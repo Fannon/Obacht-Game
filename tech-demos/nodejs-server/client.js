@@ -11,7 +11,7 @@ demo.broadcastTestData = [];
 var socket = io.connect('http://' + ip + ':' + port);
 
 socket.on('servermessage', function (data) {
-    var html = '<div class="label label-success">' + data.msg + '</div>';
+    var html = '<div class="label label-success">' + data.msg + '</div> ';
     $('#servermessages').append(html);
 });
 
@@ -96,8 +96,8 @@ broadcastTest = function() {
 
     data = {
         data: {'action': 'jump'},
-        x: Math.random(),
-        y: Math.random(),
+        x: Math.random() * 1280,
+        y: Math.random() * 720,
         z: Math.random(),
         time: new Date().getTime()
     };
