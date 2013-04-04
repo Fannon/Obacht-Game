@@ -2,7 +2,8 @@ var io = require('socket.io').listen(8080);
 
 io.sockets.on('connection', function (socket) {
 
-  socket.emit('news', { hello: 'world' });
+  socket.emit('servermessage', { msg: 'Erfolgreich verbunden' });
+  socket.emit('servermessage', { msg: 'Erfolgreich verbunden' });
 
   // Empfängt Daten und sendet sie wieder zurück
   // Client misst die Zeit die dafür benötigt wurde
@@ -11,8 +12,9 @@ io.sockets.on('connection', function (socket) {
     socket.emit('pingPongTestResponse', {'pingData': data });
   });
 
-  io.sockets.on('broadcastTest', function (socket) {
-  socket.broadcast.emit('user connected');
-});
+  socket.on('broadcastTest', function (data) {
+    console.log('Broadcast');
+    socket.broadcast.emit('BroadcastTestResponse', {'data': data });
+  });
 
 });

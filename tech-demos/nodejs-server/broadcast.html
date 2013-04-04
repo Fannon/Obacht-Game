@@ -12,16 +12,22 @@
     </style>
 </head>
 <body>
-    <h1>NodeJS Websocket Techdemo</h1>
+    <h2>NodeJS Websocket Techdemo</h2>
 
     <h4>Broadcasting Test: Daten zum Server und an ALLE zurück</h4>
+
+    <h5>Mitteilungen vom Server:</h5>
+    <div id="servermessages"></div>
+
     <h5>Meine Daten</h5>
-    <div class="well">
+    <div class="well well-small">
         <p><strong>X</strong>: <span id="myX"></span></p>
         <p><strong>Y</strong>: <span id="myY"></span></p>
         <p><strong>Z</strong>: <span id="myZ"></span></p>
         <p><strong>Data</strong>: <span id="myData"></span></p>
     </div>
+
+    <div id="others"></div>
         
 
     
@@ -34,11 +40,11 @@
 <script>
     jQuery(document).ready(function() {
 
-        // Führt alle 3 Sekunden einen PingPong Test aus
-        pingPongTest();
+        // Führt alle 500 Sekunden einen PingPong Test aus
+        broadcastTest();
         setInterval(function(){
-            pingPongTest();
-        }, 500);
+            broadcastTest();
+        }, 1000);
 
     });
 
