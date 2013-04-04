@@ -17,8 +17,7 @@ io.sockets.on('connection', function (socket) {
     data.z = -data.z;
 
     console.log('Broadcast');
-    // io.sockets.emit('message', {foo:bar});
-    io.sockets.emit('BroadcastTestResponse', data);
+    socket.broadcast.emit('BroadcastTestResponse', data);
   });
 
 });
