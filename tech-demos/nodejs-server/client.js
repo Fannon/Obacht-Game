@@ -14,10 +14,14 @@ socket.on('pingPongTestResponse', function (data) {
     var time = demo.pingPongEnd - demo.pingPongStart;
 
     demo.pingPongTestData.push(time);
-    var sum = demo.pingPongTestData.reduce(function(a, b) { return a + b });
+    var sum = demo.pingPongTestData.reduce(function(a, b) {return a + b;});
     var avg = sum / demo.pingPongTestData.length;
+    var max = Math.max.apply(null, demo.pingPongTestData);
+    var min = Math.min.apply(null, demo.pingPongTestData);
 
     $('#pingPongAvg').text(avg + 'ms, ');
+    $('#pingPongMax').text(max + 'ms, ');
+    $('#pingPongMin').text(min + 'ms, ');
     $('#pingPong').append(time + 'ms, ');
     console.dir(demo.pingPongTestData);
 });
