@@ -27,9 +27,23 @@
         <p><strong>Data</strong>: <span id="myData"></span></p>
     </div>
 
-    <div id="others"></div>
-        
+    <h5>Gegner Daten</h5>
+    <div class="well well-small">
+        <p><strong>X</strong>: <span id="opponentX"></span></p>
+        <p><strong>Y</strong>: <span id="opponentY"></span></p>
+        <p><strong>Z</strong>: <span id="opponentZ"></span></p>
+        <p><strong>Data</strong>: <span id="opponentData"></span></p>
+        <p><strong>Zeit</strong>: <span id="opponentTime"></span></p>
+    </div>
+    
 
+    <h5>Benchmark</h5>
+    <div class="well well-small">
+        <p><strong>Durchschnitt</strong>: <span id="broadcastAvg"></span></p>
+        <p><strong>Maximum</strong>: <span id="broadcastMax"></span></p>
+        <p><strong>Minimum</strong>: <span id="broadcastMin"></span></p>
+        <p><strong>Werte</strong>: <span id="broadcast"></span></p>
+    </div>
     
 </body>
 </html>
@@ -40,11 +54,11 @@
 <script>
     jQuery(document).ready(function() {
 
-        // Führt alle 500 Sekunden einen PingPong Test aus
+        // Führt alle 500 MilliSekunden einen broadcast Test aus
         broadcastTest();
         setInterval(function(){
             broadcastTest();
-        }, 1000);
+        }, 500);
 
     });
 
