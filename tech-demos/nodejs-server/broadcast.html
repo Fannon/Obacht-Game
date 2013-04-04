@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NodeJS Websocket Techdemo</title>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            margin: 7px;
+        }
+    </style>
+</head>
+<body>
+    <h1>NodeJS Websocket Techdemo</h1>
+
+    <h4>Broadcasting Test: Daten zum Server und an ALLE zurück</h4>
+    <h5>Meine Daten</h5>
+    <div class="well">
+        <p><strong>X</strong>: <span id="myX"></span></p>
+        <p><strong>Y</strong>: <span id="myY"></span></p>
+        <p><strong>Z</strong>: <span id="myZ"></span></p>
+        <p><strong>Data</strong>: <span id="myData"></span></p>
+    </div>
+        
+
+    
+</body>
+</html>
+
+<script src="http://192.168.2.100:8080/socket.io/socket.io.js"></script>
+<script src="client.js"></script>
+
+<script>
+    jQuery(document).ready(function() {
+
+        // Führt alle 3 Sekunden einen PingPong Test aus
+        pingPongTest();
+        setInterval(function(){
+            pingPongTest();
+        }, 500);
+
+    });
+
+</script>

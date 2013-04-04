@@ -1,8 +1,11 @@
+var ip = "192.168.2.100";
+var port = 8080;
+
 var demo = {}; // Global Namespace
 
 demo.pingPongTestData = [];
 
-var socket = io.connect('http://localhost:8080');
+var socket = io.connect('http://' + ip + ':' + port);
 
 socket.on('news', function (data) {
     console.log(data);
@@ -39,13 +42,3 @@ pingPongTest = function() {
 
     socket.emit('pingPongTest', data);
 };
-
-jQuery(document).ready(function() {
-
-    // Führt alle 3 Sekunden einen PingPong Test aus
-    pingPongTest();
-    setInterval(function(){
-        pingPongTest();
-    }, 500);
-
-});

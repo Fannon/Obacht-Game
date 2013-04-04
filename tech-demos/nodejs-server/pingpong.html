@@ -5,20 +5,36 @@
     <title>NodeJS Websocket Techdemo</title>
     <script src="http://code.jquery.com/jquery.min.js"></script>
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            margin: 7px;
+        }
+    </style>
 </head>
 <body>
     <h1>NodeJS Websocket Techdemo</h1>
 
-    <h3>Latenz: Daten zum Server und zurück:</h3>
+    <h4>PingPong Test: Daten zum Server und zurück</h4>
     <p><strong>Durchschnitt</strong>: <span id="pingPongAvg"></span></p>
     <p><strong>Maximum</strong>: <span id="pingPongMax"></span></p>
     <p><strong>Minimum</strong>: <span id="pingPongMin"></span></p>
     <p><strong>Werte</strong>: <span id="pingPong"></span></p>
 
-    <hr>
-    
 </body>
 </html>
 
-<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+<script src="http://192.168.2.100:8080/socket.io/socket.io.js"></script>
 <script src="client.js"></script>
+
+<script>
+    jQuery(document).ready(function() {
+
+        // Führt alle 3 Sekunden einen PingPong Test aus
+        pingPongTest();
+        setInterval(function(){
+            pingPongTest();
+        }, 500);
+
+    });
+
+</script>
