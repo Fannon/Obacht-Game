@@ -1,0 +1,47 @@
+var demo = {}; // Global Namespace
+
+demo.pingPongTestData = [];
+
+var socket = io.connect('http://localhost:8080');
+
+socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+});
+
+socket.on('pingPongTestResponse', function (data) {
+    demo.pingPongEnd = new Date().getTime();
+    var time = demo.pingPongEnd - demo.pingPongStart;
+
+    demo.pingPongTestData.push(time);
+    var sum = demo.pingPongTestData.reduce(function(a, b) { return a + b });
+    var avg = sum / demo.pingPongTestData.length;
+
+    $('#pingPongAvg').text(avg + 'ms, ');
+    $('#pingPong').append(time + 'ms, ');
+    console.dir(demo.pingPongTestData);
+});
+
+pingPongTest = function() {
+
+    data = {
+        test: "Drei Chinesen mit dem Kontrabass saßen auf der Straße und erzählten sich was. Da kam die Polizei, ei was ist denn das? Drei Chinesen mit dem Kontrabass.",
+        x: 2.4,
+        y: 2.5,
+        z: 3.1
+    };
+
+    demo.pingPongStart = new Date().getTime();
+
+    socket.emit('pingPongTest', data);
+};
+
+jQuery(document).ready(function() {
+
+    // Führt alle 3 Sekunden einen PingPong Test aus
+    pingPongTest();
+    setInterval(function(){
+        pingPongTest();
+    }, 500);
+
+});
