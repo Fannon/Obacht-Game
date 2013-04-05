@@ -1,5 +1,5 @@
 // Konfiguration
-var ip = "192.168.2.100";
+var ip = "ec2-54-228-30-155.eu-west-1.compute.amazonaws.com";
 var port = 8080;
 
 // Variablen und Datenstrukturen
@@ -45,9 +45,10 @@ pingPongTest = function() {
 
     data = {
         test: "Drei Chinesen mit dem Kontrabass saßen auf der Straße und erzählten sich was. Da kam die Polizei, ei was ist denn das? Drei Chinesen mit dem Kontrabass.",
-        x: 2.4,
-        y: 2.5,
-        z: 3.1
+        x: Math.random() * 1280,
+        y: Math.random() * 720,
+        z: Math.random(),
+        time: new Date().getTime()
     };
 
     demo.pingPongStart = new Date().getTime();
