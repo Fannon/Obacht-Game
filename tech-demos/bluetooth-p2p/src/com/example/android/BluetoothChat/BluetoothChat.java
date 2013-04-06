@@ -151,7 +151,8 @@ public class BluetoothChat extends Activity {
             public void onClick(View v) {
                 // Send a message using content of the edit text widget
                 TextView view = (TextView) findViewById(R.id.edit_text_out);
-                String message = view.getText().toString();
+                long startTime = System.currentTimeMillis();
+                String message = String.valueOf(startTime) + " ";
                 sendMessage(message);
             }
         });
