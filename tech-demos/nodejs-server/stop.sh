@@ -1,5 +1,5 @@
 # Evtl: chmod +x stop.sh
-
+echo ''
 echo '###########################'
 echo '# Forever: Stoppe Server ##'
 echo '###########################'
