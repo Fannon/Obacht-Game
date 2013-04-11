@@ -10,27 +10,41 @@ goog.require('lime.animation.MoveBy');
 goog.require('lime.animation.RotateBy');
 goog.require('lime.animation.Loop');
 
+var viewportWidth = 1280;
+var viewportHeight = 720
+
 
 // entrypoint
 prototype_martin.start = function(){
 
-	var director = new lime.Director(document.body,1280,720),
+	var director = new lime.Director(document.body, viewportWidth, viewportHeight),
 	    
         scene = new lime.Scene(),
-        planet_bottom =  new lime.Circle().setSize(2100,2100).setPosition(200,1500).setFill(0,0,0),
+        planet_bottom = new lime.Circle().setSize(2100,2100).setPosition(200,1500).setFill(0,0,0),
         planet_top =  new lime.Circle().setSize(2100,2100).setPosition(1080,-780).setFill(0,0,0),
         character = new lime.Circle().setSize(100, 150).setPosition(200, 400).setFill('#d5622f'),
-        hindernis = new lime.Circle().setSize(75, 150).setPosition(0, -1065).setFill(0,0,0);
+        hindernis = new lime.Circle().setSize(75, 150).setPosition(0, -1065).setFill(0,0,0),
+        swipeArea =  new lime.Node().setSize(viewportWidth / 2, viewportHeight).setPosition(0,0).setAnchorPoint(0,0),
     
+        // LAYER_1 – OBJECTS //
+        layer_1 = new lime.Layer().setSize(viewportWidth, viewportHeight),
+
+        // LAYER_2 – INTERACTION //
+        layer_2 = new lime.Layer().setSize(viewportWidth, viewportHeight);
+
     planet_bottom.appendChild(hindernis);
-    scene.appendChild(character);
-    scene.appendChild(planet_bottom);
-    scene.appendChild(planet_top);
+    layer_1.appendChild(character);
+    layer_1.appendChild(planet_bottom);
+    layer_1.appendChild(planet_top);
+    layer_2.appendChild(swipeArea);
+
+    scene.appendChild(layer_1);
+    scene.appendChild(layer_2);
 
 	director.makeMobileWebAppCapable();
 
 
-
+    ///////////////
     /* ANIMATION */
     ///////////////
 
@@ -40,23 +54,24 @@ prototype_martin.start = function(){
 
     var jump = new lime.animation.Sequence(
         new lime.animation.MoveBy(0, -280).setDuration(0.2).setEasing(lime.animation.Easing.EASEOUT),
-        new lime.animation.MoveBy(0, 280).setDuration(0.45).setEasing(lime.animation.Easing.EASEIN)
+        new lime.animation.MoveBy(0, 280).setDuration(0.35).setEasing(lime.animation.Easing.EASEIN)
     );
 
     planet_bottom.runAction(turnPlanet);
 
 
+    ////////////////////
     /* EVENTLISTENERS */
     ////////////////////
 
     var touchStartY;
     var touchEndY;
 
-    goog.events.listen(scene, ['touchstart', 'mousedown'], function(e) {
+    goog.events.listen(swipeArea, ['touchstart', 'mousedown'], function(e) {
         touchStartY = Math.round(e.position.y)
     });
 
-    goog.events.listen(scene, ['touchend', 'mouseup'], function(e) {
+    goog.events.listen(swipeArea, ['touchend', 'mouseup'], function(e) {
         touchEndY = Math.round(e.position.y)
         if (touchEndY < touchStartY) {
             character.runAction(jump);
