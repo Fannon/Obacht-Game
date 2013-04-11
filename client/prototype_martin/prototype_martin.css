@@ -1,10 +1,5 @@
 body {
 
-	background-image: -webkit-linear-gradient(top left, #ee9864 0%, #f4d0b1 50%, #ee9864 100%); 
-	background-image: -moz-linear-gradient(top left, #ee9864 0%, #f4d0b1 50%, #ee9864 100%); 
-	background-image: -o-linear-gradient(top left, #ee9864 0%, #f4d0b1 50%, #ee9864 100%); 
-	background-image: linear-gradient(top left, #ee9864 0%, #f4d0b1 50%, #ee9864 100%);">
-
 	background-image: url(bg.jpg);
 	background-size: 100% 100%;
 }
