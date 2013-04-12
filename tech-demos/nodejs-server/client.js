@@ -1,5 +1,5 @@
 // Konfiguration
-var ip = "ec2-54-228-30-155.eu-west-1.compute.amazonaws.com";
+var serverUrl = "http://obacht.informatik.hs-augsburg.de:8080";
 var port = 8080;
 
 // Variablen und Datenstrukturen
@@ -8,7 +8,7 @@ demo.pingPongTestData = [];
 demo.broadcastTestData = [];
 
 // Socket.io
-var socket = io.connect('http://' + ip + ':' + port);
+var socket = io.connect(serverUrl);
 
 socket.on('servermessage', function (data) {
     var html = '<div class="label label-success">' + data.msg + '</div> ';
