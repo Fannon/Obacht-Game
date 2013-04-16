@@ -1,25 +1,26 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Obacht Game Server Testing</title>
+    <title>Game Server Testing</title>
     <script src="http://code.jquery.com/jquery.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <style>
         body {
             margin: 7px;
         }
+        table {
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
-    <h2>Obacht Game Server Testing</h2>
+    <h2>Game Server Testing</h2>
 
     <table class="table table-condensed table-striped">
-
-    <tbody id="logtable"></tbody>
-</table>
-
-
+        <tbody id="logtable"></tbody>
+    </table>
 
 </body>
 </html>
@@ -28,9 +29,18 @@
 
 <script>
 
-var socket = io.connect('http://localhost:8080');
 
+//////////////////////////////
+// Modules and Variables    //
+//////////////////////////////
+
+var socket = io.connect('http://localhost:8080');
 var room = false;
+
+
+//////////////////////////////
+// Communication Events     //
+//////////////////////////////
 
 socket.on('connected', function (success) {
     if (success === true) {
@@ -45,7 +55,16 @@ socket.on('room_pin', function (pin) {
     } else {
         log('Could not join room, maybe it is full.');
     }
+});
 
+socket.on('new_room_pin', function (pin) {
+    log('New PIN received: ' + pin);
+    joinRoom(pin);
+});
+
+socket.on('no_match_found', function () {
+    log('No Match found.');
+    newRoom();
 });
 
 socket.on('game_data', function (data) {
@@ -54,50 +73,71 @@ socket.on('game_data', function (data) {
 });
 
 socket.on('get_rooms', function (data) {
-    console.dir(data);
+    $.each(data, function(index, value) {
+        if (index != "") {
+            log('Room #' + index + ', Users: ' + value);
+        }
+    });
 });
 
 
+//////////////////////////////
+// Communication Functions  //
+//////////////////////////////
 
-jQuery(document).ready(function() {
+function findMatch() {
+    log('>> findMatch()');
+    socket.emit('find_match');
+}
 
-    // Create new Room
-    socket.emit('new_room', '');
-
-
-});
+function newRoom() {
+    log('>> newRoom()');
+    socket.emit('new_room');
+}
 
 function joinRoom(pin) {
+    log('>> joinRoom(' + pin + ')');
     socket.emit('join_room', pin);
+}
+
+function leaveRoom() {
+    log('>> leaveRoom()');
+    socket.emit('leave_room');
 }
 
 function broadcast(game_data) {
     if (room) {
-        var data = {
-            room: room,
-            data: game_data
-        }
-        socket.emit('broadcast', data);
+        log('>> broadcast()');
+        socket.emit('broadcast', game_data);
     } else {
         log('Not in a room yet!')
     }
 }
 
 function getRooms() {
+    console.log('>> getRooms()');
     socket.emit('get_rooms', '');
 }
 
 
+//////////////////////////////
+// Helper Functions         //
+//////////////////////////////
+
 function log(msg) {
 
     var date = new Date();
-    var hour = date.getHours();
-    var minute = date.getMinutes();
-    var second = date.getSeconds();
+    var hour = date.getHours().pad(2);
+    var minute = date.getMinutes().pad(2);
+    var second = date.getSeconds().pad(2);
 
-    var html = '<tr><td width="70px">' + hour + ':' + minute + ':' + second + '</td><td>' + msg + '</td></tr>';
+    var html = '<tr><td width="54px">' + hour + ':' + minute + ':' + second + '</td><td>' + msg + '</td></tr>';
     $('#logtable').append(html);
 }
 
+// http://stackoverflow.com/questions/3313875/javascript-date-ensure-getminutes-gethours-getseconds-puts-0-in-front-i
+Number.prototype.pad = function (len) {
+    return (new Array(len+1).join("0") + this).slice(-len);
+}
 
 </script>

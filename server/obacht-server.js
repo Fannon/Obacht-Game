@@ -9,10 +9,12 @@
 // Modules and Variables    //
 //////////////////////////////
 
-var gameserver = {}; // Global Namespace
-var port = (process.argv[2] ? process.argv[2] : 8080); // Use Console Argument if there
+var gameServer = {}; // Global Namespace
+gameServer.openRooms = [];
+gameServer.maxPin = 9999;
+gameServer.port = (process.argv[2] ? process.argv[2] : 8080); // Use Console Argument if there
 
-var io = require('socket.io').listen(port);
+var io = require('socket.io').listen(gameServer.port);
 
 
 //////////////////////////////
@@ -31,22 +33,29 @@ io.set('log level', 1); // reduce logging
 
 io.sockets.on('connection', function(socket) {
 
+    socket.emit('connected', true);
     console.log('+++ NEW REMOTE CONNECTION');
 
-    socket.emit('connected', true);
-
-    // Client requests a new Room, enters it and gets the PIN for it
+    /**
+     * New Room Request
+     */
     socket.on('new_room', function() {
-        var pin = Math.floor(Math.random()*9999);
-        socket.join(pin);
-        socket.emit('room_pin', pin);
-        console.log('--> Client requested new Room #' + pin);
+        var pin = getNewPin();
+        socket.emit('new_room_pin', pin);
+        console.log('--> Client requested new Room PIN #' + pin);
     });
 
-    // Clients sends PIN and joins the Room if not full
+    /**
+     * Join Room Request
+     */
     socket.on('join_room', function(pin) {
 
-        console.log(io.sockets.clients(pin));
+        // Leave old Room and join new one
+        if (socket.room) {
+            console.log('--> Client leaves Room #' + socket.room);
+            socket.leave(socket.room);
+        }
+        socket.room = pin;
 
         if (io.sockets.clients(pin).length < 2) {
             socket.join(pin);
@@ -59,23 +68,108 @@ io.sockets.on('connection', function(socket) {
 
     });
 
-    // Debug: Get all open Rooms
+    /**
+     * Find Match Request
+     */
+    socket.on('find_match', function() {
+
+        console.log('--> Client request new Match');
+
+        if (socket.room) {
+            socket.leave(socket.room);
+        }
+
+        var pin = findMatch();
+
+        if (pin) {
+            socket.emit('new_room_pin', pin);
+        } else {
+            socket.emit('no_match_found');
+        }
+    });
+
+    /**
+     * Leave Room Request
+     */
+    socket.on('leave_room', function() {
+        if (socket.room) {
+            socket.leave(socket.room);
+        }
+    });
+
+    /**
+     * Broadcast to other Players in Room Request
+     */
     socket.on('broadcast', function(data) {
-        console.log('<-> Broadcasting Game Data in Room #' + data.room);
-        socket.broadcast.to(data.room).emit('game_data', data);
+        console.log('<-> Broadcasting Game Data in Room #' + socket.room);
+        socket.broadcast.to(socket.room).emit('game_data', data);
     });
 
 
-    // Debug: Get all open Rooms
+    /**
+     * Get all open Rooms Request
+     */
     socket.on('get_rooms', function() {
         socket.emit('get_rooms', io.sockets.manager.rooms);
         console.log('<-- Sent current rooms Information');
     });
 
-    // Client disconnects
+
+    /**
+     * Client disconnect Event
+     */
     socket.on('disconnect', function() {
         // Rooms are automatically leaved and pruned
         console.log('--- DISCONNECT FROM REMOTE');
     });
 
 });
+
+
+//////////////////////////////
+// GameServer Functions     //
+//////////////////////////////
+
+/**
+ * Generates a Random PIN
+ * Checks if it is already in use. If it is, draws a new one.
+ *
+ * @return {integer} PIN
+ */
+function getNewPin() {
+
+    var pin = Math.floor(Math.random() * gameServer.maxPin);
+
+    if (io.sockets.clients(pin).length > 0) {
+        console.log('### Room already used, trying again.');
+        return getNewPin();
+    } else {
+        return pin;
+    }
+}
+
+/**
+ * Finds a Match
+ *
+ * Looks for a Game with just one Player waiting for another
+ * TODO: Just BruteForce right now, not very performant
+ *
+ * @return {integer} PIN for Room, false if no Room open
+ */
+function findMatch() {
+
+    for (var pin = 0; pin < gameServer.maxPin; pin++) {
+        if(io.sockets.manager.rooms['/' + pin]) {
+            if(io.sockets.manager.rooms['/' + pin].length == 1) {
+                console.log('### Match found: Room #' + pin);
+                return pin;
+            }
+        }
+    }
+
+    return false;
+}
+
+//////////////////////////////
+// Helper Functions         //
+//////////////////////////////
