@@ -1,14 +1,19 @@
 goog.provide('prototype_lukas');
 
 goog.require('lime.Director');
-goog.require('lime.Scene');
+goog.require('lime.GlossyButton');
 goog.require('lime.Layer');
+goog.require('lime.Scene');
+
+
 goog.require('lime.Circle');
+goog.require('lime.RoundedRect');
 goog.require('lime.animation.Sequence');
 goog.require('lime.animation.ScaleTo');
 goog.require('lime.animation.MoveBy');
 goog.require('lime.animation.RotateBy');
 goog.require('lime.animation.Loop');
+//goog.require('prototype_lukas.Game');
 
 var VIEWPORT_WIDTH = 1280;
 var VIEWPORT_HEIGHT = 720
@@ -21,115 +26,51 @@ var VIEWPORT_HEIGHT = 720
 
 prototype_lukas.start = function(){
 
-	var director = new lime.Director(document.body, VIEWPORT_WIDTH, VIEWPORT_HEIGHT),
+	prototype_lukas.director = new lime.Director(document.body, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+	var	scene = new lime.Scene(),
+	    layer = new lime.Layer();
 	    
-        scene = new lime.Scene(),
-        planet_bottom = new lime.Circle().setSize(2100,2100).setPosition(200,1500).setFill(0,0,0),
-        planet_top =  new lime.Circle().setSize(2100,2100).setPosition(1080,-780).setFill(0,0,0),
-        character = new lime.Circle().setSize(100, 150).setPosition(200, 470).setAnchorPoint(0.5, 1).setFill('#d5622f'),
-        hindernis = new lime.Circle().setSize(75, 150).setPosition(0, -1065).setFill(0,0,0),
-        jumpArea =  new lime.Node().setSize(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2).setPosition(0,0).setAnchorPoint(0,0),
-        crouchArea = new lime.Node().setSize(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2).setPosition(0, VIEWPORT_HEIGHT / 2).setAnchorPoint(0,0),
+	var btn = new lime.GlossyButton('CONNECT WITH A FRIEND').setSize(300, 40).setPosition(640, 100);
+	goog.events.listen(btn, 'click', function() {
+			prototype_lukas.newgame(1);
+	});
+	layer.appendChild(btn);
 
-        
-    
-        // LAYER_1 – OBJECTS //
-        layer_1 = new lime.Layer().setSize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT),
-
-        // LAYER_2 – INTERACTION //
-        layer_2 = new lime.Layer().setSize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-        
-       
-
-    planet_bottom.appendChild(hindernis);
-    layer_1.appendChild(planet_bottom);
-    layer_1.appendChild(planet_top);
-    layer_1.appendChild(character);
-    layer_2.appendChild(jumpArea);
-    layer_2.appendChild(crouchArea);
-
-
-    scene.appendChild(layer_1);
-    scene.appendChild(layer_2);
-
-	director.makeMobileWebAppCapable();
-
-
-
-///////////////
-/* ANIMATION */
-///////////////
-
-    var turnPlanet = new lime.animation.Loop(
-        new lime.animation.RotateBy(360).setDuration(6).setEasing(lime.animation.Easing.LINEAR)
-    );
-
-    var jumpUp = new lime.animation.MoveBy(0, -280).setDuration(0.2).setEasing(lime.animation.Easing.EASEOUT);
-    var jumpDown = jumpUp.reverse().setDuration(0.35).setEasing(lime.animation.Easing.EASEIN);
-    var jump = new lime.animation.Sequence(jumpUp, jumpDown);
-
-    var crouch = new lime.animation.ScaleTo(1.6, 0.5).setDuration(0.1);
-    var standUp = new lime.animation.ScaleTo(1, 1).setDuration(0.1);
-
-    planet_bottom.runAction(turnPlanet);
-
-
-    
-////////////////////
-/* EVENTHANDLING */
-////////////////////
-
+	var btn = new lime.GlossyButton('CONNECT RANDOM').setSize(300, 40).setPosition(640, 200);
+	goog.events.listen(btn, 'click', function() {
+		prototype_lukas.newgame(1);
+	});
+	layer.appendChild(btn);
 	
-	var isCrouching = false;
+	var btn = new lime.GlossyButton('TEST MODE').setSize(300, 40).setPosition(640, 300);
+	goog.events.listen(btn, 'click', function() {
+		prototype_lukas.newgame(1);
+	});
+	layer.appendChild(btn);
+	
+	scene.appendChild(layer);
 
-    goog.events.listen(jumpArea,['mousedown','touchstart'], function(e) {
-        character.runAction(jump);
-    });
-    goog.events.listen(crouchArea,['mousedown','touchstart'], function(e) {
-        character.runAction(crouch);
-        
-        e.swallow(['mouseup','touchend'],function(){
-			character.runAction(standUp);
-        });
-    });
-   
-	/*
-    var touchStartY;
-    var touchMoveY;
-    var touchEndY;
-    var isCrouching = false;
-
-    goog.events.listen(swipeArea, 'touchstart', function(e) {
-        touchStartY = Math.round(e.position.y);
-    });
-
-    goog.events.listen(swipeArea, 'touchend', function(e) {
-        touchEndY = Math.round(e.position.y);
-        
-        if (touchEndY < touchStartY) {
-            character.runAction(jump);
-        } 
-        if (isCrouching == true) {
-            character.runAction(standUp);
-            isCrouching = false;
-        } else {
-            return;
-        }
-    });
-
-    goog.events.listen(swipeArea, 'touchmove', function(e) {
-        touchMoveY = Math.round(e.position.y);
-
-        if (isCrouching == false && touchStartY < touchMoveY) {
-            character.runAction(crouch);
-            isCrouching = true;
-        } else {
-            return;
-        }
-    }); */
-
-	director.replaceScene(scene);
+	prototype_lukas.director.replaceScene(scene);
 }
+
+
+prototype_lukas.newgame = function(mode) {
+	var scene = new lime.Scene(),
+	layer = new lime.Layer();
+
+	scene.appendChild(layer);
+
+	var game = new prototype_lukas.Game(mode);
+	layer.appendChild(game);
+	
+
+	prototype_lukas.director.replaceScene(scene);
+};
+
+prototype_lukas.Game = function(mode){
+	
+}
+
 
 
 //this is required for outside access after code is compiled in ADVANCED_COMPILATIONS mode
