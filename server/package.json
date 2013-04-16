@@ -1,0 +1,27 @@
+{
+  "name": "obachtServer",
+  "version": "0.0.1",
+  "author": "Simon Heimler <heimlersimon@gmail.com>",
+  "description": "The Server for the mobile Game Obacht",
+  "contributors": [
+    {
+      "name": "Sebastian Huber",
+      "email": "blacklist.mod@web.de"
+    }
+  ],
+  "scripts": {
+    "start": "node obacht-server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Fannon/IA6.Medienprojekt.git"
+  },
+  "keywords": [
+    "multiplayer",
+    "server"
+  ],
+  "dependencies": {
+    "socket.io":   "0.9.x"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Obacht Game Server Testing</title>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            margin: 7px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Obacht Game Server Testing</h2>
+
+    <table class="table table-condensed table-striped">
+
+    <tbody id="logtable"></tbody>
+</table>
+
+
+
+</body>
+</html>
+
+<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+
+<script>
+
+var socket = io.connect('http://localhost:8080');
+
+var room = false;
+
+socket.on('connected', function (success) {
+    if (success === true) {
+        log('Successful Connected');
+    }
+});
+
+socket.on('room_pin', function (pin) {
+    if (pin) {
+        room = pin;
+        log('Joined Room #' + pin);
+    } else {
+        log('Could not join room, maybe it is full.');
+    }
+
+});
+
+socket.on('game_data', function (data) {
+    log('Game Data received');
+    console.dir(data);
+});
+
+socket.on('get_rooms', function (data) {
+    console.dir(data);
+});
+
+
+
+jQuery(document).ready(function() {
+
+    // Create new Room
+    socket.emit('new_room', '');
+
+
+});
+
+function joinRoom(pin) {
+    socket.emit('join_room', pin);
+}
+
+function broadcast(game_data) {
+    if (room) {
+        var data = {
+            room: room,
+            data: game_data
+        }
+        socket.emit('broadcast', data);
+    } else {
+        log('Not in a room yet!')
+    }
+}
+
+function getRooms() {
+    socket.emit('get_rooms', '');
+}
+
+
+function log(msg) {
+
+    var date = new Date();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+
+    var html = '<tr><td width="70px">' + hour + ':' + minute + ':' + second + '</td><td>' + msg + '</td></tr>';
+    $('#logtable').append(html);
+}
+
+
+</script>
