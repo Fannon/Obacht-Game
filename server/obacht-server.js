@@ -1,3 +1,6 @@
+/* global socket, process */
+/* jshint strict: false */
+
 /**
  * Obacht Game Node.js Multiplayer Server
  *
@@ -174,7 +177,7 @@ function findMatch() {
 
     for (var pin = 0; pin < gameServer.maxPin; pin++) {
         if(io.sockets.manager.rooms['/' + pin]) {
-            if(io.sockets.manager.rooms['/' + pin].length == 1) {
+            if(io.sockets.manager.rooms['/' + pin].length === 1) {
                 console.log('### Match found: Room #' + pin);
                 return pin;
             }
