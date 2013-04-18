@@ -67,8 +67,18 @@ socket.on('no_match_found', function () {
     newRoom();
 });
 
-socket.on('game_data', function (data) {
-    log('Game Data received');
+socket.on('player_move', function (data) {
+    log('Enemy Movement Data received');
+    console.dir(data);
+});
+
+socket.on('item', function (data) {
+    log('Item Data received');
+    console.dir(data);
+});
+
+socket.on('hurdle', function (data) {
+    log('Hurdle Data received');
     console.dir(data);
 });
 
@@ -95,7 +105,10 @@ function newRoom() {
     socket.emit('new_room');
 }
 
-function joinRoom(pin) {
+function joinRoom(pin, private) {
+    if (private) {
+        pin = 'P' + pin;
+    }
     log('>> joinRoom(' + pin + ')');
     socket.emit('join_room', pin);
 }
@@ -105,13 +118,17 @@ function leaveRoom() {
     socket.emit('leave_room');
 }
 
-function broadcast(game_data) {
+function playerMove(data) {
     if (room) {
-        log('>> broadcast()');
-        socket.emit('broadcast', game_data);
+        log('>> playerMove()');
+        socket.emit('player_move', data);
     } else {
         log('Not in a room yet!')
     }
+}
+
+function throwHurdle(data) {
+    socket.emit('thrown_hurdle', data);
 }
 
 function getRooms() {
