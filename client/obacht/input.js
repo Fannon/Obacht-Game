@@ -1,0 +1,3 @@
+/**
+ * handels the user input
+ */

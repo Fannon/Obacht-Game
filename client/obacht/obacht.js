@@ -1,3 +1,9 @@
+/**
+ * OBACHT is a multiplayer game createt by obacht. For more informations check www.obacht-game.de
+ * 
+ * start a new game
+ */
+
 //set main namespace
 goog.provide('obacht');
 
