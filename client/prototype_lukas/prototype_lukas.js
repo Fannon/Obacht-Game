@@ -60,7 +60,7 @@ prototype_lukas.newgame = function(mode) {
 
 	scene.appendChild(layer);
 
-	var game = new prototype_lukas.Game(mode);
+	var game = new prototype_lukas.Game();
 	layer.appendChild(game);
 	
 
@@ -68,7 +68,9 @@ prototype_lukas.newgame = function(mode) {
 };
 
 prototype_lukas.Game = function(mode){
-	
+	var planet_top =  new lime.Circle().setSize(2100,2100).setPosition(1080,-780).setFill(0,0,0);
+	layer = new lime.Layer();
+	layer.appendChild(planet_top);
 }
 
 
