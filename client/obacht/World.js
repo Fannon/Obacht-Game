@@ -1,4 +1,3 @@
 /**
  * World Object
- * 
  */

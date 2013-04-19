@@ -1,5 +1,14 @@
+/* global goog, obacht */
+
+// Provide Namespace
+goog.provide('obacht.Game');
+
 /**
- * SINGELTON
- * 
- * Its a game object
+ * Its a Game scene
+ *
+ * @constructor
+ * @extends lime.Scene
  */
+obacht.Game = function(size) {
+    //
+};

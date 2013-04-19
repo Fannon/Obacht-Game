@@ -1,3 +1,3 @@
 /**
- * handels the user input
+ * Handles the user input
  */
