@@ -9,16 +9,24 @@ goog.provide('obacht');
 
 // get requirements
 goog.require('obacht.Game');
+goog.require('obacht.MultiplayerService');
 
-
-// entrypoint
+/**
+ * Starts the Game
+ *
+ * Controller
+ */
 obacht.start = function(){
 
     this.currentGame = new obacht.Game();
 
+    this.multiplayerService = new obacht.MultiplayerService('http://localhost:8080');
+
+    this.multiplayerService.joinRoom(1234);
+
 	// Controller, sonst nichts
 
-}
+};
 
 
 //this is required for outside access after code is compiled in ADVANCED_COMPILATIONS mode

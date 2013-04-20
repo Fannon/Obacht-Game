@@ -24,13 +24,21 @@ obacht.Player = function() {
 // Player Actions (Logic)   //
 //////////////////////////////
 
+// Getter und Setter
+
+/**
+ * Lets the Player jump
+ */
 obacht.Player.prototype.jump = function() {
+    "use strict";
+    this.y += 1;
     console.log('Jump around!');
 };
 
 obacht.Player.prototype.crouch = function() {
     console.log('Crowbar ready');
 };
+
 
 // throwTrap();
 // etc.

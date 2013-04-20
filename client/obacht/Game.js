@@ -17,8 +17,10 @@ obacht.Game = function(size) {
     // Game Model (state)       //
     //////////////////////////////
 
+    // Players are properties of the Game
     this.player1 = new obacht.Player();
     this.player2  = new obacht.Player();
 
     this.player1.jump();
+    console.log(this.player1.y);
 };
