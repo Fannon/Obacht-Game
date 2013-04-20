@@ -1,4 +1,5 @@
-/* global goog, obacht */
+/* global goog, obacht, io, console */
+/* jshint devel: true, strict: false */
 goog.provide('obacht.MultiplayerService');
 
 /**
@@ -11,14 +12,9 @@ goog.provide('obacht.MultiplayerService');
  * @author Simon Heimler
  */
 
+// TODO: Singleton Pattern: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript
+
 obacht.MultiplayerService = function(serverUrl) {
-
-    // Singleton Pattern
-    if (arguments.callee._singletonInstance){
-        return arguments.callee._singletonInstance;
-    }
-    arguments.callee._singletonInstance = this;
-
 
     //////////////////////////////
     // Model                    //
@@ -26,7 +22,9 @@ obacht.MultiplayerService = function(serverUrl) {
 
     this.serverUrl = serverUrl;
     this.room = false;
-    this.socket = io.connect(serverUrl); // Set up Socket-Connection to Server
+    this.socket = io.connect(this.serverUrl); // Set up Socket-Connection to Server
+
+    var that = this;
 
 
     //////////////////////////////
@@ -41,7 +39,7 @@ obacht.MultiplayerService = function(serverUrl) {
 
     this.socket.on('room_pin', function (pin) {
         if (pin) {
-            room = pin;
+            that.room = pin;
             console.log('Joined Room #' + pin);
         } else {
             console.log('Could not join room, maybe it is full.');
@@ -50,12 +48,12 @@ obacht.MultiplayerService = function(serverUrl) {
 
     this.socket.on('new_room_pin', function (pin) {
         console.log('New PIN received: ' + pin);
-        joinRoom(pin);
+        this.joinRoom(pin);
     });
 
     this.socket.on('no_match_found', function () {
         console.log('No Match found.');
-        newRoom();
+        this.newRoom();
     });
 
     this.socket.on('player_move', function (data) {
@@ -74,14 +72,14 @@ obacht.MultiplayerService = function(serverUrl) {
     });
 
     this.socket.on('get_rooms', function (data) {
-        for (var room in data) {
-            if (room !== "") {
-                console.log('Room #' + room + ', Users: ' + data[room]);
+        for (var roomId in data) {
+            if (roomId !== "") {
+                console.log('Room #' + roomId + ', Users: ' + data[roomId]);
             }
         }
     });
 
-}
+};
 
 
 //////////////////////////////
@@ -89,12 +87,12 @@ obacht.MultiplayerService = function(serverUrl) {
 //////////////////////////////
 
 obacht.MultiplayerService.prototype.findMatch = function () {
-    log('>> findMatch()');
+    console.log('>> findMatch()');
     this.socket.emit('find_match');
 };
 
 obacht.MultiplayerService.prototype.newRoom = function () {
-    log('>> newRoom()');
+    console.log('>> newRoom()');
     this.socket.emit('new_room');
 };
 
@@ -102,32 +100,32 @@ obacht.MultiplayerService.prototype.joinRoom = function(pin, privateRoom) {
     if (privateRoom) {
         pin = 'P' + pin;
     }
-    log('>> joinRoom(' + pin + ')');
+    console.log('>> joinRoom(' + pin + ')');
     this.socket.emit('join_room', pin);
 };
 
 obacht.MultiplayerService.prototype.leaveRoom = function() {
-    log('>> leaveRoom()');
+    console.log('>> leaveRoom()');
     this.socket.emit('leave_room');
-}
+};
 
 obacht.MultiplayerService.prototype.playerMove = function(data) {
     if (this.room) {
-        log('>> playerMove()');
+        console.log('>> playerMove()');
         this.socket.emit('player_move', data);
     } else {
-        log('Not in a room yet!')
+        console.log('Not in a room yet!');
     }
-}
+};
 
 obacht.MultiplayerService.prototype.throwHurdle = function(data) {
     this.socket.emit('thrown_hurdle', data);
-}
+};
 
 obacht.MultiplayerService.prototype.getRooms = function() {
     console.log('>> getRooms()');
     this.socket.emit('get_rooms', '');
-}
+};
 
 
 //////////////////////////////
@@ -138,4 +136,4 @@ obacht.MultiplayerService.prototype.getRooms = function() {
 // http://stackoverflow.com/questions/3313875/javascript-date-ensure-getminutes-gethours-getseconds-puts-0-in-front-i
 Number.prototype.pad = function (len) {
     return (new Array(len+1).join("0") + this).slice(-len);
-}
+};
