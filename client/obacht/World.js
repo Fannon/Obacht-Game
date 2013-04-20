@@ -1,3 +1,6 @@
+/* global goog, obacht */
+goog.provide('obacht.World');
+
 /**
- * World Object
+ * Its a World Object
  */

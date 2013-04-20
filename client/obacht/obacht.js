@@ -4,24 +4,17 @@
  * start a new game
  */
 
-//set main namespace
+// set main namespace
 goog.provide('obacht');
 
-
-//get requirements
-goog.require('lime.Director');
-goog.require('lime.Scene');
-goog.require('lime.Layer');
-goog.require('lime.Circle');
-goog.require('lime.Label');
-goog.require('lime.animation.Spawn');
-goog.require('lime.animation.FadeTo');
-goog.require('lime.animation.ScaleTo');
-goog.require('lime.animation.MoveTo');
+// get requirements
+goog.require('obacht.Game');
 
 
 // entrypoint
 obacht.start = function(){
+
+    this.currentGame = new obacht.Game();
 
 	// Controller, sonst nichts
 

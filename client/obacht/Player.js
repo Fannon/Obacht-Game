@@ -1,25 +1,39 @@
+/* global goog, obacht */
+goog.provide('obacht.Player');
+
 /**
- * Player object
+ * Its a Player Object
+ *
+ * @constructor
  */
+obacht.Player = function() {
+
+    console.log('New Player();');
+
+    //////////////////////////////
+    // Player Model (state)     //
+    //////////////////////////////
+
+    this.health = 3;
+    this.y = 0;
 
 
-// Hier mal eine mögliche Aufteilung innerhalb der Player Klasse (oder anderen)
+};
 
 //////////////////////////////
-// Player Model (state)     //
+// Player Actions (Logic)   //
 //////////////////////////////
 
-// health
-// y coordinates
+obacht.Player.prototype.jump = function() {
+    console.log('Jump around!');
+};
 
+obacht.Player.prototype.crouch = function() {
+    console.log('Crowbar ready');
+};
 
-//////////////////////////////
-// Player Logic (actions)   //
-//////////////////////////////
-
-// crouch();
-// jump();
 // throwTrap();
+// etc.
 
 //////////////////////////////
 // Player Controls (user)   //
@@ -32,4 +46,5 @@
 //////////////////////////////
 
 // Sprites anziehen etc.
+
 
