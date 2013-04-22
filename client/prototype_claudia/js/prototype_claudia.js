@@ -1,7 +1,12 @@
 goog.provide('prototype_claudia');
-//goog.provide('lime.Renderer.CANVAS.SPRITE');
-//goog.provide('lime.Renderer.DOM.SPRITE');
-//goog.provide('lime.Sprite');
+
+goog.provide('lime.Label');
+goog.provide('lime.Renderer.CANVAS.LABEL');
+goog.provide('lime.Renderer.DOM.LABEL');
+goog.require('lime.Renderer.CANVAS.SPRITE');
+goog.require('lime.Renderer.DOM.SPRITE');
+goog.require('lime.Sprite');
+goog.require('goog.style'); 
 
 goog.require('lime.Director');
 goog.require('lime.Scene');
@@ -19,8 +24,8 @@ goog.require('lime');
 goog.require('lime.Node');
 goog.require('lime.fill.Color');
 goog.require('lime.fill.Stroke');
-/*goog.require('lime.fill.Fill');
-goog.require('lime.fill.Image');*/
+goog.require('lime.fill.Fill');
+goog.require('lime.fill.Image');
 
 
 
@@ -40,8 +45,11 @@ prototype_claudia.start = function(){
 	var director = new lime.Director(document.body, VIEWPORT_WIDTH, VIEWPORT_HEIGHT),
 	    
         scene = new lime.Scene(),
-        background = new lime.RoundedRect().setSize(VIEWPORT_WIDTH,VIEWPORT_HEIGHT).setFill('../images/candy/bg_candyland.jpg').setPosition(0,0),
-        //background = new lime.Sprite().setFill('../images/candy/bg_candyland.jpg').setSize(50,50).setAnchorPoint(0,0).setPosition(0,0),
+        background = new lime.Sprite().setSize(VIEWPORT_WIDTH,VIEWPORT_HEIGHT).setFill('images/candy/bg_candyland.jpg').setPosition(0,0).setAnchorPoint(0,0),
+        erde = new lime.Sprite().setSize(1470,1470).setFill('images/candy/Erde_Candyland.png').setPosition(0,1960).setAnchorPoint(0,1),
+        landschaft1 = new lime.Sprite().setSize(1590,1590).setFill('images/candy/Landschaft1_Candyland.png').setPosition(0,1960).setAnchorPoint(0,1),
+        landschaft2 = new lime.Sprite().setSize(1680,1680).setFill('images/candy/Landschaft2_Candyland.png').setPosition(0,1960).setAnchorPoint(0,1),
+        himmel = new lime.Sprite().setSize(1750,1750).setFill('images/candy/Himmel_Candyland.png').setPosition(0,1960).setAnchorPoint(0,1),
         planet_bottom = new lime.Circle().setSize(1475,1475).setFill('#232323').setAnchorPoint(0.5,0.5).setPosition(0,0),
         hindernis1 = new lime.RoundedRect().setSize(100, 100).setFill(160,270,280).setAnchorPoint(0.5, 0.5).setPosition(0, -1480),
         hindernis2 = new lime.RoundedRect().setSize(100, 160).setFill(160,270,280).setAnchorPoint(0.5, 0.5).setPosition(0, 1480),
@@ -66,6 +74,10 @@ prototype_claudia.start = function(){
     //layer_1.appendChild(planet_bottom);
     //layer_1.appendChild(planet_top);
 	layer_1.appendChild(background);
+	layer_1.appendChild(himmel);
+	layer_1.appendChild(landschaft2);
+	layer_1.appendChild(landschaft1);
+	layer_1.appendChild(erde);
     layer_1.appendChild(character);
     layer_2.appendChild(jumpArea);
     layer_2.appendChild(crouchArea);
@@ -84,10 +96,19 @@ prototype_claudia.start = function(){
 /* ANIMATION */
 ///////////////
 
-    var turnPlanet = new lime.animation.Loop(
-        new lime.animation.RotateBy(360).setDuration(12).setEasing(lime.animation.Easing.LINEAR)
+    var turnLandschaft1 = new lime.animation.Loop(
+        new lime.animation.RotateBy(360).setDuration(40).setEasing(lime.animation.Easing.LINEAR)
+    );
+    
+    var turnLandschaft2 = new lime.animation.Loop(
+        new lime.animation.RotateBy(360).setDuration(60).setEasing(lime.animation.Easing.LINEAR)
     );
 
+    var turnHimmel = new lime.animation.Loop(
+        new lime.animation.RotateBy(360).setDuration(100).setEasing(lime.animation.Easing.LINEAR)
+    );
+    
+   
     var jumpUp = new lime.animation.MoveBy(0, -280).setDuration(0.2).setEasing(lime.animation.Easing.EASEOUT);
     var jumpDown = jumpUp.reverse().setDuration(0.35).setEasing(lime.animation.Easing.EASEIN);
     var jump = new lime.animation.Sequence(jumpUp, jumpDown);
@@ -95,7 +116,9 @@ prototype_claudia.start = function(){
     var crouch = new lime.animation.ScaleTo(1.6, 0.5).setDuration(0.1);
     var standUp = new lime.animation.ScaleTo(1, 1).setDuration(0.1);
 
-    planet_bottom.runAction(turnPlanet);
+    landschaft1.runAction(turnLandschaft1);
+    landschaft2.runAction(turnLandschaft2);
+    himmel.runAction(turnHimmel);
 
 
     
