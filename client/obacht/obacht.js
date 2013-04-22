@@ -19,6 +19,7 @@ goog.require('obacht.MultiplayerService');
  * Controller
  */
 obacht.start = function(){
+    "use strict";
 
     this.currentGame = new obacht.Game();
 
