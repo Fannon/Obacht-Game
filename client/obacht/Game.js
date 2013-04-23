@@ -1,6 +1,7 @@
 /* global goog, obacht */
 goog.provide('obacht.Game');
 
+goog.require('obacht.World');
 goog.require('obacht.Player');
 
 /**
@@ -16,6 +17,9 @@ obacht.Game = function(size) {
     //////////////////////////////
     // Game Model (state)       //
     //////////////////////////////
+    
+    // World is a property of the Game
+    this.world = new obacht.World();
 
     // Players are properties of the Game
     this.player1 = new obacht.Player();

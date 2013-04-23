@@ -1,4 +1,6 @@
 {
     "initialWorldSpeed": 100,
-    "iterateWorldSpeed": 5
+    "iterateWorldSpeed": 5,
+    "viewportWidth": 1280,
+    "viewportHeight": 720 
 }
