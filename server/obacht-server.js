@@ -1,18 +1,21 @@
+/* global socket, process */
+/* jshint strict: false */
+
 /**
  * Obacht Game Node.js Multiplayer Server
  *
  * @author Simon Heimler
  */
 
-
 //////////////////////////////
 // Modules and Variables    //
 //////////////////////////////
 
-var gameServer = {}; // Global Namespace
-gameServer.openRooms = [];
-gameServer.maxPin = 9999;
-gameServer.port = (process.argv[2] ? process.argv[2] : 8080); // Use Console Argument if there
+var gameServer = {
+    maxPlayers: 2,
+    maxPin: 9999,
+    port: (process.argv[2] ? process.argv[2] : 8080) // Use Console Argument if there
+};
 
 var io = require('socket.io').listen(gameServer.port);
 
@@ -40,7 +43,7 @@ io.sockets.on('connection', function(socket) {
      * New Room Request
      */
     socket.on('new_room', function() {
-        var pin = getNewPin();
+        var pin = 'P' + getNewPin(); // Private Room
         socket.emit('new_room_pin', pin);
         console.log('--> Client requested new Room PIN #' + pin);
     });
@@ -57,7 +60,7 @@ io.sockets.on('connection', function(socket) {
         }
         socket.room = pin;
 
-        if (io.sockets.clients(pin).length < 2) {
+        if (io.sockets.clients(pin).length < gameServer.maxPlayers) {
             socket.join(pin);
             socket.emit('room_pin', pin);
             console.log('--> Client joined Room #' + pin);
@@ -100,9 +103,23 @@ io.sockets.on('connection', function(socket) {
     /**
      * Broadcast to other Players in Room Request
      */
-    socket.on('broadcast', function(data) {
-        console.log('<-> Broadcasting Game Data in Room #' + socket.room);
-        socket.broadcast.to(socket.room).emit('game_data', data);
+    socket.on('player_move', function(data) {
+        console.log('<-> Broadcasting Player Movement in Room #' + socket.room);
+        socket.broadcast.to(socket.room).emit('player_move', data);
+    });
+
+    /**
+     * Broadcast to other Players in Room Request
+     */
+    socket.on('thrown_hurdle', function(data) {
+
+        console.log('<-> Processing Incoming Hurdle in Room #' + socket.room);
+
+        // TODO: process data, coordinates and hurdle type
+        // Check if action is valid and generate return data
+
+        // Broadcast to all Players in the room
+        io.sockets.in(socket.room).emit('hurdle', data);
     });
 
 
@@ -160,7 +177,7 @@ function findMatch() {
 
     for (var pin = 0; pin < gameServer.maxPin; pin++) {
         if(io.sockets.manager.rooms['/' + pin]) {
-            if(io.sockets.manager.rooms['/' + pin].length == 1) {
+            if(io.sockets.manager.rooms['/' + pin].length === 1) {
                 console.log('### Match found: Room #' + pin);
                 return pin;
             }
@@ -168,6 +185,20 @@ function findMatch() {
     }
 
     return false;
+}
+
+/**
+ * Randomly generates Items
+ */
+function generateItems() {
+    // TODO: Generates Random Items for both players
+}
+
+/**
+ * Randomly generates Hurdles
+ */
+function generateHurdles() {
+    // TODO: Generates Random Hurdles for both players
 }
 
 //////////////////////////////

@@ -158,7 +158,7 @@ def update():
     
     opt = ' '.join(map(lambda x: '--root_with_prefix="'+quoteSpace(os.path.join(basedir,x.rstrip()))+'/ ../../../'+x.rstrip()+'/"',paths))
 
-    call = escapeSpace(os.path.join(closure_dir,'closure/bin/build/depswriter.py'))+' --root_with_prefix="'+\
+    call = 'python ' + escapeSpace(os.path.join(closure_dir,'closure/bin/build/depswriter.py'))+' --root_with_prefix="'+\
         quoteSpace(closure_dir)+'/ ../../" '+opt+' --output_file="'+closure_deps_file+'"'
         
     print (call)
@@ -278,21 +278,25 @@ def build(name,options):
 
     opt = ' '.join(map(lambda x: '--root="'+os.path.join(basedir,x.rstrip())+'/"',dir_list))
     
-    call = escapeSpace(os.path.join(closure_dir,'closure/bin/build/closurebuilder.py'))+' '+opt+' --namespace="'+name+'" '+\
+    call = 'python ' + escapeSpace(os.path.join(closure_dir,'closure/bin/build/closurebuilder.py'))+' '+opt+' --namespace="'+name+'" '+\
         '-o compiled -c '+compiler_path;
     
     
     if options.advanced:
         call+=" -f --compilation_level=ADVANCED_OPTIMIZATIONS"
-
+        
     if options.externs_file:
         for i, opt in enumerate(options.externs_file):
             call+=" -f --externs="+opt
-        
+            
     if options.map_file:
-        call+=" -f --formatting=PRETTY_PRINT -f --create_source_map="+options.map_file
+        call+=" -f --formatting=PRETTY_PRINT -f --create_source_map='"+options.map_file+"'"
     else:
         call+=" -f --define='goog.DEBUG=false'"
+        
+    if options.define:
+        for i, opt in enumerate(options.define):
+            call+=" -f --define='"+opt+"'"
         
     outname = options.output    
         
@@ -364,6 +368,9 @@ Commands:
                       
     parser.add_option("-p", "--preload", dest="preload", action="store", type="string",
                         help="Generate preloader code with given callback as start point.")
+                        
+    parser.add_option("-d", "--define", dest="define", action="append",
+                        help="Define custom variable accessible before build.")
     
     (options, args) = parser.parse_args()
     if not (len(args) == 2 or (len(args)==1 and ['init','update'].count(args[0])==1 )) :
