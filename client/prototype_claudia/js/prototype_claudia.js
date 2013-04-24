@@ -118,6 +118,7 @@ prototype_claudia.start = function(){
 
     landschaft1.runAction(turnLandschaft1);
     landschaft2.runAction(turnLandschaft2);
+    erde.runAction(turnLandschaft1);
     himmel.runAction(turnHimmel);
 
 
