@@ -28,7 +28,7 @@ prototype_fabi.start = function(){
     planet_top =  new lime.Circle().setSize(2100,2100).setPosition(1080,-780).setFill(0,0,0),
     
     character = new lime.Circle().setSize(100, 150).setPosition(200, 470).setAnchorPoint(1, 1).setFill('#d5622f'),
-    hindernis = new lime.Circle().setSize(100, 150).setPosition(1200, 470).setAnchorPoint(1, 1).setFill('#c00'),
+    hindernis = new lime.Circle().setSize(100, 150).setPosition(200, 1500).setAnchorPoint(1, 1).setFill('#c00'),
     jumpArea =  new lime.Node().setSize(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2).setPosition(0,0).setAnchorPoint(0,0),
     crouchArea = new lime.Node().setSize(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2).setPosition(0, VIEWPORT_HEIGHT / 2).setAnchorPoint(0,0),
       
@@ -70,48 +70,61 @@ prototype_fabi.start = function(){
     scene.appendChild(layer_2);
 
     director.makeMobileWebAppCapable();
- 
+
 //Beschleunigungsparameter
 var velocity = 0.3;
 //Anzahl Kollisionen
 var kollanz=0;
+//Startwinkel & Winkelgeschwindigkeit
+var startwinkel=45;
+var winkel=startwinkel;
+var winkelgeschwindigkeit=0.01;
+//Startposition
+var groundx=300;
+var groundy=1400;   
+       
 lime.scheduleManager.schedule(function(dt){
     
     /*Positionen */
     var position = hindernis.getPosition();
 	
 	/*Gleichmäßige Bewegung */
-    position.x -= velocity * dt; // if dt is bigger we just move more
+    //position.x -= velocity * dt; // if dt is bigger we just move more
+       
+   	position.x = Math.sin(winkel) * 900 + groundx;
+	position.y = Math.cos(winkel) * 900 + groundy;
+       
     this.setPosition(position); 
+    
+    winkel=winkel+winkelgeschwindigkeit;
     
     /*Positionen abrufen*/
     hindernispos=hindernis.getPosition();
 	characterpos=character.getPosition();
 	
-	/*ACHTUNG: Da viele Zwischenwerte fehlen sollte man auf 10er aufrunden*/
+	/*ACHTUNG: Da viele Zwischenwerte fehlen sollte man auf 10er Stellen aufrunden*/
 	rhpos=Math.round(hindernispos.x/10)*10
 	
-	console.log(rhpos);
+	//Differenz der Y Koordinaten
+	diff=hindernispos.y-characterpos.y;
+	console.log(diff);
 	
-	//Kollisionserkennung
-	//Gleiche Höhe
-	if(rhpos==characterpos.x){
-		if(hindernispos.y==characterpos.y){
+	//Gleiche Höhe checken
+	if(rhpos==characterpos.x+100){
+		if(diff<40){
 		kollanz++;	
-		this.setPosition(800,470);
+		winkel=startwinkel;
 		}
-	}else if(rhpos<0){
-		this.setPosition(800,470)
+	}else if(hindernispos.x<0){
+		winkel=startwinkel;
 	};
 	
 	//Text Kollisionsanzahl
 	lbl2.setText('Kollision nr: '+kollanz);
-	//Characterposition
-	lbl.setText('Hindernis X: '+Math.round(hindernispos.x) + ' Charakter X: '+Math.round(characterpos.x));
-	
+	//Characterposition Anzeigen
+	lbl.setText('Hindernis X: '+Math.round(hindernispos.x) + ' Y:'+Math.round(hindernispos.y)+' Charakter X: '+Math.round(characterpos.x)+ ' Y: '+Math.round(characterpos.y)+ ' Differenz Y: '+Math.round(diff));
     
 },hindernis);
-
 
 	
 ///////////////
