@@ -88,15 +88,10 @@ lime.scheduleManager.schedule(function(dt){
     /*Positionen */
     var position = hindernis.getPosition();
 	
-	/*Gleichmäßige Bewegung */
-    //position.x -= velocity * dt; // if dt is bigger we just move more
-       
    	position.x = Math.sin(winkel) * 900 + groundx;
 	position.y = Math.cos(winkel) * 900 + groundy;
        
     this.setPosition(position); 
-    
-    winkel=winkel+winkelgeschwindigkeit;
     
     /*Positionen abrufen*/
     hindernispos=hindernis.getPosition();
@@ -118,6 +113,9 @@ lime.scheduleManager.schedule(function(dt){
 	}else if(hindernispos.x<0){
 		winkel=startwinkel;
 	};
+	
+	//Winkel erhöhen
+	winkel=winkel+winkelgeschwindigkeit;
 	
 	//Text Kollisionsanzahl
 	lbl2.setText('Kollision nr: '+kollanz);
