@@ -2,7 +2,7 @@
 
 /**
  * OBACHT is a multiplayer game createt by obacht. For more informations check www.obacht-game.de
- * 
+ *
  * start a new game
  */
 
@@ -28,31 +28,31 @@ obacht.start = function(){
 	//this.currentGame = new obacht.Game();
 
 	// Controller, sonst nichts
-	
+
 	var viewportWidth = 1280;
 	var viewportHeight = 720;
-	
+
 	var obachtDirector = new lime.Director(document.body, viewportWidth, viewportHeight);
 	var scene = new lime.Scene(),
-	   	layer = new lime.Layer();
-	    	
+        layer = new lime.Layer();
+
 	/*hier muss dann das Menu eingeschoben werden dass dann das Spiel neue Spiel aufruft
 	this.menu = new obacht.Menu(); */
-	
+
 	this.currentGame = new obacht.Game();
 
-	//nur zu Testzwecken, wird dann ins Menu ausgelagert, sonst muss man immer durchs Menü navigieren wenn man zum Spiel will	
+	//nur zu Testzwecken, wird dann ins Menu ausgelagert, sonst muss man immer durchs Menü navigieren wenn man zum Spiel will
 	layer.appendChild(this.currentGame);
 	scene.appendChild(layer);
 
 	obachtDirector.makeMobileWebAppCapable();
 	// set current scene active
 	obachtDirector.replaceScene(scene);
-		
+
 	this.multiplayerService = new obacht.MultiplayerService('http://localhost:8080');
 
     this.multiplayerService.joinRoom(1234);
-	    	
+
 
 };
 

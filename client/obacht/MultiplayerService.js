@@ -24,13 +24,13 @@ obacht.MultiplayerService = function(serverUrl) {
     this.room = false;
     this.socket = io.connect(this.serverUrl); // Set up Socket-Connection to Server
 
-    var that = this;
+    var self = this;
 
 
     //////////////////////////////
     // Communication Events     //
     //////////////////////////////
-    
+
     this.socket.on('connected', function (success) {
         if (success === true) {
             console.log('Successful Connected');

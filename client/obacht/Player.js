@@ -1,12 +1,14 @@
 /* global goog, obacht */
 goog.provide('obacht.Player');
 
+goog.require('obacht.Trap');
+
 /**
  * Its a Player Object
  *
  * @constructor
  */
-obacht.Player = function() {
+obacht.Player = function(name) {
 
     console.log('New Player();');
 
@@ -14,9 +16,9 @@ obacht.Player = function() {
     // Player Model (state)     //
     //////////////////////////////
 
+    this.name = name;
     this.health = 3;
     this.y = 0;
-
 
 };
 
@@ -29,16 +31,24 @@ obacht.Player = function() {
 /**
  * Lets the Player jump
  */
-obacht.Player.prototype.jump = function() {
-    "use strict";
-    this.y += 1;
-    console.log('Jump around!');
-};
+obacht.Player.prototype = {
+    jump: function() {
+        "use strict";
+        this.y += 1;
+        console.log('Jump around!');
+    },
+    crouch: function() {
+        console.log('Crowbar ready');
+    },
+    throwTrap: function(type) {
+        var trap = new obacht.Trap(type);
+        console.log("Player " + this.name + " throws " + type);
 
-obacht.Player.prototype.crouch = function() {
-    console.log('Crowbar ready');
-};
+        // TODO: Logik, etc
 
+        return trap;
+    }
+};
 
 // throwTrap();
 // etc.

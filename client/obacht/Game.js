@@ -17,14 +17,18 @@ obacht.Game = function(size) {
     //////////////////////////////
     // Game Model (state)       //
     //////////////////////////////
-    
+
     // World is a property of the Game
-    this.world = new obacht.World();
+    this.world1 = new obacht.World();
+    this.world2 = new obacht.World();
 
     // Players are properties of the Game
-    this.player1 = new obacht.Player();
-    this.player2  = new obacht.Player();
+    this.ownPlayer = new obacht.Player('Harald');
+    this.enemyPlayer  = new obacht.Player('Rudi');
 
-    this.player1.jump();
-    console.log(this.player1.y);
+    this.ownPlayer.jump();
+    this.ownPlayer.throwTrap('Igelfisch');
+
+
+    console.log("ownPlayer.y: " + this.ownPlayer.y); // Y Koordinate auslesen
 };
