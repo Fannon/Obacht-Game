@@ -97,11 +97,11 @@ prototype_claudia.start = function(){
 ///////////////
 
     var turnLandschaft1 = new lime.animation.Loop(
-        new lime.animation.RotateBy(360).setDuration(40).setEasing(lime.animation.Easing.LINEAR)
+        new lime.animation.RotateBy(360).setDuration(60).setEasing(lime.animation.Easing.LINEAR)
     );
     
     var turnLandschaft2 = new lime.animation.Loop(
-        new lime.animation.RotateBy(360).setDuration(60).setEasing(lime.animation.Easing.LINEAR)
+        new lime.animation.RotateBy(360).setDuration(65).setEasing(lime.animation.Easing.LINEAR)
     );
 
     var turnHimmel = new lime.animation.Loop(
