@@ -1,3 +1,0 @@
-/**
- * Handles the user input
- */
