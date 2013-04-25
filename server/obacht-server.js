@@ -190,14 +190,14 @@ function findMatch() {
 /**
  * Randomly generates Items
  */
-function generateItems() {
+function throwBonus() {
     // TODO: Generates Random Items for both players
 }
 
 /**
  * Randomly generates Hurdles
  */
-function generateHurdles() {
+function throwTrap() {
     // TODO: Generates Random Hurdles for both players
 }
 

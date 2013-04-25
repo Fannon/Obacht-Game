@@ -1,4 +1,6 @@
 /* global goog, obacht */
+/* jshint strict: false */
+
 
 /**
  * OBACHT is a multiplayer game createt by obacht. For more informations check www.obacht-game.de

@@ -1,4 +1,6 @@
 /* global goog, obacht */
+/* jshint strict: false */
+
 goog.provide('obacht.options');
 
 /**
