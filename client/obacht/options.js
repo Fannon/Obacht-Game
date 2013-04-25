@@ -9,7 +9,7 @@ goog.provide('obacht.options');
 obacht.options = {
     graphics: {
         viewportWidth: 1280,
-        viewportHeight: 720,
+        viewportHeight: 720
     },
     sound: {
         music: true,
@@ -17,8 +17,8 @@ obacht.options = {
         vibration: true
     },
     "world": {
-        "initialWorldSpeed": 100,
-        "iterateWorldSpeed": 5
+        "initialWorldSpeed": 100, // Fiktiv
+        "iterateWorldSpeed": 5 // Fiktiv
     },
     "player": {
 
