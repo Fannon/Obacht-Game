@@ -1,11 +1,15 @@
 #!/bin/bash
-# Evtl: sudo chmod +x start.sh
+# Evtl: sudo chmod +x start
 
 echo ''
-echo '###########################'
-echo '# Forever: Starte Server ##'
-echo '###########################'
-forever stop server.js
+echo ''
+echo '###############################'
+echo '# Forever: Starte GameServer  #'
+echo '###############################'
+echo ''
+forever stop obacht-server.js
 forever -o ~/.forever/obacht-out.log -e ~/.forever/obacht-err.log --append start obacht-server.js
-echo 'Laufende Forever Prozesse:'
+echo '###############################'
+echo '# Forever: Laufende Prozesse: #'
+echo '###############################'
 forever list
