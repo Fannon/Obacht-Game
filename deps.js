@@ -240,7 +240,8 @@ goog.addDependency('../../../obacht/MultiplayerService.js', ['obacht.Multiplayer
 goog.addDependency('../../../obacht/Player.js', ['obacht.Player'], ['obacht.Trap']);
 goog.addDependency('../../../obacht/Trap.js', ['obacht.Trap'], ['obacht.Item']);
 goog.addDependency('../../../obacht/World.js', ['obacht.World'], ['obacht.Bonus']);
-goog.addDependency('../../../obacht/obacht.js', ['obacht'], ['lime.Director', 'lime.Layer', 'lime.Scene', 'obacht.Game', 'obacht.MultiplayerService']);
+goog.addDependency('../../../obacht/obacht.js', ['obacht'], ['lime.Director', 'lime.Layer', 'lime.Scene', 'obacht.Game', 'obacht.MultiplayerService', 'obacht.options']);
+goog.addDependency('../../../obacht/options.js', ['obacht.options'], []);
 goog.addDependency('../../closure/goog/a11y/aria/announcer.js', ['goog.a11y.aria.Announcer'], ['goog.Disposable', 'goog.a11y.aria', 'goog.a11y.aria.LivePriority', 'goog.a11y.aria.State', 'goog.dom', 'goog.object']);
 goog.addDependency('../../closure/goog/a11y/aria/aria.js', ['goog.a11y.aria', 'goog.a11y.aria.LivePriority', 'goog.a11y.aria.Role', 'goog.a11y.aria.State'], ['goog.dom']);
 goog.addDependency('../../closure/goog/array/array.js', ['goog.array', 'goog.array.ArrayLike'], ['goog.asserts']);

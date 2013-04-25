@@ -11,10 +11,12 @@ goog.provide('obacht');
 
 // get requirements
 goog.require('obacht.MultiplayerService');
+goog.require('obacht.Game');
+goog.require('obacht.options');
+
 goog.require('lime.Director');
 goog.require('lime.Layer');
 goog.require('lime.Scene');
-goog.require('obacht.Game');
 
 
 /**
@@ -24,13 +26,14 @@ goog.require('obacht.Game');
  */
 obacht.start = function(){
     "use strict";
-	console.log('start');
-	//this.currentGame = new obacht.Game();
+	console.log('Obacht start()');
 
-	// Controller, sonst nichts
+    console.log('Current Options:');
+    console.dir(obacht.options);
 
-	var viewportWidth = 1280;
-	var viewportHeight = 720;
+
+	var viewportWidth = obacht.options.graphics.viewportWidth;
+	var viewportHeight = obacht.options.graphics.viewportHeight;
 
 	var obachtDirector = new lime.Director(document.body, viewportWidth, viewportHeight);
 	var scene = new lime.Scene(),
@@ -49,10 +52,8 @@ obacht.start = function(){
 	// set current scene active
 	obachtDirector.replaceScene(scene);
 
-	this.multiplayerService = new obacht.MultiplayerService('http://localhost:8080');
-
-    this.multiplayerService.joinRoom(1234);
-
+    // Connect to Multiplayer Server
+	this.multiplayerService = new obacht.MultiplayerService(obacht.options.server.url);
 
 };
 

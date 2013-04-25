@@ -26,6 +26,8 @@ obacht.MultiplayerService = function(serverUrl) {
 
     var self = this;
 
+    console.log("Connecting to Multiplayer Server on " + serverUrl);
+
 
     //////////////////////////////
     // Communication Events     //
@@ -39,7 +41,7 @@ obacht.MultiplayerService = function(serverUrl) {
 
     this.socket.on('room_pin', function (pin) {
         if (pin) {
-            that.room = pin;
+            self.room = pin;
             console.log('Joined Room #' + pin);
         } else {
             console.log('Could not join room, maybe it is full.');
