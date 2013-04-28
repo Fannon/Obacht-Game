@@ -32,7 +32,8 @@ goog.require('lime.fill.Image');
 
 
 var VIEWPORT_WIDTH = 1280;
-var VIEWPORT_HEIGHT = 720
+var VIEWPORT_HEIGHT = 720;
+var THEME = 'dessert'
 
 
 
@@ -46,15 +47,15 @@ prototype_claudia.start = function(){
 	    
         scene = new lime.Scene(),
 
-        background = new lime.Sprite().setSize(VIEWPORT_WIDTH,VIEWPORT_HEIGHT).setFill('images/wueste/Verlauf_Wueste.jpg').setPosition(0,0).setAnchorPoint(0,0),
-        himmel1 = new lime.Sprite().setSize(1750,1750).setFill('images/wueste/Himmel_Wueste.png').setPosition(0,1960).setAnchorPoint(0,1),
-        himmel2 = new lime.Sprite().setSize(1750,1750).setFill('images/wueste/Himmel_Wueste.png').setPosition(0,1960).setAnchorPoint(0,1).setRotation(90),
-        landschaftHinten1 = new lime.Sprite().setSize(1680,1680).setFill('images/wueste/Landschaft2_Wueste.png').setPosition(0,1960).setAnchorPoint(0,1),
-        landschaftHinten2 = new lime.Sprite().setSize(1680,1680).setFill('images/wueste/Landschaft2_Wueste.png').setPosition(0,1960).setAnchorPoint(0,1).setRotation(90),
-        landschaftVorne1 = new lime.Sprite().setSize(1590,1590).setFill('images/wueste/Landschaft1_Wueste.png').setPosition(0,1960).setAnchorPoint(0,1),
-        landschaftVorne2 = new lime.Sprite().setSize(1590,1590).setFill('images/wueste/Landschaft1_Wueste.png').setPosition(0,1960).setAnchorPoint(0,1).setRotation(90),
-        erde1 = new lime.Sprite().setSize(1470,1470).setFill('images/wueste/Erde_Wueste.png').setPosition(0,1960).setAnchorPoint(0,1),
-        erde2 = new lime.Sprite().setSize(1470,1470).setFill('images/wueste/Erde_Wueste.png').setPosition(0,1960).setAnchorPoint(0,1).setRotation(90),
+        sky = new lime.Sprite().setSize(VIEWPORT_WIDTH,VIEWPORT_HEIGHT).setFill('images/'+THEME+'/sky_'+THEME+'.jpg').setPosition(0,0).setAnchorPoint(0,0),
+        clouds1 = new lime.Sprite().setSize(1750,1750).setFill('images/'+THEME+'/clouds_'+THEME+'.png').setPosition(0,1960).setAnchorPoint(0,1),
+        clouds2 = new lime.Sprite().setSize(1750,1750).setFill('images/'+THEME+'/clouds_'+THEME+'.png').setPosition(0,1960).setAnchorPoint(0,1).setRotation(90),
+        landscapeA1 = new lime.Sprite().setSize(1590,1590).setFill('images/'+THEME+'/landscapeA_'+THEME+'.png').setPosition(0,1960).setAnchorPoint(0,1),
+        landscapeA2 = new lime.Sprite().setSize(1590,1590).setFill('images/'+THEME+'/landscapeA_'+THEME+'.png').setPosition(0,1960).setAnchorPoint(0,1).setRotation(90),        
+        landscapeB1 = new lime.Sprite().setSize(1680,1680).setFill('images/'+THEME+'/landscapeB_'+THEME+'.png').setPosition(0,1960).setAnchorPoint(0,1),
+        landscapeB2 = new lime.Sprite().setSize(1680,1680).setFill('images/'+THEME+'/landscapeB_'+THEME+'.png').setPosition(0,1960).setAnchorPoint(0,1).setRotation(90),
+        terra1 = new lime.Sprite().setSize(1470,1470).setFill('images/'+THEME+'/terra_'+THEME+'.png').setPosition(0,1960).setAnchorPoint(0,1),
+        terra2 = new lime.Sprite().setSize(1470,1470).setFill('images/'+THEME+'/terra_'+THEME+'.png').setPosition(0,1960).setAnchorPoint(0,1).setRotation(90),
 
         //hindernis1 = new lime.RoundedRect().setSize(100, 100).setFill(160,270,280).setAnchorPoint(0.5, 0.5).setPosition(0, -1480),
         //hindernis2 = new lime.RoundedRect().setSize(100, 160).setFill(160,270,280).setAnchorPoint(0.5, 0.5).setPosition(0, 1480),
@@ -73,21 +74,21 @@ prototype_claudia.start = function(){
         
        
 
-		layer_1.appendChild(background);
-		layer_1.appendChild(himmel2);
-		layer_1.appendChild(himmel1);
-		layer_1.appendChild(landschaftHinten2);
-		layer_1.appendChild(landschaftHinten1);
-		layer_1.appendChild(landschaftVorne2);
-		layer_1.appendChild(landschaftVorne1);
-		layer_1.appendChild(erde1);
-		layer_1.appendChild(erde2);
+		layer_1.appendChild(sky);
+		layer_1.appendChild(clouds2);
+		layer_1.appendChild(clouds1);
+		layer_1.appendChild(landscapeB1);
+		layer_1.appendChild(landscapeB2);
+		layer_1.appendChild(landscapeA1);
+		layer_1.appendChild(landscapeA2);
+		layer_1.appendChild(terra1);
+		layer_1.appendChild(terra2);
 	    layer_1.appendChild(character);
 	    
 	    layer_2.appendChild(jumpArea);
 	    layer_2.appendChild(crouchArea);
 	            
-	    //background.qualityRenderer = true;
+	    //sky.qualityRenderer = true;
 	
 	
 	    scene.appendChild(layer_1);
@@ -102,85 +103,77 @@ prototype_claudia.start = function(){
 ///////////////
         
 
-    var drehungErde1 = new lime.animation.Loop(
+    var drehungterra1 = new lime.animation.Loop(
     	    new lime.animation.Sequence(
-    	      new lime.animation.RotateTo(90).setDuration(20).setEasing(lime.animation.Easing.LINEAR),	
-        	  new lime.animation.RotateTo(180).setDuration(0).setEasing(lime.animation.Easing.LINEAR),
-              new lime.animation.RotateTo(270).setDuration(0).setEasing(lime.animation.Easing.LINEAR),
-              new lime.animation.RotateTo(360).setDuration(20).setEasing(lime.animation.Easing.LINEAR)              
+    	      new lime.animation.RotateBy(90).setDuration(20).setEasing(lime.animation.Easing.LINEAR),	
+        	  new lime.animation.RotateBy(180).setDuration(0).setEasing(lime.animation.Easing.LINEAR),
+              new lime.animation.RotateBy(90).setDuration(20).setEasing(lime.animation.Easing.LINEAR)              
             )
     );
     
-    var drehungErde2 = new lime.animation.Loop(
+    var drehungterra2 = new lime.animation.Loop(
     	    new lime.animation.Sequence(
-    	      new lime.animation.RotateTo(180).setDuration(0).setEasing(lime.animation.Easing.LINEAR),	
-        	  new lime.animation.RotateTo(270).setDuration(0).setEasing(lime.animation.Easing.LINEAR),
-              new lime.animation.RotateTo(360).setDuration(20).setEasing(lime.animation.Easing.LINEAR),
-              new lime.animation.RotateTo(90).setDuration(20).setEasing(lime.animation.Easing.LINEAR)              
+    	      new lime.animation.RotateBy(180).setDuration(0).setEasing(lime.animation.Easing.LINEAR),	
+              new lime.animation.RotateBy(90).setDuration(20).setEasing(lime.animation.Easing.LINEAR),
+              new lime.animation.RotateBy(90).setDuration(20).setEasing(lime.animation.Easing.LINEAR)              
             )
     );
     
-    var drehungLandschaftVorne1 = new lime.animation.Loop(
+    var drehungLandscapeA1 = new lime.animation.Loop(
     	    new lime.animation.Sequence(
-    	      new lime.animation.RotateTo(90).setDuration(20).setEasing(lime.animation.Easing.LINEAR),	
-        	  new lime.animation.RotateTo(180).setDuration(0).setEasing(lime.animation.Easing.LINEAR),
-              new lime.animation.RotateTo(270).setDuration(0).setEasing(lime.animation.Easing.LINEAR),
-              new lime.animation.RotateTo(360).setDuration(20).setEasing(lime.animation.Easing.LINEAR)              
+    	      new lime.animation.RotateBy(90).setDuration(20).setEasing(lime.animation.Easing.LINEAR),	
+        	  new lime.animation.RotateBy(180).setDuration(0).setEasing(lime.animation.Easing.LINEAR),
+              new lime.animation.RotateBy(90).setDuration(20).setEasing(lime.animation.Easing.LINEAR)              
             )
     );
     
-    var drehungLandschaftVorne2 = new lime.animation.Loop(
+    var drehungLandscapeA2 = new lime.animation.Loop(
     	    new lime.animation.Sequence(
-    	      new lime.animation.RotateTo(180).setDuration(0).setEasing(lime.animation.Easing.LINEAR),	
-        	  new lime.animation.RotateTo(270).setDuration(0).setEasing(lime.animation.Easing.LINEAR),
-              new lime.animation.RotateTo(360).setDuration(20).setEasing(lime.animation.Easing.LINEAR),
-              new lime.animation.RotateTo(90).setDuration(20).setEasing(lime.animation.Easing.LINEAR)              
+    	      new lime.animation.RotateBy(180).setDuration(0).setEasing(lime.animation.Easing.LINEAR),	
+              new lime.animation.RotateBy(90).setDuration(20).setEasing(lime.animation.Easing.LINEAR),
+              new lime.animation.RotateBy(90).setDuration(20).setEasing(lime.animation.Easing.LINEAR)              
             )
     );
     
-    var drehungLandschaftHinten1 = new lime.animation.Loop(
+    var drehungLandscapeB1 = new lime.animation.Loop(
     	    new lime.animation.Sequence(
-    	      new lime.animation.RotateTo(90).setDuration(35).setEasing(lime.animation.Easing.LINEAR),	
-        	  new lime.animation.RotateTo(180).setDuration(0).setEasing(lime.animation.Easing.LINEAR),
-              new lime.animation.RotateTo(270).setDuration(0).setEasing(lime.animation.Easing.LINEAR),
-              new lime.animation.RotateTo(360).setDuration(35).setEasing(lime.animation.Easing.LINEAR)              
+    	      new lime.animation.RotateBy(90).setDuration(35).setEasing(lime.animation.Easing.LINEAR),	
+        	  new lime.animation.RotateBy(180).setDuration(0).setEasing(lime.animation.Easing.LINEAR),
+              new lime.animation.RotateBy(90).setDuration(35).setEasing(lime.animation.Easing.LINEAR)              
             )
     );
     
-    var drehungLandschaftHinten2 = new lime.animation.Loop(
+    var drehungLandscapeB2 = new lime.animation.Loop(
     	    new lime.animation.Sequence(
-    	      new lime.animation.RotateTo(180).setDuration(0).setEasing(lime.animation.Easing.LINEAR),	
-        	  new lime.animation.RotateTo(270).setDuration(0).setEasing(lime.animation.Easing.LINEAR),
-              new lime.animation.RotateTo(360).setDuration(35).setEasing(lime.animation.Easing.LINEAR),
-              new lime.animation.RotateTo(90).setDuration(35).setEasing(lime.animation.Easing.LINEAR)              
+    	      new lime.animation.RotateBy(180).setDuration(0).setEasing(lime.animation.Easing.LINEAR),	
+              new lime.animation.RotateBy(90).setDuration(35).setEasing(lime.animation.Easing.LINEAR),
+              new lime.animation.RotateBy(90).setDuration(35).setEasing(lime.animation.Easing.LINEAR)              
             )
     );
     
-    var drehungHimmel1 = new lime.animation.Loop(
+    var drehungclouds1 = new lime.animation.Loop(
     	    new lime.animation.Sequence(
-    	      new lime.animation.RotateTo(90).setDuration(50).setEasing(lime.animation.Easing.LINEAR),	
-        	  new lime.animation.RotateTo(180).setDuration(0).setEasing(lime.animation.Easing.LINEAR),
-              new lime.animation.RotateTo(270).setDuration(0).setEasing(lime.animation.Easing.LINEAR),
-              new lime.animation.RotateTo(360).setDuration(50).setEasing(lime.animation.Easing.LINEAR)              
+    	      new lime.animation.RotateBy(90).setDuration(50).setEasing(lime.animation.Easing.LINEAR),	
+        	  new lime.animation.RotateBy(180).setDuration(0).setEasing(lime.animation.Easing.LINEAR),
+              new lime.animation.RotateBy(90).setDuration(50).setEasing(lime.animation.Easing.LINEAR)              
             )
     );
     
-    var drehungHimmel2 = new lime.animation.Loop(
+    var drehungclouds2 = new lime.animation.Loop(
     	    new lime.animation.Sequence(
-    	      new lime.animation.RotateTo(180).setDuration(0).setEasing(lime.animation.Easing.LINEAR),	
-        	  new lime.animation.RotateTo(270).setDuration(0).setEasing(lime.animation.Easing.LINEAR),
-              new lime.animation.RotateTo(360).setDuration(50).setEasing(lime.animation.Easing.LINEAR),
-              new lime.animation.RotateTo(90).setDuration(50).setEasing(lime.animation.Easing.LINEAR)              
+    	      new lime.animation.RotateBy(180).setDuration(0).setEasing(lime.animation.Easing.LINEAR),	
+              new lime.animation.RotateBy(90).setDuration(50).setEasing(lime.animation.Easing.LINEAR),
+              new lime.animation.RotateBy(90).setDuration(50).setEasing(lime.animation.Easing.LINEAR)              
             )
     );    
-    erde1.runAction(drehungErde1);
-    erde2.runAction(drehungErde2);
-    landschaftHinten1.runAction(drehungLandschaftHinten1);
-    landschaftHinten2.runAction(drehungLandschaftHinten2);
-    landschaftVorne1.runAction(drehungLandschaftVorne1);
-    landschaftVorne2.runAction(drehungLandschaftVorne2);
-    himmel1.runAction(drehungHimmel1);
-    himmel2.runAction(drehungHimmel2);
+    terra1.runAction(drehungterra1);
+    terra2.runAction(drehungterra2);
+    landscapeB1.runAction(drehungLandscapeB1);
+    landscapeB2.runAction(drehungLandscapeB2);
+    landscapeA1.runAction(drehungLandscapeA1);
+    landscapeA2.runAction(drehungLandscapeA2);
+    clouds1.runAction(drehungclouds1);
+    clouds2.runAction(drehungclouds2);
        
 
 
