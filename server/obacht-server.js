@@ -1,4 +1,4 @@
-/* global socket, process */
+/* global require, socket, process */
 /* jshint strict: false */
 
 /**
