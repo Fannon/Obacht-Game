@@ -33,7 +33,7 @@ goog.require('lime.fill.Image');
 
 var VIEWPORT_WIDTH = 1280;
 var VIEWPORT_HEIGHT = 720;
-var THEME = 'water'
+var THEME = 'water'              // water || dessert || meadow 
 
 
 
