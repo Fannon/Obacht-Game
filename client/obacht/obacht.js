@@ -1,3 +1,6 @@
+/* global goog, obacht */
+/* jshint strict: false */
+
 //set main namespace
 goog.provide('obacht');
 
