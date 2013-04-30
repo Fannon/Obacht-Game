@@ -1,5 +1,5 @@
 /* global require, socket, process */
-/* jshint strict: false */
+/* jshint strict: false, devel: true */
 
 /**
  * Obacht Game Node.js Multiplayer Server
@@ -36,90 +36,136 @@ io.set('log level', 1); // reduce logging
 
 io.sockets.on('connection', function(socket) {
 
-    socket.emit('connected', true);
+    /**
+     * New Player connects to Server
+     * Sends ID back so that the client knows it's successful connected
+     */
+    socket.emit('connected', {
+        pid: socket.id
+    });
     console.log('+++ NEW REMOTE CONNECTION');
+
+
+    /**
+     * Connection to Server fails
+     */
+    socket.on('connect_failed', function(){
+        socket.emit('connected', {
+            pid: socket.id,
+            error: 'Connection to Server failed!'
+        });
+        console.log('!!! REMOTE CONNECTION FAILED');
+    });
+
 
     /**
      * New Room Request
+     * Draws new private PIN (closed Room) and sends it back to Client
      */
-    socket.on('new_room', function() {
-        var pin = 'P' + getNewPin(); // Private Room
-        socket.emit('new_room_pin', pin);
+    socket.on('new_room', function(room) {
+        var pin = getNewPin();
+        var room_detail =  {
+            pin: pin,
+            closed: room.closed,
+            players: [],  // No Players yet
+            theme: room.theme,
+            options: room.options
+        };
+
+        socket.emit('room_detail', room_detail);
         console.log('--> Client requested new Room PIN #' + pin);
     });
 
     /**
      * Join Room Request
      */
-    socket.on('join_room', function(pin) {
+    socket.on('join_room', function(roomDetail) {
 
-        // Leave old Room and join new one
-        if (socket.room) {
-            console.log('--> Client leaves Room #' + socket.room);
-            socket.leave(socket.room);
+        // Leave old Room if connected to one
+        if (socket.pin) {
+            console.log('--> Client leaves Room #' + socket.pin);
+            socket.leave(socket.pin);
         }
-        socket.room = pin;
 
-        if (io.sockets.clients(pin).length < gameServer.maxPlayers) {
-            socket.join(pin);
-            socket.emit('room_pin', pin);
-            console.log('--> Client joined Room #' + pin);
+        // Bind PIN to Client, use private PIN if room is closed
+        if (roomDetail.closed) {
+            // Private Room which cannot be joined with Random Games
+            socket.pin = 'P-' + roomDetail.pin;
         } else {
-            socket.emit('room_pin', false);
-            console.log('--> Client tryed to join full Room #' + pin);
+            socket.pin = roomDetail.pin;
+        }
+
+        // Create Return Object
+        var room_detail =  {
+            pin: roomDetail.pin,
+            closed: roomDetail.closed,
+            players: io.sockets.clients,
+            theme: roomDetail.theme,
+            options: roomDetail.options
+        };
+
+        if (io.sockets.clients(roomDetail.pin).length < gameServer.maxPlayers) {
+            // Room available: 0 or 1 Player
+            socket.join(socket.pin);
+            socket.broadcast.to(socket.pin).emit('room_detail', room_detail);
+            console.log('--> Client joined Room #' + socket.pin);
+        } else {
+            // Room is full: >= 2 Player
+            room_detail.error = 'Client tryed to join full Room #';
+            socket.emit('room_detail', room_detail);
+            console.log('--> Client tryed to join full Room #' + socket.pin);
         }
 
     });
 
+
     /**
-     * Find Match Request
+     * Find Match
+     * Looks for Player waiting for another Player
+     * If none available, return 0 -> Client will create a new Game
      */
     socket.on('find_match', function() {
 
         console.log('--> Client request new Match');
 
-        if (socket.room) {
-            socket.leave(socket.room);
+        // If still in Room, leave it
+        if (socket.pin) {
+            socket.leave(socket.pin);
         }
 
         var pin = findMatch();
 
-        if (pin) {
-            socket.emit('new_room_pin', pin);
-        } else {
-            socket.emit('no_match_found');
-        }
+        // Create Return Object
+        var room_detail =  {
+            pin: pin
+        };
+
+        socket.emit('room_detail', room_detail);
+
     });
 
+
     /**
-     * Leave Room Request
+     * Leave Room currently connected
      */
     socket.on('leave_room', function() {
         if (socket.room) {
+            console.log('--> Client leaves Room #' + socket.pin);
             socket.leave(socket.room);
         }
     });
 
-    /**
-     * Broadcast to other Players in Room Request
-     */
-    socket.on('player_move', function(data) {
-        console.log('<-> Broadcasting Player Movement in Room #' + socket.room);
-        socket.broadcast.to(socket.room).emit('player_move', data);
-    });
 
     /**
      * Broadcast to other Players in Room Request
      */
-    socket.on('thrown_hurdle', function(data) {
+    socket.on('player_action', function(data) {
 
-        console.log('<-> Processing Incoming Hurdle in Room #' + socket.room);
-
-        // TODO: process data, coordinates and hurdle type
-        // Check if action is valid and generate return data
+        console.log('<-> Player Action "' + data.type + '" in Room #' + socket.room);
 
         // Broadcast to all Players in the room
-        io.sockets.in(socket.room).emit('hurdle', data);
+        socket.broadcast.to(socket.room).emit('hurdle', data);
+//        io.sockets.in(socket.room).emit('hurdle', data);
     });
 
 
@@ -153,7 +199,7 @@ io.sockets.on('connection', function(socket) {
  *
  * @return {integer} PIN
  */
-function getNewPin() {
+function getNewPin(closed) {
 
     var pin = Math.floor(Math.random() * gameServer.maxPin);
 
@@ -170,34 +216,49 @@ function getNewPin() {
  *
  * Looks for a Game with just one Player waiting for another
  * TODO: Just BruteForce right now, not very performant
+ * TODO: Randomize it (?)
  *
- * @return {integer} PIN for Room, false if no Room open
+ * @return {number} PIN for Room, false if no Room open
  */
 function findMatch() {
 
-    for (var pin = 0; pin < gameServer.maxPin; pin++) {
+    for (var pin = 1; pin < gameServer.maxPin; pin++) {
         if(io.sockets.manager.rooms['/' + pin]) {
-            if(io.sockets.manager.rooms['/' + pin].length === 1) {
+            if(io.sockets.manager.rooms['/' + pin].length === 1) { // Rooms with just 1 Player
                 console.log('### Match found: Room #' + pin);
                 return pin;
             }
         }
     }
 
-    return false;
+    return 0; // No Match found
 }
 
 /**
  * Randomly generates Items
+ *
+ * @param {string} distance
+ * @param {number} pid
+ * @returns {{type: *, pid: *, distance: *}}
  */
-function throwBonus() {
+function placeItem(distance, pid) {
+
     // TODO: Generates Random Items for both players
+
+    var itemTypes = ['small_trap', 'big_trap', 'flying_trap'];
+    var type = itemTypes[Math.floor(Math.random()*itemTypes.length)];
+
+    return {
+        type: type,
+        pid: pid,
+        distance: distance
+    };
 }
 
 /**
  * Randomly generates Hurdles
  */
-function throwTrap() {
+function placeTrap() {
     // TODO: Generates Random Hurdles for both players
 }
 
