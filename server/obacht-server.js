@@ -79,7 +79,7 @@ io.sockets.on('connection', function(socket) {
     /**
      * Join Room Request
      */
-    socket.on('join_room', function(roomDetail) {
+    socket.on('join_room', function(newRoom) {
 
         // Leave old Room if connected to one
         if (socket.pin) {
@@ -88,23 +88,23 @@ io.sockets.on('connection', function(socket) {
         }
 
         // Bind PIN to Client, use private PIN if room is closed
-        if (roomDetail.closed) {
+        if (newRoom.closed === true) {
             // Private Room which cannot be joined with Random Games
-            socket.pin = 'P-' + roomDetail.pin;
+            socket.pin = 'P-' + newRoom.pin;
         } else {
-            socket.pin = roomDetail.pin;
+            socket.pin = newRoom.pin;
         }
 
         // Create Return Object
         var room_detail =  {
-            pin: roomDetail.pin,
-            closed: roomDetail.closed,
+            pin: newRoom.pin,
+            closed: newRoom.closed,
             players: io.sockets.clients,
-            theme: roomDetail.theme,
-            options: roomDetail.options
+            theme: newRoom.theme,
+            options: newRoom.options
         };
 
-        if (io.sockets.clients(roomDetail.pin).length < gameServer.maxPlayers) {
+        if (io.sockets.clients(newRoom.pin).length < gameServer.maxPlayers) {
             // Room available: 0 or 1 Player
             socket.join(socket.pin);
             socket.broadcast.to(socket.pin).emit('room_detail', room_detail);
@@ -134,10 +134,16 @@ io.sockets.on('connection', function(socket) {
         }
 
         var pin = findMatch();
+        var players = [];
+        if (io.sockets.manager.rooms.hasOwnProperty('/' + pin)) {
+            players = io.sockets.manager.rooms['/' + pin];
+        }
 
         // Create Return Object
         var room_detail =  {
-            pin: pin
+            pin: pin,
+            players: players,
+            closed: false
         };
 
         socket.emit('room_detail', room_detail);
@@ -147,11 +153,12 @@ io.sockets.on('connection', function(socket) {
 
     /**
      * Leave Room currently connected
+     * (Debugging Function)
      */
     socket.on('leave_room', function() {
-        if (socket.room) {
+        if (socket.pin) {
             console.log('--> Client leaves Room #' + socket.pin);
-            socket.leave(socket.room);
+            socket.leave(socket.pin);
         }
     });
 
@@ -160,17 +167,14 @@ io.sockets.on('connection', function(socket) {
      * Broadcast to other Players in Room Request
      */
     socket.on('player_action', function(data) {
-
-        console.log('<-> Player Action "' + data.type + '" in Room #' + socket.room);
-
-        // Broadcast to all Players in the room
-        socket.broadcast.to(socket.room).emit('hurdle', data);
-//        io.sockets.in(socket.room).emit('hurdle', data);
+        console.log('<-> Player Action "' + data.type + '" in Room #' + socket.pin);
+        socket.broadcast.to(socket.pin).emit('hurdle', data);
     });
 
 
     /**
      * Get all open Rooms Request
+     * (Debugging Function)
      */
     socket.on('get_rooms', function() {
         socket.emit('get_rooms', io.sockets.manager.rooms);
