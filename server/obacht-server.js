@@ -7,34 +7,36 @@
  * @author Simon Heimler
  */
 
+
 //////////////////////////////
 // Modules and Variables    //
 //////////////////////////////
 
-var gameServer = {
-    maxPlayers: 2,
-    maxPin: 9999,
-    port: (process.argv[2] ? process.argv[2] : 8080) // Use Console Argument if there
-};
+var obacht = {}; // Global Namespace
+obacht.server = {};
+obacht.server.options = require('./options'); // Load Options
+obacht.server.port = (process.argv[2] ? process.argv[2] : obacht.server.options.defaultPort); // Set Port, use Console Args if available
+obacht.server.io = require('socket.io').listen(obacht.server.port); // Start Socket.io
 
-var io = require('socket.io').listen(gameServer.port);
-
+// Data Structures
+var RoomCollection = require('./roomCollection');
+obacht.server.rooms = new RoomCollection(9999, obacht.server.io); // Load RoomCollection DataStructure
 
 //////////////////////////////
 // Configuration            //
 //////////////////////////////
 
-io.enable('browser client minification'); // send minified client
-io.enable('browser client etag'); // apply etag caching logic based on version number
-io.enable('browser client gzip'); // gzip the file
-io.set('log level', 1); // reduce logging
+obacht.server.io.enable('browser client minification'); // send minified client
+obacht.server.io.enable('browser client etag'); // apply etag caching logic based on version number
+obacht.server.io.enable('browser client gzip'); // gzip the file
+obacht.server.io.set('log level', 1); // reduce logging
 
 
 //////////////////////////////
 // Comminication            //
 //////////////////////////////
 
-io.sockets.on('connection', function(socket) {
+obacht.server.io.sockets.on('connection', function(socket) {
 
     /**
      * New Player connects to Server
@@ -63,7 +65,8 @@ io.sockets.on('connection', function(socket) {
      * Draws new private PIN (closed Room) and sends it back to Client
      */
     socket.on('new_room', function(room) {
-        var pin = getNewPin();
+        var pin = obacht.server.rooms.getNewPin();
+        console.log(pin);
         var room_detail =  {
             pin: pin,
             closed: room.closed,
@@ -99,12 +102,12 @@ io.sockets.on('connection', function(socket) {
         var room_detail =  {
             pin: newRoom.pin,
             closed: newRoom.closed,
-            players: io.sockets.clients,
+            players: obacht.server.io.sockets.clients,
             theme: newRoom.theme,
             options: newRoom.options
         };
 
-        if (io.sockets.clients(newRoom.pin).length < gameServer.maxPlayers) {
+        if (obacht.server.io.sockets.clients(newRoom.pin).length < obacht.server.options.maxRooms) {
             // Room available: 0 or 1 Player
             socket.join(socket.pin);
             socket.broadcast.to(socket.pin).emit('room_detail', room_detail);
@@ -133,10 +136,10 @@ io.sockets.on('connection', function(socket) {
             socket.leave(socket.pin);
         }
 
-        var pin = findMatch();
+        var pin = obacht.server.rooms.findMatch();
         var players = [];
-        if (io.sockets.manager.rooms.hasOwnProperty('/' + pin)) {
-            players = io.sockets.manager.rooms['/' + pin];
+        if (obacht.server.io.sockets.manager.rooms.hasOwnProperty('/' + pin)) {
+            players = obacht.server.io.sockets.manager.rooms['/' + pin];
         }
 
         // Create Return Object
@@ -177,7 +180,7 @@ io.sockets.on('connection', function(socket) {
      * (Debugging Function)
      */
     socket.on('get_rooms', function() {
-        socket.emit('get_rooms', io.sockets.manager.rooms);
+        socket.emit('get_rooms', obacht.server.io.sockets.manager.rooms);
         console.log('<-- Sent current rooms Information');
     });
 
@@ -191,81 +194,3 @@ io.sockets.on('connection', function(socket) {
     });
 
 });
-
-
-//////////////////////////////
-// GameServer Functions     //
-//////////////////////////////
-
-/**
- * Generates a Random PIN
- * Checks if it is already in use. If it is, draws a new one.
- *
- * @return {integer} PIN
- */
-function getNewPin(closed) {
-
-    var pin = Math.floor(Math.random() * gameServer.maxPin);
-
-    if (io.sockets.clients(pin).length > 0) {
-        console.log('### Room already used, trying again.');
-        return getNewPin();
-    } else {
-        return pin;
-    }
-}
-
-/**
- * Finds a Match
- *
- * Looks for a Game with just one Player waiting for another
- * TODO: Just BruteForce right now, not very performant
- * TODO: Randomize it (?)
- *
- * @return {number} PIN for Room, false if no Room open
- */
-function findMatch() {
-
-    for (var pin = 1; pin < gameServer.maxPin; pin++) {
-        if(io.sockets.manager.rooms['/' + pin]) {
-            if(io.sockets.manager.rooms['/' + pin].length === 1) { // Rooms with just 1 Player
-                console.log('### Match found: Room #' + pin);
-                return pin;
-            }
-        }
-    }
-
-    return 0; // No Match found
-}
-
-/**
- * Randomly generates Items
- *
- * @param {string} distance
- * @param {number} pid
- * @returns {{type: *, pid: *, distance: *}}
- */
-function placeItem(distance, pid) {
-
-    // TODO: Generates Random Items for both players
-
-    var itemTypes = ['small_trap', 'big_trap', 'flying_trap'];
-    var type = itemTypes[Math.floor(Math.random()*itemTypes.length)];
-
-    return {
-        type: type,
-        pid: pid,
-        distance: distance
-    };
-}
-
-/**
- * Randomly generates Hurdles
- */
-function placeTrap() {
-    // TODO: Generates Random Hurdles for both players
-}
-
-//////////////////////////////
-// Helper Functions         //
-//////////////////////////////
