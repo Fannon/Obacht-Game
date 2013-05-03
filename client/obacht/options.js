@@ -10,8 +10,8 @@ goog.provide('obacht.options');
  */
 obacht.options = {
     graphics: {
-        viewportWidth: 1280,
-        viewportHeight: 720
+        VIEWPORT_WIDTH: 1280,
+        VIEWPORT_HEIGHT: 720
     },
     sound: {
         music: true,

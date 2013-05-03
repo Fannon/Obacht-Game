@@ -31,15 +31,11 @@ obacht.start = function(){
     console.log('Current Options:');
     console.dir(obacht.options);
 
-
-    var viewportWidth = obacht.options.graphics.viewportWidth;
-    var viewportHeight = obacht.options.graphics.viewportHeight;
-
-    var obachtDirector = new lime.Director(document.body, viewportWidth, viewportHeight);
+    var obachtDirector = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     var scene = new lime.Scene(),
         layer = new lime.Layer();
 
-    /*hier muss dann das Menu eingeschoben werden dass dann das Spiel neue Spiel aufruft
+    /*hier muss dann das Menu eingeschoben werden, dass dann das Spiel neue Spiel aufruft
      this.menu = new obacht.Menu(); */
 
     this.currentGame = new obacht.Game();
