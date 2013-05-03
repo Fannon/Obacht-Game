@@ -5,6 +5,9 @@ goog.provide('obacht.Game');
 
 goog.require('obacht.World');
 goog.require('obacht.Player');
+goog.require('obacht.themes');
+goog.require('obacht.options');
+
 
 
 /**
@@ -21,9 +24,14 @@ obacht.Game = function(size) {
     // Game Model (state)       //
     //////////////////////////////
 
-    // World is a property of the Game
-    this.ownWorld = new obacht.World();
-    this.enemyWorld = new obacht.World();
+    this.layer = new lime.Layer();
+    this.ownWorld = new obacht.World('bottom');
+    this.enemyWorld = new obacht.World('top');
+    this.sky = new lime.Sprite().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT).setFill(obacht.themes.path.sky).setPosition(0, 0).setAnchorPoint(0, 0);
+
+    this.layer.appendChild(this.sky);
+    this.layer.appendChild(this.enemyWorld.layer);
+    this.layer.appendChild(this.ownWorld.layer);
 
     // Players are properties of the Game
     this.ownPlayer = new obacht.Player('Harald');

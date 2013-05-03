@@ -37,7 +37,7 @@ obacht.Player.prototype = {
     jump: function() {
         "use strict";
         this.y += 1;
-        console.log('Jump around!');
+        //console.log('Jump around!');
     },
     crouch: function() {
         console.log('Crowbar ready');

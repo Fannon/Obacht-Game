@@ -13,15 +13,39 @@ obacht.options = {
         VIEWPORT_WIDTH: 1280,
         VIEWPORT_HEIGHT: 720
     },
+
     sound: {
         music: true,
         sound: true,
         vibration: true
     },
-    "world": {
-        "initialWorldSpeed": 100, // Fiktiv
-        "iterateWorldSpeed": 5 // Fiktiv
+
+    world: {
+        size: {
+            ground: 1470,
+            landscapeA: 1590,
+            landscapeB: 1680,
+            clouds: 1750
+        },
+        bottom: {
+            x: 0,
+            y: 1960,
+            rotation1: 0,
+            rotation2: 90
+        },
+        top: {
+            x: 1280,
+            y: -1240,
+            rotation1: 180,
+            rotation2: 270
+        },
+        spinDuration: {
+            front: 20,
+            middle: 35,
+            clouds: 75
+        }
     },
+
     "player": {
 
     },
