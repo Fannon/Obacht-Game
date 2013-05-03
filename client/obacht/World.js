@@ -9,7 +9,7 @@ goog.require('obacht.Bonus');
  * Its a World Object
  */
 
-obacht.World = function(size) {
+obacht.World = function(theme) {
 
     console.log('New World();');
 
