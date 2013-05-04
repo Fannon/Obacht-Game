@@ -102,14 +102,27 @@ lime.scheduleManager.schedule(function(dt){
 	
 	//Differenz der Y Koordinaten
 	diff=hindernispos.y-characterpos.y;
-	console.log(diff);
+	//console.log(diff);
+	
+	//Größe der Objekte abfragen und durch 2 Teilen
+	characterboundx=character.getSize().width/2;
+	hindernisboundx=hindernis.getSize().width/2;
+	//Kanten festlegen KANTE 1
+	characterege_right=characterpos.x-characterboundx;
+	characterege_left=characterpos.x+characterboundx;	
+	
+	hindernisege_right=rhpos+hindernisboundx;
+	hindernisege_left=rhpos-hindernisboundx;
+	
+	console.log(characterboundx);
+	console.log(hindernisboundx);
 	
 	//Gleiche Höhe checken
-	if(rhpos==characterpos.x+100){
-		if(diff<40){
-		kollanz++;	
+	if(characterege_left==hindernisege_right || characterege_right==hindernisege_left){	
+		//if(diff<60){
 		winkel=startwinkel;
-		}
+		kollanz++;
+		//}
 	}else if(hindernispos.x<0){
 		winkel=startwinkel;
 	};
@@ -120,7 +133,7 @@ lime.scheduleManager.schedule(function(dt){
 	//Text Kollisionsanzahl
 	lbl2.setText('Kollision nr: '+kollanz);
 	//Characterposition Anzeigen
-	lbl.setText('Hindernis X: '+Math.round(hindernispos.x) + ' Y:'+Math.round(hindernispos.y)+' Charakter X: '+Math.round(characterpos.x)+ ' Y: '+Math.round(characterpos.y)+ ' Differenz Y: '+Math.round(diff));
+	lbl.setText(' Character: '+characterege_left+'/'+characterege_right +' Hindernis: '+hindernisege_right +'/'+hindernisege_left);
     
 },hindernis);
 
