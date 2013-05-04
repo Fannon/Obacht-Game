@@ -27,8 +27,8 @@ prototype_fabi.start = function(){
     planet_bottom = new lime.Circle().setSize(2100,2100).setPosition(200,1500).setFill(0,0,0),
     planet_top =  new lime.Circle().setSize(2100,2100).setPosition(1080,-780).setFill(0,0,0),
     
-    character = new lime.Circle().setSize(100, 150).setPosition(200, 470).setAnchorPoint(1, 1).setFill('#d5622f'),
-    hindernis = new lime.Circle().setSize(100, 150).setPosition(200, 1500).setAnchorPoint(1, 1).setFill('#c00'),
+    character = new lime.Sprite().setSize(100, 100).setPosition(200, 470).setAnchorPoint(1, 1).setFill('#d5622f'),
+    hindernis = new lime.Sprite().setSize(100, 100).setPosition(200, 1500).setAnchorPoint(1, 1).setFill('#c00'),
     jumpArea =  new lime.Node().setSize(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2).setPosition(0,0).setAnchorPoint(0,0),
     crouchArea = new lime.Node().setSize(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2).setPosition(0, VIEWPORT_HEIGHT / 2).setAnchorPoint(0,0),
       
