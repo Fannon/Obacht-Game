@@ -131,7 +131,7 @@ lime.scheduleManager.schedule(function(dt){
 		kollanz++;
 		
 		//Neue Flugbahn
-		random=Math.floor((Math.random()*3)+1);
+		random=Math.floor((Math.random()*2)+1);
 			if (random==1){
 				faktor=935;
 			}else{
