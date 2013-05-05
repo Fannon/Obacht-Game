@@ -35,8 +35,9 @@ obacht.Game = function(size) {
     this.layer.appendChild(this.sky);
     this.layer.appendChild(this.enemyWorld.layer);
     this.layer.appendChild(this.ownWorld.layer);
-    this.layer.appendChild(this.ownPlayer.layer);
-    this.layer.appendChild(this.enemyPlayer.layer);
+    this.layer.appendChild(this.ownPlayer.graphicsLayer);
+    this.layer.appendChild(this.enemyPlayer.graphicsLayer);
+    this.layer.appendChild(this.ownPlayer.interactionLayer);
 
     // Players are properties of the Game
 
