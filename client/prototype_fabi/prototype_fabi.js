@@ -27,8 +27,8 @@ prototype_fabi.start = function(){
     planet_bottom = new lime.Circle().setSize(2100,2100).setPosition(200,1500).setFill(0,0,0),
     planet_top =  new lime.Circle().setSize(2100,2100).setPosition(1080,-780).setFill(0,0,0),
     
-    character = new lime.Sprite().setSize(100, 100).setPosition(200, 470).setAnchorPoint(1, 1).setFill('#d5622f'),
-    hindernis = new lime.Sprite().setSize(100, 100).setPosition(200, 1500).setAnchorPoint(1, 1).setFill('#c00'),
+    character = new lime.Sprite().setSize(70, 70).setPosition(200, 470).setAnchorPoint(1, 1).setFill('#d5622f'),
+    hindernis = new lime.Sprite().setSize(70, 70).setPosition(200, 1500).setAnchorPoint(1, 1).setFill('#c00'),
     jumpArea =  new lime.Node().setSize(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2).setPosition(0,0).setAnchorPoint(0,0),
     crouchArea = new lime.Node().setSize(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2).setPosition(0, VIEWPORT_HEIGHT / 2).setAnchorPoint(0,0),
       
@@ -75,21 +75,24 @@ prototype_fabi.start = function(){
 var velocity = 0.3;
 //Anzahl Kollisionen
 var kollanz=0;
+       
 //Startwinkel & Winkelgeschwindigkeit
 var startwinkel=45;
 var winkel=startwinkel;
 var winkelgeschwindigkeit=0.01;
 //Startposition
 var groundx=300;
-var groundy=1400;   
+var groundy=1400;        
+
+var faktor=935;
        
 lime.scheduleManager.schedule(function(dt){
-    
+	
     /*Positionen */
     var position = hindernis.getPosition();
 	
-   	position.x = Math.sin(winkel) * 930 + groundx;
-	position.y = Math.cos(winkel) * 930 + groundy;
+   	position.x = Math.sin(winkel) * faktor + groundx;
+	position.y = Math.cos(winkel) * faktor + groundy;
        
     this.setPosition(position); 
     
@@ -119,17 +122,26 @@ lime.scheduleManager.schedule(function(dt){
 	hindernisboundy=hindernis.getSize().height/2;
 	
 	characterege_y=Math.round(characterpos.y/10)*10+characterboundy;
-	hindernisege_y=Math.round(hindernispos.y/10)*10+hindernisboundy;
+	hindernisege_y=Math.round(hindernispos.y/10)*10-hindernisboundy;
 	
-	//Checkt Rechte Kante auf Hindernis Kante Rechts | Rechte Kante auf Hinderniskante Links | Mittelpunkt auf Mittelpunkt
-	if(characterege_right==hindernisege_right || characterege_right==hindernisege_left || rhpos==characterpos.x){	
-		if(diff<35){
+	//CHECK: Linke Characterkante auf Hinderniskante Rechts | Rechte Characterkante auf Hinderniskante Links | Mittelpunkt auf Mittelpunkt
+	if(characterege_left==hindernisege_right || characterege_right==hindernisege_left || rhpos==characterpos.x){	
+		if(characterege_y==hindernisege_y || diff<35){
 		winkel=startwinkel;
 		kollanz++;
+		
+		//Neue Flugbahn
+		random=Math.floor((Math.random()*3)+1);
+			if (random==1){
+				faktor=935;
+			}else{
+				faktor=1000;
+			}
 		}
 	}else if(hindernispos.x<0){
 		winkel=startwinkel;
 	};
+	
 	
 	//Winkel erhöhen
 	winkel=winkel+winkelgeschwindigkeit;
