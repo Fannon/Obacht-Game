@@ -88,8 +88,8 @@ lime.scheduleManager.schedule(function(dt){
     /*Positionen */
     var position = hindernis.getPosition();
 	
-   	position.x = Math.sin(winkel) * 900 + groundx;
-	position.y = Math.cos(winkel) * 900 + groundy;
+   	position.x = Math.sin(winkel) * 930 + groundx;
+	position.y = Math.cos(winkel) * 930 + groundy;
        
     this.setPosition(position); 
     
@@ -107,22 +107,26 @@ lime.scheduleManager.schedule(function(dt){
 	//Größe der Objekte abfragen und durch 2 Teilen
 	characterboundx=character.getSize().width/2;
 	hindernisboundx=hindernis.getSize().width/2;
-	//Kanten festlegen KANTE 1
-	characterege_right=characterpos.x-characterboundx;
-	characterege_left=characterpos.x+characterboundx;	
+	//X Kanten festlegen
+	characterege_right=characterpos.x+characterboundx;
+	characterege_left=characterpos.x-characterboundx;	
 	
 	hindernisege_right=rhpos+hindernisboundx;
 	hindernisege_left=rhpos-hindernisboundx;
 	
-	console.log(characterboundx);
-	console.log(hindernisboundx);
+	//Y Kanten festlegen -> Nur unten und oben NICHT VERWENDET
+	characterboundy=character.getSize().height/2;
+	hindernisboundy=hindernis.getSize().height/2;
 	
-	//Gleiche Höhe checken
-	if(characterege_left==hindernisege_right || characterege_right==hindernisege_left){	
-		//if(diff<60){
+	characterege_y=Math.round(characterpos.y/10)*10+characterboundy;
+	hindernisege_y=Math.round(hindernispos.y/10)*10+hindernisboundy;
+	
+	//Checkt Rechte Kante auf Hindernis Kante Rechts | Rechte Kante auf Hinderniskante Links | Mittelpunkt auf Mittelpunkt
+	if(characterege_right==hindernisege_right || characterege_right==hindernisege_left || rhpos==characterpos.x){	
+		if(diff<35){
 		winkel=startwinkel;
 		kollanz++;
-		//}
+		}
 	}else if(hindernispos.x<0){
 		winkel=startwinkel;
 	};
@@ -133,7 +137,7 @@ lime.scheduleManager.schedule(function(dt){
 	//Text Kollisionsanzahl
 	lbl2.setText('Kollision nr: '+kollanz);
 	//Characterposition Anzeigen
-	lbl.setText(' Character: '+characterege_left+'/'+characterege_right +' Hindernis: '+hindernisege_right +'/'+hindernisege_left);
+	lbl.setText(characterege_y+' / '+hindernisege_y);
     
 },hindernis);
 
