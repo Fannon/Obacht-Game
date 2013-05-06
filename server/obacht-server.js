@@ -6,13 +6,13 @@
  *
  * @author Simon Heimler
  */
+var obacht = {};
 
 
 //////////////////////////////
 // Modules and Variables    //
 //////////////////////////////
 
-var obacht = {}; // Global Namespace
 obacht.server = {};
 obacht.server.options = require('./options'); // Load Options
 obacht.server.port = (process.argv[2] ? process.argv[2] : obacht.server.options.defaultPort); // Set Port, use Console Args if available
@@ -22,8 +22,9 @@ obacht.server.io = require('socket.io').listen(obacht.server.port); // Start Soc
 var RoomCollection = require('./roomCollection');
 obacht.server.rooms = new RoomCollection(9999, obacht.server.io); // Load RoomCollection DataStructure
 
+
 //////////////////////////////
-// Configuration            //
+// Socket.io Configuration  //
 //////////////////////////////
 
 obacht.server.io.enable('browser client minification'); // send minified client
@@ -38,6 +39,8 @@ obacht.server.io.set('log level', 1); // reduce logging
 
 obacht.server.io.sockets.on('connection', function(socket) {
 
+    // TODO: Version checking -> Version can have gameplay relevance!
+
     /**
      * New Player connects to Server
      * Sends ID back so that the client knows it's successful connected
@@ -47,9 +50,8 @@ obacht.server.io.sockets.on('connection', function(socket) {
     });
     console.log('+++ NEW REMOTE CONNECTION');
 
-
     /**
-     * Connection to Server fails
+     * Connection Failed
      */
     socket.on('connect_failed', function(){
         socket.emit('connected', {
@@ -58,7 +60,6 @@ obacht.server.io.sockets.on('connection', function(socket) {
         });
         console.log('!!! REMOTE CONNECTION FAILED');
     });
-
 
     /**
      * New Room Request
@@ -121,7 +122,6 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
     });
 
-
     /**
      * Find Match
      * Looks for Player waiting for another Player
@@ -153,7 +153,6 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
     });
 
-
     /**
      * Leave Room currently connected
      * (Debugging Function)
@@ -165,7 +164,6 @@ obacht.server.io.sockets.on('connection', function(socket) {
         }
     });
 
-
     /**
      * Broadcast to other Players in Room Request
      */
@@ -173,7 +171,6 @@ obacht.server.io.sockets.on('connection', function(socket) {
         console.log('<-> Player Action "' + data.type + '" in Room #' + socket.pin);
         socket.broadcast.to(socket.pin).emit('hurdle', data);
     });
-
 
     /**
      * Get all open Rooms Request
