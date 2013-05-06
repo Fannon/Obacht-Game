@@ -27,8 +27,8 @@ prototype_fabi.start = function(){
     planet_bottom = new lime.Circle().setSize(2100,2100).setPosition(200,1500).setFill(0,0,0),
     planet_top =  new lime.Circle().setSize(2100,2100).setPosition(1080,-780).setFill(0,0,0),
     
-    character = new lime.Circle().setSize(100, 150).setPosition(200, 470).setAnchorPoint(1, 1).setFill('#d5622f'),
-    hindernis = new lime.Circle().setSize(100, 150).setPosition(200, 1500).setAnchorPoint(1, 1).setFill('#c00'),
+    character = new lime.Sprite().setSize(70, 70).setPosition(200, 470).setAnchorPoint(1, 1).setFill('#d5622f'),
+    hindernis = new lime.Sprite().setSize(70, 70).setPosition(200, 1500).setAnchorPoint(1, 1).setFill('#c00'),
     jumpArea =  new lime.Node().setSize(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2).setPosition(0,0).setAnchorPoint(0,0),
     crouchArea = new lime.Node().setSize(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2).setPosition(0, VIEWPORT_HEIGHT / 2).setAnchorPoint(0,0),
       
@@ -75,21 +75,24 @@ prototype_fabi.start = function(){
 var velocity = 0.3;
 //Anzahl Kollisionen
 var kollanz=0;
+       
 //Startwinkel & Winkelgeschwindigkeit
 var startwinkel=45;
 var winkel=startwinkel;
 var winkelgeschwindigkeit=0.01;
 //Startposition
 var groundx=300;
-var groundy=1400;   
+var groundy=1400;        
+
+var faktor=935;
        
 lime.scheduleManager.schedule(function(dt){
-    
+	
     /*Positionen */
     var position = hindernis.getPosition();
 	
-   	position.x = Math.sin(winkel) * 900 + groundx;
-	position.y = Math.cos(winkel) * 900 + groundy;
+   	position.x = Math.sin(winkel) * faktor + groundx;
+	position.y = Math.cos(winkel) * faktor + groundy;
        
     this.setPosition(position); 
     
@@ -102,17 +105,43 @@ lime.scheduleManager.schedule(function(dt){
 	
 	//Differenz der Y Koordinaten
 	diff=hindernispos.y-characterpos.y;
-	console.log(diff);
+	//console.log(diff);
 	
-	//Gleiche Höhe checken
-	if(rhpos==characterpos.x+100){
-		if(diff<40){
-		kollanz++;	
+	//Größe der Objekte abfragen und durch 2 Teilen
+	characterboundx=character.getSize().width/2;
+	hindernisboundx=hindernis.getSize().width/2;
+	//X Kanten festlegen
+	characterege_right=characterpos.x+characterboundx;
+	characterege_left=characterpos.x-characterboundx;	
+	
+	hindernisege_right=rhpos+hindernisboundx;
+	hindernisege_left=rhpos-hindernisboundx;
+	
+	//Y Kanten festlegen -> Nur unten und oben NICHT VERWENDET
+	characterboundy=character.getSize().height/2;
+	hindernisboundy=hindernis.getSize().height/2;
+	
+	characterege_y=Math.round(characterpos.y/10)*10+characterboundy;
+	hindernisege_y=Math.round(hindernispos.y/10)*10-hindernisboundy;
+	
+	//CHECK: Linke Characterkante auf Hinderniskante Rechts | Rechte Characterkante auf Hinderniskante Links | Mittelpunkt auf Mittelpunkt
+	if(characterege_left==hindernisege_right || characterege_right==hindernisege_left || rhpos==characterpos.x){	
+		if(characterege_y==hindernisege_y || diff<35){
 		winkel=startwinkel;
+		kollanz++;
+		
+		//Neue Flugbahn
+		random=Math.floor((Math.random()*2)+1);
+			if (random==1){
+				faktor=935;
+			}else{
+				faktor=1000;
+			}
 		}
 	}else if(hindernispos.x<0){
 		winkel=startwinkel;
 	};
+	
 	
 	//Winkel erhöhen
 	winkel=winkel+winkelgeschwindigkeit;
@@ -120,7 +149,7 @@ lime.scheduleManager.schedule(function(dt){
 	//Text Kollisionsanzahl
 	lbl2.setText('Kollision nr: '+kollanz);
 	//Characterposition Anzeigen
-	lbl.setText('Hindernis X: '+Math.round(hindernispos.x) + ' Y:'+Math.round(hindernispos.y)+' Charakter X: '+Math.round(characterpos.x)+ ' Y: '+Math.round(characterpos.y)+ ' Differenz Y: '+Math.round(diff));
+	lbl.setText(characterege_y+' / '+hindernisege_y);
     
 },hindernis);
 
