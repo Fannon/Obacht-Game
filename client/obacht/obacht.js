@@ -4,17 +4,10 @@
 //set main namespace
 goog.provide('obacht');
 
-
 //get requirements
 goog.require('lime.Director');
 goog.require('lime.Scene');
 goog.require('lime.Layer');
-goog.require('lime.Circle');
-goog.require('lime.Label');
-goog.require('lime.animation.Spawn');
-goog.require('lime.animation.FadeTo');
-goog.require('lime.animation.ScaleTo');
-goog.require('lime.animation.MoveTo');
 
 // obacht requirements
 goog.require('obacht.MultiplayerService');
@@ -25,24 +18,13 @@ goog.require('obacht.options');
 // entrypoint
 obacht.start = function(){
 
-    "use strict";
-    console.log('Obacht start()');
-
-    console.log('Current Options:');
     console.dir(obacht.options);
 
     var obachtDirector = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
-    var scene = new lime.Scene(),
-        layer = new lime.Layer();
+    var scene = new lime.Scene();
+    var currentGame = new obacht.Game();
 
-    /*hier muss dann das Menu eingeschoben werden, dass dann das Spiel neue Spiel aufruft
-     this.menu = new obacht.Menu(); */
-
-    this.currentGame = new obacht.Game();
-
-    //nur zu Testzwecken, wird dann ins Menu ausgelagert, sonst muss man immer durchs Menü navigieren wenn man zum Spiel will
-    layer.appendChild(this.currentGame);
-    scene.appendChild(layer);
+    scene.appendChild(currentGame.layer);
 
     obachtDirector.makeMobileWebAppCapable();
     // set current scene active
