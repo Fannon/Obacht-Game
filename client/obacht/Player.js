@@ -24,7 +24,8 @@ obacht.Player = function(type) {
     // Subscribe to Events      //
     //////////////////////////////
 
-    obacht.multiplayerService.events.subscribe('player_move_test', function(data) {
+    // TODO: Just a test Event Subscription! Remove later.
+    obacht.mp.events.subscribe('player_move_test', function(data) {
         console.log('Player Move Test received!');
     });
 
@@ -109,7 +110,6 @@ obacht.Player.prototype = {
 //////////////////////
 
 	// JUMP //
-
 
     this.isJumping = false;
 

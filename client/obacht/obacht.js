@@ -19,7 +19,7 @@ goog.require('obacht.options');
 obacht.start = function(){
 
     // Connect to Multiplayer Server
-    this.multiplayerService = new obacht.MultiplayerService(obacht.options.server.url);
+    this.mp = new obacht.MultiplayerService(obacht.options.server.url);
 
     console.dir(obacht.options);
 

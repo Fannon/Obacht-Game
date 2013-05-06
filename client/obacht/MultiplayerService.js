@@ -29,7 +29,7 @@ obacht.MultiplayerService = function(serverUrl) {
 
     console.log("Connecting to Multiplayer Server on " + serverUrl);
 
-    // Create new Event Publisher/Subscriber
+    // Event Publisher/Subscriber (http://closure-library.googlecode.com/svn/docs/class_goog_pubsub_PubSub.html)
     this.events = new goog.pubsub.PubSub();
 
 
@@ -141,9 +141,6 @@ obacht.MultiplayerService.prototype.playerAction = function(type, data) {
         data: data
     });
 };
-
-
-
 
 obacht.MultiplayerService.prototype.leaveRoom = function() {
     console.log('>> leaveRoom()');
