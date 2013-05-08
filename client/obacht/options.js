@@ -45,9 +45,19 @@ obacht.options = {
             clouds: 75
         }
     },
-
-    "player": {
-
+    player: {
+        general: {
+            width: 120,
+            height: 190
+        },
+        own: {
+            x: 160,
+            y: 570
+        },
+        enemy: {
+            x: 1120,
+            y: 150
+        }
     },
     "trap": {
 

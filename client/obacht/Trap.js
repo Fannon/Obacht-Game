@@ -1,5 +1,5 @@
-/* global goog, obacht */
-/* jshint strict: false */
+/* global goog, lime, obacht */
+/* jshint strict: false, devel:true */
 
 goog.provide('obacht.Trap');
 

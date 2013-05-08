@@ -1,5 +1,5 @@
-/* global goog, obacht */
-/* jshint strict: false */
+/* global goog, lime, obacht */
+/* jshint strict: false, devel:true */
 
 //set main namespace
 goog.provide('obacht');
@@ -18,6 +18,9 @@ goog.require('obacht.options');
 // entrypoint
 obacht.start = function(){
 
+    // Connect to Multiplayer Server
+    this.mp = new obacht.MultiplayerService(obacht.options.server.url);
+
     console.dir(obacht.options);
 
     var obachtDirector = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
@@ -30,8 +33,6 @@ obacht.start = function(){
     // set current scene active
     obachtDirector.replaceScene(scene);
 
-    // Connect to Multiplayer Server
-    this.multiplayerService = new obacht.MultiplayerService(obacht.options.server.url);
 
 };
 

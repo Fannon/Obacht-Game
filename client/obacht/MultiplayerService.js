@@ -2,6 +2,8 @@
 /* jshint devel: true, strict: false */
 goog.provide('obacht.MultiplayerService');
 
+goog.require('goog.pubsub.PubSub');
+
 /**
  * This service handles the connection between client and a mulitplayer-server
  *
@@ -26,6 +28,9 @@ obacht.MultiplayerService = function(serverUrl) {
     var self = this;
 
     console.log("Connecting to Multiplayer Server on " + serverUrl);
+
+    // Event Publisher/Subscriber (http://closure-library.googlecode.com/svn/docs/class_goog_pubsub_PubSub.html)
+    this.events = new goog.pubsub.PubSub();
 
 
     //////////////////////////////
@@ -64,13 +69,10 @@ obacht.MultiplayerService = function(serverUrl) {
                 // if room has room for one more player
                 console.log('Joining Room.');
                 self.joinRoom(data.pin);
-            }  
-            self.room = data.pin;   
+            }
+            self.room = data.pin;
         }
     });
-
-
-
 
     this.socket.on('no_match_found', function () {
         console.log('No Match found.');
@@ -80,16 +82,20 @@ obacht.MultiplayerService = function(serverUrl) {
     this.socket.on('player_move', function (data) {
         console.log('Enemy Movement Data received');
         console.dir(data);
+        self.events.publish('player_move', data);
+
     });
 
     this.socket.on('item', function (data) {
         console.log('Item Data received');
         console.dir(data);
+        self.events.publish('item', data);
     });
 
     this.socket.on('trap', function (data) {
         console.log('Trap Data received');
         console.dir(data);
+        self.events.publish('trap', data);
     });
 
     this.socket.on('get_rooms', function (data) {
@@ -136,12 +142,25 @@ obacht.MultiplayerService.prototype.playerAction = function(type, data) {
     });
 };
 
-
-
-
 obacht.MultiplayerService.prototype.leaveRoom = function() {
     console.log('>> leaveRoom()');
     this.socket.emit('leave_room');
+};
+
+obacht.MultiplayerService.prototype.playerMove = function(data) {
+    if (this.room) {
+        console.log('>> playerMove()');
+        this.socket.emit('player_move', data);
+    } else {
+        console.log('Not in a room yet!');
+    }
+
+    // TODO: Nur ein Test, später wieder löschen!
+    this.events.publish('player_move_test', data);
+};
+
+obacht.MultiplayerService.prototype.throwHurdle = function(data) {
+    this.socket.emit('thrown_hurdle', data);
 };
 
 obacht.MultiplayerService.prototype.getRooms = function() {
