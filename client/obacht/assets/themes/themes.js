@@ -1,3 +1,5 @@
+/* global goog, obacht */
+
 goog.provide('obacht.themes');
 
 var theme = 'water'; // meadow, desert, water, candy

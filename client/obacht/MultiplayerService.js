@@ -80,10 +80,11 @@ obacht.MultiplayerService = function(serverUrl) {
     });
 
     this.socket.on('player_move', function (data) {
-        console.log('Enemy Movement Data received');
-        console.dir(data);
         self.events.publish('player_move', data);
+    });
 
+    this.socket.on('player_action', function (data) {
+        self.events.publish('player_action', data.type, data.data);
     });
 
     this.socket.on('item', function (data) {

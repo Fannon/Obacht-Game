@@ -41,7 +41,7 @@ obacht.Game = function(size) {
     // Players are properties of the Game
 
 
-   //this.ownPlayer.jump('player');
+//    this.ownPlayer.jump('player');
 
     //this.ownPlayer.throwTrap('Igelfisch');
 
