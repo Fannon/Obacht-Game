@@ -72,13 +72,17 @@ prototype_fabi.start = function(){
 
     director.makeMobileWebAppCapable();
 
-    //REAL MEGA MASTER Funktion
+    //Kollisionsalgorithmus
+    //Parameter
+    //
+    // linke obere ecke koordinaten als array ([0]=x [1]=y),länge,hohe
+    //
     function kollisioncheck(position1,width1,height1,position2,width2,height2){   
     	    
-     return position1[0] < position2[0] + width2  &&
-     position2[0] < position1[0] + width1  &&
-     position1[1] < position2[1] + height2 &&
-     position2[1] < position1[1] + height1;  	    
+     return 	position1[0] < position2[0] + width2  &&
+     		position2[0] < position1[0] + width1  &&
+     		position1[1] < position2[1] + height2 &&
+     		position2[1] < position1[1] + height1;  	    
      
     }       
     
