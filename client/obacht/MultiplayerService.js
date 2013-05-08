@@ -87,8 +87,8 @@ obacht.MultiplayerService = function(serverUrl) {
         console.dir(data);
     });
 
-    this.socket.on('hurdle', function (data) {
-        console.log('Hurdle Data received');
+    this.socket.on('trap', function (data) {
+        console.log('Trap Data received');
         console.dir(data);
     });
 
@@ -142,19 +142,6 @@ obacht.MultiplayerService.prototype.playerAction = function(type, data) {
 obacht.MultiplayerService.prototype.leaveRoom = function() {
     console.log('>> leaveRoom()');
     this.socket.emit('leave_room');
-};
-
-obacht.MultiplayerService.prototype.playerMove = function(data) {
-    if (this.room) {
-        console.log('>> playerMove()');
-        this.socket.emit('player_move', data);
-    } else {
-        console.log('Not in a room yet!');
-    }
-};
-
-obacht.MultiplayerService.prototype.throwHurdle = function(data) {
-    this.socket.emit('thrown_hurdle', data);
 };
 
 obacht.MultiplayerService.prototype.getRooms = function() {
