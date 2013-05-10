@@ -1,5 +1,5 @@
-/* global goog, obacht */
-/* jshint strict: false */
+/* global goog, lime, obacht */
+/* jshint strict: false, devel:true */
 
 goog.provide('obacht.World');
 goog.require('obacht.options');
@@ -35,14 +35,14 @@ obacht.World = function(position) {
     // DECIDE IF BOTTOM WORLD OR TOP WORLD //
     /////////////////////////////////////////
 
-    if (position == 'bottom') {
+    if (position === 'bottom') {
         this.x = obacht.options.world.bottom.x;
         this.y = obacht.options.world.bottom.y;
         this.rotation1 = obacht.options.world.bottom.rotation1;
         this.rotation2 = obacht.options.world.bottom.rotation2;
     }
 
-    if (position == 'top') {
+    if (position === 'top') {
         this.x = obacht.options.world.top.x;
         this.y = obacht.options.world.top.y;
         this.rotation1 = obacht.options.world.top.rotation1;

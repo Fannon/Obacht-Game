@@ -1,5 +1,5 @@
-/* global goog, obacht */
-/* jshint strict: false */
+/* global goog, lime, obacht */
+/* jshint strict: false, devel: true */
 
 goog.provide('obacht.Player');
 goog.require('obacht.options');
@@ -21,38 +21,47 @@ obacht.Player = function(type) {
     console.log('New Player();');
 
     //////////////////////////////
+    // Subscribe to Events      //
+    //////////////////////////////
+
+    // TODO: Just a test Event Subscription! Remove later.
+    obacht.mp.events.subscribe('player_move_test', function(data) {
+        console.log('Player Move Test received!');
+    });
+
+    //////////////////////////////
     // Player Model (state)     //
     //////////////////////////////
-    if (type == 'own') {
-        
+    if (type === 'own') {
+
         this.tapAreaTop     = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, 0).setAnchorPoint(0, 0);
         this.tapAreaBottom  = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setAnchorPoint(0, 0);
         this.tapAreaPuffer  = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT).setPosition(0, 0).setAnchorPoint(0, 0);
-        
+
         this.x = obacht.options.player.own.x;
         this.y = obacht.options.player.own.y;
         this.rotation = '0';
-        
+
         this.interactionLayer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
         this.interactionLayer.appendChild(this.tapAreaTop);
         this.interactionLayer.appendChild(this.tapAreaBottom);
         this.interactionLayer.appendChild(this.tapAreaPuffer);
 
-    };
+    }
 
-    if (type == 'enemy') {
+    if (type === 'enemy') {
 		this.x = obacht.options.player.enemy.x;
 		this.y = obacht.options.player.enemy.y;
 		this.rotation = "180";
-    };
+    }
 
 
     this.health = 3;
-    
-    this.player = new lime.RoundedRect().setSize(obacht.options.player.general.width, obacht.options.player.general.height).setPosition(this.x, this.y).setAnchorPoint(0.5, 1).setFill('#d5622f').setRotation(this.rotation);
-    
+
+    this.player = new lime.RoundedRect().setSize(obacht.options.player.general.width, obacht.options.player.general.height).setPosition(this.x, this.y).setAnchorPoint(0.5, 1).setFill('assets/gfx/hugo1.png').setRotation(this.rotation);
+
     this.graphicsLayer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
-    
+
     this.graphicsLayer.appendChild(this.player);
 
 };
@@ -67,20 +76,20 @@ obacht.Player = function(type) {
 
 /**
  * Lets the Player jump
- */ 
+ */
 obacht.Player.prototype = {
     jump: function(player) {
 		this.player.runAction(this.jumpAnimation);
     },
-    
+
     crouch: function() {
 		this.player.runAction(this.crouchAnimation);
     },
-    
+
     standUp: function() {
 		this.player.runAction(this.standUpAnimation);
-    },   
-    
+    },
+
     throwTrap: function(type) {
         var trap = new obacht.Trap(type);
         console.log("Player " + this.name + " throws " + type);
@@ -89,7 +98,7 @@ obacht.Player.prototype = {
 
         return trap;
     }
-    
+
 };
 
 
@@ -101,7 +110,6 @@ obacht.Player.prototype = {
 //////////////////////
 
 	// JUMP //
-
 
     this.isJumping = false;
 
