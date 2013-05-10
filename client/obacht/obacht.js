@@ -20,22 +20,21 @@ obacht.start = function() {
 
     // Connect to Multiplayer Server
     this.mp = new obacht.MultiplayerService(obacht.options.server.url);
-    this.currentGame = new obacht.Game();
-
-    this.obachtDirector = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
-    this.scene = new lime.Scene();
-
-    scene.appendChild(this.currentGame.layer);
 
     console.dir(obacht.options);
 
+    var obachtDirector = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
+    var scene = new lime.Scene();
+
+    this.currentGame = new obacht.Game();
+    scene.appendChild(this.currentGame.layer);
+
+
     obachtDirector.makeMobileWebAppCapable();
+
     // set current scene active
     obachtDirector.replaceScene(scene);
-
-
 };
 
-
-//this is required for outside access after code is compiled in ADVANCED_COMPILATIONS mode
+// this is required for outside access after code is compiled in ADVANCED_COMPILATIONS mode
 goog.exportSymbol('obacht.start', obacht.start);
