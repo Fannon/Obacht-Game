@@ -23,13 +23,8 @@ goog.require('lime.animation.RotateBy');
  * Its a World Object
  */
 
-<<<<<<< HEAD
-obacht.World = function(theme) {
-=======
 obacht.World = function(position) {
     console.log('New World()');
-
-
 
     /////////////////////////////////////////
     // DECIDE IF BOTTOM WORLD OR TOP WORLD //
@@ -48,8 +43,6 @@ obacht.World = function(position) {
         this.rotation1 = obacht.options.world.top.rotation1;
         this.rotation2 = obacht.options.world.top.rotation2;
     }
-
->>>>>>> dac60665f58c0a131eb3028b2e7c374f5db7a251
 
 
     ///////////////////////
