@@ -5,6 +5,7 @@ goog.provide('obacht.Game');
 
 goog.require('obacht.World');
 goog.require('obacht.Player');
+goog.require('obacht.PlayerController');
 goog.require('obacht.themes');
 goog.require('obacht.options');
 
@@ -31,12 +32,14 @@ obacht.Game = function(size) {
     this.ownPlayer = new obacht.Player('own');
     this.enemyPlayer = new obacht.Player('enemy');
 
+    this.playerController = new obacht.PlayerController();
+
     this.layer.appendChild(this.sky);
     this.layer.appendChild(this.enemyWorld.layer);
     this.layer.appendChild(this.ownWorld.layer);
-    this.layer.appendChild(this.ownPlayer.graphicsLayer);
-    this.layer.appendChild(this.enemyPlayer.graphicsLayer);
-    this.layer.appendChild(this.ownPlayer.interactionLayer);
+    this.layer.appendChild(this.ownPlayer.layer);
+    this.layer.appendChild(this.enemyPlayer.layer);
+    this.layer.appendChild(this.playerController.layer);
 
     // Players are properties of the Game
 
