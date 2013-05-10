@@ -2,7 +2,10 @@
 /* jshint strict: false, devel: true */
 
 goog.provide('obacht.Player');
+goog.require('obacht');
 goog.require('obacht.options');
+goog.require('obacht.PlayerController');
+goog.require('obacht.Game');
 goog.require('obacht.Trap');
 
 goog.require('goog.pubsub.PubSub');
@@ -43,11 +46,11 @@ obacht.Player = function(type) {
 
     this.health = 3;
 
-    this.player = new lime.RoundedRect().setSize(obacht.options.player.general.width, obacht.options.player.general.height).setPosition(this.x, this.y).setAnchorPoint(0.5, 1).setFill('assets/gfx/hugo1.png').setRotation(this.rotation);
+    this.character = new lime.RoundedRect().setSize(obacht.options.player.general.width, obacht.options.player.general.height).setPosition(this.x, this.y).setAnchorPoint(0.5, 1).setFill('assets/gfx/hugo1.png').setRotation(this.rotation);
 
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
 
-    this.layer.appendChild(this.player);
+    this.layer.appendChild(this.character);
 
 
 
@@ -78,11 +81,8 @@ obacht.Player = function(type) {
     /* SUBSCRIBE TO EVENTS */
     /////////////////////////
 
-    // Event Publisher/Subscriber
-    this.events = new goog.pubsub.PubSub();
-
     // TODO: Just a test Event Subscription! Remove later.
-    this.events.subscribe('player_jump', function() {
+    obacht.currentGame.playerController.events.subscribe('player_jump', function() {
         console.log('SLAYER!');
         this.jump();
     });
@@ -95,22 +95,17 @@ obacht.Player = function(type) {
 // Player Actions (Logic)   //
 //////////////////////////////
 
-// Getter und Setter
-
-/**
- * Lets the Player jump
- */
 obacht.Player.prototype = {
-    jump: function(player) {
-		this.player.runAction(this.jumpAnimation);
+    jump: function() {
+		this.character.runAction(this.jumpAnimation);
     },
 
     crouch: function() {
-		this.player.runAction(this.crouchAnimation);
+		this.character.runAction(this.crouchAnimation);
     },
 
     standUp: function() {
-		this.player.runAction(this.standUpAnimation);
+		this.character.runAction(this.standUpAnimation);
     },
 
     throwTrap: function(type) {
