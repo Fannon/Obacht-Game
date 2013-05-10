@@ -57,6 +57,9 @@ obacht.options = {
         enemy: {
             x: 1120,
             y: 150
+        },
+        stateVar: {
+            isJumping: false
         }
     },
     "trap": {
