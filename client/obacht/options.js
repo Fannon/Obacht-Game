@@ -47,16 +47,19 @@ obacht.options = {
     },
     player: {
         general: {
-            width: 190 * 1.1 * 1.6,
-            height: 190 * 1.1
+            width: 120,
+            height: 190
         },
         own: {
             x: 160,
-            y: 540
+            y: 570
         },
         enemy: {
             x: 1120,
-            y: 180
+            y: 150
+        },
+        stateVar: {
+            isJumping: false
         }
     },
     "trap": {
