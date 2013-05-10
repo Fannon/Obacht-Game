@@ -29,7 +29,6 @@ obacht.PlayerController = function() {
     self = this;
 
 
-
     ////////////////////
     /* EVENT HANDLING */
     ////////////////////
@@ -51,7 +50,7 @@ obacht.PlayerController = function() {
 
     goog.events.listen(this.tapAreaBottom, ['touchstart', 'mousedown'], function(e) {
         if (this.isCrouching === false) {
-            this.crouch();
+            self.crouch();
             this.isCrouching = true;
         } else {
             return;
@@ -60,7 +59,7 @@ obacht.PlayerController = function() {
 
     goog.events.listen(this.tapAreaPuffer, ['touchend', 'mouseup'], function(e) {
         if (this.isCrouching === true) {
-            this.standUp();
+            self.standUp();
             this.isCrouching = false;
         } else {
             return;
@@ -75,7 +74,7 @@ obacht.PlayerController = function() {
 
         if (this.tapPositionY < this.tapToleranceArea || this.tapPositionY > obacht.options.graphics.VIEWPORT_HEIGHT / 2 - this.tapToleranceArea || this.tapPositionX < this.tapToleranceArea || this.tapPositionX > obacht.options.graphics.VIEWPORT_WIDTH / 2 - this.tapToleranceArea) {
             if (this.isCrouching === true) {
-                this.standUp();
+                self.standUp();
                 this.isCrouching = false;
             }
         }
@@ -86,6 +85,14 @@ obacht.PlayerController.prototype = {
 
     jump: function() {
         "use strict";
-        this.events.publish('player_jump');
+        self.events.publish('player_jump');
+    },
+
+    crouch: function() {
+        self.events.publish('player_crouch');
+    },
+
+    standUp: function() {
+        self.events.publish('player_standUp');
     }
 };

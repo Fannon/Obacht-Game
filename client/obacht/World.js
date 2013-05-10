@@ -23,21 +23,21 @@ goog.require('lime.animation.RotateBy');
  * Its a World Object
  */
 
-obacht.World = function(position) {
+obacht.World = function(type) {
     console.log('New World()');
 
     /////////////////////////////////////////
     // DECIDE IF BOTTOM WORLD OR TOP WORLD //
     /////////////////////////////////////////
 
-    if (position === 'own') {
+    if (type === 'own') {
         this.x = obacht.options.world.bottom.x;
         this.y = obacht.options.world.bottom.y;
         this.rotation1 = obacht.options.world.bottom.rotation1;
         this.rotation2 = obacht.options.world.bottom.rotation2;
     }
 
-    if (position === 'enemy') {
+    if (type === 'enemy') {
         this.x = obacht.options.world.top.x;
         this.y = obacht.options.world.top.y;
         this.rotation1 = obacht.options.world.top.rotation1;

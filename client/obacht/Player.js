@@ -81,13 +81,16 @@ obacht.Player = function(type) {
     /* SUBSCRIBE TO EVENTS */
     /////////////////////////
 
-    // TODO: Just a test Event Subscription! Remove later.
+    // Does not work. Don't know why. If you uncomment this code "currentGame" suddenly gets undefined.
+/*
     obacht.currentGame.playerController.events.subscribe('player_jump', function() {
         console.log('SLAYER!');
         this.jump();
     });
+*/
 
 };
+
 
 
 
@@ -116,5 +119,4 @@ obacht.Player.prototype = {
 
         return trap;
     }
-
 };
