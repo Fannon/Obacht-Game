@@ -29,8 +29,6 @@ obacht.Game = function() {
     this.enemyWorld = new obacht.World('enemy');
     this.sky = new lime.Sprite().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT).setFill(obacht.themes.path.sky).setPosition(0, 0).setAnchorPoint(0, 0);
 
-    this.playerController = new obacht.PlayerController();
-
     this.ownPlayer = new obacht.Player('own');
     this.enemyPlayer = new obacht.Player('enemy');
 
@@ -40,7 +38,7 @@ obacht.Game = function() {
     this.layer.appendChild(this.ownWorld.layer);
     this.layer.appendChild(this.enemyPlayer.layer);
     this.layer.appendChild(this.ownPlayer.layer);
-    this.layer.appendChild(this.playerController.layer);
+    this.layer.appendChild(obacht.playerController.layer);
 
 };
 

@@ -21,11 +21,10 @@ obacht.start = function() {
     // Connect to Multiplayer Server
     this.mp = new obacht.MultiplayerService(obacht.options.server.url);
 
-    console.dir(obacht.options);
-
     var obachtDirector = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     var scene = new lime.Scene();
 
+    this.playerController = new obacht.PlayerController();
     this.currentGame = new obacht.Game();
     scene.appendChild(this.currentGame.layer);
 
