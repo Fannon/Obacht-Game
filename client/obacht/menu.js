@@ -39,26 +39,27 @@ obacht.loadMenuScene2 = function() {
     sceneMenu.appendChild(layerMenu);
     
     //PlayOnline-Button
-    var btn_play = new obacht.Button('PLAY ONLINE').setPosition(450, 360).setSize(300, 100);
-    layerMenu.appendChild(btn_play);
-    goog.events.listen(btn_play, lime.Button.Event.CLICK, function() {
+    var btn_playOnline = new obacht.Button('PLAY ONLINE').setPosition(450, 360).setSize(300, 100);
+    layerMenu.appendChild(btn_playOnline);
+    goog.events.listen(btn_playOnline, lime.Button.Event.CLICK, function() {
       obacht.loadGame();
     });
     
     //Create-Button
-    var btn_play = new obacht.Button('CREATE GAME').setPosition(830, 290).setSize(300, 100);
-    layerMenu.appendChild(btn_play);
-    goog.events.listen(btn_play, lime.Button.Event.CLICK, function() {
+    var btn_createGame = new obacht.Button('CREATE GAME').setPosition(830, 290).setSize(300, 100);
+    layerMenu.appendChild(btn_createGame);
+    goog.events.listen(btn_createGame, lime.Button.Event.CLICK, function() {
       obacht.loadGame();
     });
     
     //Join-Button
-    var btn_play = new obacht.Button('JOIN GAME').setPosition(830, 430).setSize(300, 100);
-    layerMenu.appendChild(btn_play);
-    goog.events.listen(btn_play, lime.Button.Event.CLICK, function() {
+    var btn_joinGame = new obacht.Button('JOIN GAME').setPosition(830, 430).setSize(300, 100);
+    layerMenu.appendChild(btn_joinGame);
+    goog.events.listen(btn_joinGame, lime.Button.Event.CLICK, function() {
       obacht.loadGame();
     });
 }; 
+ 
 
 //load Game
 obacht.loadGame = function() {
