@@ -3,6 +3,8 @@
 
 goog.provide('obacht.Menu');
 
+goog.require('obacht.Join');
+
 /**
  * Game Menu
  *
@@ -10,6 +12,7 @@ goog.provide('obacht.Menu');
  *
  * @constructor
  */
+   
 
 //load Menu
 obacht.Menu = function() {
@@ -56,11 +59,11 @@ obacht.loadMenuScene2 = function() {
     var btn_joinGame = new obacht.Button('JOIN GAME').setPosition(830, 430).setSize(300, 100);
     layerMenu.appendChild(btn_joinGame);
     goog.events.listen(btn_joinGame, lime.Button.Event.CLICK, function() {
-      obacht.loadGame();
+      obacht.Join();
     });
 }; 
- 
 
+   
 //load Game
 obacht.loadGame = function() {
 
@@ -80,8 +83,3 @@ obacht.loadGame = function() {
   
 // this is required for outside access after code is compiled in ADVANCED_COMPILATIONS mode
 goog.exportSymbol('obacht.start', obacht.start);
-
-// Funktionen
-obacht.Menu.prototype = {
-
-};
