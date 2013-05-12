@@ -7,20 +7,23 @@ goog.provide('obacht.Join');
 //Variables
     //Code
     var codeArray = [4];
-    codeArray[0] = '3';
-    codeArray[1] = '4';
-    codeArray[2] = '8';
+    codeArray[0] = '_';
+    codeArray[1] = '_';
+    codeArray[2] = '_';
     codeArray[3] = '_';
     
      //Position of the Code to change
-    var codeposition = 3;
+    var codeposition = 0;
 
+    //Complete Code to Check
+    var code = codeArray[0]+codeArray[1]+codeArray[2]+codeArray[3];
+    
     //Code with Spaces for visualization
-    var code = codeArray[0]+' '+codeArray[1]+' '+codeArray[2]+' '+codeArray[3];
+    var codeVisualization = codeArray[0]+' '+codeArray[1]+' '+codeArray[2]+' '+codeArray[3];
     
     //Code-Field    
     var field = new lime.RoundedRect().setFill('#888').setRadius(15).setPosition(640, 360).setSize(300, 130);
-    field.label = new lime.Label().setAlign('center').setText(code).setFontColor('#eef').setFontSize(80).setSize(300, 80).setFontWeight('bold');
+    field.label = new lime.Label().setAlign('center').setText(codeVisualization).setFontColor('#eef').setFontSize(80).setSize(300, 80).setFontWeight('bold');
 
     field.appendChild(field.label);    
     
@@ -62,7 +65,7 @@ obacht.Join = function() {
 	layerMenu.appendChild(keyDelete);   
 	
     
-    // Add listener for number-keys
+    // Listener for number-keys
     goog.events.listen(key0, lime.Button.Event.CLICK, function(){
     	obacht.addNumber('0');
     });
@@ -95,7 +98,7 @@ obacht.Join = function() {
     });
        
         
-    // Add listener for delete-key
+    // Listener for delete-key
 	goog.events.listen(keyDelete, lime.Button.Event.CLICK, function() {
         obacht.deleteNumber();
     });    
@@ -116,8 +119,9 @@ obacht.addNumber = function (insertNumber) {
         if(codeposition<4){
             codeposition++;
         }
-        code = codeArray[0]+' '+codeArray[1]+' '+codeArray[2]+' '+codeArray[3];
-        field.label.setText(code);
+        code = codeArray[0]+codeArray[1]+codeArray[2]+codeArray[3];
+        codeVisualization = codeArray[0]+' '+codeArray[1]+' '+codeArray[2]+' '+codeArray[3];
+        field.label.setText(codeVisualization);
 };
 
 //Delete Number
@@ -127,8 +131,9 @@ obacht.deleteNumber = function (){
     if(codeposition>0){
         codeposition--;
     }
-    code = codeArray[0]+' '+codeArray[1]+' '+codeArray[2]+' '+codeArray[3];
-    field.label.setText(code);		
+    code = codeArray[0]+codeArray[1]+codeArray[2]+codeArray[3];
+    codeVisualization = codeArray[0]+' '+codeArray[1]+' '+codeArray[2]+' '+codeArray[3];
+    field.label.setText(codeVisualization);		
 };
 
 // this is required for outside access after code is compiled in ADVANCED_COMPILATIONS mode
