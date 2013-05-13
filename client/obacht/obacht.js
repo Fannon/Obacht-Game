@@ -24,7 +24,7 @@ obacht.start = function() {
     obacht.director.makeMobileWebAppCapable();
 
     //Start with Menu
-    obacht.Menu();
+    obacht.menu = new obacht.Menu();
 
 };
 
