@@ -25,6 +25,7 @@ obacht.Player = function(type) {
 
     console.log('New Player();');
 
+    var self = this;
 
 
     //////////////////
@@ -82,12 +83,12 @@ obacht.Player = function(type) {
     /////////////////////////
 
     // Does not work. Don't know why. If you uncomment this code "currentGame" suddenly gets undefined.
-/*
-    obacht.currentGame.playerController.events.subscribe('player_jump', function() {
+
+    obacht.playerController.events.subscribe('player_jump', function() {
         console.log('SLAYER!');
-        this.jump();
+        self.jump();
     });
-*/
+
 
 };
 
