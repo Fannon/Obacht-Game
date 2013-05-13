@@ -161,7 +161,7 @@ obacht.Menu.prototype = {
         /**
          * Draws Button for Keyboard Input
          *
-         * @param {integer} x
+         * @param {Number} x
          * @param {string} text
          *
          * @returns {*}
@@ -176,7 +176,7 @@ obacht.Menu.prototype = {
         /**
          * Add Number to PIN
          *
-         * @param {integer} insertNumber
+         * @param {Number} insertNumber
          */
         var addNumber = function(insertNumber) {
             codeArray[codeposition] = insertNumber;
@@ -245,34 +245,34 @@ obacht.Menu.prototype = {
         /////////////////////////////
 
         goog.events.listen(keys[0], lime.Button.Event.CLICK, function() {
-            addNumber('0');
+            addNumber(0);
         });
         goog.events.listen(keys[1], lime.Button.Event.CLICK, function() {
-            addNumber('1');
+            addNumber(1);
         });
         goog.events.listen(keys[2], lime.Button.Event.CLICK, function() {
-            addNumber('2');
+            addNumber(2);
         });
         goog.events.listen(keys[3], lime.Button.Event.CLICK, function() {
-            addNumber('3');
+            addNumber(3);
         });
         goog.events.listen(keys[4], lime.Button.Event.CLICK, function() {
-            addNumber('4');
+            addNumber(4);
         });
         goog.events.listen(keys[5], lime.Button.Event.CLICK, function() {
-            addNumber('5');
+            addNumber(5);
         });
         goog.events.listen(keys[6], lime.Button.Event.CLICK, function() {
-            addNumber('6');
+            addNumber(6);
         });
         goog.events.listen(keys[7], lime.Button.Event.CLICK, function() {
-            addNumber('7');
+            addNumber(7);
         });
         goog.events.listen(keys[8], lime.Button.Event.CLICK, function() {
-            addNumber('8');
+            addNumber(8);
         });
         goog.events.listen(keys[9], lime.Button.Event.CLICK, function() {
-            addNumber('9');
+            addNumber(9);
         });
         goog.events.listen(keyDelete, lime.Button.Event.CLICK, function() {
             deleteNumber();
