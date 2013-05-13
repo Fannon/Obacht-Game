@@ -85,16 +85,21 @@ obacht.Player = function(type) {
     // Does not work. Don't know why. If you uncomment this code "currentGame" suddenly gets undefined.
 
     obacht.playerController.events.subscribe('player_jump', function() {
-        self.jump();
+        if(type == "own"){
+            self.jump();
+        };
     });
     
     obacht.playerController.events.subscribe('player_crouch', function() {
-        console.log('duck dich');
-        self.crouch();
+        if(type == "own"){
+        	self.crouch();
+        };
     });
     
     obacht.playerController.events.subscribe('player_standUp', function() {
-        self.standUp();
+    	if(type == "own"){
+    	    self.standUp();	
+    	};
     });
 
 

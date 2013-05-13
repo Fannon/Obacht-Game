@@ -51,13 +51,11 @@ obacht.PlayerController = function() {
     this.isCrouching = false;
 
     goog.events.listen(this.tapAreaBottom, ['touchstart', 'mousedown'], function(e) {
-    	console.log(self.isCrouching);
         if (self.isCrouching === false) {
             self.crouch();
             self.isCrouching = true;
         } else {
             return false;
-            console.log('false');
         }
     });
 
@@ -90,10 +88,10 @@ obacht.PlayerController.prototype = {
     jump: function() {
         "use strict";
         this.events.publish('player_jump');
+        obacht.mp.events.publish('player_jump');
     },
 
     crouch: function() {
-    	console.log('crouch');
         "use strict";
         this.events.publish('player_crouch');
     },
