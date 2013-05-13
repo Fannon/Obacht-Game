@@ -14,12 +14,12 @@ goog.require('goog.pubsub.PubSub');
 obacht.PlayerController = function() {
     "use strict";
     var self = this;
-    
+
     this.isCrouching = false;
 
-    this.tapAreaTop     = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, 0).setAnchorPoint(0, 0);
-    this.tapAreaBottom  = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setAnchorPoint(0, 0);
-    this.tapAreaPuffer  = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT).setPosition(0, 0).setAnchorPoint(0, 0);
+    this.tapAreaTop = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, 0).setAnchorPoint(0, 0);
+    this.tapAreaBottom = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setAnchorPoint(0, 0);
+    this.tapAreaPuffer = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT).setPosition(0, 0).setAnchorPoint(0, 0);
 
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     this.layer.appendChild(this.tapAreaTop);
@@ -28,7 +28,6 @@ obacht.PlayerController = function() {
 
     // Event Publisher/Subscriber
     this.events = new goog.pubsub.PubSub();
-
 
 
     ////////////////////
@@ -64,7 +63,7 @@ obacht.PlayerController = function() {
             self.standUp();
             self.isCrouching = false;
         } else {
-            return;
+            return false;
         }
     });
 
@@ -73,7 +72,7 @@ obacht.PlayerController = function() {
     goog.events.listen(this.tapAreaBottom, ['touchmove', 'mousemove'], function(e) {
         this.tapPositionX = e.position.x;
         this.tapPositionY = e.position.y;
-        
+
         if (this.tapPositionY < this.tapToleranceArea || this.tapPositionY > obacht.options.graphics.VIEWPORT_HEIGHT / 2 - this.tapToleranceArea || this.tapPositionX < this.tapToleranceArea || this.tapPositionX > obacht.options.graphics.VIEWPORT_WIDTH / 2 - this.tapToleranceArea) {
             if (self.isCrouching === true) {
                 self.standUp();
@@ -93,6 +92,7 @@ obacht.PlayerController.prototype = {
 
     crouch: function() {
         "use strict";
+        console.log('crouch');
         this.events.publish('player_crouch');
     },
 
