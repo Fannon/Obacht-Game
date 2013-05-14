@@ -121,16 +121,14 @@ lime.scheduleManager.schedule(function(dt){
     var position = hindernis.getPosition();
 
     position.x = Math.sin(winkel) * faktor + groundx;
-<<<<<<< HEAD
+
     position.y = Math.cos(winkel) * faktor + groundy;       
     this.setPosition(position); 
     
-=======
     position.y = Math.cos(winkel) * faktor + groundy;
 
     this.setPosition(position);
 
->>>>>>> d45c762adfd0b6eab5b1939861a4322af6e859a8
     /*Positionen abrufen*/
     hindernispos=hindernis.getPosition();
 
