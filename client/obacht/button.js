@@ -1,3 +1,6 @@
+/* global goog, lime, obacht */
+/* jshint strict: false, devel:true */
+
 goog.provide('obacht.Button');
 
 goog.require('lime.GlossyButton');
@@ -34,21 +37,21 @@ obacht.Button.prototype.makeState_ = function() {
 
 /**
  * Set button base color
- * @param {mixed} clr New base color.
+ * @param {string} clr New base color.
  * @return {lime.GlossyButton} object itself.
  */
 obacht.Button.prototype.setColor = function(clr) {
     clr = lime.fill.parse(clr);
     goog.array.forEach([this.upstate, this.downstate], function(s) {
-        var c = s == this.downstate ? clr.clone().addBrightness(.1) : clr;
+        var c = s === this.downstate ? clr.clone().addBrightness(0.1) : clr;
         //s.setFill(c);
-        var c2 = c.clone().addBrightness(.3);
+        var c2 = c.clone().addBrightness(0.3);
         var grad = new lime.fill.LinearGradient().setDirection(0, 0, 0, 1);
         grad.addColorStop(0, c2);
-        grad.addColorStop(.45, c);
-        grad.addColorStop(.55, c);
+        grad.addColorStop(0.45, c);
+        grad.addColorStop(0.55, c);
         grad.addColorStop(1, c2);
         s.inner.setFill(grad);
-    },this);
+    }, this);
     return this;
 };

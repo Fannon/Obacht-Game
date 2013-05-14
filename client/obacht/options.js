@@ -48,7 +48,13 @@ obacht.options = {
     player: {
         general: {
             width: 120,
-            height: 190
+            height: 190,
+            jumpUpDuration: 0.2,
+            jumpDownDuration: 0.35,
+            jumpHeight: 280,
+            crouchDuration: 0.1,
+            crouchWidth: 1.6,
+            crouchHeight: 0.5
         },
         own: {
             x: 160,
@@ -62,6 +68,11 @@ obacht.options = {
             isJumping: false
         }
     },
+
+    playerController: {
+        tapToleranceArea: 70
+    },
+
     "trap": {
 
     },

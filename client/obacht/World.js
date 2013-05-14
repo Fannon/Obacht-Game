@@ -26,8 +26,6 @@ goog.require('lime.animation.RotateBy');
 obacht.World = function(type) {
     console.log('New World()');
 
-
-
     /////////////////////////////////////////
     // DECIDE IF BOTTOM WORLD OR TOP WORLD //
     /////////////////////////////////////////
@@ -45,7 +43,6 @@ obacht.World = function(type) {
         this.rotation1 = obacht.options.world.top.rotation1;
         this.rotation2 = obacht.options.world.top.rotation2;
     }
-
 
 
     ///////////////////////

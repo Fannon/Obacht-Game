@@ -77,6 +77,22 @@ obacht.MultiplayerService = function(serverUrl) {
     this.socket.on('no_match_found', function () {
         console.log('No Match found.');
         this.newRoom();
+        self.events.publish('no_match_found');
+    });
+
+    /**
+     * Player Ready from Enemy Player
+     * TODO: Remove this when Server is not stupid anymore
+     */
+    this.socket.on('other_player_ready', function (player_ready) {
+        console.log('Other Player is ready!');
+        player_ready.forwarding = true;
+        self.socket.emit('player_ready', player_ready);
+    });
+
+    this.socket.on('game_ready', function () {
+        console.log('Game is ready!');
+        self.events.publish('game_ready');
     });
 
     this.socket.on('player_move', function (data) {
@@ -84,7 +100,17 @@ obacht.MultiplayerService = function(serverUrl) {
     });
 
     this.socket.on('player_action', function (data) {
+        console.log('player_action: ' + data.type);
         self.events.publish('player_action', data.type, data.data);
+    });
+
+    this.socket.on('player_status', function (data) {
+        self.events.publish('player_status', data.pid, data.life);
+        if (data.life === 0){
+            console.log('Game finished!');
+        } else {
+            console.log('>> playerStatus(' + data.life + ')');
+        }
     });
 
     this.socket.on('item', function (data) {
@@ -97,6 +123,11 @@ obacht.MultiplayerService = function(serverUrl) {
         console.log('Trap Data received');
         console.dir(data);
         self.events.publish('trap', data);
+    });
+
+    this.socket.on('player_left', function () {
+        console.log('Player has left the Game!');
+        self.events.publish('player_left');
     });
 
     this.socket.on('get_rooms', function (data) {
@@ -136,10 +167,24 @@ obacht.MultiplayerService.prototype.findMatch = function () {
     this.socket.emit('find_match');
 };
 
+obacht.MultiplayerService.prototype.playerReady = function (pid) {
+    console.log('>> playerReady()');
+    this.socket.emit('player_ready', {
+        pid: pid
+    });
+};
+
 obacht.MultiplayerService.prototype.playerAction = function(type, data) {
     this.socket.emit('player_action', {
         type: type,
         data: data
+    });
+};
+
+obacht.MultiplayerService.prototype.playerStatus = function (pid, life) {
+    this.socket.emit('player_status', {
+        pid: pid,
+        life: life
     });
 };
 
@@ -148,22 +193,9 @@ obacht.MultiplayerService.prototype.leaveRoom = function() {
     this.socket.emit('leave_room');
 };
 
-obacht.MultiplayerService.prototype.playerMove = function(data) {
-    if (this.room) {
-        console.log('>> playerMove()');
-        this.socket.emit('player_move', data);
-    } else {
-        console.log('Not in a room yet!');
-    }
-
-    // TODO: Nur ein Test, später wieder löschen!
-    this.events.publish('player_move_test', data);
-};
-
-obacht.MultiplayerService.prototype.throwHurdle = function(data) {
-    this.socket.emit('thrown_hurdle', data);
-};
-
+/**
+ * Debugging Function
+ */
 obacht.MultiplayerService.prototype.getRooms = function() {
     console.log('>> getRooms()');
     this.socket.emit('get_rooms', '');

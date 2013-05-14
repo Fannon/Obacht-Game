@@ -121,6 +121,10 @@ lime.scheduleManager.schedule(function(dt){
     var position = hindernis.getPosition();
 
     position.x = Math.sin(winkel) * faktor + groundx;
+
+    position.y = Math.cos(winkel) * faktor + groundy;       
+    this.setPosition(position); 
+    
     position.y = Math.cos(winkel) * faktor + groundy;
 
     this.setPosition(position);

@@ -15,9 +15,11 @@ obacht.PlayerController = function() {
     "use strict";
     var self = this;
 
-    this.tapAreaTop     = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, 0).setAnchorPoint(0, 0);
-    this.tapAreaBottom  = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setAnchorPoint(0, 0);
-    this.tapAreaPuffer  = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT).setPosition(0, 0).setAnchorPoint(0, 0);
+    this.isCrouching = false;
+
+    this.tapAreaTop = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, 0).setAnchorPoint(0, 0);
+    this.tapAreaBottom = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setAnchorPoint(0, 0);
+    this.tapAreaPuffer = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT).setPosition(0, 0).setAnchorPoint(0, 0);
 
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     this.layer.appendChild(this.tapAreaTop);
@@ -49,33 +51,33 @@ obacht.PlayerController = function() {
     this.isCrouching = false;
 
     goog.events.listen(this.tapAreaBottom, ['touchstart', 'mousedown'], function(e) {
-        if (this.isCrouching === false) {
+        if (self.isCrouching === false) {
             self.crouch();
-            this.isCrouching = true;
+            self.isCrouching = true;
         } else {
             return false;
         }
     });
 
     goog.events.listen(this.tapAreaPuffer, ['touchend', 'mouseup'], function(e) {
-        if (this.isCrouching === true) {
+        if (self.isCrouching === true) {
             self.standUp();
-            this.isCrouching = false;
+            self.isCrouching = false;
         } else {
-            return;
+            return false;
         }
     });
 
-    this.tapToleranceArea = 70;
+    this.tapToleranceArea = obacht.options.playerController.tapToleranceArea;
 
     goog.events.listen(this.tapAreaBottom, ['touchmove', 'mousemove'], function(e) {
-        this.tapPositionX = e.position.x;
-        this.tapPositionY = e.position.y;
+        self.tapPositionX = Math.round(e.position.x);
+        self.tapPositionY = Math.round(e.position.y);
 
-        if (this.tapPositionY < this.tapToleranceArea || this.tapPositionY > obacht.options.graphics.VIEWPORT_HEIGHT / 2 - this.tapToleranceArea || this.tapPositionX < this.tapToleranceArea || this.tapPositionX > obacht.options.graphics.VIEWPORT_WIDTH / 2 - this.tapToleranceArea) {
-            if (this.isCrouching === true) {
+        if (self.isCrouching === true) {
+            if (self.tapPositionY < self.tapToleranceArea || self.tapPositionY > obacht.options.graphics.VIEWPORT_HEIGHT / 2 - self.tapToleranceArea || self.tapPositionX < self.tapToleranceArea || self.tapPositionX > obacht.options.graphics.VIEWPORT_WIDTH / 2 -self.tapToleranceArea) {
                 self.standUp();
-                this.isCrouching = false;
+                self.isCrouching = false;
             }
         }
     });
@@ -86,15 +88,18 @@ obacht.PlayerController.prototype = {
     jump: function() {
         "use strict";
         this.events.publish('player_jump');
+        obacht.mp.events.publish('player_jump');
     },
 
     crouch: function() {
         "use strict";
         this.events.publish('player_crouch');
+        obacht.mp.events.publish('player_crouch');
     },
 
     standUp: function() {
         "use strict";
         this.events.publish('player_standUp');
+        obacht.mp.events.publish('player_standUp');
     }
 };
