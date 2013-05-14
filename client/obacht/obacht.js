@@ -20,6 +20,8 @@ goog.require('obacht.Menu');
 // entrypoint
 obacht.start = function() {
 
+    obacht.mp = new obacht.MultiplayerService(obacht.options.server.url);
+
     obacht.director = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     obacht.director.makeMobileWebAppCapable();
 

@@ -80,6 +80,16 @@ obacht.MultiplayerService = function(serverUrl) {
         self.events.publish('no_match_found');
     });
 
+    /**
+     * Player Ready from Enemy Player
+     * TODO: Remove this when Server is not stupid anymore
+     */
+    this.socket.on('other_player_ready', function (player_ready) {
+        console.log('Other Player is ready!');
+        player_ready.forwarding = true;
+        self.socket.emit('player_ready', player_ready);
+    });
+
     this.socket.on('game_ready', function () {
         console.log('Game is ready!');
         self.events.publish('game_ready');
@@ -90,15 +100,16 @@ obacht.MultiplayerService = function(serverUrl) {
     });
 
     this.socket.on('player_action', function (data) {
+        console.log('player_action: ' + data.type);
         self.events.publish('player_action', data.type, data.data);
     });
 
     this.socket.on('player_status', function (data) {
         self.events.publish('player_status', data.pid, data.life);
-        if (life === 0){
+        if (data.life === 0){
             console.log('Game finished!');
         } else {
-            console.log('>> playerStatus(' + life + ')');
+            console.log('>> playerStatus(' + data.life + ')');
         }
     });
 
@@ -158,7 +169,9 @@ obacht.MultiplayerService.prototype.findMatch = function () {
 
 obacht.MultiplayerService.prototype.playerReady = function (pid) {
     console.log('>> playerReady()');
-    this.socket.emit('player_ready');
+    this.socket.emit('player_ready', {
+        pid: pid
+    });
 };
 
 obacht.MultiplayerService.prototype.playerAction = function(type, data) {
@@ -180,19 +193,9 @@ obacht.MultiplayerService.prototype.leaveRoom = function() {
     this.socket.emit('leave_room');
 };
 
-obacht.MultiplayerService.prototype.playerMove = function(data) {
-    if (this.room) {
-        console.log('>> playerMove()');
-        this.socket.emit('player_move', data);
-    } else {
-        console.log('Not in a room yet!');
-    }
-};
-
-obacht.MultiplayerService.prototype.throwHurdle = function(data) {
-    this.socket.emit('thrown_hurdle', data);
-};
-
+/**
+ * Debugging Function
+ */
 obacht.MultiplayerService.prototype.getRooms = function() {
     console.log('>> getRooms()');
     this.socket.emit('get_rooms', '');
