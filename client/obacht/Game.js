@@ -15,7 +15,6 @@ goog.require('goog.pubsub.PubSub');
  * Its a Game scene
  *
  * @constructor
- * @singleton
  * @extends lime.Scene
  */
 obacht.Game = function() {
