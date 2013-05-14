@@ -13,29 +13,20 @@ goog.require('lime.Layer');
 goog.require('obacht.MultiplayerService');
 goog.require('obacht.Game');
 goog.require('obacht.options');
-
+goog.require('obacht.PlayerController');
+goog.require('obacht.Button');
+goog.require('obacht.Menu');
 
 // entrypoint
-obacht.start = function(){
+obacht.start = function() {
 
-    // Connect to Multiplayer Server
-    this.mp = new obacht.MultiplayerService(obacht.options.server.url);
+    obacht.director = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
+    obacht.director.makeMobileWebAppCapable();
 
-    console.dir(obacht.options);
-
-    var obachtDirector = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
-    var scene = new lime.Scene();
-    var currentGame = new obacht.Game();
-
-    scene.appendChild(currentGame.layer);
-
-    obachtDirector.makeMobileWebAppCapable();
-    // set current scene active
-    obachtDirector.replaceScene(scene);
-
+    //Start with Menu
+    obacht.menu = new obacht.Menu();
 
 };
 
-
-//this is required for outside access after code is compiled in ADVANCED_COMPILATIONS mode
+// this is required for outside access after code is compiled in ADVANCED_COMPILATIONS mode
 goog.exportSymbol('obacht.start', obacht.start);

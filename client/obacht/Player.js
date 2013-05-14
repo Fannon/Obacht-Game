@@ -2,8 +2,13 @@
 /* jshint strict: false, devel: true */
 
 goog.provide('obacht.Player');
+goog.require('obacht');
 goog.require('obacht.options');
+goog.require('obacht.PlayerController');
+goog.require('obacht.Game');
 goog.require('obacht.Trap');
+
+goog.require('goog.pubsub.PubSub');
 
 goog.require('lime.RoundedRect');
 goog.require('lime.Node');
@@ -20,33 +25,17 @@ obacht.Player = function(type) {
 
     console.log('New Player();');
 
-    //////////////////////////////
-    // Subscribe to Events      //
-    //////////////////////////////
+    var self = this;
 
-    // TODO: Just a test Event Subscription! Remove later.
-    obacht.mp.events.subscribe('player_move_test', function(data) {
-        console.log('Player Move Test received!');
-    });
 
-    //////////////////////////////
-    // Player Model (state)     //
-    //////////////////////////////
+    //////////////////
+    /* PLAYER MODEL */
+    //////////////////
+
     if (type === 'own') {
-
-        this.tapAreaTop     = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, 0).setAnchorPoint(0, 0);
-        this.tapAreaBottom  = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setAnchorPoint(0, 0);
-        this.tapAreaPuffer  = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT).setPosition(0, 0).setAnchorPoint(0, 0);
-
         this.x = obacht.options.player.own.x;
         this.y = obacht.options.player.own.y;
         this.rotation = '0';
-
-        this.interactionLayer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
-        this.interactionLayer.appendChild(this.tapAreaTop);
-        this.interactionLayer.appendChild(this.tapAreaBottom);
-        this.interactionLayer.appendChild(this.tapAreaPuffer);
-
     }
 
     if (type === 'enemy') {
@@ -58,112 +47,11 @@ obacht.Player = function(type) {
 
     this.health = 3;
 
-    this.player = new lime.RoundedRect().setSize(obacht.options.player.general.width, obacht.options.player.general.height).setPosition(this.x, this.y).setAnchorPoint(0.5, 1).setFill('assets/gfx/hugo1.png').setRotation(this.rotation);
+    this.character = new lime.RoundedRect().setSize(obacht.options.player.general.width, obacht.options.player.general.height).setPosition(this.x, this.y).setAnchorPoint(0.5, 1).setFill('assets/gfx/hugo1.png').setRotation(this.rotation);
 
-    this.graphicsLayer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
+    this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
 
-    this.graphicsLayer.appendChild(this.player);
-
-};
-
-
-
-//////////////////////////////
-// Player Actions (Logic)   //
-//////////////////////////////
-
-// Getter und Setter
-
-/**
- * Lets the Player jump
- */
-obacht.Player.prototype = {
-    jump: function(player) {
-		this.player.runAction(this.jumpAnimation);
-    },
-
-    crouch: function() {
-		this.player.runAction(this.crouchAnimation);
-    },
-
-    standUp: function() {
-		this.player.runAction(this.standUpAnimation);
-    },
-
-    throwTrap: function(type) {
-        var trap = new obacht.Trap(type);
-        console.log("Player " + this.name + " throws " + type);
-
-        // TODO: Logik, etc
-
-        return trap;
-    }
-
-};
-
-
-
-
-
-//////////////////////
-// EVENT - HANDLING //
-//////////////////////
-
-	// JUMP //
-
-    this.isJumping = false;
-
-    goog.events.listen(this.tapAreaTop, ['touchstart', 'mousedown'], function(e) {
-        if (this.isJumping === true) {
-            return;
-        } else {
-            this.jump();
-            this.isJumping = true;
-        }
-    });
-
-    goog.events.listen(this.jumpAnimation, "stop", function() {
-        this.isJumping = false;
-    });
-
-    // CROUCH //
-
-    this.isCrouching = false;
-
-    goog.events.listen(this.tapAreaBottom, ['touchstart', 'mousedown'], function(e) {
-        if (this.isCrouching === false) {
-            this.crouch();
-            this.isCrouching = true;
-        } else {
-            return;
-        }
-    });
-
-    goog.events.listen(this.tapAreaPuffer, ['touchend', 'mouseup'], function(e) {
-        if (this.isCrouching === true) {
-            this.standUp();
-            this.isCrouching = false;
-        } else {
-            return;
-        }
-    });
-
-    this.tapPositionX;
-    this.tapPositionY;
-    this.tapToleranceArea = 70;
-
-    goog.events.listen(this.tapAreaBottom, ['touchmove', 'mousemove'], function(e) {
-        this.tapPositionX = e.position.x;
-        this.tapPositionY = e.position.y;
-
-        if (this.tapPositionY < this.tapToleranceArea || this.tapPositionY > obacht.options.graphics.VIEWPORT_HEIGHT / 2 - this.tapToleranceArea || this.tapPositionX < this.tapToleranceArea || this.tapPositionX > obacht.options.graphics.VIEWPORT_WIDTH / 2 - this.tapToleranceArea) {
-            if (this.isCrouching === true) {
-                this.standUp();
-                this.isCrouching = false;
-            }
-        }
-
-    });
+    this.layer.appendChild(this.character);
 
 
 
@@ -180,6 +68,69 @@ obacht.Player.prototype = {
 
 
 
+    //////////////////////////////////////
+    /* STOP-EVENT FOR OPTIMIZED JUMPING */
+    //////////////////////////////////////
+
+    goog.events.listen(this.jumpAnimation, "stop", function() {
+        obacht.options.player.stateVar.isJumping = false;
+    });
 
 
 
+    /////////////////////////
+    /* SUBSCRIBE TO EVENTS */
+    /////////////////////////
+
+    // Does not work. Don't know why. If you uncomment this code "currentGame" suddenly gets undefined.
+
+    obacht.playerController.events.subscribe('player_jump', function() {
+        if(type == "own"){
+            self.jump();
+        };
+    });
+    
+    obacht.playerController.events.subscribe('player_crouch', function() {
+        if(type == "own"){
+        	self.crouch();
+        };
+    });
+    
+    obacht.playerController.events.subscribe('player_standUp', function() {
+    	if(type == "own"){
+    	    self.standUp();	
+    	};
+    });
+
+
+};
+
+
+
+
+//////////////////////////////
+// Player Actions (Logic)   //
+//////////////////////////////
+
+obacht.Player.prototype = {
+    jump: function() {
+		this.character.runAction(this.jumpAnimation);
+    },
+
+    crouch: function() {
+		this.character.runAction(this.crouchAnimation);
+    },
+
+    standUp: function() {
+		this.character.runAction(this.standUpAnimation);
+    },
+
+    throwTrap: function(type) {
+        var trap = new obacht.Trap(type);
+        console.log("Player " + this.name + " throws " + type);
+
+        // TODO: Logik, etc
+
+        return trap;
+    }
+};
