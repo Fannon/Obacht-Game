@@ -77,6 +77,12 @@ obacht.MultiplayerService = function(serverUrl) {
     this.socket.on('no_match_found', function () {
         console.log('No Match found.');
         this.newRoom();
+        self.events.publish('no_match_found');
+    });
+
+    this.socket.on('game_ready', function () {
+        console.log('Game is ready!');
+        self.events.publish('game_ready');
     });
 
     this.socket.on('player_move', function (data) {
@@ -85,6 +91,15 @@ obacht.MultiplayerService = function(serverUrl) {
 
     this.socket.on('player_action', function (data) {
         self.events.publish('player_action', data.type, data.data);
+    });
+
+    this.socket.on('player_status', function (data) {
+        self.events.publish('player_status', data.pid, data.life);
+        if (life === 0){
+            console.log('Game finished!');
+        } else {
+            console.log('>> playerStatus(' + life + ')');
+        }
     });
 
     this.socket.on('item', function (data) {
@@ -97,6 +112,11 @@ obacht.MultiplayerService = function(serverUrl) {
         console.log('Trap Data received');
         console.dir(data);
         self.events.publish('trap', data);
+    });
+
+    this.socket.on('player_left', function () {
+        console.log('Player has left the Game!');
+        self.events.publish('player_left');
     });
 
     this.socket.on('get_rooms', function (data) {
@@ -136,10 +156,22 @@ obacht.MultiplayerService.prototype.findMatch = function () {
     this.socket.emit('find_match');
 };
 
+obacht.MultiplayerService.prototype.playerReady = function (pid) {
+    console.log('>> playerReady()');
+    this.socket.emit('player_ready');
+};
+
 obacht.MultiplayerService.prototype.playerAction = function(type, data) {
     this.socket.emit('player_action', {
         type: type,
         data: data
+    });
+};
+
+obacht.MultiplayerService.prototype.playerStatus = function (pid, life) {
+    this.socket.emit('player_status', {
+        pid: pid,
+        life: life
     });
 };
 
@@ -155,9 +187,6 @@ obacht.MultiplayerService.prototype.playerMove = function(data) {
     } else {
         console.log('Not in a room yet!');
     }
-
-    // TODO: Nur ein Test, später wieder löschen!
-    this.events.publish('player_move_test', data);
 };
 
 obacht.MultiplayerService.prototype.throwHurdle = function(data) {
