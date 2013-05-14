@@ -3,12 +3,13 @@
 
 goog.provide('obacht.Game');
 
+// Closure Library Requirements
+goog.require('goog.pubsub.PubSub');
+
+// Obacht Requirements
 goog.require('obacht.World');
 goog.require('obacht.Player');
-goog.require('obacht.PlayerController');
 goog.require('obacht.themes');
-goog.require('obacht.options');
-goog.require('goog.pubsub.PubSub');
 
 
 /**

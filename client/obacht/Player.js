@@ -1,20 +1,20 @@
 /* global goog, lime, obacht */
 /* jshint strict: false, devel: true */
 
-goog.provide('obacht.Player');
-goog.require('obacht');
-goog.require('obacht.options');
-goog.require('obacht.PlayerController');
-goog.require('obacht.Game');
-goog.require('obacht.Trap');
-
+// Closure Library Requirements
 goog.require('goog.pubsub.PubSub');
 
+// Lime.js Requirements
 goog.require('lime.RoundedRect');
 goog.require('lime.Node');
 goog.require('lime.animation.Sequence');
 goog.require('lime.animation.MoveBy');
 goog.require('lime.animation.ScaleTo');
+
+// Obacht Requirements
+goog.provide('obacht.Player');
+goog.require('obacht.Trap');
+
 
 /**
  * Its a Player Object
@@ -39,9 +39,9 @@ obacht.Player = function(type) {
     }
 
     if (type === 'enemy') {
-		this.x = obacht.options.player.enemy.x;
-		this.y = obacht.options.player.enemy.y;
-		this.rotation = "180";
+        this.x = obacht.options.player.enemy.x;
+        this.y = obacht.options.player.enemy.y;
+        this.rotation = "180";
     }
 
 
@@ -52,7 +52,6 @@ obacht.Player = function(type) {
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
 
     this.layer.appendChild(this.character);
-
 
 
     ////////////////
@@ -67,7 +66,6 @@ obacht.Player = function(type) {
     this.standUpAnimation = new lime.animation.ScaleTo(1, 1).setDuration(0.1);
 
 
-
     //////////////////////////////////////
     /* STOP-EVENT FOR OPTIMIZED JUMPING */
     //////////////////////////////////////
@@ -77,7 +75,6 @@ obacht.Player = function(type) {
     });
 
 
-
     /////////////////////////
     /* SUBSCRIBE TO EVENTS */
     /////////////////////////
@@ -85,27 +82,25 @@ obacht.Player = function(type) {
     // Does not work. Don't know why. If you uncomment this code "currentGame" suddenly gets undefined.
 
     obacht.playerController.events.subscribe('player_jump', function() {
-        if(type == "own"){
+        if (type === "own") {
             self.jump();
-        };
+        }
     });
-    
+
     obacht.playerController.events.subscribe('player_crouch', function() {
-        if(type == "own"){
-        	self.crouch();
-        };
+        if (type === "own") {
+            self.crouch();
+        }
     });
-    
+
     obacht.playerController.events.subscribe('player_standUp', function() {
-    	if(type == "own"){
-    	    self.standUp();	
-    	};
+        if (type === "own") {
+            self.standUp();
+        }
     });
 
 
 };
-
-
 
 
 //////////////////////////////
@@ -114,15 +109,15 @@ obacht.Player = function(type) {
 
 obacht.Player.prototype = {
     jump: function() {
-		this.character.runAction(this.jumpAnimation);
+        this.character.runAction(this.jumpAnimation);
     },
 
     crouch: function() {
-		this.character.runAction(this.crouchAnimation);
+        this.character.runAction(this.crouchAnimation);
     },
 
     standUp: function() {
-		this.character.runAction(this.standUpAnimation);
+        this.character.runAction(this.standUpAnimation);
     },
 
     throwTrap: function(type) {

@@ -3,6 +3,14 @@
 
 goog.provide('obacht.Menu');
 
+// Lime.js Requirements
+goog.require('lime.Layer');
+
+// Obacht Requirements
+goog.require('obacht.PlayerController');
+goog.require('obacht.Game');
+goog.require('obacht.Button');
+
 /**
  * Game Menu
  *
@@ -132,7 +140,7 @@ obacht.Menu.prototype = {
         var codeposition = 0;
 
         // KeyboardButton Placement
-        var startFrom = 200;
+        var startFrom = 150;
         var spacing = 90;
         var keys = [];
 
@@ -229,7 +237,7 @@ obacht.Menu.prototype = {
         /////////////////////////////
 
         for (var i = 0; i < 10; i++) {
-            keys[i] = drawKeyboardButton(startFrom + spacing * i, i);
+            keys[i] = drawKeyboardButton(startFrom + spacing * i, i + '');
             layerMenu.appendChild(keys[i]);
         }
 
