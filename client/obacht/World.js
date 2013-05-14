@@ -35,6 +35,8 @@ obacht.World = function(type) {
         this.y = obacht.options.world.bottom.y;
         this.rotation1 = obacht.options.world.bottom.rotation1;
         this.rotation2 = obacht.options.world.bottom.rotation2;
+        this.rotation3 = obacht.options.world.bottom.startRotation1;
+        this.rotation4 = obacht.options.world.bottom.startRotation2;
     }
 
     if (type === 'enemy') {
@@ -42,6 +44,8 @@ obacht.World = function(type) {
         this.y = obacht.options.world.top.y;
         this.rotation1 = obacht.options.world.top.rotation1;
         this.rotation2 = obacht.options.world.top.rotation2;
+        this.rotation3 = obacht.options.world.bottom.startRotation1;
+        this.rotation4 = obacht.options.world.bottom.startRotation2;
     }
 
 
@@ -81,14 +85,14 @@ obacht.World = function(type) {
 obacht.World.prototype = {
 
     spin: function() {
-        this.createAnimation1(this.ground1, 90, 180, obacht.options.world.spinDuration.front, 0);
-        this.createAnimation2(this.ground2, 180, 90, 0, obacht.options.world.spinDuration.front);
-        this.createAnimation1(this.landscapeA1, 90, 180, obacht.options.world.spinDuration.front, 0);
-        this.createAnimation2(this.landscapeA2, 180, 90, 0, obacht.options.world.spinDuration.front);
-        this.createAnimation1(this.landscapeB1, 90, 180, obacht.options.world.spinDuration.middle, 0);
-        this.createAnimation2(this.landscapeB2, 180, 90, 0, obacht.options.world.spinDuration.middle);
-        this.createAnimation1(this.clouds1, 90, 180, obacht.options.world.spinDuration.clouds, 0);
-        this.createAnimation2(this.clouds2, 180, 90, 0, obacht.options.world.spinDuration.clouds);
+        this.createAnimation1(this.ground1, this.rotation3, this.rotation4, obacht.options.world.spinDuration.front, 0);
+        this.createAnimation2(this.ground2, this.rotation4, this.rotation3, 0, obacht.options.world.spinDuration.front);
+        this.createAnimation1(this.landscapeA1, this.rotation3, this.rotation4, obacht.options.world.spinDuration.front, 0);
+        this.createAnimation2(this.landscapeA2, this.rotation4, this.rotation3, 0, obacht.options.world.spinDuration.front);
+        this.createAnimation1(this.landscapeB1, this.rotation3, this.rotation4, obacht.options.world.spinDuration.middle, 0);
+        this.createAnimation2(this.landscapeB2, this.rotation4, this.rotation3, 0, obacht.options.world.spinDuration.middle);
+        this.createAnimation1(this.clouds1, this.rotation3, this.rotation4, obacht.options.world.spinDuration.clouds, 0);
+        this.createAnimation2(this.clouds2, this.rotation4, this.rotation3, 0, obacht.options.world.spinDuration.clouds);
     },
 
     createAnimation1: function(object, rotation1, rotation2, duration1, duration2) {

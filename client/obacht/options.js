@@ -31,13 +31,17 @@ obacht.options = {
             x: 0,
             y: 1960,
             rotation1: 0,
-            rotation2: 90
+            rotation2: 90,
+            startRotation1: 90,
+            startRotation2: 180
         },
         top: {
             x: 1280,
             y: -1240,
-            rotation1: 180,
-            rotation2: 270
+            rotation1: 225,
+            rotation2: 315,
+            startRotation1: 135,
+            startRotation2: 225
         },
         spinDuration: {
             front: 20,
@@ -47,8 +51,8 @@ obacht.options = {
     },
     player: {
         general: {
-            width: 120,
-            height: 190,
+            width: 377*0.7,
+            height: 342*0.7,
             jumpUpDuration: 0.2,
             jumpDownDuration: 0.35,
             jumpHeight: 280,
@@ -57,12 +61,12 @@ obacht.options = {
             crouchHeight: 0.5
         },
         own: {
-            x: 160,
-            y: 570
+            x: 150,
+            y: 550
         },
         enemy: {
-            x: 1120,
-            y: 150
+            x: 1130,
+            y: 170
         },
         stateVar: {
             isJumping: false
@@ -70,7 +74,11 @@ obacht.options = {
     },
 
     playerController: {
-        tapToleranceArea: 70
+        tapToleranceArea: 70,
+        
+        inventar: {
+           size: 120
+        }
     },
 
     "trap": {

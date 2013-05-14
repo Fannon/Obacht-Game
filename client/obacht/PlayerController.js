@@ -6,6 +6,8 @@ goog.provide('obacht.PlayerController');
 goog.require('obacht.options');
 goog.require('goog.pubsub.PubSub');
 
+goog.require('lime.RoundedRect');
+
 /**
  * Its a Player Controller
  *
@@ -20,11 +22,18 @@ obacht.PlayerController = function() {
     this.tapAreaTop = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, 0).setAnchorPoint(0, 0);
     this.tapAreaBottom = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setAnchorPoint(0, 0);
     this.tapAreaPuffer = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT).setPosition(0, 0).setAnchorPoint(0, 0);
+    
+    this.inventarButtonLeft = new lime.RoundedRect().setSize(obacht.options.playerController.inventar.size, obacht.options.playerController.inventar.size).setPosition(880, 20).setFill('#ffffff').setOpacity(0.5).setAnchorPoint(0, 0).setRadius(15);
+    this.inventarButtonCenter = new lime.RoundedRect().setSize(obacht.options.playerController.inventar.size, obacht.options.playerController.inventar.size).setPosition(1010, 20).setFill('#ffffff').setOpacity(0.5).setAnchorPoint(0, 0).setRadius(15);
+    this.inventarButtonRight = new lime.RoundedRect().setSize(obacht.options.playerController.inventar.size, obacht.options.playerController.inventar.size).setPosition(1140, 20).setFill('#ffffff').setOpacity(0.5).setAnchorPoint(0, 0).setRadius(15);
 
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     this.layer.appendChild(this.tapAreaTop);
     this.layer.appendChild(this.tapAreaBottom);
     this.layer.appendChild(this.tapAreaPuffer);
+    this.layer.appendChild(this.inventarButtonLeft);
+    this.layer.appendChild(this.inventarButtonCenter);
+    this.layer.appendChild(this.inventarButtonRight);
 
     // Event Publisher/Subscriber
     this.events = new goog.pubsub.PubSub();
