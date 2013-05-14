@@ -35,13 +35,15 @@ obacht.Player = function(type) {
     if (type === 'own') {
         this.x = obacht.options.player.own.x;
         this.y = obacht.options.player.own.y;
-        this.rotation = '0';
+        this.rotation = 0;
+        this.jumpHeight = -obacht.options.player.general.jumpHeight;
     }
 
     if (type === 'enemy') {
         this.x = obacht.options.player.enemy.x;
         this.y = obacht.options.player.enemy.y;
-        this.rotation = "180";
+        this.rotation = 180;
+        this.jumpHeight = obacht.options.player.general.jumpHeight;
     }
 
 
@@ -58,12 +60,12 @@ obacht.Player = function(type) {
     /* ANIMATIONS */
     ////////////////
 
-    this.jumpUp = new lime.animation.MoveBy(0, -280).setDuration(0.2).setEasing(lime.animation.Easing.EASEOUT);
-    this.jumpDown = this.jumpUp.reverse().setDuration(0.35).setEasing(lime.animation.Easing.EASEIN);
+    this.jumpUp = new lime.animation.MoveBy(0, this.jumpHeight).setDuration(obacht.options.player.general.jumpUpDuration).setEasing(lime.animation.Easing.EASEOUT);
+    this.jumpDown = this.jumpUp.reverse().setDuration(obacht.options.player.general.jumpDownDuration).setEasing(lime.animation.Easing.EASEIN);
     this.jumpAnimation = new lime.animation.Sequence(this.jumpUp, this.jumpDown);
 
-    this.crouchAnimation = new lime.animation.ScaleTo(1.6, 0.5).setDuration(0.1);
-    this.standUpAnimation = new lime.animation.ScaleTo(1, 1).setDuration(0.1);
+    this.crouchAnimation = new lime.animation.ScaleTo(obacht.options.player.general.crouchWidth, obacht.options.player.general.crouchHeight).setDuration(obacht.options.player.general.crouchDuration);
+    this.standUpAnimation = new lime.animation.ScaleTo(1, 1).setDuration(obacht.options.player.general.crouchDuration);
 
 
     //////////////////////////////////////
@@ -79,26 +81,33 @@ obacht.Player = function(type) {
     /* SUBSCRIBE TO EVENTS */
     /////////////////////////
 
-    // Does not work. Don't know why. If you uncomment this code "currentGame" suddenly gets undefined.
-
-    obacht.playerController.events.subscribe('player_jump', function() {
-        if (type === "own") {
+    if (type === "own") {
+        obacht.playerController.events.subscribe('player_jump', function() {
             self.jump();
-        }
-    });
+        });
 
-    obacht.playerController.events.subscribe('player_crouch', function() {
-        if (type === "own") {
+        obacht.playerController.events.subscribe('player_crouch', function() {
             self.crouch();
-        }
-    });
+        });
 
-    obacht.playerController.events.subscribe('player_standUp', function() {
-        if (type === "own") {
+        obacht.playerController.events.subscribe('player_standUp', function() {
             self.standUp();
-        }
-    });
+        });
+    }
 
+    if (type === "enemy") {
+        obacht.mp.events.subscribe('player_jump_mp', function() {
+            self.jump();
+        });
+
+        obacht.mp.events.subscribe('player_crouch_mp', function() {
+            self.crouch();
+        });
+
+        obacht.mp.events.subscribe('player_standUp_mp', function() {
+            self.standUp();
+        });
+    }
 
 };
 
@@ -109,14 +118,17 @@ obacht.Player = function(type) {
 
 obacht.Player.prototype = {
     jump: function() {
+        "use strict";
         this.character.runAction(this.jumpAnimation);
     },
 
     crouch: function() {
+        "use strict";
         this.character.runAction(this.crouchAnimation);
     },
 
     standUp: function() {
+        "use strict";
         this.character.runAction(this.standUpAnimation);
     },
 
