@@ -72,7 +72,7 @@ obacht.Player = function(type) {
     /* STOP-EVENT FOR OPTIMIZED JUMPING */
     //////////////////////////////////////
 
-    goog.events.listen(this.jumpAnimation, "stop", function() {
+    goog.events.listen(this.jumpAnimation, 'stop', function() {
         obacht.options.player.stateVar.isJumping = false;
     });
 
@@ -96,16 +96,16 @@ obacht.Player = function(type) {
     }
 
     if (type === "enemy") {
-        obacht.mp.events.subscribe('player_jump_mp', function() {
-            self.jump();
-        });
-
-        obacht.mp.events.subscribe('player_crouch_mp', function() {
-            self.crouch();
-        });
-
-        obacht.mp.events.subscribe('player_standUp_mp', function() {
-            self.standUp();
+        obacht.mp.events.subscribe('player_action', function(data) {
+            if (data.type === 'jump') {
+                self.jump();
+            }
+            if (data.type === 'crouch') {
+                self.crouch();
+            }
+            if (data.type === 'standUp') {
+                self.standUp();
+            }
         });
     }
 

@@ -98,18 +98,18 @@ obacht.World.prototype = {
     createAnimation1: function(object, rotation1, rotation2, duration1, duration2) {
         object.runAction(new lime.animation.Loop(
             new lime.animation.Sequence(
-            new lime.animation.RotateBy(rotation1).setDuration(duration1).setEasing(lime.animation.Easing.LINEAR),
-            new lime.animation.RotateBy(rotation2).setDuration(duration2).setEasing(lime.animation.Easing.LINEAR),
-            new lime.animation.RotateBy(rotation1).setDuration(duration1).setEasing(lime.animation.Easing.LINEAR)))
+            new lime.animation.RotateBy(rotation1).setDuration(duration1).setEasing(lime.animation.Easing.LINEAR).enableOptimizations(),
+            new lime.animation.RotateBy(rotation2).setDuration(duration2).setEasing(lime.animation.Easing.LINEAR).enableOptimizations(),
+            new lime.animation.RotateBy(rotation1).setDuration(duration1).setEasing(lime.animation.Easing.LINEAR).enableOptimizations()))
         );
     },
 
     createAnimation2: function(object, rotation1, rotation2, duration1, duration2) {
         object.runAction(new lime.animation.Loop(
             new lime.animation.Sequence(
-            new lime.animation.RotateBy(rotation1).setDuration(duration1).setEasing(lime.animation.Easing.LINEAR),
-            new lime.animation.RotateBy(rotation2).setDuration(duration2).setEasing(lime.animation.Easing.LINEAR),
-            new lime.animation.RotateBy(rotation2).setDuration(duration2).setEasing(lime.animation.Easing.LINEAR)))
+            new lime.animation.RotateBy(rotation1).setDuration(duration1).setEasing(lime.animation.Easing.LINEAR).enableOptimizations(),
+            new lime.animation.RotateBy(rotation2).setDuration(duration2).setEasing(lime.animation.Easing.LINEAR).enableOptimizations(),
+            new lime.animation.RotateBy(rotation2).setDuration(duration2).setEasing(lime.animation.Easing.LINEAR).enableOptimizations()))
         );
     }
 };

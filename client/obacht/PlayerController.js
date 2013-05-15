@@ -127,18 +127,23 @@ obacht.PlayerController.prototype = {
     jump: function() {
         "use strict";
         this.events.publish('player_jump');
-        obacht.mp.events.publish('player_jump');
+        obacht.mp.playerAction('jump', {
+            d: 1
+        });
     },
 
     crouch: function() {
         "use strict";
         this.events.publish('player_crouch');
-        obacht.mp.events.publish('player_crouch');
+        obacht.mp.playerAction('crouch', {
+            d: 2
+        });
     },
 
     standUp: function() {
         "use strict";
         this.events.publish('player_standUp');
+<<<<<<< HEAD
         obacht.mp.events.publish('player_standUp');
     },
     
@@ -151,5 +156,10 @@ obacht.PlayerController.prototype = {
         "use strict";
         //function wird durch tippen auf ein Icon im Inventar ausgelöst, setzt das Hinderniss und löscht das Icon dann aus dem Inventar
         console.log('use Item: ' + type);
+=======
+        obacht.mp.playerAction('standUp', {
+            d: 3
+        });
+>>>>>>> Bugfix
     }
 };
