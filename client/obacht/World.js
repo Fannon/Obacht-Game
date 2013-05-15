@@ -53,14 +53,14 @@ obacht.World = function(type) {
     // LIME.JS - OBJECTS //
     ///////////////////////
 
-    this.clouds1 = new lime.Sprite().setSize(obacht.options.world.size.clouds, obacht.options.world.size.clouds).setFill(obacht.themes.path.clouds).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation1);
-    this.clouds2 = new lime.Sprite().setSize(obacht.options.world.size.clouds, obacht.options.world.size.clouds).setFill(obacht.themes.path.clouds).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation2);
-    this.landscapeA1 = new lime.Sprite().setSize(obacht.options.world.size.landscapeA, obacht.options.world.size.landscapeA).setFill(obacht.themes.path.landscapeA).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation1);
-    this.landscapeA2 = new lime.Sprite().setSize(obacht.options.world.size.landscapeA, obacht.options.world.size.landscapeA).setFill(obacht.themes.path.landscapeA).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation2);
-    this.landscapeB1 = new lime.Sprite().setSize(obacht.options.world.size.landscapeB, obacht.options.world.size.landscapeB).setFill(obacht.themes.path.landscapeB).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation1);
-    this.landscapeB2 = new lime.Sprite().setSize(obacht.options.world.size.landscapeB, obacht.options.world.size.landscapeB).setFill(obacht.themes.path.landscapeB).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation2);
-    this.ground1 = new lime.Sprite().setSize(obacht.options.world.size.ground, obacht.options.world.size.ground).setFill(obacht.themes.path.ground).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation1);
-    this.ground2 = new lime.Sprite().setSize(obacht.options.world.size.ground, obacht.options.world.size.ground).setFill(obacht.themes.path.ground).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation2);
+    this.clouds1 = new lime.Sprite().setSize(obacht.options.world.size.clouds, obacht.options.world.size.clouds).setFill(obacht.themes.path.clouds).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation1).setRenderer(obacht.renderer);
+    this.clouds2 = new lime.Sprite().setSize(obacht.options.world.size.clouds, obacht.options.world.size.clouds).setFill(obacht.themes.path.clouds).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation2).setRenderer(obacht.renderer);
+    this.landscapeA1 = new lime.Sprite().setSize(obacht.options.world.size.landscapeA, obacht.options.world.size.landscapeA).setFill(obacht.themes.path.landscapeA).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation1).setRenderer(obacht.renderer);
+    this.landscapeA2 = new lime.Sprite().setSize(obacht.options.world.size.landscapeA, obacht.options.world.size.landscapeA).setFill(obacht.themes.path.landscapeA).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation2).setRenderer(obacht.renderer);
+    this.landscapeB1 = new lime.Sprite().setSize(obacht.options.world.size.landscapeB, obacht.options.world.size.landscapeB).setFill(obacht.themes.path.landscapeB).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation1).setRenderer(obacht.renderer);
+    this.landscapeB2 = new lime.Sprite().setSize(obacht.options.world.size.landscapeB, obacht.options.world.size.landscapeB).setFill(obacht.themes.path.landscapeB).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation2).setRenderer(obacht.renderer);
+    this.ground1 = new lime.Sprite().setSize(obacht.options.world.size.ground, obacht.options.world.size.ground).setFill(obacht.themes.path.ground).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation1).setRenderer(obacht.renderer);
+    this.ground2 = new lime.Sprite().setSize(obacht.options.world.size.ground, obacht.options.world.size.ground).setFill(obacht.themes.path.ground).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation2).setRenderer(obacht.renderer);
 
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
 

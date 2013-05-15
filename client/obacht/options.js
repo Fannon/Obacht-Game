@@ -11,7 +11,8 @@ goog.provide('obacht.options');
 obacht.options = {
     graphics: {
         VIEWPORT_WIDTH: 1280,
-        VIEWPORT_HEIGHT: 720
+        VIEWPORT_HEIGHT: 720,
+        DEFAULT_RENDERER: 'CANVAS'
     },
 
     sound: {
@@ -76,15 +77,15 @@ obacht.options = {
     playerController: {
         tapToleranceArea: 70
     },
-    
+
     Inventory: {
         size: 120,
         y: 20,
-   
+
         left: {
 			x: 880,
 			active: false,
-			type: 'none' 
+			type: 'none'
         },
         center: {
 			x: 1010,
