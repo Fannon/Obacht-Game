@@ -23,7 +23,7 @@ obacht.PlayerController = function() {
     this.tapAreaTop = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, 0).setAnchorPoint(0, 0);
     this.tapAreaBottom = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setAnchorPoint(0, 0);
     this.tapAreaPuffer = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT).setPosition(0, 0).setAnchorPoint(0, 0);
-    
+
     this.leftInventory = new obacht.Inventory('left');
     this.centerInventory = new obacht.Inventory('center');
     this.rightInventory = new obacht.Inventory('right');
@@ -96,7 +96,7 @@ obacht.PlayerController = function() {
             }
         }
     });
-    
+
     //LEFT INVENTORY BUTTON
    goog.events.listen(this.leftInventory.layer, ['touchstart', 'mousedown'], function(e) {
        console.log('click left');
@@ -119,7 +119,7 @@ obacht.PlayerController = function() {
        if(obacht.options.Inventory.right.active === true){
             self.useItem(obacht.options.Inventory.right.type);
         }
-    }); 
+    });
 };
 
 obacht.PlayerController.prototype = {
@@ -143,23 +143,22 @@ obacht.PlayerController.prototype = {
     standUp: function() {
         "use strict";
         this.events.publish('player_standUp');
-<<<<<<< HEAD
-        obacht.mp.events.publish('player_standUp');
+        obacht.mp.playerAction('standUp', {
+            d: 3
+        });
     },
-    
+
     getItem: function() {
         "use strict";
         //funktion wird durch tippen auf das erscheinende Icon ausgelöst und legt das Icon im Inventar ab
     },
-    
+
     useItem: function(type) {
         "use strict";
         //function wird durch tippen auf ein Icon im Inventar ausgelöst, setzt das Hinderniss und löscht das Icon dann aus dem Inventar
         console.log('use Item: ' + type);
-=======
         obacht.mp.playerAction('standUp', {
             d: 3
         });
->>>>>>> Bugfix
     }
 };
