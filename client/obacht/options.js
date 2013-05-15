@@ -74,10 +74,27 @@ obacht.options = {
     },
 
     playerController: {
-        tapToleranceArea: 70,
-        
-        inventar: {
-           size: 120
+        tapToleranceArea: 70
+    },
+    
+    Inventory: {
+        size: 120,
+        y: 20,
+   
+        left: {
+			x: 880,
+			active: false,
+			type: 'none' 
+        },
+        center: {
+			x: 1010,
+			active: false,
+			type: 'none'
+        },
+        right: {
+			x: 1140,
+			active: true,
+			type: 'snake'
         }
     },
 
