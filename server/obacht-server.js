@@ -1,5 +1,5 @@
-/* global require, socket, process */
-/* jshint devel: true */
+/* global socket */
+/* jshint devel: true, node: true */
 
 /**
  * Obacht Game Node.js Multiplayer Server
@@ -19,8 +19,8 @@ obacht.server.port = (process.argv[2] ? process.argv[2] : obacht.server.options.
 obacht.server.io = require('socket.io').listen(obacht.server.port); // Start Socket.io
 
 // Data Structures
-var RoomCollection = require('./roomCollection');
-obacht.server.rooms = new RoomCollection(9999, obacht.server.io); // Load RoomCollection DataStructure
+var RoomManager = require('./roomManager');
+obacht.server.rooms = new RoomManager(9999, obacht.server.io); // Load RoomManager DataStructure
 
 
 //////////////////////////////

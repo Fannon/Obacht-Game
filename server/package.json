@@ -21,7 +21,9 @@
     "server"
   ],
   "dependencies": {
-    "socket.io":   "0.9.x"
+    "socket.io": "~0.9.x",
+    "underscore": "~1.4.4",
+    "backbone": "~1.0.0"
   },
   "license": "MIT"
 }
