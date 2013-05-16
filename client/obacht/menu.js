@@ -131,7 +131,7 @@ obacht.Menu.prototype = {
             btn_createGame.appendChild(btn_createGame.label);
         layerMenu.appendChild(btn_createGame);    
         goog.events.listen(btn_createGame, lime.Button.Event.CLICK, function() {
-            that.loadGame(false);
+            that.getCodeScene(false);
         });
 
         //Join-Button
@@ -140,7 +140,7 @@ obacht.Menu.prototype = {
             btn_joinGame.appendChild(btn_joinGame.label);
         layerMenu.appendChild(btn_joinGame); 
         goog.events.listen(btn_joinGame, lime.Button.Event.CLICK, function() {
-            that.join();
+            that.loadGame(false);
         });
 
         //PlayOnline-Button
@@ -151,7 +151,86 @@ obacht.Menu.prototype = {
         goog.events.listen(btn_play, lime.Button.Event.CLICK, function() {
             that.loadGame(false);
         });
+
+        //Play_with_your_friend-Text
+        var text_friendsGame = new lime.Label().setAlign('center').setText('PLAY WITH YOUR FRIEND').setFontColor('#fff').setFontSize(40).setSize(430, 55).setPosition(430, 350);
+        layerMenu.appendChild(text_friendsGame);
+
+        //Random_Game-Text
+        var text_randomGame = new lime.Label().setAlign('center').setText('RANDOM GAME').setFontColor('#fff').setFontSize(40).setSize(700, 55).setPosition(830, 390);
+        layerMenu.appendChild(text_randomGame);
+
     },
+
+    getCodeScene: function() {
+        "use strict";
+        var that = this;
+
+        var sceneMenu = new lime.Scene();
+
+        // set current scene active
+        obacht.director.replaceScene(sceneMenu);
+
+        var layerMenu = new lime.Layer();
+        sceneMenu.appendChild(layerMenu);
+
+        var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/menu/backgrounds/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
+        layerMenu.appendChild(background);
+
+        var logo = new lime.Sprite().setSize(650, 149).setFill('assets/menu/logo/logo.png').setPosition(640, 100).setAnchorPoint(0.5, 0);
+        layerMenu.appendChild(logo);
+
+        //Your_Code-Text and Code_Field
+        //var getCodeButton = new lime.Sprite().setFill('assets/bildpfad.png).setPosition(640, 350).setSize(435, 110);
+        var getCodeButton= new lime.Label().setAlign('center').setText('YOUR CODE').setFontColor('#fff').setFontSize(50).setSize(300, 90).setPosition(640, 320);
+        layerMenu.appendChild(getCodeButton);
+
+        //Pop-up-Infotext
+        var getCodeInfotext = new lime.Label().setAlign('center').setText('PLEASE GIVE THIS CODE TO YOUR FRIEND').setFontColor('#fff').setFontSize(40).setSize(300, 55).setPosition(1050, 300);
+        layerMenu.appendChild(getCodeInfotext);
+
+
+        //Next-Button
+        var nextButton = new lime.Label().setAlign('center').setText('NEXT').setFontColor('#fff').setFontSize(40).setSize(700, 55).setPosition(640, 600);
+        layerMenu.appendChild(nextButton);
+        goog.events.listen(nextButton, lime.Button.Event.CLICK, function() {
+            that.selectThemeScene(false);
+        });
+
+    },
+
+
+        selectThemeScene: function() {
+            "use strict";
+            var that = this;
+
+            var sceneMenu = new lime.Scene();
+
+            // set current scene active
+            obacht.director.replaceScene(sceneMenu);
+
+            var layerMenu = new lime.Layer();
+            sceneMenu.appendChild(layerMenu);
+
+            var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/menu/backgrounds/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
+            layerMenu.appendChild(background);
+
+            var logo = new lime.Sprite().setSize(650, 149).setFill('assets/menu/logo/logo.png').setPosition(640, 100).setAnchorPoint(0.5, 0);
+            layerMenu.appendChild(logo);
+
+            //Select_World-Text
+            var selectWorld = new lime.Label().setAlign('center').setText('SELECT A WORLD').setFontColor('#fff').setFontSize(50).setSize(400, 55).setPosition(640, 320);
+            layerMenu.appendChild(selectWorld);
+
+            //Next-Button
+            var nextButton = new lime.Label().setAlign('center').setText('NEXT').setFontColor('#fff').setFontSize(40).setSize(700, 55).setPosition(640, 600);
+            layerMenu.appendChild(nextButton);
+            goog.events.listen(nextButton, lime.Button.Event.CLICK, function() {
+                that.join(false);
+            });
+
+    },
+
 
     /**
      * Game Loading Scene
@@ -316,6 +395,13 @@ obacht.Menu.prototype = {
 
         //var submitButton = drawKeyboardButton(startFrom + spacing * 11, '#');
         //layerMenu.appendChild(submitButton);
+
+        //Next-Button
+        var nextButton = new lime.Label().setAlign('center').setText('NEXT').setFontColor('#fff').setFontSize(40).setSize(700, 55).setPosition(640, 600);
+        layerMenu.appendChild(nextButton);
+        goog.events.listen(nextButton, lime.Button.Event.CLICK, function() {
+            that.loadGame(false);
+        });
 
 
         /////////////////////////////
