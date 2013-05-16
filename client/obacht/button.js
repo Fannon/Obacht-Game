@@ -15,8 +15,8 @@ goog.require('lime.GlossyButton');
 obacht.Button = function(txt) {
     lime.GlossyButton.call(this, txt);
 
-    this.borderWidth = 4;
-    this.setColor('#000');
+    this.borderWidth = 8;
+    this.setColor('#ff5a00');
 };
 goog.inherits(obacht.Button, lime.GlossyButton);
 
