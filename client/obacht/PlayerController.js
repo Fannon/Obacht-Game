@@ -3,10 +3,15 @@
 
 goog.provide('obacht.PlayerController');
 
+// Obacht Requirements
 goog.require('obacht.options');
 goog.require('obacht.Inventory');
+goog.require('obacht.Bonus');
+
+// Closure Library Requirements
 goog.require('goog.pubsub.PubSub');
 
+//LimeJS Requirements
 goog.require('lime.RoundedRect');
 
 /**
@@ -27,9 +32,8 @@ obacht.PlayerController = function() {
     this.leftInventory = new obacht.Inventory('left');
     this.centerInventory = new obacht.Inventory('center');
     this.rightInventory = new obacht.Inventory('right');
-    //this.inventarButtonLeft = new lime.RoundedRect().setSize(obacht.options.playerController.inventar.size, obacht.options.playerController.inventar.size).setPosition(880, 20).setFill('#ffffff').setOpacity(0.5).setAnchorPoint(0, 0).setRadius(15);
-    //this.inventarButtonCenter = new lime.RoundedRect().setSize(obacht.options.playerController.inventar.size, obacht.options.playerController.inventar.size).setPosition(1010, 20).setFill('#ffffff').setOpacity(0.5).setAnchorPoint(0, 0).setRadius(15);
-    //this.inventarButtonRight = new lime.RoundedRect().setSize(obacht.options.playerController.inventar.size, obacht.options.playerController.inventar.size).setPosition(1140, 20).setFill('#ffffff').setOpacity(0.5).setAnchorPoint(0, 0).setRadius(15);
+    
+    this.bonus = new obacht.Bonus('snake');
 
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     this.layer.appendChild(this.tapAreaTop);
@@ -38,6 +42,7 @@ obacht.PlayerController = function() {
     this.layer.appendChild(this.leftInventory.layer);
     this.layer.appendChild(this.centerInventory.layer);
     this.layer.appendChild(this.rightInventory.layer);
+    this.layer.appendChild(this.bonus.layer);
     //this.layer.appendChild(this.inventarButtonCenter);
     //this.layer.appendChild(this.inventarButtonRight);
 
@@ -100,25 +105,46 @@ obacht.PlayerController = function() {
     //LEFT INVENTORY BUTTON
    goog.events.listen(this.leftInventory.layer, ['touchstart', 'mousedown'], function(e) {
        console.log('click left');
-       if(obacht.options.Inventory.left.active === true){
-            self.useItem(obacht.options.Inventory.left.type);
-       } else {
-           return false;
+       if(obacht.options.inventory.left.active === true){
+            self.useItem(obacht.options.inventory.left.type);
+            obacht.options.inventory.left.active = false;
        }
     });
+    
     //CENTER INVENTORY BUTTON
     goog.events.listen(this.centerInventory.layer, ['touchstart', 'mousedown'], function(e) {
        console.log('click center');
-        if(obacht.options.Inventory.center.active === true){
-            self.useItem(obacht.options.Inventory.center.type);
+        if(obacht.options.inventory.center.active === true){
+            self.useItem(obacht.options.inventory.center.type);
+            obacht.options.inventory.center.active = false;
         }
     });
+    
     //RIGHT INVENTORY BUTTON
     goog.events.listen(this.rightInventory.layer, ['touchstart', 'mousedown'], function(e) {
        console.log('click right');
-       if(obacht.options.Inventory.right.active === true){
-            self.useItem(obacht.options.Inventory.right.type);
+       if(obacht.options.inventory.right.active === true){
+            self.useItem(obacht.options.inventory.right.type);
+            obacht.options.inventory.right.active = false;
         }
+    });
+    
+    //GET BONUS
+    goog.events.listen(this.bonus.layer, ['touchstart', 'mousedown'], function(e) {
+       console.log('click Boni');
+       if(obacht.options.inventory.right.active === false){
+           self.getItem('right');
+           obacht.options.inventory.right.active = true;
+       }else if(obacht.options.inventory.center.active === false){
+           self.getItem('center');
+           obacht.options.inventory.center.active = true;
+       }else if(obacht.options.inventory.left.active === false){
+           self.getItem('left');
+           obacht.options.inventory.left.active = true;	
+       }else {
+       	   console.log('Inventary is full')
+           return false;	
+       }
     });
 };
 
@@ -148,8 +174,12 @@ obacht.PlayerController.prototype = {
         });
     },
 
-    getItem: function() {
+    getItem: function(inventary) {
         "use strict";
+        console.log('get Boni' + inventary);
+        /*this.events.publish('getBoni',{
+            inventary: inventary
+        });*/
         //funktion wird durch tippen auf das erscheinende Icon ausgelöst und legt das Icon im Inventar ab
     },
 

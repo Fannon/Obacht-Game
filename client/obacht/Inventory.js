@@ -22,22 +22,22 @@ obacht.Inventory = function(type) {
     ////////////////
 	
 	if(type === "left"){
-		this.positionX = obacht.options.Inventory.left.x;
+		this.positionX = obacht.options.inventory.left.x;
 	}
 	if(type === "center"){
-		this.positionX = obacht.options.Inventory.center.x;
+		this.positionX = obacht.options.inventory.center.x;
 	}
 	if(type === "right"){
-		this.positionX = obacht.options.Inventory.right.x;
+		this.positionX = obacht.options.inventory.right.x;
 	}
 	
-	this.positionY = obacht.options.Inventory.y;
+	this.positionY = obacht.options.inventory.y;
 	
 	
 	////////////////////
     // LIMEJS OBJECTS //
     ////////////////////
-    this.inventoryButton = new lime.RoundedRect().setSize(obacht.options.Inventory.size, obacht.options.Inventory.size).setPosition(this.positionX, this.positionY).setFill('#ffffff').setOpacity(0.5).setAnchorPoint(0, 0).setRadius(15);
+    this.inventoryButton = new lime.RoundedRect().setSize(obacht.options.inventory.size, obacht.options.inventory.size).setPosition(this.positionX, this.positionY).setFill('#ffffff').setOpacity(0.5).setAnchorPoint(0, 0).setRadius(15);
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     this.layer.appendChild(this.inventoryButton);
 	
