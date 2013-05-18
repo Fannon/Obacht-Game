@@ -2,7 +2,7 @@
 
 goog.provide('obacht.themes');
 
-var theme = 'meadow'; // meadow, desert, water, candy
+var theme = 'desert'; // meadow, desert, water, candy
 
 obacht.themes = {
 

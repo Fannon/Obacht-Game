@@ -78,7 +78,7 @@ obacht.options = {
         tapToleranceArea: 70
     },
 
-    Inventory: {
+    inventory: {
         size: 120,
         y: 20,
 
@@ -102,7 +102,30 @@ obacht.options = {
     "trap": {
 
     },
-    "bonus": {
+    bonus: {
+        general: {
+            size: 200,
+            x: 540,
+            y: 260,
+            type: '',
+            path: 'assets/boni' //all files musst be a png file
+        },
+        type: {
+            //MEADOW
+            slug: '#555555', 
+            stub: '#555555',
+            //DESERT
+            skull: '#555555',
+            snake: '#555555',
+            cactus: '#555555',
+            scorpion: '#555555',
+            //WATER
+            urchins: '#555555',
+            fish: '#555555',
+            anchor: '#555555',
+            jelly: '#555555',
+            sharl: '#555555'
+        }
 
     },
     "server": {
