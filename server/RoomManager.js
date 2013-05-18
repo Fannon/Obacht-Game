@@ -39,7 +39,7 @@ var RoomManager = function(maxRooms, io) {
             playersReady: []
         },
         initialize: function(){
-            console.log("New RoomModel created");
+            console.log("--- New RoomModel created");
         }
     });
 
@@ -57,8 +57,6 @@ var RoomManager = function(maxRooms, io) {
  *
  * @param {Number} pin
  * @param {object} roomDetail
- *
- * @returns {boolean}
  */
 RoomManager.prototype.addRoom = function(pin, roomDetail) {
     "use strict";
@@ -66,15 +64,13 @@ RoomManager.prototype.addRoom = function(pin, roomDetail) {
     var room = this.getRoom(pin);
 
     if (room) {
-        console.log('addRoom(): Room aldready exists');
-        return false;
+        console.log('--- addRoom(): Room aldready exists');
     } else {
         roomDetail.pin = pin;
 
         this.rooms.add(roomDetail);
 
-        console.log('addRoom(): Room added');
-        return room;
+        console.log('--- addRoom(): Room added');
     }
 };
 
@@ -88,10 +84,10 @@ RoomManager.prototype.removeRoom = function(pin) {
 
     var room = this.getRoom(pin);
     if (room) {
-        console.log('removeRoom(): Room Removed');
+        console.log('--- removeRoom(): Room Removed');
         this.rooms.remove(room);
     } else {
-        console.log('removeRoom(): Room did not exist');
+        console.log('--- removeRoom(): Room did not exist');
     }
 };
 
@@ -110,7 +106,7 @@ RoomManager.prototype.getRoom = function(pin) {
  */
 RoomManager.prototype.getRoomsDebug = function() {
     "use strict";
-    console.log('getRoomsDebug();');
+    console.log('--- getRoomsDebug();');
     return this.rooms.toJSON();
 };
 
@@ -139,30 +135,6 @@ RoomManager.prototype.playerReady = function(pin, pid) {
 };
 
 /**
- * Updates Room with new roomDetail Data
- * Keeps old data if not overwritten
- *
- * TODO: Doesn't work
- *
- * @param {Number} pin
- * @param {object} roomDetail
- */
-RoomManager.prototype.updateRoom = function(pin, roomDetail) {
-    "use strict";
-
-    var room = this.getRoom(pin);
-
-//    var newRoomAttributes = _.extend(room.attributes, roomDetail);
-//    room.set(newRoomAttributes);
-
-    console.log('--- Updated Room #' + pin);
-    console.dir(room.attributes);
-
-//    return newRoomAttributes;
-
-};
-
-/**
  * Player joins a Room
  *
  * @param {Number} pin Room PIN
@@ -174,6 +146,8 @@ RoomManager.prototype.joinRoom = function(pin, pid) {
     "use strict";
 
     var room = this.getRoom(pin);
+    console.dir(room);
+
     var currentPlayers = room.attributes.players;
 
     if (currentPlayers.length > 2) {
@@ -183,7 +157,7 @@ RoomManager.prototype.joinRoom = function(pin, pid) {
         room.set({
             players: _.union(currentPlayers, [pid])
         });
-        return room;
+        return room.attributes;
     }
 
 };
@@ -191,40 +165,50 @@ RoomManager.prototype.joinRoom = function(pin, pid) {
 /**
  * Player leaves a Room
  *
+ * Removes Player Id from RoomDetail players and playersReady
+ *
  * @param {Number} pin Room PIN
  * @param {String} pid Player ID
  */
 RoomManager.prototype.leaveRoom = function(pin, pid) {
     "use strict";
 
-    var room = this.rooms.findWhere({pin: pin});
-    var currentPlayers = room.attributes.players;
+    var room = this.getRoom(pin);
 
-    room.set({
-        players: _.without(currentPlayers, [pid])
-    });
+    if (room) {
+        console.log('--> Player leaves Room #' + pin);
 
-    return room;
+        room.set({
+            players: _.without(room.attributes.players, pid),
+            playersReady: _.without(room.attributes.playersReady, pid)
+        });
 
+        // If no Players left, remove the room
+        if (room.attributes.players.length < 1) {
+            this.removeRoom(pin);
+        }
+
+        return room.attributes;
+
+    } else {
+        return false;
+    }
 };
 
 /**
  * Generates a Random PIN
  * Checks if it is already in use. If it is, draws a new one.
  *
- * TODO: Refactor this into Room Data Structure
- *
  * @return {number} PIN
  */
 RoomManager.prototype.getNewPin = function() {
     "use strict";
-    var pin = Math.floor(Math.random() * this.maxRooms);
+    var pin = Math.ceil(Math.random() * this.maxRooms);
 
-    if (this.io.sockets.clients(pin).length > 0) {
-        console.log('### Room already used, trying again.');
-        return this.getNewPin();
-    } else {
+    if (!this.getRoom(pin)) {
         return pin;
+    } else {
+        return this.getNewPin();
     }
 };
 
@@ -241,15 +225,28 @@ RoomManager.prototype.getNewPin = function() {
  */
 RoomManager.prototype.findMatch = function() {
     "use strict";
+
+//    console.log('room length: ' +  this.rooms.length);
+//    var randomPin = Math.ceil(Math.random() * this.rooms.length);
+//    console.log('Random Pin: ' +  randomPin);
+//    console.dir(this.rooms.at(randomPin));
+//
+//    if (this.rooms[randomPin]) {
+//        console.log('--- Match found: Room #' + randomPin);
+//        return randomPin;
+//    } else {
+//        console.log('--- No Match found ' + randomPin);
+//        return 0; // No Match found, return 0 to indicate that client has to create a room by itself
+//    }
+
     for (var pin = 1; pin < this.maxRooms; pin++) {
         if(this.io.sockets.manager.rooms['/' + pin]) {
             if(this.io.sockets.manager.rooms['/' + pin].length === 1) { // Rooms with just 1 Player
-                console.log('### Match found: Room #' + pin);
+                console.log('--- Match found: Room #' + pin);
                 return pin;
             }
         }
     }
-
     return 0; // No Match found
 };
 

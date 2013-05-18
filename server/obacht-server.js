@@ -133,10 +133,10 @@ obacht.server.io.sockets.on('connection', function(socket) {
      * (Debugging Function)
      */
     socket.on('leave_room', function() {
+        console.log('Leaving Room #' + socket.pin);
         if (socket.pin) {
 
             socket.broadcast.to(socket.pin).emit('player_left');
-
             obacht.server.rooms.leaveRoom(socket.pin, socket.pid);
             socket.leave(socket.pin);
             socket.pin = false;
@@ -174,7 +174,8 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
         var roomDetail = obacht.server.rooms.playerReady(socket.pin, socket.pid);
 
-        if (roomDetail.playerReady.length === 2) {
+        if (roomDetail && roomDetail.playersReady.length === 2) {
+            console.log('--- Game Ready in Room #' + socket.pin);
             socket.broadcast.to(socket.pin).emit('game_ready');
         }
 
