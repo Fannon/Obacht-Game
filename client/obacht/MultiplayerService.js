@@ -53,24 +53,27 @@ obacht.MultiplayerService = function(serverUrl) {
             console.log(data.error);
         } else {
             // if no errors
-            if (data.players.length === 0 && data.pin === 0) {
-                // if random room has no players yet
-                console.log('Created new Room');
-                console.log(data.closed);
-                self.newRoom(data.theme, data.options, data.closed);
-            } else if (data.players.length === 0) {
+            if (data.players.length === 0) {
                 // if normal room has no players yet
                 console.log('Joined Room #' + data.pin);
                 self.joinRoom(data.pin, data.closed);
             } else if (data.players[0] === self.pid) {
                 // if room has only first player within
                 console.log('Wait for other Player.');
-            } else if (data.players.length === 1) {
-                // if room has room for one more player
-                console.log('Joining Room.');
-                self.joinRoom(data.pin);
             }
             self.room = data.pin;
+        }
+    });
+
+    this.socket.on('room_invite', function (data) {
+        if (data.pin === 0) {
+            console.log('Create new Room.');
+            self.newRoom(data.theme, data.options, data.closed);
+            self.events.publish('new_room');
+        } else {
+            console.log('Joining Room ' + data.pin + ' .');
+            self.joinRoom(data.pin, false);
+            self.events.publish('join_room');
         }
     });
 
@@ -78,16 +81,6 @@ obacht.MultiplayerService = function(serverUrl) {
         console.log('No Match found.');
         this.newRoom();
         self.events.publish('no_match_found');
-    });
-
-    /**
-     * Player Ready from Enemy Player
-     * TODO: Remove this when Server is not stupid anymore
-     */
-    this.socket.on('other_player_ready', function (player_ready) {
-        console.log('Other Player is ready!');
-        player_ready.forwarding = true;
-        self.socket.emit('player_ready', player_ready);
     });
 
     this.socket.on('game_ready', function () {
@@ -167,11 +160,9 @@ obacht.MultiplayerService.prototype.findMatch = function () {
     this.socket.emit('find_match');
 };
 
-obacht.MultiplayerService.prototype.playerReady = function (pid) {
+obacht.MultiplayerService.prototype.playerReady = function () {
     console.log('>> playerReady()');
-    this.socket.emit('player_ready', {
-        pid: pid
-    });
+    this.socket.emit('player_ready');
 };
 
 obacht.MultiplayerService.prototype.playerAction = function(type, data) {
