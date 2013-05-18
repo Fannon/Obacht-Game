@@ -131,11 +131,8 @@ obacht.MultiplayerService = function(serverUrl) {
     });
 
     this.socket.on('get_rooms', function (data) {
-        for (var roomId in data) {
-            if (roomId !== "") {
-                console.log('Room #' + roomId + ', Users: ' + data[roomId]);
-            }
-        }
+        console.log('Getting Rooms Data (Debugging)');
+        console.dir(data);
     });
 
 };
