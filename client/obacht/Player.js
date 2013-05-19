@@ -130,14 +130,5 @@ obacht.Player.prototype = {
     standUp: function() {
         "use strict";
         this.character.runAction(this.standUpAnimation);
-    },
-
-    throwTrap: function(type) {
-        var trap = new obacht.Trap(type);
-        console.log("Player " + this.name + " throws " + type);
-
-        // TODO: Logik, etc
-
-        return trap;
     }
 };

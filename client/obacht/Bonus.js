@@ -8,6 +8,7 @@ goog.require('obacht.options');
 
 // LimeJS Requirements
 goog.require('lime.RoundedRect');
+goog.require('lime.animation.Resize')
 
 // Closure Library Requirements
 goog.require('goog.pubsub.PubSub');
@@ -19,37 +20,94 @@ goog.require('goog.pubsub.PubSub');
  */
 obacht.Bonus = function(type) {
 	"use strict";
+	var self = this;
 	
 	////////////////
     // ATTRIBUTES //
     ////////////////
 	this.type = type;
 	this.fill = obacht.options.bonus.general.path + this.type + '.png';
-	
+
+
 	////////////////////
     // LIMEJS OBJECTS //
     ////////////////////
-	this.bonusButton = new lime.RoundedRect().setSize(obacht.options.bonus.general.size, obacht.options.bonus.general.size).setPosition(obacht.options.bonus.general.x, obacht.options.bonus.general.y).setFill('#666666').setOpacity(0.5).setAnchorPoint(0, 0).setRadius(15);
+	this.bonusButton = new lime.RoundedRect().setSize(obacht.options.bonus.general.size, obacht.options.bonus.general.size).setPosition(obacht.options.bonus.general.x, obacht.options.bonus.general.y).setFill(this.fill).setAnchorPoint(0, 0).setRadius(15);
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     this.layer.appendChild(this.bonusButton);
     
-    /////////////////////////
-    /* SUBSCRIBE TO EVENTS */
-    /////////////////////////
-   /* obacht.playerController.events.subscribe('getBoni', function(inventary) {
-		console.log('wow ' + inventary);
-    });*/
+    // Event Publisher/Subscriber
+    this.events = new goog.pubsub.PubSub();
 
     
-    
+    /////////////////////////
+    /* SUBSCRIBE TO EVENTS */
+    /////////////////////////    
+    goog.events.listen(this.bonusButton, ['touchstart', 'mousedown'], function(e) {
+        if(obacht.options.bonus.general.state === 'new'){
+            if(obacht.options.inventory.right.active === false){
+                self.getItem('right');
+                obacht.options.inventory.right.type = self.type;
+                obacht.options.inventory.right.active = true;
+            }else if(obacht.options.inventory.center.active === false){
+                self.getItem('center');
+                obacht.options.inventory.center.type = self.type;
+                obacht.options.inventory.center.active = true;
+            }else if(obacht.options.inventory.left.active === false){
+                self.getItem('left');
+                obacht.options.inventory.left.type = self.type;
+                obacht.options.inventory.left.active = true;	
+            }else {
+                console.log('Inventary is full');
+                self.deleteBonus();
+                return false;
+                //Bonus muss hier noch gelöscht werden	
+            }
+            return false;
+        }
+        if(obacht.options.bonus.general.state === 'mine'){
+            self.useBonus();
+        }
+         
+    });
+     
 };
 
 obacht.Bonus.prototype = {
     
-    moveto: function(inventary) {
+    getItem: function(inventary) {
         "use strict";
-        console.log('move');
-        //legt Bonus im Iventar ab        
+        obacht.options.bonus.general.state = 'mine';
+        if(inventary === 'right'){
+            this.moveTo(this.bonusButton, obacht.options.inventory.right.x, obacht.options.inventory.y );	
+        }
+        if(inventary === 'center'){
+            this.moveTo(this.bonusButton, obacht.options.inventory.center.x, obacht.options.inventory.y );
+        }
+        if(inventary === 'left'){
+            this.moveTo(this.bonusButton, obacht.options.inventory.left.x, obacht.options.inventory.y );
+        }       
+    },
+    
+    moveTo: function(object, moveX, moveY) {
+        "use strict";
+        object.runAction(new lime.animation.MoveTo(moveX, moveY).setDuration(obacht.options.bonus.general.moveToDuration).setEasing(lime.animation.Easing.LINEAR));
+        object.runAction(new lime.animation.Resize(obacht.options.inventory.size, obacht.options.inventory.size).setDuration(obacht.options.bonus.general.moveToDuration));
+    },
+    
+    useBonus: function() {
+        "use strict";
+        console.log('Feuer frei');
+        obacht.mp.playerAction('trap', {
+            type: this.type,
+            d: 3
+        });
+        this.deleteBonus();
+    },
+    
+    deleteBonus: function(){
+        "use strict";
+        this.layer.removeChild(this.bonusButton);
     }
 
 };
