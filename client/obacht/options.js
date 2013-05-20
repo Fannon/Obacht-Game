@@ -94,8 +94,8 @@ obacht.options = {
         },
         right: {
 			x: 1140,
-			active: true,
-			type: 'snake'
+			active: false,
+			type: 'none'
         }
     },
 
@@ -108,7 +108,9 @@ obacht.options = {
             x: 540,
             y: 260,
             type: '',
-            path: 'assets/boni' //all files musst be a png file
+            state: 'new',
+            path: 'assets/boni/', //all files musst be a png file
+            moveToDuration: 0.2
         },
         type: {
             //MEADOW

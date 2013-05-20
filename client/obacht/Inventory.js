@@ -13,7 +13,7 @@ goog.require('lime.RoundedRect');
  *  
  * @author Lukas Jaborsky
  */
-obacht.Inventory = function(type) {
+obacht.Inventory = function(position) {
 	"use strict";
 	console.log("new Inventory");
 	
@@ -21,17 +21,18 @@ obacht.Inventory = function(type) {
     // ATTRIBUTES //
     ////////////////
 	
-	if(type === "left"){
+	if(position === "left"){
 		this.positionX = obacht.options.inventory.left.x;
 	}
-	if(type === "center"){
+	if(position === "center"){
 		this.positionX = obacht.options.inventory.center.x;
 	}
-	if(type === "right"){
+	if(position === "right"){
 		this.positionX = obacht.options.inventory.right.x;
 	}
 	
 	this.positionY = obacht.options.inventory.y;
+	
 	
 	
 	////////////////////
