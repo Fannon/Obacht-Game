@@ -6,13 +6,28 @@ goog.provide('obacht.Menu');
 // Lime.js Requirements
 goog.require('lime.Layer');
 goog.require('lime.fill.Frame');
+goog.require('lime.Button');
 
 // Obacht Requirements
 goog.require('obacht.PlayerController');
 goog.require('obacht.Game');
-goog.require('obacht.Button');
 goog.require('obacht.options');
 
+// Global Variables for Buttons and Labels//
+var menuButton = function(pos_x, pos_y, size_x, size_y, posMask_x, posMask_y, sizeMask_w, sizeMask_h, layerMenu) {
+    var button = new lime.Sprite().setSize(size_x, size_y).setFill('assets/gfx/menu_spritesheet.png').setPosition(pos_x, pos_y).setAnchorPoint(0, 0);
+    layerMenu.appendChild(button);
+    var maskButton = new lime.Sprite().setPosition(posMask_x, posMask_y).setAnchorPoint(0.5,0.5).setSize(sizeMask_w, sizeMask_h);
+    layerMenu.appendChild(maskButton);
+    button.setMask(maskButton);
+    return maskButton;
+};
+        
+var menuLabel = function(text, size, x, y, w, h, layerMenu){
+    var label = new lime.Label().setText(text).setFontColor('#fff').setFontSize(size).setPosition(x, y).setSize(w,h).setAlign('center');
+    layerMenu.appendChild(label);
+};
+      
 /**
  * Game Menu
  *
@@ -63,59 +78,45 @@ obacht.Menu.prototype = {
         layerMenu.appendChild(background);
 
 		//Small Logo
-        var logo_small = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(360, -570).setAnchorPoint(0, 0);
-        layerMenu.appendChild(logo_small);
-        var mask_logo_small = new lime.Sprite().setPosition(640, 130).setAnchorPoint(0.5,0.5).setSize(600, 150);
-        layerMenu.appendChild(mask_logo_small);
-        logo_small.setMask(mask_logo_small);
+		var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
+
        
         //Play-Button
-        var playButton = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(-760, 65).setAnchorPoint(0, 0);
-        layerMenu.appendChild(playButton);
-        var mask_playButton = new lime.Sprite().setPosition(640, 338).setAnchorPoint(0.5,0.5).setSize(400, 200);
-        layerMenu.appendChild(mask_playButton);
-        playButton.setMask(mask_playButton);                
-        var playButton_label = new lime.Label().setText('PLAY').setFontColor('#fff').setFontSize(90).setPosition(640, 348);
-        layerMenu.appendChild(playButton_label);
-        goog.events.listen(mask_playButton, lime.Button.Event.CLICK, function() {
+		var playButton = menuButton(-760, 65, 1704, 1208, 640, 338, 400, 200, layerMenu);           
+        var playButton_label = menuLabel('PLAY', 90, 640, 338, 400, 90, layerMenu);
+        goog.events.listen(playButton, lime.Button.Event.CLICK, function() {
             that.newGameScene();
         });
 
         //Help-Button
-        var help = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(-458, 80).setAnchorPoint(0, 0);
-        layerMenu.appendChild(help);
-        var mask_help = new lime.Sprite().setPosition(315, 540).setAnchorPoint(0.5,0.5).setSize(170, 170);
-        layerMenu.appendChild(mask_help);
-        help.setMask(mask_help);
-        var labelHelp = new lime.Label().setText('HELP').setFontSize(45).setAnchorPoint(0.5, 0.5).setPosition(309, 650).setFontColor('#fff');
-        layerMenu.appendChild(labelHelp);
+		var helpButton = menuButton(-458, 80, 1704, 1208, 315, 540, 170, 170, layerMenu);           
+        var helpButton_label = menuLabel('HELP', 45, 309, 650, 170, 45, layerMenu);
+        goog.events.listen(helpButton, lime.Button.Event.CLICK, function() {
+            that.helpScene();
+        });        
                 
         //Credits-Button
-        var credits = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(-432, 80).setAnchorPoint(0, 0);
-        layerMenu.appendChild(credits);
-        var mask_credits = new lime.Sprite().setPosition(538, 540).setAnchorPoint(0.5,0.5).setSize(170, 170);
-        layerMenu.appendChild(mask_credits);
-        credits.setMask(mask_credits);
-        var labelCredits = new lime.Label().setText('CREDITS').setFontSize(45).setAnchorPoint(0.5, 0.5).setPosition(525, 650).setFontColor('#fff');
-        layerMenu.appendChild(labelCredits);
+		var creditsButton = menuButton(-432, 80, 1704, 1208, 538, 540, 170, 170, layerMenu);           
+        var creditsButton_label = menuLabel('CREDITS', 45, 525, 650, 170, 45, layerMenu);
+        goog.events.listen(creditsButton, lime.Button.Event.CLICK, function() {
+            that.creditsScene();
+        });
         
         //Sound-Button
-        var sound = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(-500, -163).setAnchorPoint(0, 0);
-        layerMenu.appendChild(sound);
-        var mask_sound = new lime.Sprite().setPosition(753, 540).setAnchorPoint(0.5,0.5).setSize(170, 170);
-        layerMenu.appendChild(mask_sound);
-        sound.setMask(mask_sound);
-        var labelSound = new lime.Label().setText('SOUND').setFontSize(45).setAnchorPoint(0.5, 0.5).setPosition(749, 650).setFontColor('#fff');
-        layerMenu.appendChild(labelSound);
+		var soundButton = menuButton(-500, -163, 1704, 1208, 753, 540, 170, 170, layerMenu);           
+        var soundButton_label = menuLabel('SOUND', 45, 749, 650, 170, 45, layerMenu);
+        goog.events.listen(soundButton, lime.Button.Event.CLICK, function() {
+            //change Icon
+            //sound off
+        });
 
         //Quit-Button
-        var quit = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(-350, 80).setAnchorPoint(0, 0);
-        layerMenu.appendChild(quit);
-        var mask_quit = new lime.Sprite().setPosition(963, 540).setAnchorPoint(0.5,0.5).setSize(170, 170);
-        layerMenu.appendChild(mask_quit);
-        quit.setMask(mask_quit);
-        var labelQuit = new lime.Label().setText('QUIT').setFontSize(45).setAnchorPoint(0.5, 0.5).setPosition(963, 650).setFontColor('#fff');
-        layerMenu.appendChild(labelQuit);
+		var quitButton = menuButton(-350, 80, 1704, 1208, 963, 540, 170, 170, layerMenu);           
+        var quitButton_label = menuLabel('QUIT', 45, 963, 650, 170, 45, layerMenu);
+        goog.events.listen(quitButton, lime.Button.Event.CLICK, function() {
+            //quit Game
+        });
+        
     },
 
     /**
@@ -138,75 +139,43 @@ obacht.Menu.prototype = {
         layerMenu.appendChild(background);
 
 		//Small Logo
-        var logo_small = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(360, -570).setAnchorPoint(0, 0);
-        layerMenu.appendChild(logo_small);
-        var mask_logo_small = new lime.Sprite().setPosition(640, 130).setAnchorPoint(0.5,0.5).setSize(600, 150);
-        layerMenu.appendChild(mask_logo_small);
-        logo_small.setMask(mask_logo_small);
+		var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
         
 		//Back
-        var back = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(10, 10).setAnchorPoint(0, 0);
-        layerMenu.appendChild(back);
-        var mask_back = new lime.Sprite().setPosition(0, 0).setAnchorPoint(0, 0).setSize(115, 115);
-        layerMenu.appendChild(mask_back);
-        back.setMask(mask_back);
-        goog.events.listen(mask_back, lime.Button.Event.CLICK, function() {
+		var backButton = menuButton(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);           
+        goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
             that.mainMenuScene();
-        });
+        }); 		
 
+        //Play with a friend
+        var friendIcon = menuButton(-680, 65, 1704, 1208, 410, 310, 220, 220, layerMenu);           
+        var friendIcon_label = menuLabel('PLAY WITH YOUR FRIEND', 35, 400, 350, 500, 55, layerMenu);
+        
         //Create-Button
-        var create = new lime.Sprite().setSize(1533, 1087).setFill('assets/gfx/menu_spritesheet.png').setPosition(-910, 400).setAnchorPoint(0, 0);
-        layerMenu.appendChild(create);
-        var mask_create = new lime.Sprite().setPosition(400, 480).setAnchorPoint(0.5,0.5).setSize(450, 160);
-        layerMenu.appendChild(mask_create);
-        create.setMask(mask_create);
-        var create_label = new lime.Label().setText('CREATE').setFontColor('#fff').setFontSize(60).setPosition(390, 485);
-        layerMenu.appendChild(create_label);
-        goog.events.listen(mask_create, lime.Button.Event.CLICK, function() {
+		var createButton = menuButton(-910, 400, 1533, 1087, 400, 480, 450, 160, layerMenu);           
+        var createButton_label = menuLabel('CREATE', 60, 400, 485, 400, 70, layerMenu);
+        goog.events.listen(createButton, lime.Button.Event.CLICK, function() {
             that.getCodeScene();
         });
 
         //Join-Button
-        var join = new lime.Sprite().setSize(1533, 1087).setFill('assets/gfx/menu_spritesheet.png').setPosition(-910, 515).setAnchorPoint(0, 0);
-        layerMenu.appendChild(join);
-        var mask_join = new lime.Sprite().setPosition(400, 600).setAnchorPoint(0.5,0.5).setSize(450, 160);
-        layerMenu.appendChild(mask_join);
-        join.setMask(mask_join); 
-        var join_label = new lime.Label().setText('JOIN').setFontColor('#fff').setFontSize(60).setPosition(390, 600);
-        layerMenu.appendChild(join_label);
-        goog.events.listen(mask_join, lime.Button.Event.CLICK, function() {
+		var createButton = menuButton(-910, 515, 1533, 1087, 400, 600, 450, 160, layerMenu);           
+        var createButton_label = menuLabel('JOIN', 60, 400, 600, 400, 70, layerMenu);
+        goog.events.listen(createButton, lime.Button.Event.CLICK, function() {
             that.join();
         });
 
+        //Random Game
+        //Play with a friend
+        var friendIcon = menuButton(-655, -180, 1704, 1208, 880, 310, 220, 220, layerMenu);           
+        var friendIcon_label = menuLabel('RANDOM GAME', 35, 885, 350, 500, 55, layerMenu);
+
         //Random-Button
-        var random = new lime.Sprite().setSize(1533, 1087).setFill('assets/gfx/menu_spritesheet.png').setPosition(-440, 400).setAnchorPoint(0, 0);
-        layerMenu.appendChild(random);
-        var mask_random = new lime.Sprite().setPosition(870, 480).setAnchorPoint(0.5,0.5).setSize(450, 160);
-        layerMenu.appendChild(mask_random);
-        random.setMask(mask_random);   
-        var random_label = new lime.Label().setText('PLAY').setFontColor('#fff').setFontSize(60).setPosition(870, 485);
-        layerMenu.appendChild(random_label);
-        goog.events.listen(mask_random, lime.Button.Event.CLICK, function() {
+		var createButton = menuButton(-440, 400, 1533, 1087, 870, 480, 450, 160, layerMenu);           
+        var createButton_label = menuLabel('PLAY', 60, 870, 485, 400, 70, layerMenu);
+        goog.events.listen(createButton, lime.Button.Event.CLICK, function() {
             that.loadGame();
         });
-
-        //Play_with_your_friend-Text
-        var friendIcon = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(-680, 65).setAnchorPoint(0, 0);
-        layerMenu.appendChild(friendIcon);
-        var mask_friendIcon = new lime.Sprite().setPosition(410, 310).setAnchorPoint(0.5,0.5).setSize(220, 220);
-        layerMenu.appendChild(mask_friendIcon);
-        friendIcon.setMask(mask_friendIcon);
-        var text_friendsGame = new lime.Label().setAlign('center').setText('PLAY WITH YOUR FRIEND').setFontColor('#fff').setFontSize(35).setSize(500, 55).setPosition(400, 350);
-        layerMenu.appendChild(text_friendsGame);
-
-        //Random_Game-Text
-        var randomIcon = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(-655, -180).setAnchorPoint(0, 0);
-        layerMenu.appendChild(randomIcon);
-        var mask_randomIcon = new lime.Sprite().setPosition(880, 310).setAnchorPoint(0.5,0.5).setSize(240, 220);
-        layerMenu.appendChild(mask_randomIcon);
-        randomIcon.setMask(mask_randomIcon);
-        var text_randomIcon = new lime.Label().setAlign('center').setText('RANDOM GAME').setFontColor('#fff').setFontSize(35).setSize(700, 55).setPosition(885, 350);
-        layerMenu.appendChild(text_randomIcon);
 
     },
 
@@ -226,60 +195,36 @@ obacht.Menu.prototype = {
         layerMenu.appendChild(background);
 
 		//Small Logo
-        var logo_small = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(360, -570).setAnchorPoint(0, 0);
-        layerMenu.appendChild(logo_small);
-        var mask_logo_small = new lime.Sprite().setPosition(640, 130).setAnchorPoint(0.5,0.5).setSize(600, 150);
-        layerMenu.appendChild(mask_logo_small);
-        logo_small.setMask(mask_logo_small);
+		var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
-		//Back
-        var back = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(10, 10).setAnchorPoint(0, 0);
-        layerMenu.appendChild(back);
-        var mask_back = new lime.Sprite().setPosition(0, 0).setAnchorPoint(0, 0).setSize(115, 115);
-        layerMenu.appendChild(mask_back);
-        back.setMask(mask_back);
-        goog.events.listen(mask_back, lime.Button.Event.CLICK, function() {
-            that.newGameScene();
-        });
+		//Back - Door
+		var backButton = menuButton(-990, 10, 1704, 1208, 57, 57, 130, 130, layerMenu);           
+        goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
+            that.mainMenuScene();
+        }); 
         
-        //Your_Code-Text and Code_Field
-        var yourCode= new lime.Label().setAlign('center').setText('YOUR CODE').setFontColor('#fff').setFontSize(50).setSize(300, 90).setPosition(640, 320);
-        layerMenu.appendChild(yourCode);
+        //Code_Field
+        var yourCode_label = menuLabel('YOUR CODE', 50, 640, 320, 300, 90, layerMenu);
+		var field = menuButton(290, 315, 1704, 1208, 640, 405, 480, 160, layerMenu);           
+        var code_label = menuLabel('5 6 8 7', 90, 640, 425, 400, 130, layerMenu); 
 
-        var field = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(290, 315).setAnchorPoint(0, 0);
-        layerMenu.appendChild(field);
-        var mask_field = new lime.Sprite().setPosition(640, 405).setAnchorPoint(0.5,0.5).setSize(480, 160);
-        layerMenu.appendChild(mask_field);
-        field.setMask(mask_field);
-        
         //small Infotext Icon
-        var infoIcon = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(-350, 215).setAnchorPoint(0, 0);
-        layerMenu.appendChild(infoIcon);
-        var mask_infoIcon = new lime.Sprite().setPosition(805, 265).setAnchorPoint(0.5,0.5).setSize(90, 90);
-        layerMenu.appendChild(mask_infoIcon);
-        infoIcon.setMask(mask_infoIcon);
-        
+		var infoButton = menuButton(-350, 215, 1704, 1208, 805, 265, 90, 90, layerMenu);           
+        goog.events.listen(infoButton, lime.Button.Event.CLICK, function() {
+            //Pop-up display;
+        });
+                     
         //Pop-up-Infotext
-        var popInfo = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(820, -190).setAnchorPoint(0, 0);
-        layerMenu.appendChild(popInfo);
-        var mask_popInfo = new lime.Sprite().setPosition(1000, 260).setAnchorPoint(0.5,0.5).setSize(350, 260);
-        layerMenu.appendChild(mask_popInfo);
-        popInfo.setMask(mask_popInfo);
-        var CodeInfotext = new lime.Label().setAlign('center').setText('PLEASE GIVE THIS CODE TO YOUR FRIEND').setFontColor('#fff').setFontSize(36).setSize(280, 55).setPosition(1018, 250);
-        layerMenu.appendChild(CodeInfotext);
-
-        var code_label = new lime.Label().setText('5 6 8 7').setFontColor('#fff').setFontSize(90).setPosition(640, 425).setSize(400, 130);
-        layerMenu.appendChild(code_label);
+		var PopUp = menuButton(820, -190, 1704, 1208, 1000, 260, 350, 260, layerMenu);           
+        var PopUp_label = menuLabel('PLEASE GIVE THIS CODE TO YOUR FRIEND', 36, 1018, 250, 280, 55, layerMenu);
+        goog.events.listen(PopUp, lime.Button.Event.CLICK, function() {
+            //Pop-up display none;
+        });
 
         //Next-Button
-        var next = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(85, -276).setAnchorPoint(0, 0);
-        layerMenu.appendChild(next);
-        var mask_next = new lime.Sprite().setPosition(640, 640).setAnchorPoint(0.5,0.5).setSize(350, 130);
-        layerMenu.appendChild(mask_next);
-        next.setMask(mask_next);
-        var next_label = new lime.Label().setAlign('center').setText('NEXT').setFontColor('#fff').setFontSize(40).setSize(700, 55).setPosition(640, 650);
-        layerMenu.appendChild(next_label);
-        goog.events.listen(mask_next, lime.Button.Event.CLICK, function() {
+		var nextButton = menuButton(85, -276, 1704, 1208, 640, 640, 350, 130, layerMenu);           
+        var nextButton_label = menuLabel('NEXT', 40, 640, 650, 700, 60, layerMenu);
+        goog.events.listen(nextButton, lime.Button.Event.CLICK, function() {
             that.selectThemeScene();
         });
 
@@ -302,57 +247,34 @@ obacht.Menu.prototype = {
         layerMenu.appendChild(background);
 
 		//Small Logo
-        var logo_small = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(360, -570).setAnchorPoint(0, 0);
-        layerMenu.appendChild(logo_small);
-        var mask_logo_small = new lime.Sprite().setPosition(640, 130).setAnchorPoint(0.5,0.5).setSize(600, 150);
-        layerMenu.appendChild(mask_logo_small);
-        logo_small.setMask(mask_logo_small);
+		var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
-		//Back
-        var back = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(10, 10).setAnchorPoint(0, 0);
-        layerMenu.appendChild(back);
-        var mask_back = new lime.Sprite().setPosition(0, 0).setAnchorPoint(0, 0).setSize(115, 115);
-        layerMenu.appendChild(mask_back);
-        back.setMask(mask_back);
-        goog.events.listen(mask_back, lime.Button.Event.CLICK, function() {
+        //Back
+		var backButton = menuButton(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);           
+        goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
             that.getCodeScene();
         });
-        
-        
+                    
         //Select_World-Text
-        var selectWorld = new lime.Label().setAlign('center').setText('SELECT A WORLD').setFontColor('#fff').setFontSize(50).setSize(400, 55).setPosition(640, 250);
-        layerMenu.appendChild(selectWorld);
+        var selectWorld_label = menuLabel('SELECT A WORLD', 50, 640, 320, 400, 90, layerMenu);
 
 		//Theme-Desert
-        var desert = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(-177, -65).setAnchorPoint(0, 0);
-        layerMenu.appendChild(desert);
-        var mask_desert = new lime.Sprite().setPosition(340, 425).setAnchorPoint(0.5,0.5).setSize(300, 300);
-        layerMenu.appendChild(mask_desert);
-        desert.setMask(mask_desert);
-        goog.events.listen(mask_desert, lime.Button.Event.CLICK, function() {
+		var desert = menuButton(-177, -5, 1704, 1208, 340, 485, 300, 300, layerMenu);           
+        goog.events.listen(desert, lime.Button.Event.CLICK, function() {
             that.loadGame();
         });
                 
 		//Theme-Water
-        var water = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(-675, -510).setAnchorPoint(0, 0);
-        layerMenu.appendChild(water);
-        var mask_water = new lime.Sprite().setPosition(640, 425).setAnchorPoint(0.5,0.5).setSize(300, 300).setStroke(7,'#fff');
-        layerMenu.appendChild(mask_water);
-        water.setMask(mask_water);
-        goog.events.listen(mask_water, lime.Button.Event.CLICK, function() {
+		var water = menuButton(-675, -450, 1704, 1208, 640, 485, 300, 300, layerMenu);           
+        goog.events.listen(water, lime.Button.Event.CLICK, function() {
             that.loadGame();
         });
                 
 		//Theme-Meadow
-        var meadow = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(-60, -273).setAnchorPoint(0, 0);
-        layerMenu.appendChild(meadow);
-        var mask_meadow = new lime.Sprite().setPosition(940, 425).setAnchorPoint(0.5,0.5).setSize(300, 300).setStroke(7,'#fff');
-        layerMenu.appendChild(mask_meadow);
-        meadow.setMask(mask_meadow);
-        goog.events.listen(mask_meadow, lime.Button.Event.CLICK, function() {
+		var meadow = menuButton(-60, -213, 1704, 1208, 940, 485, 300, 300, layerMenu);           
+        goog.events.listen(meadow, lime.Button.Event.CLICK, function() {
             that.loadGame();
         });
-
     },
 
 
@@ -403,10 +325,10 @@ obacht.Menu.prototype = {
         var codeArray = ['_','_','_','_'];
 
         var code_label = [4];
-        code_label[0] = new lime.Label().setText(codeArray[0]).setFontColor('#fff').setFontSize(90).setPosition(490, 425).setSize(100, 130);
-        code_label[1] = new lime.Label().setText(codeArray[1]).setFontColor('#fff').setFontSize(90).setPosition(590, 425).setSize(100, 130);
-        code_label[2] = new lime.Label().setText(codeArray[2]).setFontColor('#fff').setFontSize(90).setPosition(690, 425).setSize(100, 130);
-        code_label[3] = new lime.Label().setText(codeArray[3]).setFontColor('#fff').setFontSize(90).setPosition(790, 425).setSize(100, 130);        
+        code_label[0] = new lime.Label().setText(codeArray[0]).setFontColor('#fff').setFontSize(90).setPosition(520, 425).setSize(100, 130);
+        code_label[1] = new lime.Label().setText(codeArray[1]).setFontColor('#fff').setFontSize(90).setPosition(600, 425).setSize(100, 130);
+        code_label[2] = new lime.Label().setText(codeArray[2]).setFontColor('#fff').setFontSize(90).setPosition(680, 425).setSize(100, 130);
+        code_label[3] = new lime.Label().setText(codeArray[3]).setFontColor('#fff').setFontSize(90).setPosition(760, 425).setSize(100, 130);        
         
         var codeposition = 0;
 
@@ -431,11 +353,8 @@ obacht.Menu.prototype = {
             return codeArray[0] + codeArray[1] + codeArray[2] + codeArray[3];
         };
 
-        /**
-        * Returns PIN with adequate spacing
-        * @returns {string}
-        */
-        var redraw_Code = function() {
+
+        var draw_Code = function() {
         	code_label[0].setText(codeArray[0]);
         	code_label[1].setText(codeArray[1]);
         	code_label[2].setText(codeArray[2]);
@@ -455,11 +374,11 @@ obacht.Menu.prototype = {
         * @returns {*}
         */
         var drawKeyboardButton = function(x1, x2) {
-	        var key = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(x1, -100).setAnchorPoint(0, 0);
-	        layerMenu.appendChild(key);
-	        var mask_key = new lime.Sprite().setPosition(x2, 530).setAnchorPoint(0.5,0.5).setSize(130, 130);
-	        layerMenu.appendChild(mask_key);
-	        key.setMask(mask_key);
+            var key = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(x1, -100).setAnchorPoint(0, 0);
+            layerMenu.appendChild(key);
+            var maskKey = new lime.Sprite().setPosition(x2, 530).setAnchorPoint(0.5,0.5).setSize(130, 130);
+            layerMenu.appendChild(maskKey);
+            key.setMask(maskKey);
             return key;
         };
 
@@ -469,26 +388,34 @@ obacht.Menu.prototype = {
         * @param {Number} insertNumber
         */
         var addNumber = function(insertNumber) {
-            codeArray[codeposition] = insertNumber;
-            if (codeposition < 4) {
-                codeposition++;
-            }
-            redraw_Code();   
+        	for (i=0; i<=3; i++){
+        	    if (codeArray[i] !== '_') 
+        	        continue;
+        	    else
+                    codeArray[i] = insertNumber;
+                    code_label[i].setText(codeArray[i]);
+                    layerMenu.appendChild(code_label[i]);   
+                    return;
+           };
         };
 
         /**
         * Backspace PIN (Deletes last entered PIN)
         */
         var deleteNumber = function() {
-            codeArray[codeposition - 1] = '_';
-            if (codeposition > 0) {
-                codeposition--;
-            }
-            redraw_Code();
+        	for (i=3; i>=0; i--){
+        	    if (codeArray[i] === '_') 
+        	        continue;
+        	    else
+                    codeArray[i] = '_';
+                    code_label[i].setText(codeArray[i]);
+                    layerMenu.appendChild(code_label[i]);   
+                    return;
+           };
         };
 
         var startGame = function() {
-            if (codeposition === 4) {
+            if (codeArray[0] !== '_' && codeArray[1] !== '_' && codeArray[2] !== '_' && codeArray[3] !== '_') {
                 that.loadGame(getPin());
             }
         };
@@ -511,47 +438,31 @@ obacht.Menu.prototype = {
         layerMenu.appendChild(background);
 
         //Small Logo
-        var logo_small = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(360, -570).setAnchorPoint(0, 0);
-        layerMenu.appendChild(logo_small);
-        var mask_logo_small = new lime.Sprite().setPosition(640, 130).setAnchorPoint(0.5,0.5).setSize(600, 150);
-        layerMenu.appendChild(mask_logo_small);
-        logo_small.setMask(mask_logo_small);
+		var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
 		//Back
-        var back = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(10, 10).setAnchorPoint(0, 0);
-        layerMenu.appendChild(back);
-        var mask_back = new lime.Sprite().setPosition(0, 0).setAnchorPoint(0, 0).setSize(115, 115);
-        layerMenu.appendChild(mask_back);
-        back.setMask(mask_back);
-        goog.events.listen(mask_back, lime.Button.Event.CLICK, function() {
+		var backButton = menuButton(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);           
+        goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
             that.newGameScene();
         });
         
-        //Pop-up-Infotext
-        var popInfo = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(220, 145).setAnchorPoint(0, 0);
-        layerMenu.appendChild(popInfo);
-        var mask_popInfo = new lime.Sprite().setPosition(1020, 315).setAnchorPoint(0.5,0.5).setSize(400, 370);
-        layerMenu.appendChild(mask_popInfo);
-        popInfo.setMask(mask_popInfo);
-        var CodeInfotext = new lime.Label().setAlign('center').setText('ENTER THE FOUR DIGIT CODE YOU GOT FROM YOUR FRIEND').setFontColor('#fff').setFontSize(36).setSize(280, 55).setPosition(1040, 248);
-        layerMenu.appendChild(CodeInfotext);
-        
         //small Infotext Icon
-        var infoIcon = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(-345, 215).setAnchorPoint(0, 0);
-        layerMenu.appendChild(infoIcon);
-        var mask_infoIcon = new lime.Sprite().setPosition(810, 265).setAnchorPoint(0.5,0.5).setSize(90, 90);
-        layerMenu.appendChild(mask_infoIcon);
-        infoIcon.setMask(mask_infoIcon);
+		var infoButton = menuButton(-345, 215, 1704, 1208, 810, 265, 90, 90, layerMenu);           
+        goog.events.listen(infoButton, lime.Button.Event.CLICK, function() {
+            //Pop-up display;
+        });
                 
-       //Enter_Code-Text and Code_Field
-        var enterCode= new lime.Label().setAlign('center').setText('ENTER CODE').setFontColor('#fff').setFontSize(50).setSize(300, 90).setPosition(640, 315);
-        layerMenu.appendChild(enterCode);
-        var field = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(290, 315).setAnchorPoint(0, 0);
-        layerMenu.appendChild(field);
-        var mask_field = new lime.Sprite().setPosition(640, 405).setAnchorPoint(0.5,0.5).setSize(480, 160);
-        layerMenu.appendChild(mask_field);
-        field.setMask(mask_field);
-        redraw_Code();               
+        //Pop-up-Infotext
+		var PopUp = menuButton(220, 145, 1704, 1208, 1020, 315, 400, 370, layerMenu);           
+        var PopUp_label = menuLabel('ENTER THE FOUR DIGIT CODE YOU GOT FROM YOUR FRIEND', 36, 1040, 248, 280, 55, layerMenu);
+        goog.events.listen(PopUp, lime.Button.Event.CLICK, function() {
+            //Pop-up display none;
+        });
+        
+        //Code_Field
+        var enterCode_label = menuLabel('ENTER CODE', 50, 640, 320, 300, 90, layerMenu);
+		var field = menuButton(290, 315, 1704, 1208, 640, 405, 480, 160, layerMenu);           
+        draw_Code();               
                 
         /////////////////////////////
         // Create Buttons //
@@ -566,21 +477,11 @@ obacht.Menu.prototype = {
         }
 
         //Delete-Key
-		var keyDelete = new lime.Sprite().setSize(1772, 1256).setFill('assets/gfx/menu_spritesheet.png').setPosition(0, 68).setAnchorPoint(0, 0);
-		layerMenu.appendChild(keyDelete);
-		var mask_keyDelete = new lime.Sprite().setPosition(1190, 530).setAnchorPoint(0.5,0.5).setSize(130, 130);
-		layerMenu.appendChild(mask_keyDelete);
-		keyDelete.setMask(mask_keyDelete);
-
+		var keyDelete = menuButton(0, 68, 1772, 1256, 1190, 530, 130, 130, layerMenu);           
 
         //Next-Button
-        var next = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(85, -276).setAnchorPoint(0, 0);
-        layerMenu.appendChild(next);
-        var mask_next = new lime.Sprite().setPosition(640, 640).setAnchorPoint(0.5,0.5).setSize(350, 130);
-        layerMenu.appendChild(mask_next);
-        next.setMask(mask_next);
-        var next_label = new lime.Label().setAlign('center').setText('NEXT').setFontColor('#fff').setFontSize(40).setSize(700, 55).setPosition(640, 650);
-        layerMenu.appendChild(next_label);
+		var nextButton = menuButton(85, -276, 1704, 1208, 640, 640, 350, 130, layerMenu);           
+        var nextButton_label = menuLabel('NEXT', 40, 640, 650, 700, 60, layerMenu);
 
 
 
@@ -621,7 +522,7 @@ obacht.Menu.prototype = {
         goog.events.listen(keyDelete, lime.Button.Event.CLICK, function() {
             deleteNumber();
         });
-        goog.events.listen(mask_next, lime.Button.Event.CLICK, function() {
+        goog.events.listen(nextButton, lime.Button.Event.CLICK, function() {
             startGame();
         });
 
