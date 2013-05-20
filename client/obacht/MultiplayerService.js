@@ -57,9 +57,12 @@ obacht.MultiplayerService = function(serverUrl) {
                 // if normal room has no players yet
                 console.log('Joined Room #' + data.pin);
                 self.joinRoom(data.pin, data.closed);
+                self.events.publish('join_room');
             } else if (data.players[0] === self.pid) {
                 // if room has only first player within
                 console.log('Wait for other Player.');
+                self.playerReady();
+                self.events.publish('player_ready');
             }
             self.room = data.pin;
         }
