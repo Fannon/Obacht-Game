@@ -4,20 +4,19 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 var Logger = require('./Logger');
+var options = require('./options');
 
 /** Custom Logger */
-var log = new Logger(0); // Set Logging Level
+var log = new Logger(options.loglevel); // Set Logging Level
 
 /**
  * Room DataStructure for the Server
  *
- * TODO: Make this into an Collection of Room Objects
- *
  * @author Simon Heimler
  *
- * @type {object}
+ * @param {object} io Socket.io Loop Through
  */
-var RoomManager = function(maxRooms, io) {
+var RoomManager = function(io) {
     "use strict";
 
 
@@ -25,7 +24,6 @@ var RoomManager = function(maxRooms, io) {
     // Variables               //
     /////////////////////////////
 
-    this.maxRooms = maxRooms;
     this.io = io; // Socket.io Loop Through
 
 
@@ -43,14 +41,6 @@ var RoomManager = function(maxRooms, io) {
             players: [],
             playersCount: 0, // Just for convenience
             playersReady: []
-        },
-        initialize: function(){
-            log.debug("--- New RoomModel created");
-        },
-        update: function() {
-            // Update on Array doesn't work, needs new ArrayRefernce
-//            log.debug(intern("--- RoomModel updated"));
-//            this.set({playersCount: this.get("players").length});
         }
     });
 
@@ -75,14 +65,12 @@ RoomManager.prototype.addRoom = function(pin, roomDetail) {
     var room = this.getRoom(pin);
 
     if (room) {
-        log.debug('--- addRoom(): Room aldready exists');
+        log.warn('!!! addRoom(): Room aldready exists');
         return false;
     } else {
         roomDetail.pin = pin;
-
         this.rooms.add(roomDetail);
-
-        log.debug('--- addRoom(): Room added');
+        log.info('--- New Room created! (' + this.rooms.length + ' TOTAL)');
         return true;
     }
 };
@@ -152,9 +140,9 @@ RoomManager.prototype.playerReady = function(pin, pid) {
 /**
  * Player joins a Room
  *
- * @param {Number} pin Room PIN
- * @param {String} pid Player ID
- * @param {Boolean} isClosed
+ * @param {Number}  pin         Room PIN
+ * @param {String}  pid         Player ID
+ * @param {Boolean} isClosed    Room is private or not
  *
  * @return {*} RoomModel if successfull, false if room already full
  */
@@ -163,20 +151,24 @@ RoomManager.prototype.joinRoom = function(pin, pid, isClosed) {
 
     var room = this.getRoom(pin);
 
-    if (room && room.attributes.players.length > 2) {
+    // Catch all Error Cases
+    if (!room) {
+        log.warn('!!! Tried to join Room that doesnt exist');
+        return false;
+    } else if (room.attributes.players.length > 2) {
         log.warn('!!! Room Already full! #' + pin);
         return false;
-    } else if (room && room.attributes.closed === isClosed) {
-        room.set({
-            players: _.union(room.attributes.players, [pid]),
-            playersCount: room.attributes.players.length + 1
-        });
-        log.debug('--> Client joined Room #' + pin);
-        return room.attributes;
-    } else {
-        log.error('!!! Could not join Room ' + pin);
+    } else if (room.attributes.closed !== isClosed) {
+        log.warn('!!! Tried to join Room with different Privacy Setting');
+        return false;
     }
 
+    room.set({
+        players: _.union(room.attributes.players, [pid]),
+        playersCount: room.attributes.players.length + 1
+    });
+    log.debug('--> Player joined Room #' + pin);
+    return room.attributes;
 };
 
 /**
@@ -184,8 +176,8 @@ RoomManager.prototype.joinRoom = function(pin, pid, isClosed) {
  *
  * Removes Player Id from RoomDetail players and playersReady
  *
- * @param {Number} pin Room PIN
- * @param {String} pid Player ID
+ * @param {Number} pin  Room PIN
+ * @param {String} pid  Player ID
  */
 RoomManager.prototype.leaveRoom = function(pin, pid) {
     "use strict";
@@ -216,12 +208,19 @@ RoomManager.prototype.leaveRoom = function(pin, pid) {
 /**
  * Generates a Random PIN
  * Checks if it is already in use. If it is, draws a new one.
+ * Public Room PIN's start with a Number higher than the maximum private PIN
  *
+ * @param {Boolean} isClosed    Room is private or not
  * @return {number} PIN
  */
-RoomManager.prototype.getNewPin = function() {
+RoomManager.prototype.getNewPin = function(isClosed) {
     "use strict";
-    var pin = Math.ceil(Math.random() * this.maxRooms);
+    var pin = 0;
+    if (isClosed) {
+        pin = Math.ceil(Math.random() * options.maxPrivateRooms);
+    } else {
+        pin = Math.ceil(Math.random() * options.maxPublicRooms) + options.maxPrivateRooms + 1;
+    }
 
     if (!this.getRoom(pin)) {
         return pin;
@@ -235,8 +234,7 @@ RoomManager.prototype.getNewPin = function() {
  *
  * Looks for a Game with just one Player waiting for another
  *
- *
- * @return {number} PIN for Room, false if no Room open
+ * @return {number} PIN for Room, 0 if no other Player available
  */
 RoomManager.prototype.findMatch = function() {
     "use strict";

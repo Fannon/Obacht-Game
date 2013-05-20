@@ -1,9 +1,6 @@
 /* global module */
 /* jshint devel:true, node: true */
 
-/** Colored Console Output https://github.com/medikoo/cli-color */
-var clc = require('cli-color');
-
 /**
  * Custom Logger with Color- and Loglevel Support
  *
@@ -19,13 +16,19 @@ var Logger = function(loglevel) {
     this.setLogLevel(loglevel);
 };
 
+// Escaped ANSI Color Codes
+var blue  = '\033[34m';
+var yellow = '\033[33m';
+var red   = '\033[31m';
+var reset = '\033[0m';
+
 Logger.prototype.setLogLevel = function(loglevel) {
     "use strict";
     this.loglevel = loglevel;
 
     if (loglevel <= 0) {
         Logger.prototype.debug = function(msg) {
-            console.log(clc.white(msg));
+            console.log(reset + msg + reset);
         };
     } else {
         Logger.prototype.debug = function(msg) {};
@@ -33,7 +36,7 @@ Logger.prototype.setLogLevel = function(loglevel) {
 
     if (loglevel <= 1) {
         Logger.prototype.info = function(msg) {
-            console.log(clc.blue(msg));
+            console.log(blue + msg + reset);
         };
     } else {
         Logger.prototype.info = function(msg) {};
@@ -41,7 +44,7 @@ Logger.prototype.setLogLevel = function(loglevel) {
 
     if (loglevel <= 2) {
         Logger.prototype.warn = function(msg) {
-            console.log(clc.yellow(msg));
+            console.log(yellow + msg + reset);
         };
     } else {
         Logger.prototype.warn = function(msg) {};
@@ -49,7 +52,7 @@ Logger.prototype.setLogLevel = function(loglevel) {
 
     if (loglevel <= 3) {
         Logger.prototype.error = function(msg) {
-            console.log(clc.red(msg));
+            console.log(red + msg + reset);
         };
     } else {
         Logger.prototype.error = function(msg) {};
