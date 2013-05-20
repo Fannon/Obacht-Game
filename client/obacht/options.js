@@ -114,7 +114,7 @@ obacht.options = {
         },
         type: {
             //MEADOW
-            slug: '#555555', 
+            slug: '#555555',
             stub: '#555555',
             //DESERT
             skull: '#555555',
@@ -131,6 +131,7 @@ obacht.options = {
 
     },
     "server": {
-        "url": "http://192.168.2.100:8080/"
+        "url": "http://obacht.informatik.hs-augsburg.de:8080"
+//      "url": "http://192.168.2.100:8080/"
     }
 };

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Evtl: sudo chmod +x start
+# Evtl: sudo chmod +x start.sh
 # This Script uses https://github.com/nodejitsu/forever for
 # Forever should be installed globally (npm install forever -g)
 
