@@ -68,7 +68,7 @@ obacht.MultiplayerService = function(serverUrl) {
     this.socket.on('room_invite', function (data) {
         if (data.pin === 0) {
             console.log('Create new Room.');
-            self.newRoom(data.theme, data.options, data.closed);
+            self.newRoom(data.theme, data.options, false);
             self.events.publish('new_room');
         } else {
             console.log('Joining Room ' + data.pin + ' .');

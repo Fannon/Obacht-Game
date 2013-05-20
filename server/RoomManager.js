@@ -4,6 +4,13 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 
+/** Colored Console Output https://github.com/medikoo/cli-color */
+var clc = require('cli-color');
+var error = clc.red.bold;
+var warn = clc.yellow;
+var notice = clc.blue;
+var intern = clc.blackBright;
+
 /**
  * Room DataStructure for the Server
  *
@@ -33,13 +40,20 @@ var RoomManager = function(maxRooms, io) {
     this.RoomModel = Backbone.Model.extend({
         defaults: {
             pin: undefined,
+            closed: false,
             theme: 'random',
             options: {},
             players: [],
+            playersCount: 0, // Just for convenience
             playersReady: []
         },
         initialize: function(){
-            console.log("--- New RoomModel created");
+            console.log(intern("--- New RoomModel created"));
+        },
+        update: function() {
+            // Update on Array doesn't work, needs new ArrayRefernce
+//            console.log(intern("--- RoomModel updated"));
+//            this.set({playersCount: this.get("players").length});
         }
     });
 
@@ -65,12 +79,14 @@ RoomManager.prototype.addRoom = function(pin, roomDetail) {
 
     if (room) {
         console.log('--- addRoom(): Room aldready exists');
+        return false;
     } else {
         roomDetail.pin = pin;
 
         this.rooms.add(roomDetail);
 
         console.log('--- addRoom(): Room added');
+        return true;
     }
 };
 
@@ -84,10 +100,10 @@ RoomManager.prototype.removeRoom = function(pin) {
 
     var room = this.getRoom(pin);
     if (room) {
-        console.log('--- removeRoom(): Room Removed');
+        console.log(intern('--- removeRoom(): Room Removed'));
         this.rooms.remove(room);
     } else {
-        console.log('--- removeRoom(): Room did not exist');
+        console.log(intern('--- removeRoom(): Room did not exist'));
     }
 };
 
@@ -113,8 +129,9 @@ RoomManager.prototype.getRoomsDebug = function() {
 /**
  * Sets the player Ready
  *
- * @param pin
- * @param pid
+ * @param {Number} pin
+ * @param {String} pid
+ *
  * @returns {*}
  */
 RoomManager.prototype.playerReady = function(pin, pid) {
@@ -130,6 +147,7 @@ RoomManager.prototype.playerReady = function(pin, pid) {
         room.set({
             playersReady: _.union(playersReady, [pid])
         });
+        console.log(intern('--- Player ready in Room #' + pin));
         return room.attributes;
     }
 };
@@ -139,25 +157,27 @@ RoomManager.prototype.playerReady = function(pin, pid) {
  *
  * @param {Number} pin Room PIN
  * @param {String} pid Player ID
+ * @param {Boolean} isClosed
  *
  * @return {*} RoomModel if successfull, false if room already full
  */
-RoomManager.prototype.joinRoom = function(pin, pid) {
+RoomManager.prototype.joinRoom = function(pin, pid, isClosed) {
     "use strict";
 
     var room = this.getRoom(pin);
-    console.dir(room);
 
-    var currentPlayers = room.attributes.players;
-
-    if (currentPlayers.length > 2) {
-        console.log('!!! Room Already full!');
+    if (room && room.attributes.players.length > 2) {
+        console.log(error('!!! Room Already full! #' + pin));
         return false;
-    } else {
+    } else if (room && room.attributes.closed === isClosed) {
         room.set({
-            players: _.union(currentPlayers, [pid])
+            players: _.union(room.attributes.players, [pid]),
+            playersCount: room.attributes.players.length + 1
         });
+        console.log('--> Client joined Room #' + pin);
         return room.attributes;
+    } else {
+        console.log(error('!!! Could not join Room ') + pin);
     }
 
 };
@@ -180,7 +200,8 @@ RoomManager.prototype.leaveRoom = function(pin, pid) {
 
         room.set({
             players: _.without(room.attributes.players, pid),
-            playersReady: _.without(room.attributes.playersReady, pid)
+            playersReady: _.without(room.attributes.playersReady, pid),
+            playersCount: room.attributes.players.length + -1
         });
 
         // If no Players left, remove the room
@@ -217,37 +238,26 @@ RoomManager.prototype.getNewPin = function() {
  *
  * Looks for a Game with just one Player waiting for another
  *
- * TODO: Refactor this into Room Data Structure
- * TODO: Just BruteForce right now, not very performant
- * TODO: Randomize it (?)
  *
  * @return {number} PIN for Room, false if no Room open
  */
 RoomManager.prototype.findMatch = function() {
     "use strict";
 
-//    console.log('room length: ' +  this.rooms.length);
-//    var randomPin = Math.ceil(Math.random() * this.rooms.length);
-//    console.log('Random Pin: ' +  randomPin);
-//    console.dir(this.rooms.at(randomPin));
-//
-//    if (this.rooms[randomPin]) {
-//        console.log('--- Match found: Room #' + randomPin);
-//        return randomPin;
-//    } else {
-//        console.log('--- No Match found ' + randomPin);
-//        return 0; // No Match found, return 0 to indicate that client has to create a room by itself
-//    }
+    var availableRooms = this.rooms.where({
+        playersCount: 1,
+        closed: false
+    });
 
-    for (var pin = 1; pin < this.maxRooms; pin++) {
-        if(this.io.sockets.manager.rooms['/' + pin]) {
-            if(this.io.sockets.manager.rooms['/' + pin].length === 1) { // Rooms with just 1 Player
-                console.log('--- Match found: Room #' + pin);
-                return pin;
-            }
-        }
+    if (availableRooms.length > 0) {
+        var randomPin = Math.ceil(Math.random() * availableRooms.length) - 1;
+        var pin = availableRooms[randomPin].get("pin");
+        console.log('--- Match found: Room #' + pin);
+        return pin;
+    } else {
+        console.log(intern('--- No Match found, returning PIN 0'));
+        return 0;
     }
-    return 0; // No Match found
 };
 
 module.exports = RoomManager;
