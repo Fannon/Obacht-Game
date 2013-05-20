@@ -32,7 +32,7 @@ obacht.PlayerController = function() {
     this.leftInventory = new obacht.Inventory('left');
     this.centerInventory = new obacht.Inventory('center');
     this.rightInventory = new obacht.Inventory('right');
-    
+
     this.bonus = new obacht.Bonus('snake');
 
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
@@ -107,7 +107,7 @@ obacht.PlayerController = function() {
             obacht.options.inventory.left.active = false;
        }
     });
-    
+
     //CENTER INVENTORY BUTTON
     goog.events.listen(this.centerInventory.layer, ['touchstart', 'mousedown'], function(e) {
         if(obacht.options.inventory.center.active === true){
@@ -115,7 +115,7 @@ obacht.PlayerController = function() {
             obacht.options.inventory.center.active = false;
         }
     });
-    
+
     //RIGHT INVENTORY BUTTON
     goog.events.listen(this.rightInventory.layer, ['touchstart', 'mousedown'], function(e) {
        if(obacht.options.inventory.right.active === true){
@@ -150,7 +150,7 @@ obacht.PlayerController.prototype = {
         obacht.mp.playerAction('standUp', {
             d: 3
         });
-    },
+    }
 
     /*useItem: function(type) {
         "use strict";
@@ -158,6 +158,6 @@ obacht.PlayerController.prototype = {
         console.log('use Item: ' + type);
         obacht.mp.playerAction('standUp', {
             d: 3
-        }); 
+        });
     } */
 };
