@@ -21,16 +21,13 @@ obacht.server = {};
 obacht.server.options = require('./options');
 obacht.server.port = (process.argv[2] ? process.argv[2] : obacht.server.options.defaultPort); // Set Port, use Console Args if available
 obacht.server.io = require('socket.io').listen(obacht.server.port); // Start Socket.io
+obacht.Logger = require('./Logger');
 
-/** Colored Console Output https://github.com/medikoo/cli-color */
-var clc = require('cli-color');
-var error = clc.red.bold;
-var warn = clc.yellow;
-var notice = clc.blue;
-var intern = clc.blackBright;
+/** Custom Logger */
+var log = new obacht.Logger(0); // Set Logging Level
 
 // Data Structures
-var RoomManager = require('./roomManager');
+var RoomManager = require('./RoomManager');
 obacht.server.rooms = new RoomManager(9999, obacht.server.io); // Load RoomManager DataStructure
 
 
@@ -63,7 +60,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
     socket.emit('connected', {
         pid: socket.id
     });
-    console.log(notice('+++ NEW REMOTE CONNECTION'));
+    log.info('+++ NEW REMOTE CONNECTION (' + obacht.server.io.sockets.clients().length + ' TOTAL)');
 
     /**
      * Connection Failed
@@ -73,7 +70,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
             pid: socket.id,
             error: 'Connection to Server failed!'
         });
-        console.log(error('!!! REMOTE CONNECTION FAILED'));
+        log.error('!!! REMOTE CONNECTION FAILED');
     });
 
     /**
@@ -90,7 +87,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
         obacht.server.rooms.addRoom(pin, roomDetail);
         socket.emit('room_detail', roomDetail);
 
-        console.log('--> Client requested new Room PIN #' + pin);
+        log.debug('--> Client requested new Room PIN #' + pin);
 
     });
 
@@ -103,7 +100,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
         if (socket.pin) {
             obacht.server.rooms.leaveRoom(socket.pin, socket.pid);
             socket.leave(socket.pin);
-            console.log('--> Client leaves Room #' + socket.pin);
+            log.debug('--> Client leaves Room #' + socket.pin);
         }
         socket.pin = room_detail.pin;
 
@@ -123,7 +120,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
             socket.leave(socket.pin);
             socket.pin = false;
 
-            console.log('--> Client leaves Room #' + socket.pin);
+            log.debug('--> Client leaves Room #' + socket.pin);
         }
     });
 
@@ -134,7 +131,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
      */
     socket.on('find_match', function() {
 
-        console.log('--> Client request new Match');
+        log.debug('--> Client request new Match');
 
         // If still in Room, leave it
         if (socket.pin) {
@@ -158,11 +155,11 @@ obacht.server.io.sockets.on('connection', function(socket) {
             var roomDetail = obacht.server.rooms.playerReady(socket.pin, socket.pid);
 
             if (roomDetail && roomDetail.playersReady.length === 2) {
-                console.log(intern('--- Game Ready in Room #' + socket.pin));
+                log.debug('--- Game Ready in Room #' + socket.pin);
                 obacht.server.io.sockets['in'](socket.pin).emit('game_ready');
             }
         } else {
-            console.log(warn('--- Player cannot be ready - is not in a Game yet'));
+            log.warn('--- Player cannot be ready - is not in a Game yet');
         }
     });
 
@@ -177,7 +174,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
      * Broadcast to other Players in Room Request
      */
     socket.on('player_action', function(data) {
-        console.log('<-> Player Action "' + data.type + '" in Room #' + socket.pin);
+        log.debug('<-> Player Action "' + data.type + '" in Room #' + socket.pin);
         socket.broadcast.to(socket.pin).emit('player_action', data);
     });
 
@@ -187,7 +184,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
      */
     socket.on('get_rooms', function() {
         socket.emit('get_rooms', obacht.server.rooms.getRoomsDebug());
-        console.log('<-- Sent current rooms Information');
+        log.debug('<-- Sent current rooms Information');
     });
 
     /**
@@ -200,9 +197,9 @@ obacht.server.io.sockets.on('connection', function(socket) {
             obacht.server.rooms.leaveRoom(socket.pin, socket.pid);
             socket.broadcast.to(socket.pin).emit('player_left');
             socket.leave(socket.pin);
-            console.log(warn('--- Player left Room due to disconnect'));
+            log.warn('--- Player left Room due to disconnect');
         }
-        console.log('--- DISCONNECT FROM REMOTE');
+        log.debug('--- DISCONNECT FROM REMOTE');
     });
 
 });

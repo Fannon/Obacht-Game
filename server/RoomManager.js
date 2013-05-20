@@ -3,13 +3,10 @@
 
 var _ = require('underscore');
 var Backbone = require('backbone');
+var Logger = require('./Logger');
 
-/** Colored Console Output https://github.com/medikoo/cli-color */
-var clc = require('cli-color');
-var error = clc.red.bold;
-var warn = clc.yellow;
-var notice = clc.blue;
-var intern = clc.blackBright;
+/** Custom Logger */
+var log = new Logger(0); // Set Logging Level
 
 /**
  * Room DataStructure for the Server
@@ -48,11 +45,11 @@ var RoomManager = function(maxRooms, io) {
             playersReady: []
         },
         initialize: function(){
-            console.log(intern("--- New RoomModel created"));
+            log.debug("--- New RoomModel created");
         },
         update: function() {
             // Update on Array doesn't work, needs new ArrayRefernce
-//            console.log(intern("--- RoomModel updated"));
+//            log.debug(intern("--- RoomModel updated"));
 //            this.set({playersCount: this.get("players").length});
         }
     });
@@ -78,14 +75,14 @@ RoomManager.prototype.addRoom = function(pin, roomDetail) {
     var room = this.getRoom(pin);
 
     if (room) {
-        console.log('--- addRoom(): Room aldready exists');
+        log.debug('--- addRoom(): Room aldready exists');
         return false;
     } else {
         roomDetail.pin = pin;
 
         this.rooms.add(roomDetail);
 
-        console.log('--- addRoom(): Room added');
+        log.debug('--- addRoom(): Room added');
         return true;
     }
 };
@@ -100,10 +97,10 @@ RoomManager.prototype.removeRoom = function(pin) {
 
     var room = this.getRoom(pin);
     if (room) {
-        console.log(intern('--- removeRoom(): Room Removed'));
+        log.debug('--- removeRoom(): Room Removed');
         this.rooms.remove(room);
     } else {
-        console.log(intern('--- removeRoom(): Room did not exist'));
+        log.debug('--- removeRoom(): Room did not exist');
     }
 };
 
@@ -122,7 +119,7 @@ RoomManager.prototype.getRoom = function(pin) {
  */
 RoomManager.prototype.getRoomsDebug = function() {
     "use strict";
-    console.log('--- getRoomsDebug();');
+    log.debug('--- getRoomsDebug();');
     return this.rooms.toJSON();
 };
 
@@ -141,13 +138,13 @@ RoomManager.prototype.playerReady = function(pin, pid) {
     var playersReady = room.attributes.playersReady;
 
     if (playersReady.length > 2) {
-        console.log('!!! ERROR: More than 2 Players cannot be ready!');
+        log.debug('!!! ERROR: More than 2 Players cannot be ready!');
         return false;
     } else {
         room.set({
             playersReady: _.union(playersReady, [pid])
         });
-        console.log(intern('--- Player ready in Room #' + pin));
+        log.debug('--- Player ready in Room #' + pin);
         return room.attributes;
     }
 };
@@ -167,17 +164,17 @@ RoomManager.prototype.joinRoom = function(pin, pid, isClosed) {
     var room = this.getRoom(pin);
 
     if (room && room.attributes.players.length > 2) {
-        console.log(error('!!! Room Already full! #' + pin));
+        log.warn('!!! Room Already full! #' + pin);
         return false;
     } else if (room && room.attributes.closed === isClosed) {
         room.set({
             players: _.union(room.attributes.players, [pid]),
             playersCount: room.attributes.players.length + 1
         });
-        console.log('--> Client joined Room #' + pin);
+        log.debug('--> Client joined Room #' + pin);
         return room.attributes;
     } else {
-        console.log(error('!!! Could not join Room ') + pin);
+        log.error('!!! Could not join Room ' + pin);
     }
 
 };
@@ -196,7 +193,7 @@ RoomManager.prototype.leaveRoom = function(pin, pid) {
     var room = this.getRoom(pin);
 
     if (room) {
-        console.log('--> Player leaves Room #' + pin);
+        log.debug('--> Player leaves Room #' + pin);
 
         room.set({
             players: _.without(room.attributes.players, pid),
@@ -252,10 +249,10 @@ RoomManager.prototype.findMatch = function() {
     if (availableRooms.length > 0) {
         var randomPin = Math.ceil(Math.random() * availableRooms.length) - 1;
         var pin = availableRooms[randomPin].get("pin");
-        console.log('--- Match found: Room #' + pin);
+        log.debug('--- Match found: Room #' + pin);
         return pin;
     } else {
-        console.log(intern('--- No Match found, returning PIN 0'));
+        log.debug('--- No Match found, returning PIN 0');
         return 0;
     }
 };
