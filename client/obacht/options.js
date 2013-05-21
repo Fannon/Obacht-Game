@@ -105,12 +105,14 @@ obacht.options = {
             height: 200*0.7,
         },
         own: {
-            x: 400,
-            y: 650
+            x: 350,
+            y: 550,
+            angle: 45
         },
         enemy: {
             x: 1130,
-            y: 170
+            y: 170,
+            angle: 45
         },
     },
     bonus: {
