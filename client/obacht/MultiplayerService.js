@@ -21,8 +21,9 @@ obacht.MultiplayerService = function(serverUrl) {
     //////////////////////////////
 
     this.serverUrl = serverUrl;
-    this.room = false;
-    this.pid = undefined;
+    this.pin = false;
+    this.pid = false;
+    this.roomDetail = false;
     this.socket = io.connect(this.serverUrl); // Set up Socket-Connection to Server
 
     var self = this;
@@ -47,28 +48,29 @@ obacht.MultiplayerService = function(serverUrl) {
     });
 
     this.socket.on('room_detail', function (data) {
+        self.roomDetail = data;
+        self.pin = data.pin;
+
+        console.log('RoomDetails received');
         console.dir(data);
-        if (data.error || data.players.length === 0 ) {
-            // e.g. no free place in room
-            console.log(data.error);
+
+    });
+
+    this.socket.on('error', function(data) {
+        if (data.type === 'warning') {
+            console.warn(data.msg);
         } else {
-            // if no errors
-            if (data.players[0] === self.pid) {
-                // if player is first player
-                console.log('First Player ready.');
-                self.playerReady();
-                self.events.publish('player_ready');
-            } else {
-                // if player is second player
-                console.log('Second Player ready.');
-                self.playerReady();
-                self.events.publish('player_ready');
-            }
-            self.room = data.pin;
+            console.error(data.msg);
+        }
+        if (data.trace) {
+            console.dir(data.trace);
         }
     });
 
     this.socket.on('room_invite', function (data) {
+
+        console.log('Room invite received');
+
         if (data.pin === 0) {
             console.log('Create new Room.');
             // TODO Theme-Randomizer

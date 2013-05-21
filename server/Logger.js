@@ -43,19 +43,25 @@ Logger.prototype.setLogLevel = function(loglevel) {
     }
 
     if (loglevel <= 2) {
-        Logger.prototype.warn = function(msg) {
+        Logger.prototype.warn = function(msg, socket) {
             console.log(yellow + msg + reset);
+            if (socket) {
+                socket.emit('error', {type: 'warning', msg: msg});
+            }
         };
     } else {
-        Logger.prototype.warn = function(msg) {};
+        Logger.prototype.warn = function(msg, socket) {};
     }
 
     if (loglevel <= 3) {
-        Logger.prototype.error = function(msg) {
+        Logger.prototype.error = function(msg, socket) {
             console.log(red + msg + reset);
+            if (socket) {
+                socket.emit('error', {type: 'error', msg: msg});
+            }
         };
     } else {
-        Logger.prototype.error = function(msg) {};
+        Logger.prototype.error = function(msg, socket) {};
     }
 };
 
