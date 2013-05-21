@@ -39,7 +39,8 @@ obacht.Game = function() {
     this.layer.appendChild(this.enemyPlayer.layer);
     this.layer.appendChild(this.ownPlayer.layer);
     this.layer.appendChild(obacht.playerController.layer);
-
+    
+    this.Generator=new obacht.Generator();
 };
 
 obacht.Game.prototype = {
