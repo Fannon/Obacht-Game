@@ -21,14 +21,15 @@ obacht.Trap = function(type) {
 
     console.log('New Trap();');
 	
+	this.x=obacht.options.trap.own.x;
+	this.y=obacht.options.trap.own.y;
+	
     this.type = type;
     this.fill = obacht.options.bonus.general.path + this.type + '.png';
 
     ////////////////////
     // LIMEJS OBJECTS //
     ////////////////////
-    this.x = obacht.options.player.enemy.x;
-    this.y = obacht.options.player.enemy.y;
     this.rotation = 180;
     this.jumpHeight = obacht.options.player.general.jumpHeight;
     

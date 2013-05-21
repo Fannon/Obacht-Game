@@ -99,8 +99,19 @@ obacht.options = {
         }
     },
 
-    "trap": {
-
+    trap: {
+        general: {
+            width: 200*0.7,
+            height: 200*0.7,
+        },
+        own: {
+            x: 400,
+            y: 650
+        },
+        enemy: {
+            x: 1130,
+            y: 170
+        },
     },
     bonus: {
         general: {

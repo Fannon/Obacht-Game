@@ -27,7 +27,7 @@ obacht.Game = function() {
     //////////////////////////////
     // Game Model (state)       //
     //////////////////////////////
-    /*
+    
     this.ownWorld = new obacht.World('own');
     this.enemyWorld = new obacht.World('enemy');
     this.sky = new lime.Sprite().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT).setFill(obacht.themes.path.sky).setPosition(0, 0).setAnchorPoint(0, 0);
@@ -45,7 +45,7 @@ obacht.Game = function() {
     
     this.layer.appendChild(this.Trap.layer);
     this.layer.appendChild(obacht.playerController.layer);
-    */
+    
 };
 
 obacht.Game.prototype = {
