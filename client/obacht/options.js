@@ -102,7 +102,7 @@ obacht.options = {
     trap: {
         general: {
             width: 200*0.7,
-            height: 200*0.7,
+            height: 200*0.7
         },
         own: {
             x: 400,
@@ -111,7 +111,7 @@ obacht.options = {
         enemy: {
             x: 1130,
             y: 170
-        },
+        }
     },
     bonus: {
         general: {
@@ -142,7 +142,7 @@ obacht.options = {
 
     },
     "server": {
-        "url": "http://obacht.informatik.hs-augsburg.de:8080"
-//      "url": "http://192.168.2.100:8080/"
+//        "url": "http://obacht.informatik.hs-augsburg.de:8080"
+      "url": "http://192.168.2.100:8080/"
     }
 };

@@ -88,13 +88,13 @@ obacht.Menu.prototype = {
         "use strict";
         var that = this;
 
-        var sceneLoading = new lime.Scene();
+        var loadingScene = new lime.Scene();
 
         // set current scene active
-        obacht.director.replaceScene(sceneLoading);
+        obacht.director.replaceScene(loadingScene);
 
         var layerMenu = new lime.Layer();
-        sceneLoading.appendChild(layerMenu);
+        loadingScene.appendChild(layerMenu);
 
         var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
         layerMenu.appendChild(background);
@@ -110,7 +110,19 @@ obacht.Menu.prototype = {
         });
 
         //Loading ... Label
-        var loading_label = new obacht.Menu.Label('Loading ...', 40, 640, 520, 600, 90, layerMenu);
+        var loadingStatus = 0;
+        var loadingText = 'Loading ';
+        var loadingLabel = new obacht.Menu.Label(loadingText, 40, 640, 520, 600, 90, layerMenu);
+
+        setInterval(function(){
+            loadingStatus += 1;
+            loadingLabel.removeDomElement();
+
+            for (var i = 0; i < loadingStatus; i++) {
+
+            }
+            loadingLabel = new obacht.Menu.Label('Loading ', 40, 640, 520, 600, 90, layerMenu);
+        },800);
 
     },
 
