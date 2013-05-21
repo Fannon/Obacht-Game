@@ -48,19 +48,19 @@ obacht.MultiplayerService = function(serverUrl) {
 
     this.socket.on('room_detail', function (data) {
         console.dir(data);
-        if (data.error) {
+        if (data.error || data.players.length === 0 ) {
             // e.g. no free place in room
             console.log(data.error);
         } else {
             // if no errors
-            if (data.players.length === 0) {
-                // if normal room has no players yet
-                console.log('Joined Room #' + data.pin);
-                self.joinRoom(data.pin, data.closed);
-                self.events.publish('join_room');
-            } else if (data.players[0] === self.pid) {
-                // if room has only first player within
-                console.log('Wait for other Player.');
+            if (data.players[0] === self.pid) {
+                // if player is first player
+                console.log('First Player ready.');
+                self.playerReady();
+                self.events.publish('player_ready');
+            } else {
+                // if player is second player
+                console.log('Second Player ready.');
                 self.playerReady();
                 self.events.publish('player_ready');
             }
@@ -71,11 +71,12 @@ obacht.MultiplayerService = function(serverUrl) {
     this.socket.on('room_invite', function (data) {
         if (data.pin === 0) {
             console.log('Create new Room.');
-            self.newRoom(data.theme, data.options, false);
+            // TODO Theme-Randomizer
+            self.newRoom('desert', data.options, false);
             self.events.publish('new_room');
         } else {
             console.log('Joining Room ' + data.pin + ' .');
-            self.joinRoom(data.pin, false);
+            self.joinRoom(data.pin, data.closed);
             self.events.publish('join_room');
         }
     });

@@ -210,7 +210,7 @@ obacht.Menu.prototype = {
         var createButton = new obacht.Menu.Button(-910, 400, 1533, 1087, 400, 480, 450, 160, layerMenu);
         var createLabel = new obacht.Menu.Label('CREATE', 60, 400, 485, 400, 70, layerMenu);
         goog.events.listen(createButton, lime.Button.Event.CLICK, function() {
-            that.getCodeScene();
+            that.selectThemeScene();
         });
 
         //Join-Button
@@ -234,6 +234,54 @@ obacht.Menu.prototype = {
 
     },
 
+
+    selectThemeScene: function() {
+        "use strict";
+        var that = this;
+
+        var sceneMenu = new lime.Scene();
+
+        // set current scene active
+        obacht.director.replaceScene(sceneMenu);
+
+        var layerMenu = new lime.Layer();
+        sceneMenu.appendChild(layerMenu);
+
+        var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
+        layerMenu.appendChild(background);
+
+        //Small Logo
+        var logo_small = new obacht.Menu.Button(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
+
+        //Back - Door
+        var backButton = new obacht.Menu.Button(-990, 10, 1704, 1208, 57, 57, 130, 130, layerMenu);
+        goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
+            that.mainMenuScene();
+        });
+
+        //Select_World-Text
+        var selectWorldLabel = new obacht.Menu.Label('SELECT A WORLD', 50, 640, 320, 400, 90, layerMenu);
+
+        //Theme-Desert
+        var desert = new obacht.Menu.Button(-177, -5, 1704, 1208, 340, 485, 300, 300, layerMenu);
+        goog.events.listen(desert, lime.Button.Event.CLICK, function() {
+            that.getCodeScene();
+        });
+
+        //Theme-Water
+        var water = new obacht.Menu.Button(-675, -450, 1704, 1208, 640, 485, 300, 300, layerMenu);
+        goog.events.listen(water, lime.Button.Event.CLICK, function() {
+            that.getCodeScene();
+        });
+
+        //Theme-Meadow
+        var meadow = new obacht.Menu.Button(-60, -213, 1704, 1208, 940, 485, 300, 300, layerMenu);
+        goog.events.listen(meadow, lime.Button.Event.CLICK, function() {
+            that.getCodeScene();
+        });
+    },
+
+
     getCodeScene: function() {
         "use strict";
         var that = this;
@@ -255,10 +303,10 @@ obacht.Menu.prototype = {
         //Small Logo
         var logo_small = new obacht.Menu.Button(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
-        //Back - Door
-        var backButton = new obacht.Menu.Button(-990, 10, 1704, 1208, 57, 57, 130, 130, layerMenu);
+        //Back
+        var backButton = new obacht.Menu.Button(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
         goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
-            that.mainMenuScene();
+            that.selectThemeScene();
         });
 
         //Code_Field
@@ -285,56 +333,9 @@ obacht.Menu.prototype = {
         var nextButton = new obacht.Menu.Button(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
         var nextLabel = new obacht.Menu.Label('NEXT', 40, 637, 650, 700, 60, layerMenu);
         goog.events.listen(nextButton, lime.Button.Event.CLICK, function() {
-            that.selectThemeScene();
-        });
-
-    },
-
-
-    selectThemeScene: function() {
-        "use strict";
-        var that = this;
-
-        var sceneMenu = new lime.Scene();
-
-        // set current scene active
-        obacht.director.replaceScene(sceneMenu);
-
-        var layerMenu = new lime.Layer();
-        sceneMenu.appendChild(layerMenu);
-
-        var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
-        layerMenu.appendChild(background);
-
-        //Small Logo
-        var logo_small = new obacht.Menu.Button(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
-
-        //Back
-        var backButton = new obacht.Menu.Button(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
-        goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
-            that.getCodeScene();
-        });
-
-        //Select_World-Text
-        var selectWorldLabel = new obacht.Menu.Label('SELECT A WORLD', 50, 640, 320, 400, 90, layerMenu);
-
-        //Theme-Desert
-        var desert = new obacht.Menu.Button(-177, -5, 1704, 1208, 340, 485, 300, 300, layerMenu);
-        goog.events.listen(desert, lime.Button.Event.CLICK, function() {
             that.loadGame();
         });
 
-        //Theme-Water
-        var water = new obacht.Menu.Button(-675, -450, 1704, 1208, 640, 485, 300, 300, layerMenu);
-        goog.events.listen(water, lime.Button.Event.CLICK, function() {
-            that.loadGame();
-        });
-
-        //Theme-Meadow
-        var meadow = new obacht.Menu.Button(-60, -213, 1704, 1208, 940, 485, 300, 300, layerMenu);
-        goog.events.listen(meadow, lime.Button.Event.CLICK, function() {
-            that.loadGame();
-        });
     },
 
 
