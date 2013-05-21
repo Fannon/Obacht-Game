@@ -100,7 +100,7 @@ RoomManager.prototype.removeRoom = function(pin) {
  */
 RoomManager.prototype.getRoom = function(pin) {
     "use strict";
-    return this.rooms.findWhere({pin: pin});
+    return this.rooms.findWhere({pin: parseInt(pin, 10)});
 };
 
 /**
@@ -154,7 +154,7 @@ RoomManager.prototype.joinRoom = function(pin, pid, isClosed) {
 
     // Catch all Error Cases
     if (!room) {
-        log.warn('!!! Tried to join Room that doesnt exist');
+        log.warn('!!! Tried to join Room #' + pin + ' that doesnt exist');
         return false;
     } else if (room.attributes.players.length > 2) {
         log.warn('!!! Room Already full! #' + pin);
