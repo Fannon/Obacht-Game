@@ -44,20 +44,48 @@ obacht.Menu = function() {
     lime.Label.defaultFont = 'Cartwheel';
     lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
     
-    // Start first Menu Scene
-    this.mainMenuScene();
+    // Start first Scene
+    this.loadingScene();
 
 };
 
-//BIG LOGO FOR LOADING-SCREEN
-        // var logo_big = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(190, -750).setAnchorPoint(0, 0);
-        // layerMenu.appendChild(logo_big);
-        // var mask_logo_big = new lime.Sprite().setPosition(640, 360).setAnchorPoint(0.5,0.5).setSize(1000, 200);
-        // layerMenu.appendChild(mask_logo_big);
-        // logo_big.setMask(mask_logo_big);
-        
+
         
 obacht.Menu.prototype = {
+
+    /**
+     * Loading Start Scene
+     */
+    loadingScene: function() {
+        "use strict";
+        var that = this;
+
+        var sceneLoading = new lime.Scene();
+
+        // set current scene active
+        obacht.director.replaceScene(sceneLoading);
+
+        var layerMenu = new lime.Layer();
+        sceneLoading.appendChild(layerMenu);
+
+        var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
+        layerMenu.appendChild(background);
+
+        //BIG LOGO FOR LOADING-SCREEN
+        var logo_big = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(190, -750).setAnchorPoint(0, 0);
+        layerMenu.appendChild(logo_big);
+        var mask_logo_big = new lime.Sprite().setPosition(640, 360).setAnchorPoint(0.5,0.5).setSize(1000, 200);
+        layerMenu.appendChild(mask_logo_big);
+        logo_big.setMask(mask_logo_big);
+        goog.events.listen(logo_big, lime.Button.Event.CLICK, function() {
+            that.mainMenuScene();
+        });
+
+        //Loading ... Label
+        var loading_label = menuLabel('Loading ...', 40, 640, 520, 600, 90, layerMenu);
+
+    },
+
 
     /**
      * Main Menu Scene
@@ -191,6 +219,9 @@ obacht.Menu.prototype = {
         var layerMenu = new lime.Layer();
         sceneMenu.appendChild(layerMenu);
 
+        var layerToolTip = new lime.Layer().setHidden(true);
+        sceneMenu.appendChild(layerToolTip);
+
         var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
         layerMenu.appendChild(background);
 
@@ -209,21 +240,23 @@ obacht.Menu.prototype = {
         var code_label = menuLabel('5 6 8 7', 90, 640, 425, 400, 130, layerMenu); 
 
         //small Infotext Icon
-		var infoButton = menuButton(-350, 215, 1704, 1208, 805, 265, 90, 90, layerMenu);           
+		var infoButton = menuButton(-350, 215, 1704, 1208, 805, 265, 90, 90, layerMenu);
         goog.events.listen(infoButton, lime.Button.Event.CLICK, function() {
             //Pop-up display;
+            layerToolTip.setHidden(false);
         });
                      
         //Pop-up-Infotext
-		var PopUp = menuButton(820, -190, 1704, 1208, 1000, 260, 350, 260, layerMenu);           
-        var PopUp_label = menuLabel('PLEASE GIVE THIS CODE TO YOUR FRIEND', 36, 1018, 250, 280, 55, layerMenu);
+		var PopUp = menuButton(820, -190, 1704, 1208, 1000, 260, 350, 260, layerToolTip);
+        var PopUp_label = menuLabel('PLEASE GIVE THIS CODE TO YOUR FRIEND', 36, 1018, 250, 280, 55, layerToolTip);
         goog.events.listen(PopUp, lime.Button.Event.CLICK, function() {
             //Pop-up display none;
+            layerToolTip.setHidden(true);
         });
 
         //Next-Button
-		var nextButton = menuButton(85, -276, 1704, 1208, 640, 640, 350, 130, layerMenu);           
-        var nextButton_label = menuLabel('NEXT', 40, 640, 650, 700, 60, layerMenu);
+		var nextButton = menuButton(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
+        var nextButton_label = menuLabel('NEXT', 40, 637, 650, 700, 60, layerMenu);
         goog.events.listen(nextButton, lime.Button.Event.CLICK, function() {
             that.selectThemeScene();
         });
@@ -433,6 +466,9 @@ obacht.Menu.prototype = {
         var layerMenu = new lime.Layer();
         sceneMenu.appendChild(layerMenu);
 
+        var layerToolTip = new lime.Layer().setHidden(true);
+        sceneMenu.appendChild(layerToolTip);
+
         // Background
         var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
         layerMenu.appendChild(background);
@@ -450,13 +486,15 @@ obacht.Menu.prototype = {
 		var infoButton = menuButton(-345, 215, 1704, 1208, 810, 265, 90, 90, layerMenu);           
         goog.events.listen(infoButton, lime.Button.Event.CLICK, function() {
             //Pop-up display;
+            layerToolTip.setHidden(false);
         });
                 
         //Pop-up-Infotext
-		var PopUp = menuButton(220, 145, 1704, 1208, 1020, 315, 400, 370, layerMenu);           
-        var PopUp_label = menuLabel('ENTER THE FOUR DIGIT CODE YOU GOT FROM YOUR FRIEND', 36, 1040, 248, 280, 55, layerMenu);
+		var PopUp = menuButton(220, 145, 1704, 1208, 1020, 315, 400, 370, layerToolTip);
+        var PopUp_label = menuLabel('ENTER THE FOUR DIGIT CODE YOU GOT FROM YOUR FRIEND', 36, 1040, 248, 280, 55, layerToolTip);
         goog.events.listen(PopUp, lime.Button.Event.CLICK, function() {
             //Pop-up display none;
+            layerToolTip.setHidden(true);
         });
         
         //Code_Field
@@ -480,8 +518,8 @@ obacht.Menu.prototype = {
 		var keyDelete = menuButton(0, 68, 1772, 1256, 1190, 530, 130, 130, layerMenu);           
 
         //Next-Button
-		var nextButton = menuButton(85, -276, 1704, 1208, 640, 640, 350, 130, layerMenu);           
-        var nextButton_label = menuLabel('NEXT', 40, 640, 650, 700, 60, layerMenu);
+		var nextButton = menuButton(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
+        var nextButton_label = menuLabel('NEXT', 40, 637, 650, 700, 60, layerMenu);
 
 
 
