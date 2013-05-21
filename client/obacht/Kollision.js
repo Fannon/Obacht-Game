@@ -11,8 +11,8 @@ obacht.Kollision = function(object1,object2){
     obj1[0]=Math.round(object1pos.x/10)*10-(object1.getSize().width/2);
     obj1[1]=Math.round(object1pos.y/10)*10-(object1.getSize().height/2);
 
-    obj1w=hindernis.getSize().width;
-    obj1h=hindernis.getSize().height;
+    obj1w=object1.getSize().width;
+    obj1h=object1.getSize().height;
 
     obj2[0]=Math.round(object2pos.x/10)*10-(object2.getSize().width/2);
     obj2[1]=Math.round(object2pos.y/10)*10-(object2.getSize().height/2);

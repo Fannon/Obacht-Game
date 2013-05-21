@@ -6,6 +6,7 @@ goog.require('goog.pubsub.PubSub');
 
 // Lime.js Requirements
 goog.require('lime.RoundedRect');
+goog.require('lime.Sprite');
 goog.require('lime.Node');
 goog.require('lime.animation.Sequence');
 goog.require('lime.animation.MoveBy');
@@ -48,7 +49,7 @@ obacht.Player = function(type) {
 
     this.health = 3;
 
-    this.character = new lime.RoundedRect().setSize(obacht.options.player.general.width, obacht.options.player.general.height).setPosition(this.x, this.y).setAnchorPoint(0.5, 1).setFill('assets/gfx/hugo4.png').setRotation(this.rotation).setRenderer(obacht.renderer);
+    this.character = new lime.Sprite().setSize(obacht.options.player.general.width, obacht.options.player.general.height).setPosition(this.x, this.y).setAnchorPoint(0.5, 1).setFill('#999').setRotation(this.rotation).setRenderer(obacht.renderer);
     /*'assets/gfx/hugo4.png'*/
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
 
