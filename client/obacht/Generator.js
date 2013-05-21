@@ -4,7 +4,7 @@
 goog.provide('obacht.Generator');
 
 
-/*
+/**
  * Trap and Bonus Generator
  *
  * @constructor

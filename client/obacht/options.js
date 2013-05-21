@@ -52,8 +52,8 @@ obacht.options = {
     },
     player: {
         general: {
-            width: 377*0.7,
-            height: 342*0.7,
+            width: 235*0.7,
+            height: 300*0.7,
             jumpUpDuration: 0.2,
             jumpDownDuration: 0.35,
             jumpHeight: 280,
@@ -99,8 +99,19 @@ obacht.options = {
         }
     },
 
-    "trap": {
-
+    trap: {
+        general: {
+            width: 200*0.7,
+            height: 200*0.7
+        },
+        own: {
+            x: 400,
+            y: 650
+        },
+        enemy: {
+            x: 1130,
+            y: 170
+        }
     },
     bonus: {
         general: {
@@ -131,7 +142,7 @@ obacht.options = {
 
     },
     "server": {
-        "url": "http://obacht.informatik.hs-augsburg.de:8080"
-//      "url": "http://192.168.2.100:8080/"
+//        "url": "http://obacht.informatik.hs-augsburg.de:8080"
+      "url": "http://192.168.2.100:8080/"
     }
 };

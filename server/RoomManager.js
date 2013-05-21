@@ -37,6 +37,7 @@ var RoomManager = function(io) {
             pin: undefined,
             closed: false,
             theme: 'random',
+            randomTheme: true,
             options: {},
             players: [],
             playersCount: 0, // Just for convenience
@@ -225,7 +226,7 @@ RoomManager.prototype.getNewPin = function(isClosed) {
     if (!this.getRoom(pin)) {
         return pin;
     } else {
-        return this.getNewPin();
+        return this.getNewPin(isClosed);
     }
 };
 
