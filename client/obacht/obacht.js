@@ -13,6 +13,7 @@ goog.require('lime.Renderer.CANVAS');
 goog.require('obacht.options');
 goog.require('obacht.MultiplayerService');
 goog.require('obacht.Menu');
+goog.require('obacht.themes');
 
 
 // entrypoint

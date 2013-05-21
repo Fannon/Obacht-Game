@@ -3,10 +3,15 @@
 
 goog.provide('obacht.Generator');
 
+<<<<<<< HEAD
 goog.require('obacht.Game');
 goog.require('obacht.Trap');
 goog.require('obacht.Kollision');
 /*
+=======
+
+/**
+>>>>>>> c73c30dafc77edbaa37bc7574eb9fd57592f132d
  * Trap and Bonus Generator
  *
  * @constructor

@@ -70,7 +70,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
             pid: socket.id,
             error: 'Connection to Server failed!'
         });
-        log.error('!!! Remote connection failed!');
+        log.error('!!! Remote connection failed!', socket);
     });
 
     /**
@@ -79,13 +79,16 @@ obacht.server.io.sockets.on('connection', function(socket) {
      */
     socket.on('new_room', function(roomDetail) {
 
-        var pin = obacht.server.rooms.getNewPin();
+        var pin = obacht.server.rooms.getNewPin(roomDetail.closed);
 
         roomDetail.players = []; // Set Players to empty Array (No Player joined yet)
         roomDetail.pin = pin;
 
         obacht.server.rooms.addRoom(pin, roomDetail);
-        socket.emit('room_detail', roomDetail);
+        socket.emit('room_invite', {
+            pin: pin,
+            closed: roomDetail.closed
+        });
 
         log.debug('--> Player requested new Room PIN #' + pin);
 
@@ -98,16 +101,14 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
         // Leave old Room if connected to one
         if (socket.pin) {
-            obacht.server.rooms.leaveRoom(socket.pin, socket.pid);
-            socket.leave(socket.pin);
-            log.debug('--> Player leaves Room #' + socket.pin);
+            obacht.server.leaveRoomHelper(socket);
         }
         socket.pin = roomDetail.pin;
 
         var room = obacht.server.rooms.joinRoom(socket.pin, socket.pid, roomDetail.closed);
         if (room) {
             socket.join(socket.pin);
-            socket.broadcast.to(socket.pin).emit('room_detail', room);
+            obacht.server.io.sockets['in'](socket.pin).emit('room_detail', room);
         }
 
     });
@@ -116,16 +117,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
      * Leave Room Player is currently connected
      */
     socket.on('leave_room', function() {
-        if (socket.pin) {
-            socket.broadcast.to(socket.pin).emit('player_left');
-            obacht.server.rooms.leaveRoom(socket.pin, socket.pid);
-            socket.leave(socket.pin);
-            socket.pin = false;
-
-            log.debug('--> Player leaves Room #' + socket.pin);
-        } else {
-            log.warn('!!! Tried to leave Room, but there was none joined');
-        }
+        obacht.server.leaveRoomHelper(socket);
     });
 
     /**
@@ -139,13 +131,15 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
         // If still in Room, leave it
         if (socket.pin) {
-            socket.leave(socket.pin);
-            obacht.server.rooms.leaveRoom(socket.pin, socket.pid);
+            obacht.server.leaveRoomHelper(socket);
         }
 
         var pin = obacht.server.rooms.findMatch();
 
-        socket.emit('room_invite', {pin: pin});
+        socket.emit('room_invite', {
+            pin: pin,
+            closed: false
+        });
 
     });
 
@@ -155,15 +149,15 @@ obacht.server.io.sockets.on('connection', function(socket) {
      * If both Players are ready, sending a 'game_ready' Signal: The Game can be started now
      */
     socket.on('player_ready', function() {
-
         if (socket.pin) {
             var roomDetail = obacht.server.rooms.playerReady(socket.pin, socket.pid);
             if (roomDetail && roomDetail.playersReady.length === 2) {
                 log.debug('--- Game Ready in Room #' + socket.pin);
                 obacht.server.io.sockets['in'](socket.pin).emit('game_ready');
             }
+            obacht.server.io.sockets['in'](socket.pin).emit('room_detail', roomDetail);
         } else {
-            log.warn('--- Player cannot be ready - is not in a Game yet');
+            log.warn('--- Player cannot be ready - is not in a Game yet', socket);
         }
     });
 
@@ -174,7 +168,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
         if (socket.pin) {
             socket.broadcast.to(socket.pin).emit('player_status', player_status);
         } else {
-            log.warn('!!! Cannot send Player Status while not connected to a Game!');
+            log.warn('!!! Cannot send Player Status while not connected to a Game!', socket);
         }
     });
 
@@ -186,7 +180,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
             log.debug('<-> Player Action "' + data.type + '" in Room #' + socket.pin);
             socket.broadcast.to(socket.pin).emit('player_action', data);
         } else {
-            log.warn('!!! Cannot send Player Action while not connected to a Game!');
+            log.warn('!!! Cannot send Player Action while not connected to a Game!', socket);
         }
     });
 
@@ -209,9 +203,27 @@ obacht.server.io.sockets.on('connection', function(socket) {
             obacht.server.rooms.leaveRoom(socket.pin, socket.pid);
             socket.broadcast.to(socket.pin).emit('player_left');
             socket.leave(socket.pin);
-            log.warn('--- Player left Room due to disconnect');
+            log.warn('--- Player left Room due to disconnect', socket);
         }
         log.debug('--- Player disconnect');
     });
 
 });
+
+
+//////////////////////////////
+// Helper Functions         //
+//////////////////////////////
+
+obacht.server.leaveRoomHelper = function(socket) {
+    "use strict";
+    if (socket.pin) {
+        socket.broadcast.to(socket.pin).emit('player_left');
+        obacht.server.rooms.leaveRoom(socket.pin, socket.pid);
+        socket.leave(socket.pin);
+        socket.pin = false;
+        log.debug('--> Player leaves Room #' + socket.pin);
+    } else {
+        log.warn('!!! Tried to leave Room, but there was none joined', socket);
+    }
+};

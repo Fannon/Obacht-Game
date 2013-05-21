@@ -88,13 +88,13 @@ obacht.Menu.prototype = {
         "use strict";
         var that = this;
 
-        var sceneLoading = new lime.Scene();
+        var loadingScene = new lime.Scene();
 
         // set current scene active
-        obacht.director.replaceScene(sceneLoading);
+        obacht.director.replaceScene(loadingScene);
 
         var layerMenu = new lime.Layer();
-        sceneLoading.appendChild(layerMenu);
+        loadingScene.appendChild(layerMenu);
 
         var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
         layerMenu.appendChild(background);
@@ -110,7 +110,20 @@ obacht.Menu.prototype = {
         });
 
         //Loading ... Label
-        var loading_label = new obacht.Menu.Label('Loading ...', 40, 640, 520, 600, 90, layerMenu);
+        var loadingText = 'Loading ';
+        var loadingStatus = '.';
+        var loadingLabel = new obacht.Menu.Label(loadingText + loadingStatus, 40, 740, 520, 400, 90, layerMenu).setAlign('left');
+
+        setInterval(function(){
+            layerMenu.removeChild(loadingLabel);
+            loadingStatus += '.';
+
+            loadingLabel = new obacht.Menu.Label(loadingText + loadingStatus, 40, 740, 520, 400, 90, layerMenu).setAlign('left');
+            if (loadingStatus === '.....') {
+                loadingStatus = '';
+            }
+
+        }, 950);
 
     },
 
@@ -210,7 +223,7 @@ obacht.Menu.prototype = {
         var createButton = new obacht.Menu.Button(-910, 400, 1533, 1087, 400, 480, 450, 160, layerMenu);
         var createLabel = new obacht.Menu.Label('CREATE', 60, 400, 485, 400, 70, layerMenu);
         goog.events.listen(createButton, lime.Button.Event.CLICK, function() {
-            that.getCodeScene();
+            that.selectThemeScene();
         });
 
         //Join-Button
@@ -229,10 +242,61 @@ obacht.Menu.prototype = {
         var randomPlayButton = new obacht.Menu.Button(-440, 400, 1533, 1087, 870, 480, 450, 160, layerMenu);
         var randomPlayLabel = new obacht.Menu.Label('PLAY', 60, 870, 485, 400, 70, layerMenu);
         goog.events.listen(randomPlayButton, lime.Button.Event.CLICK, function() {
-            that.loadGame();
+            obacht.mp.findMatch();
+            obacht.mp.events.subscribe('room_detail', function(data){
+                that.loadGameScene(data);
+            });
         });
 
     },
+
+
+    selectThemeScene: function() {
+        "use strict";
+        var that = this;
+
+        var sceneMenu = new lime.Scene();
+
+        // set current scene active
+        obacht.director.replaceScene(sceneMenu);
+
+        var layerMenu = new lime.Layer();
+        sceneMenu.appendChild(layerMenu);
+
+        var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
+        layerMenu.appendChild(background);
+
+        //Small Logo
+        var logo_small = new obacht.Menu.Button(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
+
+        //Back - Door
+        var backButton = new obacht.Menu.Button(-990, 10, 1704, 1208, 57, 57, 130, 130, layerMenu);
+        goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
+            that.mainMenuScene();
+        });
+
+        //Select_World-Text
+        var selectWorldLabel = new obacht.Menu.Label('SELECT A WORLD', 50, 640, 320, 400, 90, layerMenu);
+
+        //Theme-Desert
+        var desert = new obacht.Menu.Button(-177, -5, 1704, 1208, 340, 485, 300, 300, layerMenu);
+        goog.events.listen(desert, lime.Button.Event.CLICK, function() {
+            that.getCodeScene();
+        });
+
+        //Theme-Water
+        var water = new obacht.Menu.Button(-675, -450, 1704, 1208, 640, 485, 300, 300, layerMenu);
+        goog.events.listen(water, lime.Button.Event.CLICK, function() {
+            that.getCodeScene();
+        });
+
+        //Theme-Meadow
+        var meadow = new obacht.Menu.Button(-60, -213, 1704, 1208, 940, 485, 300, 300, layerMenu);
+        goog.events.listen(meadow, lime.Button.Event.CLICK, function() {
+            that.getCodeScene();
+        });
+    },
+
 
     getCodeScene: function() {
         "use strict";
@@ -255,10 +319,10 @@ obacht.Menu.prototype = {
         //Small Logo
         var logo_small = new obacht.Menu.Button(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
-        //Back - Door
-        var backButton = new obacht.Menu.Button(-990, 10, 1704, 1208, 57, 57, 130, 130, layerMenu);
+        //Back
+        var backButton = new obacht.Menu.Button(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
         goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
-            that.mainMenuScene();
+            that.selectThemeScene();
         });
 
         //Code_Field
@@ -285,56 +349,9 @@ obacht.Menu.prototype = {
         var nextButton = new obacht.Menu.Button(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
         var nextLabel = new obacht.Menu.Label('NEXT', 40, 637, 650, 700, 60, layerMenu);
         goog.events.listen(nextButton, lime.Button.Event.CLICK, function() {
-            that.selectThemeScene();
+            that.loadGameScene();
         });
 
-    },
-
-
-    selectThemeScene: function() {
-        "use strict";
-        var that = this;
-
-        var sceneMenu = new lime.Scene();
-
-        // set current scene active
-        obacht.director.replaceScene(sceneMenu);
-
-        var layerMenu = new lime.Layer();
-        sceneMenu.appendChild(layerMenu);
-
-        var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
-        layerMenu.appendChild(background);
-
-        //Small Logo
-        var logo_small = new obacht.Menu.Button(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
-
-        //Back
-        var backButton = new obacht.Menu.Button(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
-        goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
-            that.getCodeScene();
-        });
-
-        //Select_World-Text
-        var selectWorldLabel = new obacht.Menu.Label('SELECT A WORLD', 50, 640, 320, 400, 90, layerMenu);
-
-        //Theme-Desert
-        var desert = new obacht.Menu.Button(-177, -5, 1704, 1208, 340, 485, 300, 300, layerMenu);
-        goog.events.listen(desert, lime.Button.Event.CLICK, function() {
-            that.loadGame();
-        });
-
-        //Theme-Water
-        var water = new obacht.Menu.Button(-675, -450, 1704, 1208, 640, 485, 300, 300, layerMenu);
-        goog.events.listen(water, lime.Button.Event.CLICK, function() {
-            that.loadGame();
-        });
-
-        //Theme-Meadow
-        var meadow = new obacht.Menu.Button(-60, -213, 1704, 1208, 940, 485, 300, 300, layerMenu);
-        goog.events.listen(meadow, lime.Button.Event.CLICK, function() {
-            that.loadGame();
-        });
     },
 
 
@@ -342,12 +359,11 @@ obacht.Menu.prototype = {
      * Game Loading Scene
      * Starts the Game and everything that needs to be ready for that.
      */
-    loadGame: function(pin) {
+    loadGameScene: function(roomDetail) {
         "use strict";
 
-        if (!pin) {
-            pin = '1234'; // TODO: PIN from Server
-        }
+        obacht.themes.setTheme(roomDetail.theme);
+
 
         // Connect to Multiplayer Server
         //obacht.mp = new obacht.MultiplayerService(obacht.options.server.url);
@@ -364,7 +380,7 @@ obacht.Menu.prototype = {
         obacht.playerController = new obacht.PlayerController();
 
         obacht.currentGame = new obacht.Game();
-        obacht.currentGame.pin = pin;
+//        obacht.currentGame.pin = roomDetail.pin;
         sceneGame.appendChild(obacht.currentGame.layer);
 
     },
@@ -465,7 +481,7 @@ obacht.Menu.prototype = {
 
         var startGame = function() {
             if (codeArray[0] !== '_' && codeArray[1] !== '_' && codeArray[2] !== '_' && codeArray[3] !== '_') {
-                that.loadGame(getPin());
+                that.loadGameScene(getPin());
             }
         };
 

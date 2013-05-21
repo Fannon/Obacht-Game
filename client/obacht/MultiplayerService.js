@@ -21,8 +21,9 @@ obacht.MultiplayerService = function(serverUrl) {
     //////////////////////////////
 
     this.serverUrl = serverUrl;
-    this.room = false;
-    this.pid = undefined;
+    this.pin = false;
+    this.pid = false;
+    this.roomDetail = false;
     this.socket = io.connect(this.serverUrl); // Set up Socket-Connection to Server
 
     var self = this;
@@ -47,35 +48,42 @@ obacht.MultiplayerService = function(serverUrl) {
     });
 
     this.socket.on('room_detail', function (data) {
+        self.roomDetail = data;
+        self.pin = data.pin;
+
+        console.log('RoomDetails received');
         console.dir(data);
-        if (data.error) {
-            // e.g. no free place in room
-            console.log(data.error);
+        self.events.publish('room_detail', data);
+
+    });
+
+    this.socket.on('error', function(data) {
+        if (data.type === 'warning') {
+            console.warn(data.msg);
         } else {
-            // if no errors
-            if (data.players.length === 0) {
-                // if normal room has no players yet
-                console.log('Joined Room #' + data.pin);
-                self.joinRoom(data.pin, data.closed);
-                self.events.publish('join_room');
-            } else if (data.players[0] === self.pid) {
-                // if room has only first player within
-                console.log('Wait for other Player.');
-                self.playerReady();
-                self.events.publish('player_ready');
-            }
-            self.room = data.pin;
+            console.error(data.msg);
+        }
+        if (data.trace) {
+            console.dir(data.trace);
         }
     });
 
     this.socket.on('room_invite', function (data) {
+
+        console.log('Room invite received: PIN: #' + data.pin);
+
         if (data.pin === 0) {
-            console.log('Create new Room.');
-            self.newRoom(data.theme, data.options, false);
+            console.log('Create new random Room.');
+
+            var theme = self.getRandomTheme();
+            console.log('Random Theme: ' + theme);
+
+            self.newRoom(theme, data.options, false);
             self.events.publish('new_room');
+
         } else {
-            console.log('Joining Room ' + data.pin + ' .');
-            self.joinRoom(data.pin, false);
+            console.log('Joining Room ' + data.pin);
+            self.joinRoom(data.pin, data.closed);
             self.events.publish('join_room');
         }
     });
@@ -196,3 +204,10 @@ obacht.MultiplayerService.prototype.getRooms = function() {
 //////////////////////////////
 // Helper Functions         //
 //////////////////////////////
+
+obacht.MultiplayerService.prototype.getRandomTheme = function() {
+    console.dir(obacht.themes);
+    var availableThemes = obacht.themes.availableThemes;
+    var rand = Math.floor(availableThemes.length * Math.random());
+    return availableThemes[rand];
+};

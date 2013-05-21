@@ -37,6 +37,7 @@ var RoomManager = function(io) {
             pin: undefined,
             closed: false,
             theme: 'random',
+            randomTheme: true,
             options: {},
             players: [],
             playersCount: 0, // Just for convenience
