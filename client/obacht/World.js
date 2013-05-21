@@ -3,7 +3,6 @@
 
 goog.provide('obacht.World');
 goog.require('obacht.options');
-goog.require('obacht.themes');
 goog.require('obacht.Bonus');
 goog.require('lime.animation.Sequence');
 goog.require('lime.animation.Loop');

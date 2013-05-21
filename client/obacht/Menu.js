@@ -110,19 +110,20 @@ obacht.Menu.prototype = {
         });
 
         //Loading ... Label
-        var loadingStatus = 0;
         var loadingText = 'Loading ';
-        var loadingLabel = new obacht.Menu.Label(loadingText, 40, 640, 520, 600, 90, layerMenu);
+        var loadingStatus = '.';
+        var loadingLabel = new obacht.Menu.Label(loadingText + loadingStatus, 40, 740, 520, 400, 90, layerMenu).setAlign('left');
 
         setInterval(function(){
-            loadingStatus += 1;
-            loadingLabel.removeDomElement();
+            layerMenu.removeChild(loadingLabel);
+            loadingStatus += '.';
 
-            for (var i = 0; i < loadingStatus; i++) {
-
+            loadingLabel = new obacht.Menu.Label(loadingText + loadingStatus, 40, 740, 520, 400, 90, layerMenu).setAlign('left');
+            if (loadingStatus === '.....') {
+                loadingStatus = '';
             }
-            loadingLabel = new obacht.Menu.Label('Loading ', 40, 640, 520, 600, 90, layerMenu);
-        },800);
+
+        }, 950);
 
     },
 
@@ -241,7 +242,10 @@ obacht.Menu.prototype = {
         var randomPlayButton = new obacht.Menu.Button(-440, 400, 1533, 1087, 870, 480, 450, 160, layerMenu);
         var randomPlayLabel = new obacht.Menu.Label('PLAY', 60, 870, 485, 400, 70, layerMenu);
         goog.events.listen(randomPlayButton, lime.Button.Event.CLICK, function() {
-            that.loadGame();
+            obacht.mp.findMatch();
+            obacht.mp.events.subscribe('room_detail', function(data){
+                that.loadGameScene(data);
+            });
         });
 
     },
@@ -345,7 +349,7 @@ obacht.Menu.prototype = {
         var nextButton = new obacht.Menu.Button(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
         var nextLabel = new obacht.Menu.Label('NEXT', 40, 637, 650, 700, 60, layerMenu);
         goog.events.listen(nextButton, lime.Button.Event.CLICK, function() {
-            that.loadGame();
+            that.loadGameScene();
         });
 
     },
@@ -355,12 +359,11 @@ obacht.Menu.prototype = {
      * Game Loading Scene
      * Starts the Game and everything that needs to be ready for that.
      */
-    loadGame: function(pin) {
+    loadGameScene: function(roomDetail) {
         "use strict";
 
-        if (!pin) {
-            pin = '1234'; // TODO: PIN from Server
-        }
+        obacht.themes.setTheme(roomDetail.theme);
+
 
         // Connect to Multiplayer Server
         //obacht.mp = new obacht.MultiplayerService(obacht.options.server.url);
@@ -377,7 +380,7 @@ obacht.Menu.prototype = {
         obacht.playerController = new obacht.PlayerController();
 
         obacht.currentGame = new obacht.Game();
-        obacht.currentGame.pin = pin;
+//        obacht.currentGame.pin = roomDetail.pin;
         sceneGame.appendChild(obacht.currentGame.layer);
 
     },
@@ -478,7 +481,7 @@ obacht.Menu.prototype = {
 
         var startGame = function() {
             if (codeArray[0] !== '_' && codeArray[1] !== '_' && codeArray[2] !== '_' && codeArray[3] !== '_') {
-                that.loadGame(getPin());
+                that.loadGameScene(getPin());
             }
         };
 

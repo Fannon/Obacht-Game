@@ -53,6 +53,7 @@ obacht.MultiplayerService = function(serverUrl) {
 
         console.log('RoomDetails received');
         console.dir(data);
+        self.events.publish('room_detail', data);
 
     });
 
@@ -69,15 +70,19 @@ obacht.MultiplayerService = function(serverUrl) {
 
     this.socket.on('room_invite', function (data) {
 
-        console.log('Room invite received');
+        console.log('Room invite received: PIN: #' + data.pin);
 
         if (data.pin === 0) {
-            console.log('Create new Room.');
-            // TODO Theme-Randomizer
-            self.newRoom('desert', data.options, false);
+            console.log('Create new random Room.');
+
+            var theme = self.getRandomTheme();
+            console.log('Random Theme: ' + theme);
+
+            self.newRoom(theme, data.options, false);
             self.events.publish('new_room');
+
         } else {
-            console.log('Joining Room ' + data.pin + ' .');
+            console.log('Joining Room ' + data.pin);
             self.joinRoom(data.pin, data.closed);
             self.events.publish('join_room');
         }
@@ -199,3 +204,10 @@ obacht.MultiplayerService.prototype.getRooms = function() {
 //////////////////////////////
 // Helper Functions         //
 //////////////////////////////
+
+obacht.MultiplayerService.prototype.getRandomTheme = function() {
+    console.dir(obacht.themes);
+    var availableThemes = obacht.themes.availableThemes;
+    var rand = Math.floor(availableThemes.length * Math.random());
+    return availableThemes[rand];
+};
