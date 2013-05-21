@@ -111,14 +111,9 @@ obacht.options = {
         },
         enemy: {
             x: 1130,
-<<<<<<< HEAD
             y: 170,
             angle: 45
-        },
-=======
-            y: 170
         }
->>>>>>> c73c30dafc77edbaa37bc7574eb9fd57592f132d
     },
     bonus: {
         general: {

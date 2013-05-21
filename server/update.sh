@@ -1,4 +1,5 @@
 #!/bin/sh
+# Evtl: sudo chmod +x update.sh
 
 # Updates the Server. Needs sudo to work!
 

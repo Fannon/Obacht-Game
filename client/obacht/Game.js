@@ -33,29 +33,23 @@ obacht.Game = function() {
 
     this.ownPlayer = new obacht.Player('own');
     this.enemyPlayer = new obacht.Player('enemy');
-<<<<<<< HEAD
-    
-=======
+
     this.Trap=new obacht.Trap('test');
 
->>>>>>> c73c30dafc77edbaa37bc7574eb9fd57592f132d
     this.layer = new lime.Layer();
     this.layer.appendChild(this.sky);
     this.layer.appendChild(this.enemyWorld.layer);
     this.layer.appendChild(this.ownWorld.layer);
     this.layer.appendChild(this.enemyPlayer.layer);
     this.layer.appendChild(this.ownPlayer.layer);
-<<<<<<< HEAD
-    
+
     this.layer.appendChild(obacht.playerController.layer);
-    
+
     this.Generator=new obacht.Generator(this.layer,this.ownPlayer);
-=======
 
     this.layer.appendChild(this.Trap.layer);
     this.layer.appendChild(obacht.playerController.layer);
 
->>>>>>> c73c30dafc77edbaa37bc7574eb9fd57592f132d
 };
 
 obacht.Game.prototype = {
