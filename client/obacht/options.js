@@ -52,8 +52,8 @@ obacht.options = {
     },
     player: {
         general: {
-            width: 377*0.7,
-            height: 342*0.7,
+            width: 235*0.7,
+            height: 300*0.7,
             jumpUpDuration: 0.2,
             jumpDownDuration: 0.35,
             jumpHeight: 280,

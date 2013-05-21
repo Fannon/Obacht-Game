@@ -46,11 +46,10 @@ obacht.Player = function(type) {
         this.jumpHeight = obacht.options.player.general.jumpHeight;
     }
 
-
     this.health = 3;
 
     this.character = new lime.RoundedRect().setSize(obacht.options.player.general.width, obacht.options.player.general.height).setPosition(this.x, this.y).setAnchorPoint(0.5, 1).setFill('assets/gfx/hugo4.png').setRotation(this.rotation).setRenderer(obacht.renderer);
-
+    /*'assets/gfx/hugo4.png'*/
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
 
     this.layer.appendChild(this.character);
@@ -122,10 +121,12 @@ obacht.Player.prototype = {
         this.character.runAction(this.jumpAnimation);
     },
 
+    /*
     crouch: function() {
         "use strict";
         this.character.runAction(this.crouchAnimation);
     },
+    */
 
     standUp: function() {
         "use strict";
