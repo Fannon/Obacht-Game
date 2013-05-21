@@ -33,9 +33,7 @@ obacht.Inventory = function(position) {
 	
 	this.positionY = obacht.options.inventory.y;
 	
-	
-	
-	////////////////////
+    ////////////////////
     // LIMEJS OBJECTS //
     ////////////////////
     this.inventoryButton = new lime.RoundedRect().setSize(obacht.options.inventory.size, obacht.options.inventory.size).setPosition(this.positionX, this.positionY).setFill('#ffffff').setOpacity(0.5).setAnchorPoint(0, 0).setRadius(15);
