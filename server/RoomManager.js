@@ -162,14 +162,15 @@ RoomManager.prototype.joinRoom = function(pin, pid, isClosed) {
     } else if (room.attributes.closed !== isClosed) {
         log.warn('!!! Tried to join Room with different Privacy Setting');
         return false;
+    } else {
+        room.set({
+            players: _.union(room.attributes.players, [pid]),
+            playersCount: room.attributes.players.length + 1
+        });
+        log.debug('--> Player joined Room #' + pin);
+        return room.attributes;
     }
 
-    room.set({
-        players: _.union(room.attributes.players, [pid]),
-        playersCount: room.attributes.players.length + 1
-    });
-    log.debug('--> Player joined Room #' + pin);
-    return room.attributes;
 };
 
 /**
