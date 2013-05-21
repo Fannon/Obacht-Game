@@ -1,5 +1,5 @@
 /* global goog, lime, obacht */
-/* devel:true */
+/* jshint devel:true */
 
 goog.provide('obacht.Menu');
 
@@ -12,25 +12,6 @@ goog.require('lime.Button');
 goog.require('obacht.PlayerController');
 goog.require('obacht.Game');
 goog.require('obacht.options');
-
-// Global Variables for Buttons and Labels//
-var menuButton = function(pos_x, pos_y, size_x, size_y, posMask_x, posMask_y, sizeMask_w, sizeMask_h, layerMenu) {
-    "use strict";
-
-    var button = new lime.Sprite().setSize(size_x, size_y).setFill('assets/gfx/menu_spritesheet.png').setPosition(pos_x, pos_y).setAnchorPoint(0, 0);
-    layerMenu.appendChild(button);
-    var maskButton = new lime.Sprite().setPosition(posMask_x, posMask_y).setAnchorPoint(0.5,0.5).setSize(sizeMask_w, sizeMask_h);
-    layerMenu.appendChild(maskButton);
-    button.setMask(maskButton);
-    return maskButton;
-};
-
-var menuLabel = function(text, size, x, y, w, h, layerMenu){
-    "use strict";
-
-    var label = new lime.Label().setText(text).setFontColor('#fff').setFontSize(size).setPosition(x, y).setSize(w,h).setAlign('center');
-    layerMenu.appendChild(label);
-};
 
 /**
  * Game Menu
@@ -53,7 +34,50 @@ obacht.Menu = function() {
 
 };
 
+/**
+ * Menu Button
+ *
+ * @param pos_x
+ * @param pos_y
+ * @param size_x
+ * @param size_y
+ * @param posMask_x
+ * @param posMask_y
+ * @param sizeMask_w
+ * @param sizeMask_h
+ * @param layerMenu
+ * @returns {*}
+ * @constructor
+ */
+obacht.Menu.Button = function(pos_x, pos_y, size_x, size_y, posMask_x, posMask_y, sizeMask_w, sizeMask_h, layerMenu) {
+    "use strict";
+    var button = new lime.Sprite().setSize(size_x, size_y).setFill('assets/gfx/menu_spritesheet.png').setPosition(pos_x, pos_y).setAnchorPoint(0, 0);
+    layerMenu.appendChild(button);
+    var maskButton = new lime.Sprite().setPosition(posMask_x, posMask_y).setAnchorPoint(0.5,0.5).setSize(sizeMask_w, sizeMask_h);
+    layerMenu.appendChild(maskButton);
+    button.setMask(maskButton);
+    return maskButton;
+};
 
+/**
+ * Menu Label
+ *
+ * @param text
+ * @param size
+ * @param x
+ * @param y
+ * @param w
+ * @param h
+ * @param layerMenu
+ * @returns {*}
+ * @constructor
+ */
+obacht.Menu.Label = function(text, size, x, y, w, h, layerMenu){
+    "use strict";
+    var label = new lime.Label().setText(text).setFontColor('#fff').setFontSize(size).setPosition(x, y).setSize(w,h).setAlign('center');
+    layerMenu.appendChild(label);
+    return label;
+};
 
 obacht.Menu.prototype = {
 
@@ -86,7 +110,7 @@ obacht.Menu.prototype = {
         });
 
         //Loading ... Label
-        var loading_label = menuLabel('Loading ...', 40, 640, 520, 600, 90, layerMenu);
+        var loading_label = new obacht.Menu.Label('Loading ...', 40, 640, 520, 600, 90, layerMenu);
 
     },
 
@@ -110,41 +134,40 @@ obacht.Menu.prototype = {
         layerMenu.appendChild(background);
 
         //Small Logo
-        var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
-
+        var logo_small = new obacht.Menu.Button(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
         //Play-Button
-        var playButton = menuButton(-760, 65, 1704, 1208, 640, 338, 400, 200, layerMenu);
-        var playButton_label = menuLabel('PLAY', 90, 640, 338, 400, 90, layerMenu);
+        var playButton = new obacht.Menu.Button(-760, 65, 1704, 1208, 640, 338, 400, 200, layerMenu);
+        var playLabel = new obacht.Menu.Label('PLAY', 90, 640, 338, 400, 90, layerMenu);
         goog.events.listen(playButton, lime.Button.Event.CLICK, function() {
             that.newGameScene();
         });
 
         //Help-Button
-        var helpButton = menuButton(-458, 80, 1704, 1208, 315, 540, 170, 170, layerMenu);
-        var helpButton_label = menuLabel('HELP', 45, 309, 650, 170, 45, layerMenu);
+        var helpButton = new obacht.Menu.Button(-458, 80, 1704, 1208, 315, 540, 170, 170, layerMenu);
+        var helpLabel = new obacht.Menu.Label('HELP', 45, 309, 650, 170, 45, layerMenu);
         goog.events.listen(helpButton, lime.Button.Event.CLICK, function() {
             that.helpScene();
         });
 
         //Credits-Button
-        var creditsButton = menuButton(-432, 80, 1704, 1208, 538, 540, 170, 170, layerMenu);
-        var creditsButton_label = menuLabel('CREDITS', 45, 525, 650, 170, 45, layerMenu);
+        var creditsButton = new obacht.Menu.Button(-432, 80, 1704, 1208, 538, 540, 170, 170, layerMenu);
+        var creditsLabel = new obacht.Menu.Label('CREDITS', 45, 525, 650, 170, 45, layerMenu);
         goog.events.listen(creditsButton, lime.Button.Event.CLICK, function() {
             that.creditsScene();
         });
 
         //Sound-Button
-        var soundButton = menuButton(-500, -163, 1704, 1208, 753, 540, 170, 170, layerMenu);
-        var soundButton_label = menuLabel('SOUND', 45, 749, 650, 170, 45, layerMenu);
+        var soundButton = new obacht.Menu.Button(-500, -163, 1704, 1208, 753, 540, 170, 170, layerMenu);
+        var soundLabel = new obacht.Menu.Label('SOUND', 45, 749, 650, 170, 45, layerMenu);
         goog.events.listen(soundButton, lime.Button.Event.CLICK, function() {
             //change Icon
             //sound off
         });
 
         //Quit-Button
-        var quitButton = menuButton(-350, 80, 1704, 1208, 963, 540, 170, 170, layerMenu);
-        var quitButton_label = menuLabel('QUIT', 45, 963, 650, 170, 45, layerMenu);
+        var quitButton = new obacht.Menu.Button(-350, 80, 1704, 1208, 963, 540, 170, 170, layerMenu);
+        var quitLabel = new obacht.Menu.Label('QUIT', 45, 963, 650, 170, 45, layerMenu);
         goog.events.listen(quitButton, lime.Button.Event.CLICK, function() {
             //quit Game
         });
@@ -171,41 +194,41 @@ obacht.Menu.prototype = {
         layerMenu.appendChild(background);
 
         //Small Logo
-        var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
+        var smallLogoButton = new obacht.Menu.Button(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
         //Back
-        var backButton = menuButton(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
+        var backButton = new obacht.Menu.Button(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
         goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
             that.mainMenuScene();
         });
 
         //Play with a friend
-        var friendIcon = menuButton(-680, 65, 1704, 1208, 410, 310, 220, 220, layerMenu);
-        var friendIcon_label = menuLabel('PLAY WITH YOUR FRIEND', 35, 400, 350, 500, 55, layerMenu);
+        var friendIcon = new obacht.Menu.Button(-680, 65, 1704, 1208, 410, 310, 220, 220, layerMenu);
+        var friendLabel = new obacht.Menu.Label('PLAY WITH YOUR FRIEND', 35, 400, 350, 500, 55, layerMenu);
 
         //Create-Button
-        var createButton = menuButton(-910, 400, 1533, 1087, 400, 480, 450, 160, layerMenu);
-        var createButton_label = menuLabel('CREATE', 60, 400, 485, 400, 70, layerMenu);
+        var createButton = new obacht.Menu.Button(-910, 400, 1533, 1087, 400, 480, 450, 160, layerMenu);
+        var createLabel = new obacht.Menu.Label('CREATE', 60, 400, 485, 400, 70, layerMenu);
         goog.events.listen(createButton, lime.Button.Event.CLICK, function() {
             that.getCodeScene();
         });
 
         //Join-Button
-        var createButton = menuButton(-910, 515, 1533, 1087, 400, 600, 450, 160, layerMenu);
-        var createButton_label = menuLabel('JOIN', 60, 400, 600, 400, 70, layerMenu);
-        goog.events.listen(createButton, lime.Button.Event.CLICK, function() {
+        var joinButton = new obacht.Menu.Button(-910, 515, 1533, 1087, 400, 600, 450, 160, layerMenu);
+        var joinLabel = new obacht.Menu.Label('JOIN', 60, 400, 600, 400, 70, layerMenu);
+        goog.events.listen(joinButton, lime.Button.Event.CLICK, function() {
             that.join();
         });
 
         //Random Game
         //Play with a friend
-        var friendIcon = menuButton(-655, -180, 1704, 1208, 880, 310, 220, 220, layerMenu);
-        var friendIcon_label = menuLabel('RANDOM GAME', 35, 885, 350, 500, 55, layerMenu);
+        var randomIcon = new obacht.Menu.Button(-655, -180, 1704, 1208, 880, 310, 220, 220, layerMenu);
+        var randomLabel = new obacht.Menu.Label('RANDOM GAME', 35, 885, 350, 500, 55, layerMenu);
 
         //Random-Button
-        var createButton = menuButton(-440, 400, 1533, 1087, 870, 480, 450, 160, layerMenu);
-        var createButton_label = menuLabel('PLAY', 60, 870, 485, 400, 70, layerMenu);
-        goog.events.listen(createButton, lime.Button.Event.CLICK, function() {
+        var randomPlayButton = new obacht.Menu.Button(-440, 400, 1533, 1087, 870, 480, 450, 160, layerMenu);
+        var randomPlayLabel = new obacht.Menu.Label('PLAY', 60, 870, 485, 400, 70, layerMenu);
+        goog.events.listen(randomPlayButton, lime.Button.Event.CLICK, function() {
             that.loadGame();
         });
 
@@ -230,37 +253,37 @@ obacht.Menu.prototype = {
         layerMenu.appendChild(background);
 
         //Small Logo
-        var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
+        var logo_small = new obacht.Menu.Button(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
         //Back - Door
-        var backButton = menuButton(-990, 10, 1704, 1208, 57, 57, 130, 130, layerMenu);
+        var backButton = new obacht.Menu.Button(-990, 10, 1704, 1208, 57, 57, 130, 130, layerMenu);
         goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
             that.mainMenuScene();
         });
 
         //Code_Field
-        var yourCode_label = menuLabel('YOUR CODE', 50, 640, 320, 300, 90, layerMenu);
-        var field = menuButton(290, 315, 1704, 1208, 640, 405, 480, 160, layerMenu);
-        var code_label = menuLabel('5 6 8 7', 90, 640, 425, 400, 130, layerMenu);
+        var codeLabel = new obacht.Menu.Label('YOUR CODE', 50, 640, 320, 300, 90, layerMenu);
+        var field = new obacht.Menu.Button(290, 315, 1704, 1208, 640, 405, 480, 160, layerMenu);
+        var codeNumbersLabel =  obacht.Menu.Label('5 6 8 7', 90, 640, 425, 400, 130, layerMenu);
 
         //small Infotext Icon
-        var infoButton = menuButton(-350, 215, 1704, 1208, 805, 265, 90, 90, layerMenu);
+        var infoButton = new obacht.Menu.Button(-350, 215, 1704, 1208, 805, 265, 90, 90, layerMenu);
         goog.events.listen(infoButton, lime.Button.Event.CLICK, function() {
             //Pop-up display;
             layerToolTip.setHidden(false);
         });
 
         //Pop-up-Infotext
-        var PopUp = menuButton(820, -190, 1704, 1208, 1000, 260, 350, 260, layerToolTip);
-        var PopUp_label = menuLabel('PLEASE GIVE THIS CODE TO YOUR FRIEND', 36, 1018, 250, 280, 55, layerToolTip);
-        goog.events.listen(PopUp, lime.Button.Event.CLICK, function() {
+        var popupButton = new obacht.Menu.Button(820, -190, 1704, 1208, 1000, 260, 350, 260, layerToolTip);
+        var popupLabel = new obacht.Menu.Label('PLEASE GIVE THIS CODE TO YOUR FRIEND', 36, 1018, 250, 280, 55, layerToolTip);
+        goog.events.listen(popupButton, lime.Button.Event.CLICK, function() {
             //Pop-up display none;
             layerToolTip.setHidden(true);
         });
 
         //Next-Button
-        var nextButton = menuButton(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
-        var nextButton_label = menuLabel('NEXT', 40, 637, 650, 700, 60, layerMenu);
+        var nextButton = new obacht.Menu.Button(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
+        var nextLabel = new obacht.Menu.Label('NEXT', 40, 637, 650, 700, 60, layerMenu);
         goog.events.listen(nextButton, lime.Button.Event.CLICK, function() {
             that.selectThemeScene();
         });
@@ -284,31 +307,31 @@ obacht.Menu.prototype = {
         layerMenu.appendChild(background);
 
         //Small Logo
-        var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
+        var logo_small = new obacht.Menu.Button(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
         //Back
-        var backButton = menuButton(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
+        var backButton = new obacht.Menu.Button(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
         goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
             that.getCodeScene();
         });
 
         //Select_World-Text
-        var selectWorld_label = menuLabel('SELECT A WORLD', 50, 640, 320, 400, 90, layerMenu);
+        var selectWorldLabel = new obacht.Menu.Label('SELECT A WORLD', 50, 640, 320, 400, 90, layerMenu);
 
         //Theme-Desert
-        var desert = menuButton(-177, -5, 1704, 1208, 340, 485, 300, 300, layerMenu);
+        var desert = new obacht.Menu.Button(-177, -5, 1704, 1208, 340, 485, 300, 300, layerMenu);
         goog.events.listen(desert, lime.Button.Event.CLICK, function() {
             that.loadGame();
         });
 
         //Theme-Water
-        var water = menuButton(-675, -450, 1704, 1208, 640, 485, 300, 300, layerMenu);
+        var water = new obacht.Menu.Button(-675, -450, 1704, 1208, 640, 485, 300, 300, layerMenu);
         goog.events.listen(water, lime.Button.Event.CLICK, function() {
             that.loadGame();
         });
 
         //Theme-Meadow
-        var meadow = menuButton(-60, -213, 1704, 1208, 940, 485, 300, 300, layerMenu);
+        var meadow = new obacht.Menu.Button(-60, -213, 1704, 1208, 940, 485, 300, 300, layerMenu);
         goog.events.listen(meadow, lime.Button.Event.CLICK, function() {
             that.loadGame();
         });
@@ -390,7 +413,6 @@ obacht.Menu.prototype = {
             return codeArray[0] + codeArray[1] + codeArray[2] + codeArray[3];
         };
 
-
         var draw_Code = function() {
             code_label[0].setText(codeArray[0]);
             code_label[1].setText(codeArray[1]);
@@ -468,32 +490,32 @@ obacht.Menu.prototype = {
         layerMenu.appendChild(background);
 
         //Small Logo
-        var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
+        var smallLogoButton = new obacht.Menu.Button(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
         //Back
-        var backButton = menuButton(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
+        var backButton = new obacht.Menu.Button(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
         goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
             that.newGameScene();
         });
 
         //small Infotext Icon
-        var infoButton = menuButton(-345, 215, 1704, 1208, 810, 265, 90, 90, layerMenu);
+        var infoButton = new obacht.Menu.Button(-345, 215, 1704, 1208, 810, 265, 90, 90, layerMenu);
         goog.events.listen(infoButton, lime.Button.Event.CLICK, function() {
             //Pop-up display;
             layerToolTip.setHidden(false);
         });
 
         //Pop-up-Infotext
-        var PopUp = menuButton(220, 145, 1704, 1208, 1020, 315, 400, 370, layerToolTip);
-        var PopUp_label = menuLabel('ENTER THE FOUR DIGIT CODE YOU GOT FROM YOUR FRIEND', 36, 1040, 248, 280, 55, layerToolTip);
-        goog.events.listen(PopUp, lime.Button.Event.CLICK, function() {
+        var popupButton = new obacht.Menu.Button(220, 145, 1704, 1208, 1020, 315, 400, 370, layerToolTip);
+        var popupLabel = new obacht.Menu.Label('ENTER THE FOUR DIGIT CODE YOU GOT FROM YOUR FRIEND', 36, 1040, 248, 280, 55, layerToolTip);
+        goog.events.listen(popupButton, lime.Button.Event.CLICK, function() {
             //Pop-up display none;
             layerToolTip.setHidden(true);
         });
 
         //Code_Field
-        var enterCode_label = menuLabel('ENTER CODE', 50, 640, 320, 300, 90, layerMenu);
-        var field = menuButton(290, 315, 1704, 1208, 640, 405, 480, 160, layerMenu);
+        var enterCodeLabel = new obacht.Menu.Label('ENTER CODE', 50, 640, 320, 300, 90, layerMenu);
+        var fieldButton = new obacht.Menu.Button(290, 315, 1704, 1208, 640, 405, 480, 160, layerMenu);
         draw_Code();
 
         /////////////////////////////
@@ -509,12 +531,11 @@ obacht.Menu.prototype = {
         }
 
         //Delete-Key
-        var keyDelete = menuButton(0, 68, 1772, 1256, 1190, 530, 130, 130, layerMenu);
+        var keyDelete = new obacht.Menu.Button(0, 68, 1772, 1256, 1190, 530, 130, 130, layerMenu);
 
         //Next-Button
-        var nextButton = menuButton(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
-        var nextButton_label = menuLabel('NEXT', 40, 637, 650, 700, 60, layerMenu);
-
+        var nextButton = new obacht.Menu.Button(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
+        var nextLabel = new obacht.Menu.Label('NEXT', 40, 637, 650, 700, 60, layerMenu);
 
 
         /////////////////////////////

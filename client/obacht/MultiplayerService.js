@@ -196,9 +196,3 @@ obacht.MultiplayerService.prototype.getRooms = function() {
 //////////////////////////////
 // Helper Functions         //
 //////////////////////////////
-
-// TODO: Maybe not the best solution with Google Closure Library
-// http://stackoverflow.com/questions/3313875/javascript-date-ensure-getminutes-gethours-getseconds-puts-0-in-front-i
-Number.prototype.pad = function (len) {
-    return (new Array(len+1).join("0") + this).slice(-len);
-};

@@ -225,7 +225,7 @@ RoomManager.prototype.getNewPin = function(isClosed) {
     if (!this.getRoom(pin)) {
         return pin;
     } else {
-        return this.getNewPin();
+        return this.getNewPin(isClosed);
     }
 };
 
