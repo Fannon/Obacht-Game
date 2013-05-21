@@ -15,6 +15,8 @@ goog.require('obacht.options');
 
 // Global Variables for Buttons and Labels//
 var menuButton = function(pos_x, pos_y, size_x, size_y, posMask_x, posMask_y, sizeMask_w, sizeMask_h, layerMenu) {
+    "use strict";
+
     var button = new lime.Sprite().setSize(size_x, size_y).setFill('assets/gfx/menu_spritesheet.png').setPosition(pos_x, pos_y).setAnchorPoint(0, 0);
     layerMenu.appendChild(button);
     var maskButton = new lime.Sprite().setPosition(posMask_x, posMask_y).setAnchorPoint(0.5,0.5).setSize(sizeMask_w, sizeMask_h);
@@ -22,12 +24,14 @@ var menuButton = function(pos_x, pos_y, size_x, size_y, posMask_x, posMask_y, si
     button.setMask(maskButton);
     return maskButton;
 };
-        
+
 var menuLabel = function(text, size, x, y, w, h, layerMenu){
+    "use strict";
+
     var label = new lime.Label().setText(text).setFontColor('#fff').setFontSize(size).setPosition(x, y).setSize(w,h).setAlign('center');
     layerMenu.appendChild(label);
 };
-      
+
 /**
  * Game Menu
  *
@@ -40,17 +44,17 @@ var menuLabel = function(text, size, x, y, w, h, layerMenu){
  */
 obacht.Menu = function() {
     "use strict";
-    
+
     lime.Label.defaultFont = 'Cartwheel';
     lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
-    
+
     // Start first Scene
     this.loadingScene();
 
 };
 
 
-        
+
 obacht.Menu.prototype = {
 
     /**
@@ -105,33 +109,33 @@ obacht.Menu.prototype = {
         var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
         layerMenu.appendChild(background);
 
-		//Small Logo
-		var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
+        //Small Logo
+        var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
-       
+
         //Play-Button
-		var playButton = menuButton(-760, 65, 1704, 1208, 640, 338, 400, 200, layerMenu);           
+        var playButton = menuButton(-760, 65, 1704, 1208, 640, 338, 400, 200, layerMenu);
         var playButton_label = menuLabel('PLAY', 90, 640, 338, 400, 90, layerMenu);
         goog.events.listen(playButton, lime.Button.Event.CLICK, function() {
             that.newGameScene();
         });
 
         //Help-Button
-		var helpButton = menuButton(-458, 80, 1704, 1208, 315, 540, 170, 170, layerMenu);           
+        var helpButton = menuButton(-458, 80, 1704, 1208, 315, 540, 170, 170, layerMenu);
         var helpButton_label = menuLabel('HELP', 45, 309, 650, 170, 45, layerMenu);
         goog.events.listen(helpButton, lime.Button.Event.CLICK, function() {
             that.helpScene();
-        });        
-                
+        });
+
         //Credits-Button
-		var creditsButton = menuButton(-432, 80, 1704, 1208, 538, 540, 170, 170, layerMenu);           
+        var creditsButton = menuButton(-432, 80, 1704, 1208, 538, 540, 170, 170, layerMenu);
         var creditsButton_label = menuLabel('CREDITS', 45, 525, 650, 170, 45, layerMenu);
         goog.events.listen(creditsButton, lime.Button.Event.CLICK, function() {
             that.creditsScene();
         });
-        
+
         //Sound-Button
-		var soundButton = menuButton(-500, -163, 1704, 1208, 753, 540, 170, 170, layerMenu);           
+        var soundButton = menuButton(-500, -163, 1704, 1208, 753, 540, 170, 170, layerMenu);
         var soundButton_label = menuLabel('SOUND', 45, 749, 650, 170, 45, layerMenu);
         goog.events.listen(soundButton, lime.Button.Event.CLICK, function() {
             //change Icon
@@ -139,12 +143,12 @@ obacht.Menu.prototype = {
         });
 
         //Quit-Button
-		var quitButton = menuButton(-350, 80, 1704, 1208, 963, 540, 170, 170, layerMenu);           
+        var quitButton = menuButton(-350, 80, 1704, 1208, 963, 540, 170, 170, layerMenu);
         var quitButton_label = menuLabel('QUIT', 45, 963, 650, 170, 45, layerMenu);
         goog.events.listen(quitButton, lime.Button.Event.CLICK, function() {
             //quit Game
         });
-        
+
     },
 
     /**
@@ -166,28 +170,28 @@ obacht.Menu.prototype = {
         var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
         layerMenu.appendChild(background);
 
-		//Small Logo
-		var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
-        
-		//Back
-		var backButton = menuButton(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);           
+        //Small Logo
+        var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
+
+        //Back
+        var backButton = menuButton(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
         goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
             that.mainMenuScene();
-        }); 		
+        });
 
         //Play with a friend
-        var friendIcon = menuButton(-680, 65, 1704, 1208, 410, 310, 220, 220, layerMenu);           
+        var friendIcon = menuButton(-680, 65, 1704, 1208, 410, 310, 220, 220, layerMenu);
         var friendIcon_label = menuLabel('PLAY WITH YOUR FRIEND', 35, 400, 350, 500, 55, layerMenu);
-        
+
         //Create-Button
-		var createButton = menuButton(-910, 400, 1533, 1087, 400, 480, 450, 160, layerMenu);           
+        var createButton = menuButton(-910, 400, 1533, 1087, 400, 480, 450, 160, layerMenu);
         var createButton_label = menuLabel('CREATE', 60, 400, 485, 400, 70, layerMenu);
         goog.events.listen(createButton, lime.Button.Event.CLICK, function() {
             that.getCodeScene();
         });
 
         //Join-Button
-		var createButton = menuButton(-910, 515, 1533, 1087, 400, 600, 450, 160, layerMenu);           
+        var createButton = menuButton(-910, 515, 1533, 1087, 400, 600, 450, 160, layerMenu);
         var createButton_label = menuLabel('JOIN', 60, 400, 600, 400, 70, layerMenu);
         goog.events.listen(createButton, lime.Button.Event.CLICK, function() {
             that.join();
@@ -195,11 +199,11 @@ obacht.Menu.prototype = {
 
         //Random Game
         //Play with a friend
-        var friendIcon = menuButton(-655, -180, 1704, 1208, 880, 310, 220, 220, layerMenu);           
+        var friendIcon = menuButton(-655, -180, 1704, 1208, 880, 310, 220, 220, layerMenu);
         var friendIcon_label = menuLabel('RANDOM GAME', 35, 885, 350, 500, 55, layerMenu);
 
         //Random-Button
-		var createButton = menuButton(-440, 400, 1533, 1087, 870, 480, 450, 160, layerMenu);           
+        var createButton = menuButton(-440, 400, 1533, 1087, 870, 480, 450, 160, layerMenu);
         var createButton_label = menuLabel('PLAY', 60, 870, 485, 400, 70, layerMenu);
         goog.events.listen(createButton, lime.Button.Event.CLICK, function() {
             that.loadGame();
@@ -225,29 +229,29 @@ obacht.Menu.prototype = {
         var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
         layerMenu.appendChild(background);
 
-		//Small Logo
-		var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
+        //Small Logo
+        var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
-		//Back - Door
-		var backButton = menuButton(-990, 10, 1704, 1208, 57, 57, 130, 130, layerMenu);           
+        //Back - Door
+        var backButton = menuButton(-990, 10, 1704, 1208, 57, 57, 130, 130, layerMenu);
         goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
             that.mainMenuScene();
-        }); 
-        
+        });
+
         //Code_Field
         var yourCode_label = menuLabel('YOUR CODE', 50, 640, 320, 300, 90, layerMenu);
-		var field = menuButton(290, 315, 1704, 1208, 640, 405, 480, 160, layerMenu);           
-        var code_label = menuLabel('5 6 8 7', 90, 640, 425, 400, 130, layerMenu); 
+        var field = menuButton(290, 315, 1704, 1208, 640, 405, 480, 160, layerMenu);
+        var code_label = menuLabel('5 6 8 7', 90, 640, 425, 400, 130, layerMenu);
 
         //small Infotext Icon
-		var infoButton = menuButton(-350, 215, 1704, 1208, 805, 265, 90, 90, layerMenu);
+        var infoButton = menuButton(-350, 215, 1704, 1208, 805, 265, 90, 90, layerMenu);
         goog.events.listen(infoButton, lime.Button.Event.CLICK, function() {
             //Pop-up display;
             layerToolTip.setHidden(false);
         });
-                     
+
         //Pop-up-Infotext
-		var PopUp = menuButton(820, -190, 1704, 1208, 1000, 260, 350, 260, layerToolTip);
+        var PopUp = menuButton(820, -190, 1704, 1208, 1000, 260, 350, 260, layerToolTip);
         var PopUp_label = menuLabel('PLEASE GIVE THIS CODE TO YOUR FRIEND', 36, 1018, 250, 280, 55, layerToolTip);
         goog.events.listen(PopUp, lime.Button.Event.CLICK, function() {
             //Pop-up display none;
@@ -255,7 +259,7 @@ obacht.Menu.prototype = {
         });
 
         //Next-Button
-		var nextButton = menuButton(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
+        var nextButton = menuButton(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
         var nextButton_label = menuLabel('NEXT', 40, 637, 650, 700, 60, layerMenu);
         goog.events.listen(nextButton, lime.Button.Event.CLICK, function() {
             that.selectThemeScene();
@@ -279,32 +283,32 @@ obacht.Menu.prototype = {
         var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
         layerMenu.appendChild(background);
 
-		//Small Logo
-		var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
+        //Small Logo
+        var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
         //Back
-		var backButton = menuButton(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);           
+        var backButton = menuButton(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
         goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
             that.getCodeScene();
         });
-                    
+
         //Select_World-Text
         var selectWorld_label = menuLabel('SELECT A WORLD', 50, 640, 320, 400, 90, layerMenu);
 
-		//Theme-Desert
-		var desert = menuButton(-177, -5, 1704, 1208, 340, 485, 300, 300, layerMenu);           
+        //Theme-Desert
+        var desert = menuButton(-177, -5, 1704, 1208, 340, 485, 300, 300, layerMenu);
         goog.events.listen(desert, lime.Button.Event.CLICK, function() {
             that.loadGame();
         });
-                
-		//Theme-Water
-		var water = menuButton(-675, -450, 1704, 1208, 640, 485, 300, 300, layerMenu);           
+
+        //Theme-Water
+        var water = menuButton(-675, -450, 1704, 1208, 640, 485, 300, 300, layerMenu);
         goog.events.listen(water, lime.Button.Event.CLICK, function() {
             that.loadGame();
         });
-                
-		//Theme-Meadow
-		var meadow = menuButton(-60, -213, 1704, 1208, 940, 485, 300, 300, layerMenu);           
+
+        //Theme-Meadow
+        var meadow = menuButton(-60, -213, 1704, 1208, 940, 485, 300, 300, layerMenu);
         goog.events.listen(meadow, lime.Button.Event.CLICK, function() {
             that.loadGame();
         });
@@ -361,8 +365,8 @@ obacht.Menu.prototype = {
         code_label[0] = new lime.Label().setText(codeArray[0]).setFontColor('#fff').setFontSize(90).setPosition(520, 425).setSize(100, 130);
         code_label[1] = new lime.Label().setText(codeArray[1]).setFontColor('#fff').setFontSize(90).setPosition(600, 425).setSize(100, 130);
         code_label[2] = new lime.Label().setText(codeArray[2]).setFontColor('#fff').setFontSize(90).setPosition(680, 425).setSize(100, 130);
-        code_label[3] = new lime.Label().setText(codeArray[3]).setFontColor('#fff').setFontSize(90).setPosition(760, 425).setSize(100, 130);        
-        
+        code_label[3] = new lime.Label().setText(codeArray[3]).setFontColor('#fff').setFontSize(90).setPosition(760, 425).setSize(100, 130);
+
         var codeposition = 0;
 
         // KeyboardButton Placement
@@ -378,34 +382,26 @@ obacht.Menu.prototype = {
         /////////////////////////////
 
         /**
-        * Returns PIN
-        *
-        * @returns {*}
-        */
+         * Returns PIN
+         *
+         * @returns {*}
+         */
         var getPin = function() {
             return codeArray[0] + codeArray[1] + codeArray[2] + codeArray[3];
         };
 
 
         var draw_Code = function() {
-        	code_label[0].setText(codeArray[0]);
-        	code_label[1].setText(codeArray[1]);
-        	code_label[2].setText(codeArray[2]);
-        	code_label[3].setText(codeArray[3]);
+            code_label[0].setText(codeArray[0]);
+            code_label[1].setText(codeArray[1]);
+            code_label[2].setText(codeArray[2]);
+            code_label[3].setText(codeArray[3]);
             layerMenu.appendChild(code_label[0]);
             layerMenu.appendChild(code_label[1]);
             layerMenu.appendChild(code_label[2]);
-            layerMenu.appendChild(code_label[3]);        
+            layerMenu.appendChild(code_label[3]);
         };
 
-        /**
-        * Draws Button for Keyboard Input
-        *
-        * @param {Number} x
-        * @param {string} text
-        *
-        * @returns {*}
-        */
         var drawKeyboardButton = function(x1, x2) {
             var key = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(x1, -100).setAnchorPoint(0, 0);
             layerMenu.appendChild(key);
@@ -416,35 +412,33 @@ obacht.Menu.prototype = {
         };
 
         /**
-        * Add Number to PIN
-        *
-        * @param {Number} insertNumber
-        */
+         * Add Number to PIN
+         *
+         * @param {Number} insertNumber
+         */
         var addNumber = function(insertNumber) {
-        	for (i=0; i<=3; i++){
-        	    if (codeArray[i] !== '_') 
-        	        continue;
-        	    else
+            for (i = 0; i <= 3; i++) {
+                if (codeArray[i] === '_') {
                     codeArray[i] = insertNumber;
                     code_label[i].setText(codeArray[i]);
-                    layerMenu.appendChild(code_label[i]);   
+                    layerMenu.appendChild(code_label[i]);
                     return;
-           };
+                }
+            }
         };
 
         /**
-        * Backspace PIN (Deletes last entered PIN)
-        */
+         * Backspace PIN (Deletes last entered PIN)
+         */
         var deleteNumber = function() {
-        	for (i=3; i>=0; i--){
-        	    if (codeArray[i] === '_') 
-        	        continue;
-        	    else
+            for (i = 3; i >= 0; i--) {
+                if (codeArray[i] !== '_') {
                     codeArray[i] = '_';
                     code_label[i].setText(codeArray[i]);
-                    layerMenu.appendChild(code_label[i]);   
+                    layerMenu.appendChild(code_label[i]);
                     return;
-           };
+                }
+            }
         };
 
         var startGame = function() {
@@ -474,34 +468,34 @@ obacht.Menu.prototype = {
         layerMenu.appendChild(background);
 
         //Small Logo
-		var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
+        var logo_small = menuButton(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
-		//Back
-		var backButton = menuButton(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);           
+        //Back
+        var backButton = menuButton(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
         goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
             that.newGameScene();
         });
-        
+
         //small Infotext Icon
-		var infoButton = menuButton(-345, 215, 1704, 1208, 810, 265, 90, 90, layerMenu);           
+        var infoButton = menuButton(-345, 215, 1704, 1208, 810, 265, 90, 90, layerMenu);
         goog.events.listen(infoButton, lime.Button.Event.CLICK, function() {
             //Pop-up display;
             layerToolTip.setHidden(false);
         });
-                
+
         //Pop-up-Infotext
-		var PopUp = menuButton(220, 145, 1704, 1208, 1020, 315, 400, 370, layerToolTip);
+        var PopUp = menuButton(220, 145, 1704, 1208, 1020, 315, 400, 370, layerToolTip);
         var PopUp_label = menuLabel('ENTER THE FOUR DIGIT CODE YOU GOT FROM YOUR FRIEND', 36, 1040, 248, 280, 55, layerToolTip);
         goog.events.listen(PopUp, lime.Button.Event.CLICK, function() {
             //Pop-up display none;
             layerToolTip.setHidden(true);
         });
-        
+
         //Code_Field
         var enterCode_label = menuLabel('ENTER CODE', 50, 640, 320, 300, 90, layerMenu);
-		var field = menuButton(290, 315, 1704, 1208, 640, 405, 480, 160, layerMenu);           
-        draw_Code();               
-                
+        var field = menuButton(290, 315, 1704, 1208, 640, 405, 480, 160, layerMenu);
+        draw_Code();
+
         /////////////////////////////
         // Create Buttons //
         /////////////////////////////
@@ -515,10 +509,10 @@ obacht.Menu.prototype = {
         }
 
         //Delete-Key
-		var keyDelete = menuButton(0, 68, 1772, 1256, 1190, 530, 130, 130, layerMenu);           
+        var keyDelete = menuButton(0, 68, 1772, 1256, 1190, 530, 130, 130, layerMenu);
 
         //Next-Button
-		var nextButton = menuButton(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
+        var nextButton = menuButton(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
         var nextButton_label = menuLabel('NEXT', 40, 637, 650, 700, 60, layerMenu);
 
 
