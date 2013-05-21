@@ -413,7 +413,6 @@ obacht.Menu.prototype = {
             return codeArray[0] + codeArray[1] + codeArray[2] + codeArray[3];
         };
 
-
         var draw_Code = function() {
             code_label[0].setText(codeArray[0]);
             code_label[1].setText(codeArray[1]);

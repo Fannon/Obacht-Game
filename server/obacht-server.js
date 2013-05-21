@@ -158,7 +158,6 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
         if (socket.pin) {
             var roomDetail = obacht.server.rooms.playerReady(socket.pin, socket.pid);
-
             if (roomDetail && roomDetail.playersReady.length === 2) {
                 log.debug('--- Game Ready in Room #' + socket.pin);
                 obacht.server.io.sockets['in'](socket.pin).emit('game_ready');
@@ -172,15 +171,23 @@ obacht.server.io.sockets.on('connection', function(socket) {
      * Redirects Player Status Informations (Health) to other Player
      */
     socket.on('player_status', function(player_status){
-        socket.broadcast.to(socket.pin).emit('player_status', player_status);
+        if (socket.pin) {
+            socket.broadcast.to(socket.pin).emit('player_status', player_status);
+        } else {
+            log.warn('!!! Cannot send Player Status while not connected to a Game!');
+        }
     });
 
     /**
      * Broadcast to other Players in Room Request
      */
     socket.on('player_action', function(data) {
-        log.debug('<-> Player Action "' + data.type + '" in Room #' + socket.pin);
-        socket.broadcast.to(socket.pin).emit('player_action', data);
+        if (socket.pin) {
+            log.debug('<-> Player Action "' + data.type + '" in Room #' + socket.pin);
+            socket.broadcast.to(socket.pin).emit('player_action', data);
+        } else {
+            log.warn('!!! Cannot send Player Action while not connected to a Game!');
+        }
     });
 
     /**
