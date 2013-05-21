@@ -37,3 +37,10 @@ echo '#################################'
 echo ''
 
 forever list
+
+echo ''
+echo '#################################'
+echo '# Tail current Output Log       #'
+echo '#################################'
+echo ''
+tail -f /home/fannon/.forever/obacht-out.log
