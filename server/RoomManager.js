@@ -100,7 +100,7 @@ RoomManager.prototype.removeRoom = function(pin) {
  */
 RoomManager.prototype.getRoom = function(pin) {
     "use strict";
-    return this.rooms.findWhere({pin: pin});
+    return this.rooms.findWhere({pin: parseInt(pin, 10)});
 };
 
 /**
@@ -154,7 +154,7 @@ RoomManager.prototype.joinRoom = function(pin, pid, isClosed) {
 
     // Catch all Error Cases
     if (!room) {
-        log.warn('!!! Tried to join Room that doesnt exist');
+        log.warn('!!! Tried to join Room #' + pin + ' that doesnt exist');
         return false;
     } else if (room.attributes.players.length > 2) {
         log.warn('!!! Room Already full! #' + pin);
@@ -162,14 +162,15 @@ RoomManager.prototype.joinRoom = function(pin, pid, isClosed) {
     } else if (room.attributes.closed !== isClosed) {
         log.warn('!!! Tried to join Room with different Privacy Setting');
         return false;
+    } else {
+        room.set({
+            players: _.union(room.attributes.players, [pid]),
+            playersCount: room.attributes.players.length + 1
+        });
+        log.debug('--> Player joined Room #' + pin);
+        return room.attributes;
     }
 
-    room.set({
-        players: _.union(room.attributes.players, [pid]),
-        playersCount: room.attributes.players.length + 1
-    });
-    log.debug('--> Player joined Room #' + pin);
-    return room.attributes;
 };
 
 /**
