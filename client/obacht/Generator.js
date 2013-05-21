@@ -3,7 +3,6 @@
 
 goog.provide('obacht.Generator');
 
-goog.require('obacht.Game');
 goog.require('obacht.Trap');
 goog.require('obacht.Kollision');
 
@@ -34,12 +33,12 @@ obacht.Generator = function(layer, ownPlayer) {
 
         var Kollision = new obacht.Kollision(Trap.character, ownPlayer.character);
 
-        if (Kollision == true) {
+        if (Kollision === true) {
             console.log('Boom');
             winkel = startwinkel;
         } else if (Trap.character.getPosition().x < 0) {
             console.log('Getrappt!!!');
-            winkel = startwinkel
+            winkel = startwinkel;
         }
 
         winkel = winkel + winkelgeschwindigkeit;
