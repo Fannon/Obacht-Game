@@ -1,4 +1,9 @@
 .project/
+.idea/
+
+.project
+.pydevproject
+
 *~
 *.lock
 *.DS_Store
