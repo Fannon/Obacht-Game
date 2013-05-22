@@ -33,7 +33,7 @@ obacht.Generator = function(layer, ownPlayer) {
 
         var Collision = new obacht.Collision(Trap.character, ownPlayer.character);
 
-        if (Collision.rect() == true) {
+        if (Collision.rect() === true) {
             console.log('Kollsion mit User');
             winkel = startwinkel;
         } else if (Trap.character.getPosition().x < 0) {

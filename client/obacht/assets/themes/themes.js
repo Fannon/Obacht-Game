@@ -26,3 +26,30 @@ obacht.themes.setTheme = function(theme) {
     };
 };
 
+var themes_temp = {
+    'water': {
+        world: {
+            path: {
+                ground: 'assets/themes/' + defaultTheme + '/ground.png',
+                landscapeA: 'assets/themes/' + defaultTheme + '/landscapeA.png',
+                landscapeB: 'assets/themes/' + defaultTheme + '/landscapeB.png',
+                clouds: 'assets/themes/' + defaultTheme + '/clouds.png',
+                sky: 'assets/themes/' + defaultTheme + '/sky.jpg'
+            }
+        },
+        traps: {
+            kaktus: {
+                file: '../Kaktus.png',
+                type: 'ground',
+                size: [128, 25],
+                boundingBoxes: [
+                    [12, 24, 24, 25],
+                    [24, 24, 22, 0]
+                ]
+            }
+        }
+    },
+    'candy': {
+
+    }
+};
