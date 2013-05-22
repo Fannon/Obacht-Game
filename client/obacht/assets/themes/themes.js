@@ -42,10 +42,16 @@ var themes_temp = {
                 file: '../Kaktus.png',
                 type: 'ground',
                 size: [128, 25],
-                boundingBoxes: [
-                    [12, 24, 24, 25],
-                    [24, 24, 22, 0]
+                boundingBoxes:
+                [
+                    {x1: 12, y1: 24, x2: 24, y2: 25},
+                    {x1: 12, y1: 24, x2: 24, y2: 25}
                 ]
+            }
+        },
+        boni: {
+            kaktus: {
+                file: '../KaktusBonus.png'
             }
         }
     },
