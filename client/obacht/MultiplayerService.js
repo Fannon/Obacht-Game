@@ -178,6 +178,12 @@ obacht.MultiplayerService.prototype.playerReady = function () {
     this.socket.emit('player_ready');
 };
 
+/**
+ * Broadcast Player Action
+ *
+ * @param  {String} type Type of Player Action, i.e. 'jump'
+ * @param  {object} data ActionData
+ */
 obacht.MultiplayerService.prototype.playerAction = function(type, data) {
     this.socket.emit('player_action', {
         type: type,
