@@ -4,7 +4,7 @@
 goog.provide('obacht.Generator');
 
 goog.require('obacht.Trap');
-goog.require('obacht.Kollision');
+goog.require('obacht.Collision');
 
 /**
  * Trap and Bonus Generator
@@ -31,13 +31,13 @@ obacht.Generator = function(layer, ownPlayer) {
         position.y = Math.cos(winkel) * faktor + groundy;
         Trap.character.setPosition(position);
 
-        var Kollision = new obacht.Kollision(Trap.character, ownPlayer.character);
+        var Collision = new obacht.Collision(Trap.character, ownPlayer.character);
 
-        if (Kollision === true) {
-            console.log('Boom');
+        if (Collision.rect() == true) {
+            console.log('Kollsion mit User');
             winkel = startwinkel;
         } else if (Trap.character.getPosition().x < 0) {
-            console.log('Getrappt!!!');
+            console.log('Gegen die Wand');
             winkel = startwinkel;
         }
 
