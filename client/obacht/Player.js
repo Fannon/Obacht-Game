@@ -117,16 +117,26 @@ obacht.Player = function(type) {
 //////////////////////////////
 
 obacht.Player.prototype = {
+
+    /**
+     * Runs the jumping animation on the character.
+     */
     jump: function() {
         "use strict";
         this.character.runAction(this.jumpAnimation);
     },
 
+    /**
+     * Runs the crouching animation on the character.
+     */
     crouch: function() {
         "use strict";
         this.character.runAction(this.crouchAnimation);
     },
 
+    /**
+     * Runs the standUp animation on the character.
+     */
     standUp: function() {
         "use strict";
         this.character.runAction(this.standUpAnimation);

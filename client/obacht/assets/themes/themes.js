@@ -29,23 +29,24 @@ obacht.themes.setTheme = function(theme) {
 var themes_temp = {
     'water': {
         world: {
-            path: {
-                ground: 'assets/themes/' + defaultTheme + '/ground.png',
-                landscapeA: 'assets/themes/' + defaultTheme + '/landscapeA.png',
-                landscapeB: 'assets/themes/' + defaultTheme + '/landscapeB.png',
-                clouds: 'assets/themes/' + defaultTheme + '/clouds.png',
-                sky: 'assets/themes/' + defaultTheme + '/sky.jpg'
+            files: {
+                ground: 'assets/themes/water/ground.png',
+                landscapeA: 'assets/themes/water/landscapeA.png',
+                landscapeB: 'assets/themes/water/landscapeB.png',
+                clouds: 'assets/themes/water/clouds.png',
+                sky: 'assets/themes/water/sky.jpg'
             }
         },
         traps: {
             kaktus: {
                 file: '../Kaktus.png',
-                type: 'ground',
-                size: [128, 25],
+                position: 'ground',
+                width: 128,
+                height: 30,
                 boundingBoxes:
                 [
-                    {x1: 12, y1: 24, x2: 24, y2: 25},
-                    {x1: 12, y1: 24, x2: 24, y2: 25}
+                    {x: 0, y: 15, width: 128, height: 15}, // sample values
+                    {x: 12, y: 24, width: 24, height: 25}
                 ]
             }
         },
@@ -55,7 +56,7 @@ var themes_temp = {
             }
         }
     },
-    'candy': {
+    'desert': {
 
     }
 };
