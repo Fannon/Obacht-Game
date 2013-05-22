@@ -21,6 +21,8 @@ goog.require('obacht.Trap');
  * Its a Player Object
  *
  * @constructor
+ * @class
+ * @scope _global_
  */
 obacht.Player = function(type) {
 

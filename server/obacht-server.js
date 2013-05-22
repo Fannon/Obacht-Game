@@ -10,6 +10,9 @@ var obacht = {};
  * TODO: Version checking -> Version can have gameplay relevance!
  *
  * @author Simon Heimler
+ *
+ * @class
+ * @scope _global_
  */
 obacht.server = {};
 
@@ -218,6 +221,11 @@ obacht.server.io.sockets.on('connection', function(socket) {
 // Helper Functions         //
 //////////////////////////////
 
+/**
+ * Helper Function for leaving current Room
+ *
+ * @param  {object} socket [description]
+ */
 obacht.server.leaveRoomHelper = function(socket) {
     "use strict";
     if (socket.pin) {

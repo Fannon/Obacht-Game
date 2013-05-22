@@ -15,6 +15,9 @@ var log = new Logger(options.loglevel); // Set Logging Level
  * @author Simon Heimler
  *
  * @param {object} io Socket.io Loop Through
+ *
+ * @class
+ * @scope _global_
  */
 var RoomManager = function(io) {
     "use strict";
