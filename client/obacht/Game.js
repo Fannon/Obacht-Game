@@ -10,7 +10,6 @@ goog.require('goog.pubsub.PubSub');
 goog.require('obacht.World');
 goog.require('obacht.Player');
 goog.require('obacht.Generator');
-goog.require('obacht.Trap');
 
 
 /**
