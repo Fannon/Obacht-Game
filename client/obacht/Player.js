@@ -21,6 +21,8 @@ goog.require('obacht.Trap');
  * Its a Player Object
  *
  * @constructor
+ * @class
+ * @scope _global_
  */
 obacht.Player = function(type) {
 
@@ -49,8 +51,8 @@ obacht.Player = function(type) {
 
     this.health = 3;
 
-    this.character = new lime.Sprite().setSize(obacht.options.player.general.width, obacht.options.player.general.height).setPosition(this.x, this.y).setAnchorPoint(0.5, 1).setFill('#999').setRotation(this.rotation).setRenderer(obacht.renderer);
-    /*'assets/gfx/hugo4.png'*/
+    this.character = new lime.Sprite().setSize(obacht.options.player.general.width, obacht.options.player.general.height).setPosition(this.x, this.y).setAnchorPoint(0.5, 1).setFill('assets/gfx/hugo.png').setRotation(this.rotation).setRenderer(obacht.renderer);
+
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
 
     this.layer.appendChild(this.character);
@@ -117,18 +119,26 @@ obacht.Player = function(type) {
 //////////////////////////////
 
 obacht.Player.prototype = {
+
+    /**
+     * Runs the jumping animation on the character.
+     */
     jump: function() {
         "use strict";
         this.character.runAction(this.jumpAnimation);
     },
 
-    /*
+    /**
+     * Runs the crouching animation on the character.
+     */
     crouch: function() {
         "use strict";
         this.character.runAction(this.crouchAnimation);
     },
-    */
 
+    /**
+     * Runs the standUp animation on the character.
+     */
     standUp: function() {
         "use strict";
         this.character.runAction(this.standUpAnimation);

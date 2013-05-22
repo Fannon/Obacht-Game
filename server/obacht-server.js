@@ -10,6 +10,9 @@ var obacht = {};
  * TODO: Version checking -> Version can have gameplay relevance!
  *
  * @author Simon Heimler
+ *
+ * @class
+ * @scope _global_
  */
 obacht.server = {};
 
@@ -106,9 +109,12 @@ obacht.server.io.sockets.on('connection', function(socket) {
         socket.pin = roomDetail.pin;
 
         var room = obacht.server.rooms.joinRoom(socket.pin, socket.pid, roomDetail.closed);
-        if (room) {
+        if (room.pin) {
             socket.join(socket.pin);
             obacht.server.io.sockets['in'](socket.pin).emit('room_detail', room);
+        }
+        if (room.msg) {
+            socket.emit('message', room);
         }
 
     });
@@ -215,6 +221,11 @@ obacht.server.io.sockets.on('connection', function(socket) {
 // Helper Functions         //
 //////////////////////////////
 
+/**
+ * Helper Function for leaving current Room
+ *
+ * @param  {object} socket [description]
+ */
 obacht.server.leaveRoomHelper = function(socket) {
     "use strict";
     if (socket.pin) {

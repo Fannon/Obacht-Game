@@ -6,10 +6,12 @@
  *
  * Saves performance by changing the functions on/off while runtime
  *
+ * @param {Number} loglevel From 0 (Everything) to 5 (Nothing)
+ *
  * @author Simon Heimler
  * @constructor
- *
- * @param {Number} loglevel From 0 (Everything) to 5 (Nothing)
+ * @class
+ * @scope _global_
  */
 var Logger = function(loglevel) {
     "use strict";

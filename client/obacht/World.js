@@ -20,8 +20,10 @@ goog.require('lime.animation.RotateBy');
 
 /**
  * Its a World Object
+ *
+ * @class
+ * @scope _global_
  */
-
 obacht.World = function(type) {
     console.log('New World()');
 

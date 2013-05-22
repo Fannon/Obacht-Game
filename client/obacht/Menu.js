@@ -11,7 +11,6 @@ goog.require('lime.Button');
 // Obacht Requirements
 goog.require('obacht.PlayerController');
 goog.require('obacht.Game');
-goog.require('obacht.options');
 
 /**
  * Game Menu

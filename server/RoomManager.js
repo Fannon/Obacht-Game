@@ -15,6 +15,9 @@ var log = new Logger(options.loglevel); // Set Logging Level
  * @author Simon Heimler
  *
  * @param {object} io Socket.io Loop Through
+ *
+ * @class
+ * @scope _global_
  */
 var RoomManager = function(io) {
     "use strict";
@@ -155,10 +158,10 @@ RoomManager.prototype.joinRoom = function(pin, pid, isClosed) {
     // Catch all Error Cases
     if (!room) {
         log.warn('!!! Tried to join Room #' + pin + ' that doesnt exist');
-        return false;
-    } else if (room.attributes.players.length > 2) {
+        return {msg: 'Cannot join, room does not exist!'};
+    } else if (room.attributes.players.length > 1) {
         log.warn('!!! Room Already full! #' + pin);
-        return false;
+        return {msg: 'Cannot join, room is already full!'};
     } else if (room.attributes.closed !== isClosed) {
         log.warn('!!! Tried to join Room with different Privacy Setting');
         return false;

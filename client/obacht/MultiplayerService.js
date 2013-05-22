@@ -68,6 +68,11 @@ obacht.MultiplayerService = function(serverUrl) {
         }
     });
 
+    this.socket.on('message', function(data) {
+        console.log('Incoming Message from Server:');
+        console.dir(data);
+    });
+
     this.socket.on('room_invite', function (data) {
 
         console.log('Room invite received: PIN: #' + data.pin);
@@ -173,6 +178,12 @@ obacht.MultiplayerService.prototype.playerReady = function () {
     this.socket.emit('player_ready');
 };
 
+/**
+ * Broadcast Player Action
+ *
+ * @param  {String} type Type of Player Action, i.e. 'jump'
+ * @param  {object} data ActionData
+ */
 obacht.MultiplayerService.prototype.playerAction = function(type, data) {
     this.socket.emit('player_action', {
         type: type,
