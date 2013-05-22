@@ -109,8 +109,9 @@ obacht.server.io.sockets.on('connection', function(socket) {
         if (room.pin) {
             socket.join(socket.pin);
             obacht.server.io.sockets['in'](socket.pin).emit('room_detail', room);
-        } else if (room.msg) {
-            socket.emit('message', room.msg);
+        }
+        if (room.msg) {
+            socket.emit('message', room);
         }
 
     });
