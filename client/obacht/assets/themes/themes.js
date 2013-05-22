@@ -4,7 +4,7 @@ goog.provide('obacht.themes');
 
 var defaultTheme = 'desert'; // meadow, desert, water, candy
 obacht.themes = {};
-obacht.themes.availableThemes = ['meadow', 'desert', 'water', 'candy'];
+obacht.themes.availableThemes = ['meadow', 'desert', 'water'];
 obacht.themes.path = {
     ground: 'assets/themes/' + defaultTheme + '/ground.png',
     landscapeA: 'assets/themes/' + defaultTheme + '/landscapeA.png',
