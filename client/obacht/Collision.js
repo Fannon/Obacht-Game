@@ -1,6 +1,6 @@
-goog.provide('obacht.Kollision');
+goog.provide('obacht.Collision');
 
-obacht.Kollision = function(object1,object2){
+obacht.Collision = function(object1,object2){
 
     this.object1pos = object1.getPosition();
     this.object2pos = object2.getPosition();
@@ -19,8 +19,8 @@ obacht.Kollision = function(object1,object2){
 
 };
 
-obacht.Kollision.prototype = {
-    koll: function() {
+obacht.Collision.prototype = {
+    rect: function() {
         "use strict";
         return this.obj1x < this.obj2x + this.obj2w  &&
 		this.obj2x < this.obj1x + this.obj1w  &&

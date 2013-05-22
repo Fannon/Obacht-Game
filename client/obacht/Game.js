@@ -10,7 +10,6 @@ goog.require('goog.pubsub.PubSub');
 goog.require('obacht.World');
 goog.require('obacht.Player');
 goog.require('obacht.Generator');
-goog.require('obacht.Trap');
 
 
 /**
@@ -34,8 +33,6 @@ obacht.Game = function() {
     this.ownPlayer = new obacht.Player('own');
     this.enemyPlayer = new obacht.Player('enemy');
 
-    this.Trap=new obacht.Trap('test');
-
     this.layer = new lime.Layer();
     this.layer.appendChild(this.sky);
     this.layer.appendChild(this.enemyWorld.layer);
@@ -47,7 +44,6 @@ obacht.Game = function() {
 
     this.Generator=new obacht.Generator(this.layer,this.ownPlayer);
 
-    this.layer.appendChild(this.Trap.layer);
     this.layer.appendChild(obacht.playerController.layer);
 
 };
