@@ -68,6 +68,10 @@ obacht.MultiplayerService = function(serverUrl) {
         }
     });
 
+    this.socket.on('message', function(data) {
+        console.log('Incoming Message: ' + data.msg);
+    });
+
     this.socket.on('room_invite', function (data) {
 
         console.log('Room invite received: PIN: #' + data.pin);
