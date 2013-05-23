@@ -1,16 +1,19 @@
 /* global socket */
 /* jshint devel: true, node: true */
 
-/** Global Obacht Namespace */
+/**
+ * Obacht Namespace
+ * @namespace
+ */
 var obacht = {};
 
 /**
  * Obacht Game Node.js Multiplayer Server
  *
  * TODO: Version checking -> Version can have gameplay relevance!
+ * TODO: checkReactionTime();
  *
  * @author Simon Heimler
- * @global
  */
 obacht.server = {};
 
@@ -225,7 +228,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
  *
  * @param  {object} socket Current Socket PassThrough
  *
- * @static
+ * @memberOf obacht.server
  */
 obacht.server.leaveRoomHelper = function(socket) {
     "use strict";

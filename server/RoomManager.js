@@ -104,6 +104,7 @@ RoomManager.prototype.removeRoom = function(pin) {
  * Gets a Room by PIN
  *
  * @param {Number} pin  Room PIN
+ * @return {Object} roomModel
  */
 RoomManager.prototype.getRoom = function(pin) {
     "use strict";
@@ -112,6 +113,8 @@ RoomManager.prototype.getRoom = function(pin) {
 
 /**
  * Gets all Rooms (Debugging)
+ *
+ * @return {String} JSON String of RoomCollection
  */
 RoomManager.prototype.getRoomsDebug = function() {
     "use strict";
@@ -187,6 +190,8 @@ RoomManager.prototype.joinRoom = function(pin, pid, isClosed) {
  *
  * @param {Number} pin  Room PIN
  * @param {String} pid  Player ID
+ *
+ * @return {*} RoomModel if successfull
  */
 RoomManager.prototype.leaveRoom = function(pin, pid) {
     "use strict";
