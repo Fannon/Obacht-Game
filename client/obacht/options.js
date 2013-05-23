@@ -7,6 +7,7 @@ goog.provide('obacht.options');
  * Options for the game
  *
  * @singleton
+ * @global
  */
 obacht.options = {
     graphics: {

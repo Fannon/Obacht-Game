@@ -5,13 +5,13 @@
  * Custom Logger with Color- and Loglevel Support
  *
  * Saves performance by changing the functions on/off while runtime
+ * Uses passed through Socket Connection to emit Message to the client that caused the Message
  *
  * @param {Number} loglevel From 0 (Everything) to 5 (Nothing)
  *
  * @author Simon Heimler
  * @constructor
  * @class
- * @scope _global_
  */
 var Logger = function(loglevel) {
     "use strict";
@@ -24,11 +24,20 @@ var yellow = '\033[33m';
 var red   = '\033[31m';
 var reset = '\033[0m';
 
+/**
+ * Changes the Loglevel (while runtime)
+ *
+ * @param {Number} loglevel loglevel From 0 (Everything) to 5 (Nothing)
+ */
 Logger.prototype.setLogLevel = function(loglevel) {
     "use strict";
     this.loglevel = loglevel;
 
     if (loglevel <= 0) {
+        /**
+         * Create Debug Message
+         * @param {String} msg Log Message
+         */
         Logger.prototype.debug = function(msg) {
             console.log(reset + msg + reset);
         };
@@ -37,6 +46,10 @@ Logger.prototype.setLogLevel = function(loglevel) {
     }
 
     if (loglevel <= 1) {
+        /**
+         * Create Info Message
+         * @param {String} msg Log Message
+         */
         Logger.prototype.info = function(msg) {
             console.log(blue + msg + reset);
         };
@@ -45,6 +58,11 @@ Logger.prototype.setLogLevel = function(loglevel) {
     }
 
     if (loglevel <= 2) {
+        /**
+         * Create Warning Message, emit it via current Socket if given
+         * @param {String} msg Log Message
+         * @param {object} socket Socket PassTrough
+         */
         Logger.prototype.warn = function(msg, socket) {
             console.log(yellow + msg + reset);
             if (socket) {
@@ -56,6 +74,12 @@ Logger.prototype.setLogLevel = function(loglevel) {
     }
 
     if (loglevel <= 3) {
+        /**
+         * Create Error  Message, emit it via current Socket if given
+         *
+         * @param {String} msg Log Message
+         * @param {object} socket Socket PassTrough
+         */
         Logger.prototype.error = function(msg, socket) {
             console.log(red + msg + reset);
             if (socket) {
@@ -67,6 +91,11 @@ Logger.prototype.setLogLevel = function(loglevel) {
     }
 };
 
+/**
+ * Gets the Loglevel (while runtime)
+ *
+ * @returns {Number} Current Loglevel
+ */
 Logger.prototype.getLogLevel = function() {
     "use strict";
     return this.loglevel;

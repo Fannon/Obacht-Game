@@ -3,9 +3,8 @@
 
 goog.provide('obacht.Inventory');
 
-//goog.require('obacht.options');
-//goog.require('lime.Layer');
 goog.require('lime.RoundedRect');
+
 /**
  * Inventory Object.
  *

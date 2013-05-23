@@ -20,7 +20,7 @@ goog.require('obacht.Game');
  *
  * TODO: Use Config
  *
- * @singleton
+ * @constructor
  */
 obacht.Menu = function() {
     "use strict";

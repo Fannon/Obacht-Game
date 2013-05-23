@@ -12,8 +12,8 @@ goog.require('obacht.Collision');
  * @constructor
  */
 obacht.Generator = function(layer, ownPlayer) {
-    Trap = new obacht.Trap('test');
-    layer.appendChild(Trap.layer);
+    var trap = new obacht.Trap('test');
+    layer.appendChild(trap.layer);
 
     //Startwinkel & Winkelgeschwindigkeit
     var startwinkel = 45;
@@ -26,24 +26,24 @@ obacht.Generator = function(layer, ownPlayer) {
     faktor = 1070;
 
     lime.scheduleManager.schedule(function(dt) {
-        var position = Trap.character.getPosition();
+        var position = trap.character.getPosition();
         position.x = Math.sin(winkel) * faktor + groundx;
         position.y = Math.cos(winkel) * faktor + groundy;
-        Trap.character.setPosition(position);
+        trap.character.setPosition(position);
 
-        var Collision = new obacht.Collision(Trap.character, ownPlayer.character);
+        var Collision = new obacht.Collision(trap.character, ownPlayer.character);
 
         if (Collision.rect() === true) {
             console.log('Kollsion mit User');
             winkel = startwinkel;
-        } else if (Trap.character.getPosition().x < 0) {
+        } else if (trap.character.getPosition().x < 0) {
             console.log('Gegen die Wand');
             winkel = startwinkel;
         }
 
         winkel = winkel + winkelgeschwindigkeit;
 
-    }, Trap);
+    }, trap);
 
 };
 

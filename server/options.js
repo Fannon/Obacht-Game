@@ -2,7 +2,6 @@
 
 /**
  * Obacht Game Server Options
- * @type {object}
  */
 var options = {
     loglevel: 0,
