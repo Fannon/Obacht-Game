@@ -12,6 +12,7 @@ goog.require('goog.pubsub.PubSub');
  *
  * @author Simon Heimler
  * @author Sebastian Huber
+ * @constructor
  */
 
 obacht.MultiplayerService = function(serverUrl) {

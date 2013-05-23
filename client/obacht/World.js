@@ -21,8 +21,7 @@ goog.require('lime.animation.RotateBy');
 /**
  * Its a World Object
  *
- * @class
- * @scope _global_
+ * @constructor
  */
 obacht.World = function(type) {
     console.log('New World()');
@@ -85,6 +84,9 @@ obacht.World = function(type) {
 
 obacht.World.prototype = {
 
+    /**
+     * Spin the World
+     */
     spin: function() {
         this.createAnimation1(this.ground1, this.rotation3, this.rotation4, obacht.options.world.spinDuration.front, 0);
         this.createAnimation2(this.ground2, this.rotation4, this.rotation3, 0, obacht.options.world.spinDuration.front);

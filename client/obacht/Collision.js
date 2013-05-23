@@ -1,5 +1,15 @@
+/* global goog, lime, obacht */
+/* jshint strict: false, devel:true */
+
 goog.provide('obacht.Collision');
 
+/**
+ * Collision Detector
+ *
+ * @param object1
+ * @param object2
+ * @constructor
+ */
 obacht.Collision = function(object1,object2){
 
     this.object1pos = object1.getPosition();

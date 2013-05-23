@@ -11,7 +11,6 @@
  * @author Simon Heimler
  * @constructor
  * @class
- * @scope _global_
  */
 var Logger = function(loglevel) {
     "use strict";
@@ -24,6 +23,11 @@ var yellow = '\033[33m';
 var red   = '\033[31m';
 var reset = '\033[0m';
 
+/**
+ * Changes the Loglevel (while runtime)
+ *
+ * @param loglevel
+ */
 Logger.prototype.setLogLevel = function(loglevel) {
     "use strict";
     this.loglevel = loglevel;
@@ -67,6 +71,11 @@ Logger.prototype.setLogLevel = function(loglevel) {
     }
 };
 
+/**
+ * Gets the Loglevel (while runtime)
+ *
+ * @returns {Number} Current Loglevel
+ */
 Logger.prototype.getLogLevel = function() {
     "use strict";
     return this.loglevel;

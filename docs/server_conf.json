@@ -4,9 +4,8 @@
     },
     "source": {
         "include": [
-            "../server/obacht-server.js",
-            "../server/RoomManager.js",
-            "../server/Logger.js"
+            "../server",
+            "../server/README.md"
         ],
         "exclude": [],
         "includePattern": ".+\\.js(doc)?$",
@@ -18,7 +17,9 @@
         "monospaceLinks": false
     },
     "opts": {
+        "recurse": false,
+        "lenient": true,
         "destination": "./server/"
     },
-    "jsVersion": 180,
+    "jsVersion": 180
 }

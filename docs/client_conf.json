@@ -4,7 +4,8 @@
     },
     "source": {
         "include": [
-            "../client/obacht/"
+            "../client/obacht/",
+            "../client/obacht/README.md"
         ],
         "exclude": [],
         "includePattern": ".+\\.js(doc)?$",
@@ -17,7 +18,8 @@
     },
     "opts": {
         "recurse": false,
+        "lenient": true,
         "destination": "./client/"
     },
-    "jsVersion": 180,
+    "jsVersion": 180
 }

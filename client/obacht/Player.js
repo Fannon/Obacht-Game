@@ -21,8 +21,6 @@ goog.require('obacht.Trap');
  * Its a Player Object
  *
  * @constructor
- * @class
- * @scope _global_
  */
 obacht.Player = function(type) {
 
@@ -49,12 +47,18 @@ obacht.Player = function(type) {
         this.jumpHeight = obacht.options.player.general.jumpHeight;
     }
 
+    /**
+     * Current Player Health
+     *
+     * @type {Number}
+     */
     this.health = 3;
 
+    /** Character Graphic */
     this.character = new lime.Sprite().setSize(obacht.options.player.general.width, obacht.options.player.general.height).setPosition(this.x, this.y).setAnchorPoint(0.5, 1).setFill('assets/gfx/hugo.png').setRotation(this.rotation).setRenderer(obacht.renderer);
 
+    /** Player LimeJS Layer */
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
-
     this.layer.appendChild(this.character);
 
 

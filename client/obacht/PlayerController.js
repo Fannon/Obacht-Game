@@ -18,8 +18,6 @@ goog.require('lime.RoundedRect');
  * Its a Player Controller
  *
  * @constructor
- * @class
- * @scope _global_
  */
 obacht.PlayerController = function() {
     "use strict";

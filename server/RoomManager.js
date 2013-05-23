@@ -6,18 +6,16 @@ var Backbone = require('backbone');
 var Logger = require('./Logger');
 var options = require('./options');
 
-/** Custom Logger */
 var log = new Logger(options.loglevel); // Set Logging Level
 
 /**
  * Room DataStructure for the Server
- *
- * @author Simon Heimler
+ * Uses Backbone.js and Underscore.js for Model/Collection Handling
  *
  * @param {object} io Socket.io Loop Through
  *
- * @class
- * @scope _global_
+ * @author Simon Heimler
+ * @constructor
  */
 var RoomManager = function(io) {
     "use strict";
@@ -27,6 +25,7 @@ var RoomManager = function(io) {
     // Variables               //
     /////////////////////////////
 
+    /** Socket.io */
     this.io = io; // Socket.io Loop Through
 
 
@@ -34,7 +33,7 @@ var RoomManager = function(io) {
     // Collections & Models    //
     /////////////////////////////
 
-    // Room Model
+    /** Room Model (Backbone.Model.extend) */
     this.RoomModel = Backbone.Model.extend({
         defaults: {
             pin: undefined,
@@ -48,7 +47,10 @@ var RoomManager = function(io) {
         }
     });
 
-    // New RoomCollection Instance
+    /**
+     * Room Collection Instance
+     * This Collection manages all current RoomModels
+     */
     this.rooms = new Backbone.Collection([], {
         model: this.RoomModel
     });
@@ -60,8 +62,10 @@ var RoomManager = function(io) {
  *
  * If Room already exists, returns false
  *
- * @param {Number} pin
- * @param {object} roomDetail
+ * @param {Number} pin  Room PIN
+ * @param {object} roomDetail roomDetail Object
+ *
+ * @return {Boolean} Success or not
  */
 RoomManager.prototype.addRoom = function(pin, roomDetail) {
     "use strict";
@@ -82,7 +86,7 @@ RoomManager.prototype.addRoom = function(pin, roomDetail) {
 /**
  * Remove Room, if exists
  *
- * @param pin
+ * @param {Number} pin  Room PIN
  */
 RoomManager.prototype.removeRoom = function(pin) {
     "use strict";
@@ -99,7 +103,7 @@ RoomManager.prototype.removeRoom = function(pin) {
 /**
  * Gets a Room by PIN
  *
- * @param pin
+ * @param {Number} pin  Room PIN
  */
 RoomManager.prototype.getRoom = function(pin) {
     "use strict";
@@ -118,10 +122,10 @@ RoomManager.prototype.getRoomsDebug = function() {
 /**
  * Sets the player Ready
  *
- * @param {Number} pin
- * @param {String} pid
+ * @param {Number} pin  Room PIN
+ * @param {String} pid  Player ID
  *
- * @returns {*}
+ * @returns {*} roomDetails if successfull, false if not
  */
 RoomManager.prototype.playerReady = function(pin, pid) {
     "use strict";

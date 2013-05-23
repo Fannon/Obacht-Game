@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: server</title>
+    <title>JSDoc: Class: MultiplayerService</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Class: server</h1>
+    <h1 class="page-title">Class: MultiplayerService</h1>
     
     
 
@@ -27,9 +27,7 @@
     
 <header>
     <h2>
-        <span class="ancestors"><a href="global.html#obacht">obacht</a>.</span>
-    
-    server
+    MultiplayerService
     </h2>
     
 </header>  
@@ -41,7 +39,7 @@
     
         
 <dt>
-    <h4 class="name" id="server"><span class="type-signature"></span>new server<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="MultiplayerService"><span class="type-signature"></span>new MultiplayerService<span class="signature">()</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -49,7 +47,7 @@
     
     
     <div class="description">
-        Obacht Game Node.js Multiplayer ServerTODO: Version checking -> Version can have gameplay relevance!
+        This service handles the connection between client and a mulitplayer-serverIt includes the communication protocol and registers functions and eventsUses Socket.io and connects to a Node.js Server
     </div>
     
 
@@ -76,6 +74,8 @@
     <dd class="tag-author">
         <ul>
             <li>Simon Heimler</li>
+        
+            <li>Sebastian Huber</li>
         </ul>
     </dd>
     
@@ -89,7 +89,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        obacht-server.js, line 15
+        MultiplayerService.js, line 18
     </li></ul></dd>
     
     
@@ -128,24 +128,31 @@
     
     
     
-        <h3 class="subsection-title">Members</h3>
+    
+    
+        <h3 class="subsection-title">Methods</h3>
         
         <dl>
             
 <dt>
-    <h4 class="name" id="options"><span class="type-signature">&lt;static> </span>options<span class="type-signature"></span></h4>
+    <h4 class="name" id="getRooms"><span class="type-signature"></span>getRooms<span class="signature">()</span><span class="type-signature"></span></h4>
     
     
 </dt>
 <dd>
     
+    
     <div class="description">
-        Server Options (imported from options.js)
+        Debugging Function
     </div>
     
-    
-    
 
+    
+    
+    
+    
+    
+    
     
 <dl class="details">
     
@@ -169,7 +176,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        obacht-server.js, line 22
+        MultiplayerService.js, line 210
     </li></ul></dd>
     
     
@@ -182,18 +189,22 @@
 
     
     
+
+    
+
+    
+    
+    
+    
+    
+    
+    
 </dd>
 
-        </dl>
-    
-    
-    
-        <h3 class="subsection-title">Methods</h3>
         
-        <dl>
             
 <dt>
-    <h4 class="name" id="leaveRoomHelper"><span class="type-signature">&lt;static> </span>leaveRoomHelper<span class="signature">(socket)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="playerAction"><span class="type-signature"></span>playerAction<span class="signature">(type, data)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -201,7 +212,7 @@
     
     
     <div class="description">
-        Helper Function for leaving current Room
+        Broadcast Player Action
     </div>
     
 
@@ -235,7 +246,30 @@
 	
         <tr>
             
-                <td class="name"><code>socket</code></td>
+                <td class="name"><code>type</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Type of Player Action, i.e. 'jump'</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>data</code></td>
             
             
             <td class="type">
@@ -251,7 +285,7 @@
             
             
             
-            <td class="description last">Current Socket PassThrough</td>
+            <td class="description last">ActionData</td>
         </tr>
 	
 	
@@ -282,7 +316,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        obacht-server.js, line 227
+        MultiplayerService.js, line 188
     </li></ul></dd>
     
     
@@ -323,13 +357,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Logger.html">Logger</a></li><li><a href="obacht.server.html">server</a></li><li><a href="RoomManager.html">RoomManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#log">log</a></li><li><a href="global.html#obacht">obacht</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="obacht.Bonus.html">Bonus</a></li><li><a href="obacht.Collision.html">Collision</a></li><li><a href="obacht.Game.html">Game</a></li><li><a href="obacht.Generator.html">Generator</a></li><li><a href="obacht.Inventory.html">Inventory</a></li><li><a href="obacht.Menu.html">Menu</a></li><li><a href="obacht.Menu.Button.html">Button</a></li><li><a href="obacht.Menu.Label.html">Label</a></li><li><a href="obacht.MultiplayerService.html">MultiplayerService</a></li><li><a href="obacht.Player.html">Player</a></li><li><a href="obacht.PlayerController.html">PlayerController</a></li><li><a href="obacht.Trap.html">Trap</a></li><li><a href="obacht.World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#options">options</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Thu May 23 2013 07:28:39 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Thu May 23 2013 08:04:25 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

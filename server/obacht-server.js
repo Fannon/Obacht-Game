@@ -10,9 +10,7 @@ var obacht = {};
  * TODO: Version checking -> Version can have gameplay relevance!
  *
  * @author Simon Heimler
- *
- * @class
- * @scope _global_
+ * @global
  */
 obacht.server = {};
 
@@ -22,11 +20,12 @@ obacht.server = {};
 
 /** Server Options (imported from options.js) */
 obacht.server.options = require('./options');
-obacht.server.port = (process.argv[2] ? process.argv[2] : obacht.server.options.defaultPort); // Set Port, use Console Args if available
+/** Connection Port, using Console Arguments if available */
+obacht.server.port = (process.argv[2] ? process.argv[2] : obacht.server.options.defaultPort);
+/** Socket.io */
 obacht.server.io = require('socket.io').listen(obacht.server.port); // Start Socket.io
 obacht.Logger = require('./Logger');
 
-/** Custom Logger */
 var log = new obacht.Logger(obacht.server.options.loglevel);
 
 // Data Structures
@@ -224,7 +223,9 @@ obacht.server.io.sockets.on('connection', function(socket) {
 /**
  * Helper Function for leaving current Room
  *
- * @param  {object} socket [description]
+ * @param  {object} socket Current Socket PassThrough
+ *
+ * @static
  */
 obacht.server.leaveRoomHelper = function(socket) {
     "use strict";
