@@ -41,6 +41,9 @@ obacht.MultiplayerService = function(serverUrl) {
     // Communication Events     //
     //////////////////////////////
 
+    /**
+     * Player is connected, else print out the error
+     */
     this.socket.on('connected', function (data) {
         if (!data.error) {
             console.log('Successful Connected');
@@ -50,16 +53,20 @@ obacht.MultiplayerService = function(serverUrl) {
         }
     });
 
+    /**
+     * Receiving Roomdetails
+     */
     this.socket.on('room_detail', function (data) {
         self.roomDetail = data;
         self.pin = data.pin;
-
         console.log('RoomDetails received');
         console.dir(data);
         self.events.publish('room_detail', data);
-
     });
 
+    /**
+     * Print out errors
+     */
     this.socket.on('error', function(data) {
         if (data.type === 'warning') {
             console.warn(data.msg);
@@ -71,11 +78,19 @@ obacht.MultiplayerService = function(serverUrl) {
         }
     });
 
+    /**
+     * Print out Servermessages
+     */
     this.socket.on('message', function(data) {
         console.log('Incoming Message from Server:');
         console.dir(data);
     });
 
+    /**
+     * Receive an invite for a room
+     * If the received pin = 0 a new random room will be created
+     * Else join the the room with the received pin
+     */
     this.socket.on('room_invite', function (data) {
 
         console.log('Room invite received: PIN: #' + data.pin);
@@ -96,26 +111,36 @@ obacht.MultiplayerService = function(serverUrl) {
         }
     });
 
+    /**
+     * No Match was found
+     * Create a new room
+     */
     this.socket.on('no_match_found', function () {
         console.log('No Match found.');
         this.newRoom();
         self.events.publish('no_match_found');
     });
 
+    /**
+     * Game is ready
+     */
     this.socket.on('game_ready', function () {
         console.log('Game is ready!');
         self.events.publish('game_ready');
     });
 
-    this.socket.on('player_move', function (data) {
-        self.events.publish('player_move', data);
-    });
-
+    /**
+     * Player took an action
+     */
     this.socket.on('player_action', function (data) {
         console.log('player_action: ' + data.type);
         self.events.publish('player_action', data.type, data.data);
     });
 
+    /**
+     * Player status
+     * Show if player has life left or game is over
+     */
     this.socket.on('player_status', function (data) {
         self.events.publish('player_status', data.pid, data.life);
         if (data.life === 0){
@@ -125,23 +150,56 @@ obacht.MultiplayerService = function(serverUrl) {
         }
     });
 
+    /**
+     * Receives a bonus to show it within the reactionbox
+     */
+    this.socket.on('bonus', function (data) {
+        console.log('bonus: ' + data.type);
+        self.events.publish('bonus', data.type);
+    });
+
+    /**
+     * Sorts out if the player gets the bonus
+     */
+    this.socket.on('receive_bonus', function (data) {
+        if (data.winner_pid === self.pid) {
+            console.log('You won Bonus: ' + data.type);
+            self.events.publish('bonus', data.type, true);
+        } else {
+            console.log('You lost Bonus: ' + data.type);
+            self.events.publish('bonus', data.type, false);
+        }
+    });
+
+    /**
+     * Receives an item
+     */
     this.socket.on('item', function (data) {
         console.log('Item Data received');
         console.dir(data);
         self.events.publish('item', data);
     });
 
+    /**
+     * Receives a trap
+     */
     this.socket.on('trap', function (data) {
         console.log('Trap Data received');
         console.dir(data);
         self.events.publish('trap', data);
     });
 
+    /**
+     * Shows that a Player hast left the game
+     */
     this.socket.on('player_left', function () {
         console.log('Player has left the Game!');
         self.events.publish('player_left');
     });
 
+    /**
+     * Get room data for debugging
+     */
     this.socket.on('get_rooms', function (data) {
         console.log('Getting Rooms Data (Debugging)');
         console.dir(data);
@@ -154,6 +212,14 @@ obacht.MultiplayerService = function(serverUrl) {
 // Communication Functions  //
 //////////////////////////////
 
+
+/**
+ * Broadcast New Room
+ *
+ * @param {String} theme Theme of the new world
+ * @param {Object} options Options for the world, i.e. rotationspeed
+ * @param {String} closed Indicator if room is privat or public
+ */
 obacht.MultiplayerService.prototype.newRoom = function (theme, options, closed) {
     "use strict";
     console.log('>> newRoom()');
@@ -164,6 +230,12 @@ obacht.MultiplayerService.prototype.newRoom = function (theme, options, closed) 
     });
 };
 
+/**
+ * Broadcast Join Room
+ *
+ * @param {Number} pin Code for joining into the room
+ * @param {String} closed Indicator if Room is privat or public
+ */
 obacht.MultiplayerService.prototype.joinRoom = function(pin, closed) {
     "use strict";
     console.log('>> joinRoom(' + pin + ')');
@@ -173,12 +245,18 @@ obacht.MultiplayerService.prototype.joinRoom = function(pin, closed) {
     });
 };
 
+/**
+ * Broadcast Find Match
+ */
 obacht.MultiplayerService.prototype.findMatch = function () {
     "use strict";
     console.log('>> findMatch()');
     this.socket.emit('find_match');
 };
 
+/**
+ * Broadcast Player Ready
+ */
 obacht.MultiplayerService.prototype.playerReady = function () {
     "use strict";
     console.log('>> playerReady()');
@@ -189,7 +267,7 @@ obacht.MultiplayerService.prototype.playerReady = function () {
  * Broadcast Player Action
  *
  * @param  {String} type Type of Player Action, i.e. 'jump'
- * @param  {object} data ActionData
+ * @param  {Object} data ActionData
  */
 obacht.MultiplayerService.prototype.playerAction = function(type, data) {
     "use strict";
@@ -199,6 +277,12 @@ obacht.MultiplayerService.prototype.playerAction = function(type, data) {
     });
 };
 
+/**
+ * Broadcast Player Status
+ *
+ * @param  {String} pid Player-ID
+ * @param  {Number} life Lifecounter
+ */
 obacht.MultiplayerService.prototype.playerStatus = function (pid, life) {
     "use strict";
     this.socket.emit('player_status', {
@@ -207,6 +291,36 @@ obacht.MultiplayerService.prototype.playerStatus = function (pid, life) {
     });
 };
 
+
+/**
+ * Broadcast Throw Bonus
+ *
+ * @param  {String} type Type of the Bonus, i.e. 'snake'
+ */
+obacht.MultiplayerService.prototype.throwBonus = function (type) {
+    "use strict";
+    this.socket.emit('bonus', {
+        type: type
+    });
+};
+
+/**
+ * Broadcast Check Reactiontime
+ *
+ * @param  {String} type Type of the Bonus, i.e. 'snake'
+ * @param  {Number} reaction_time Time the player needed to push the reactionbutton in milliseconds
+ */
+obacht.MultiplayerService.prototype.checkReactiontime = function (type, reaction_time) {
+    "use strict";
+    this.socket.emit('check_reactiontime', {
+        type: type,
+        reaction_time: reaction_time
+    });
+};
+
+/**
+ * Broadcast Leave Room
+ */
 obacht.MultiplayerService.prototype.leaveRoom = function() {
     "use strict";
     console.log('>> leaveRoom()');
@@ -227,6 +341,12 @@ obacht.MultiplayerService.prototype.getRooms = function() {
 // Helper Functions         //
 //////////////////////////////
 
+
+/**
+ * Broadcast Get Random Theme
+ *
+ * @returns {String} theme Theme for the Random World
+ */
 obacht.MultiplayerService.prototype.getRandomTheme = function() {
     "use strict";
     console.dir(obacht.themes);
