@@ -10,6 +10,7 @@ goog.require('goog.pubsub.PubSub');
 goog.require('obacht.World');
 goog.require('obacht.Player');
 goog.require('obacht.Generator');
+goog.require('obacht.Bonus');
 
 
 /**
@@ -33,12 +34,15 @@ obacht.Game = function() {
     this.ownPlayer = new obacht.Player('own');
     this.enemyPlayer = new obacht.Player('enemy');
 
+    //this.bonus = new obacht.Bonus('snake');
+
     this.layer = new lime.Layer();
     this.layer.appendChild(this.sky);
     this.layer.appendChild(this.enemyWorld.layer);
     this.layer.appendChild(this.ownWorld.layer);
     this.layer.appendChild(this.enemyPlayer.layer);
     this.layer.appendChild(this.ownPlayer.layer);
+    //this.layer.appendChild(this.bonus);
 
     this.layer.appendChild(obacht.playerController.layer);
 
