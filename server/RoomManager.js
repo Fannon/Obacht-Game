@@ -41,9 +41,13 @@ var RoomManager = function(io) {
             theme: 'random',
             randomTheme: true,
             options: {},
-            players: [],
-            playersCount: 0, // Just for convenience
-            playersReady: []
+            creatingPlayerId: false,
+            creatingPlayerReactiontime: false,
+            creatingPlayerReady: false,
+            joiningPlayerId: false,
+            joiningPlayerReactiontime: false,
+            joiningPlayerReady: false,
+            playersCount: 0 // Just for convenience
         }
     });
 
@@ -134,18 +138,24 @@ RoomManager.prototype.playerReady = function(pin, pid) {
     "use strict";
 
     var room = this.getRoom(pin);
-    var playersReady = room.attributes.playersReady;
 
-    if (playersReady.length > 2) {
-        log.debug('!!! ERROR: More than 2 Players cannot be ready!');
-        return false;
-    } else {
+    if (room.attributes.creatingPlayerId === pid) {
         room.set({
-            playersReady: _.union(playersReady, [pid])
+            creatingPlayerReady: true
         });
-        log.debug('--- Player ready in Room #' + pin);
-        return room.attributes;
+        log.debug('--- Creating Player ready in Room #' + pin);
+
+    } else if (room.attributes.joiningPlayerId === pid) {
+        room.set({
+            joiningPlayerReady: true
+        });
+        log.debug('--- Joining Player ready in Room #' + pin);
+    } else {
+        log.warn('!!! Player Ready: Player is not in Room! #' + pin);
+        return false;
     }
+
+    return room.attributes;
 };
 
 /**
@@ -162,23 +172,34 @@ RoomManager.prototype.joinRoom = function(pin, pid, isClosed) {
 
     var room = this.getRoom(pin);
 
-    // Catch all Error Cases
+    // Catch Error Cases
     if (!room) {
         log.warn('!!! Tried to join Room #' + pin + ' that doesnt exist');
         return {msg: 'Cannot join, room does not exist!'};
-    } else if (room.attributes.players.length > 1) {
-        log.warn('!!! Room Already full! #' + pin);
-        return {msg: 'Cannot join, room is already full!'};
     } else if (room.attributes.closed !== isClosed) {
         log.warn('!!! Tried to join Room with different Privacy Setting');
         return false;
-    } else {
+    }
+
+    // Set Player
+    if (!room.attributes.creatingPlayerId) {
         room.set({
-            players: _.union(room.attributes.players, [pid]),
-            playersCount: room.attributes.players.length + 1
+            creatingPlayerId: pid,
+            playersCount: room.attributes.playersCount + 1
         });
-        log.debug('--> Player joined Room #' + pin);
+        log.debug('--> Creating Player joined Room #' + pin);
         return room.attributes;
+
+    } else if (!room.attributes.joiningPlayerId) {
+        room.set({
+            joiningPlayerId: pid,
+            playersCount: room.attributes.playersCount + 1
+        });
+        log.debug('--> Joining Player joined Room #' + pin);
+        return room.attributes;
+    } else {
+        log.warn('!!! Room Already full! #' + pin);
+        return {msg: 'Cannot join, room is already full!'};
     }
 
 };
@@ -201,11 +222,28 @@ RoomManager.prototype.leaveRoom = function(pin, pid) {
     if (room) {
         log.debug('--> Player leaves Room #' + pin);
 
-        room.set({
-            players: _.without(room.attributes.players, pid),
-            playersReady: _.without(room.attributes.playersReady, pid),
-            playersCount: room.attributes.players.length + -1
-        });
+        if (room.attributes.creatingPlayerId === pid) {
+            room.set({
+                creatingPlayerId: false,
+                creatingPlayerReactiontime: false,
+                creatingPlayerReady: false,
+                playersCount: room.attributes.playersCount - 1
+            });
+            log.debug('--> Creating Player left Room #' + pin);
+            return room.attributes;
+
+        } else if (room.attributes.joiningPlayerId === pid) {
+            room.set({
+                creatingPlayerId: false,
+                creatingPlayerReactiontime: false,
+                creatingPlayerReady: false,
+                playersCount: room.attributes.playersCount - 1
+            });
+            log.debug('--> Joining Player left Room #' + pin);
+            return room.attributes;
+        } else {
+            log.warn('!!! Player Left: Player has not been in Room! #' + pin);
+        }
 
         // If no Players left, remove the room
         if (room.attributes.players.length < 1) {
@@ -213,6 +251,75 @@ RoomManager.prototype.leaveRoom = function(pin, pid) {
         }
 
         return room.attributes;
+
+    } else {
+        return false;
+    }
+};
+
+/**
+ * Checks (compares) Reaction Time between both Players and declares the winner.
+ * If other Player hasn't committed his reactiontime yet, returns false
+ *
+ *
+ * @param {Number} pin      Room PIN
+ * @param {String} pid      Player ID
+ * @param {Object} data     Reaction Time / Bonus Data
+ *
+ * @return {*} Receive Bonus Object or false if calculation incomplete yet
+ */
+RoomManager.prototype.checkReactiontime = function(pin, pid, data) {
+    "use strict";
+
+    var room = this.getRoom(pin);
+    var receiveBonus = {
+        type: data.type,
+        winner_pid: false
+    };
+
+    if (room) {
+
+        // Set Reaction Time
+        if (room.attributes.creatingPlayerId === pid) {
+            room.set({
+                creatingPlayerReactiontime: data.reaction_time
+            });
+
+//            // After a specific Timeout, it will reset to false again. Just in case.
+//            setTimeout(function(){
+//                room.set({
+//                    creatingPlayerReactiontime: false
+//                });
+//            }, options.reactiontimeExpiration);
+
+        } else if (room.attributes.joiningPlayerId === pid) {
+            room.set({
+                joiningPlayerReactiontime: data.reaction_time
+            });
+        } else {
+            log.warn('!!! Check Reaction Time : Player is not in Room! #' + pin);
+        }
+
+        if (room.attributes.creatingPlayerReactiontime && room.attributes.joiningPlayerReactiontime) {
+
+            // Compare and declare the winner
+            if (room.attributes.creatingPlayerReactiontime > room.attributes.joiningPlayerReactiontime) {
+                receiveBonus.winner_pid = room.attributes.creatingPlayerId;
+            } else {
+                receiveBonus.winner_pid = room.attributes.joiningPlayerId;
+            }
+
+            // Reset Reaction Time for both Players
+            room.set({
+                creatingPlayerReactiontime: false,
+                joiningPlayerReactiontime: false
+            });
+
+            return receiveBonus;
+        } else {
+            // Missing at least one ReactionTime. Waiting for other Player.
+            return false;
+        }
 
     } else {
         return false;

@@ -126,6 +126,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
      */
     socket.on('leave_room', function() {
         obacht.server.leaveRoomHelper(socket);
+
     });
 
     /**
@@ -159,7 +160,8 @@ obacht.server.io.sockets.on('connection', function(socket) {
     socket.on('player_ready', function() {
         if (socket.pin) {
             var roomDetail = obacht.server.rooms.playerReady(socket.pin, socket.pid);
-            if (roomDetail && roomDetail.playersReady.length === 2) {
+
+            if (roomDetail && roomDetail.creatingPlayerReady && roomDetail.joiningPlayerReady) {
                 log.debug('--- Game Ready in Room #' + socket.pin);
                 obacht.server.io.sockets['in'](socket.pin).emit('game_ready');
             }
@@ -181,7 +183,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
     });
 
     /**
-     * Broadcast to other Players in Room Request
+     * Broadcast Player Action to other Player in Room
      */
     socket.on('player_action', function(data) {
         if (socket.pin) {
@@ -189,6 +191,37 @@ obacht.server.io.sockets.on('connection', function(socket) {
             socket.broadcast.to(socket.pin).emit('player_action', data);
         } else {
             log.warn('!!! Cannot send Player Action while not connected to a Game!', socket);
+        }
+    });
+
+    /**
+     * Broadcast Bonus to both Players
+     */
+    socket.on('bonus', function(data) {
+        if (socket.pin) {
+            log.debug('<-> Broadcasting Bonus "' + data.type + '" in Room #' + socket.pin);
+            obacht.server.io.sockets['in'](socket.pin).emit('bonus', data);
+        } else {
+            log.warn('!!! Cannot broadcast Bonus while not connected to a Game!', socket);
+        }
+    });
+
+    /**
+     * Check/Compare ReactionTimes between two Player.
+     * If both committed
+     */
+    socket.on('check_reactiontime', function(data) {
+        if (socket.pin) {
+            log.debug('<-> Checking Reactiontime in Room #' + socket.pin);
+
+            var result = obacht.server.rooms.checkReactiontime(socket.pin, socket.pid, data);
+
+            if (result) {
+                obacht.server.io.sockets['in'](socket.pin).emit('receive_bonus', result);
+            }
+
+        } else {
+            log.warn('!!! Cannot check Reactiontime while not connected to a Game!', socket);
         }
     });
 
@@ -207,10 +240,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
     socket.on('disconnect', function() {
         // Rooms are automatically leaved and pruned
         if (socket.pin) {
-            // Tell other Player that his Opponent has left
-            obacht.server.rooms.leaveRoom(socket.pin, socket.pid);
-            socket.broadcast.to(socket.pin).emit('player_left');
-            socket.leave(socket.pin);
+            obacht.server.leaveRoomHelper(socket);
             log.warn('--- Player left Room due to disconnect', socket);
         }
         log.debug('--- Player disconnect');
@@ -225,8 +255,9 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
 /**
  * Helper Function for leaving current Room
+ * Sends Notification to other Player, cleans up Data
  *
- * @param  {object} socket Current Socket PassThrough
+ * @param  {Object} socket Current Socket PassThrough
  *
  * @memberOf obacht.server
  */
