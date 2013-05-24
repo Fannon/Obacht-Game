@@ -21,22 +21,22 @@ obacht.Inventory = function() {
 	/////////////////////
     // INVENTORY ARRAY //
     /////////////////////
-    this.trays = new Array();
+    this.trays = [];
     
-    this.trays[0] = new Array(); 
+    this.trays[0] = []; 
     this.trays[0].active = true;
     this.trays[0].type = 'snake';
     this.trays[0].fill = "assets/boni/" + this.trays[0].type + '.png';
     this.trays[0].button = new lime.RoundedRect().setSize(obacht.options.inventory.size, obacht.options.inventory.size).setPosition(obacht.options.inventory.right.x, obacht.options.inventory.y).setFill(this.trays[0].fill).setOpacity(0.5).setAnchorPoint(0, 0).setRadius(15);
 
     
-    this.trays[1] = new Array(); 
+    this.trays[1] = []; 
     this.trays[1].active = false;
     this.trays[1].type = 'none';
     this.trays[1].fill = "assets/boni/" + this.trays[1].type + '.png';
     this.trays[1].button = new lime.RoundedRect().setSize(obacht.options.inventory.size, obacht.options.inventory.size).setPosition(obacht.options.inventory.center.x, obacht.options.inventory.y).setFill(this.trays[1].fill).setOpacity(0.5).setAnchorPoint(0, 0).setRadius(15);
     
-    this.trays[2] = new Array(); 
+    this.trays[2] = []; 
     this.trays[2].active = false;
     this.trays[2].type = 'none';
     this.trays[2].fill = "assets/boni/" + this.trays[2].type + '.png';
@@ -60,11 +60,14 @@ obacht.Inventory = function() {
     });
     
     goog.events.listen(this.trays[1].button, ['touchstart', 'mousedown'], function(e) {
-       self.checkTray(1);
+        self.checkTray(1);
     });
 
     goog.events.listen(this.trays[2].button, ['touchstart', 'mousedown'], function(e) {
-       self.checkTray(2);
+        self.checkTray(2);
+    });
+    obacht.mp.events.subscribe('receive_bonus', function(data) {
+        self.checkBoni(data.success, data.type);       
     });
 
 };
@@ -79,7 +82,7 @@ obacht.Inventory.prototype = {
 		"use strict";
 		if(this.trays[tray].active === true){
             this.throwTrap(this.trays[tray].type);
-            this.resetTray(tray);
+            this.resetTray(tray, false, 'none');
        }
     },
    
@@ -92,16 +95,50 @@ obacht.Inventory.prototype = {
         console.log('throwTrap: ' + type)
         //obacht.mp.throwTrap(type);
     },
+    
+    /**
+     * 
+     * @param {Boolean} success true on success, false on failure
+     * @param {Object} type Type of the trap
+     */
+    checkBoni: function(success, type){
+        "use strict";
+        if(success === true) {
+            this.fillTray(type);	
+        }
+        if(success === false) {
+            this.setFail();
+        }   
+    },
+    
+   /**
+    * 
+    * @param {Object} type Type of trap
+    */
+    fillTray: function(type){
+        "use strict";
+        var i = 0;
+        for( i = 0; i < this.trays.length; i+1) {
+            if(this.trays[i].active === false) {
+                this.resetTray(i, true, type);
+                break;
+            }
+        }
+    },
    
    /**
     * 
     * @param {Object} tray Number of the inventory tray
+    * @param {Boolean} active true to fill, false to clear the tray
+    * @param {Object} type Type of the trap
     */
-    resetTray: function(tray){
+    resetTray: function(tray, active, type){
         "use strict";
-        this.trays[tray].active = false;
-        this.trays[tray].type = 'none';
+        this.trays[tray].active = active;
+        this.trays[tray].type = type;
         this.trays[tray].fill = "assets/boni/" + this.trays[tray].type + '.png';
         this.trays[tray].button.setFill(this.trays[tray].fill);
-   }
+    }
+   
+
 };

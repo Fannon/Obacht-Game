@@ -124,12 +124,4 @@ obacht.PlayerController.prototype = {
         });
     }
 
-    /*useItem: function(type) {
-        "use strict";
-        //function wird durch tippen auf ein Icon im Inventar ausgelöst, setzt das Hinderniss und löscht das Icon dann aus dem Inventar
-        console.log('use Item: ' + type);
-        obacht.mp.playerAction('standUp', {
-            d: 3
-        });
-    } */
 };
