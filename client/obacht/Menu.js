@@ -234,7 +234,7 @@ obacht.Menu.prototype = {
         var joinButton = new obacht.Menu.Button(-910, 515, 1533, 1087, 400, 600, 450, 160, layerMenu);
         var joinLabel = new obacht.Menu.Label('JOIN', 60, 400, 600, 400, 70, layerMenu);
         goog.events.listen(joinButton, ['touchstart', 'mousedown'], function() {
-            self.join();
+            self.joinGameScene();
         });
 
         //Random Game
@@ -256,7 +256,9 @@ obacht.Menu.prototype = {
 
     },
 
-
+    /**
+     * Select Theme Scene
+     */
     selectThemeScene: function() {
         "use strict";
         var self = this;
@@ -313,6 +315,10 @@ obacht.Menu.prototype = {
     },
 
 
+    /**
+     * Get Code (PIN) Scene
+     * @param data
+     */
     getCodeScene: function(data) {
 
         "use strict";
@@ -382,12 +388,7 @@ obacht.Menu.prototype = {
     loadGameScene: function() {
         "use strict";
 
-        console.log('Set Theme to ' + obacht.mp.roomDetail.theme);
-        obacht.themes.setTheme(obacht.mp.roomDetail.theme);
-
         var gameScene = new lime.Scene();
-
-        // set current scene active
         obacht.director.replaceScene(gameScene);
 
 
@@ -396,7 +397,6 @@ obacht.Menu.prototype = {
         /////////////////////////////
 
         obacht.playerController = new obacht.PlayerController();
-
         obacht.currentGame = new obacht.Game();
         gameScene.appendChild(obacht.currentGame.layer);
 
@@ -405,7 +405,7 @@ obacht.Menu.prototype = {
     /**
      * Join Custom Game Scene
      */
-    join: function() {
+    joinGameScene: function() {
         "use strict";
         var self = this;
 
@@ -511,7 +511,7 @@ obacht.Menu.prototype = {
 
 
         /////////////////////////////
-        // Scene Content //
+        // Scene Content           //
         /////////////////////////////
 
         var sceneMenu = new lime.Scene();
@@ -625,9 +625,36 @@ obacht.Menu.prototype = {
             self.startGame();
         });
 
+    },
+
+    /**
+     * Game Over Scene
+     * TODO: Not implemented yet
+     */
+    gameoverScene: function() {
+        "use strict";
+
+    },
+
+    /**
+     * Wait for the other Player Scene
+     * TODO: todo
+     */
+    waitForPlayerScene: function() {
+        "use strict";
+
     }
+
 };
 
+/**
+ * Adds (left) Padding to the PIN Number
+ *
+ * @param n
+ * @param width
+ * @param z
+ * @returns {string}
+ */
 function padPin(n, width, z) {
     "use strict";
     z = z || '0';

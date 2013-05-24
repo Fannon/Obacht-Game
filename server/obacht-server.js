@@ -50,6 +50,10 @@ obacht.server.io.set('log level', 1); // reduce logging
 // Comminication            //
 //////////////////////////////
 
+/**
+ * New Player connects to Server
+ * @event
+ */
 obacht.server.io.sockets.on('connection', function(socket) {
     "use strict";
 
@@ -61,6 +65,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
     /**
      * New Player connects to Server
      * Sends ID back so that the client knows it's successful connected
+     * @event
      */
     socket.emit('connected', {
         pid: socket.id
@@ -69,6 +74,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
     /**
      * Connection Failed
+     * @event
      */
     socket.on('connect_failed', function(){
         socket.emit('connected', {
@@ -81,6 +87,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
     /**
      * New Room Request
      * Draws new private PIN (closed Room) and sends it back to Client
+     * @event
      */
     socket.on('new_room', function(roomDetail) {
 
@@ -101,6 +108,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
     /**
      * Join Room Request
+     * @event
      */
     socket.on('join_room', function(roomDetail) {
 
@@ -123,6 +131,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
     /**
      * Leave Room Player is currently connected
+     * @event
      */
     socket.on('leave_room', function() {
         obacht.server.leaveRoomHelper(socket);
@@ -133,6 +142,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
      * Find Match
      * Looks for Player waiting for another Player
      * If none available, return 0 -> Player will create a new Game
+     * @event
      */
     socket.on('find_match', function() {
 
@@ -154,8 +164,8 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
     /**
      * Player gives Ready Signal (ready to play)
-     *
      * If both Players are ready, sending a 'game_ready' Signal: The Game can be started now
+     * @event
      */
     socket.on('player_ready', function() {
         if (socket.pin) {
@@ -173,6 +183,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
     /**
      * Redirects Player Status Informations (Health) to other Player
+     * @event
      */
     socket.on('player_status', function(player_status){
         if (socket.pin) {
@@ -184,6 +195,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
     /**
      * Broadcast Player Action to other Player in Room
+     * @event
      */
     socket.on('player_action', function(data) {
         if (socket.pin) {
@@ -196,6 +208,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
     /**
      * Broadcast Bonus to both Players
+     * @event
      */
     socket.on('bonus', function(data) {
         if (socket.pin) {
@@ -208,7 +221,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
     /**
      * Check/Compare ReactionTimes between two Player.
-     * If both committed
+     * @event
      */
     socket.on('check_reactiontime', function(data) {
         if (socket.pin) {
@@ -228,6 +241,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
     /**
      * Get all open Rooms Request
      * (Debugging Function)
+     * @event
      */
     socket.on('get_rooms', function() {
         socket.emit('get_rooms', obacht.server.rooms.getRoomsDebug());
@@ -236,6 +250,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
     /**
      * Player disconnect Event
+     * @event
      */
     socket.on('disconnect', function() {
         // Rooms are automatically leaved and pruned

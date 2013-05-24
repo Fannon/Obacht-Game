@@ -50,6 +50,18 @@ obacht.Game = function() {
 
     this.layer.appendChild(obacht.playerController.layer);
 
+
+    //////////////////////////////
+    // Game Init                //
+    //////////////////////////////
+
+    console.log('Set Theme to ' + obacht.mp.roomDetail.theme);
+    obacht.themes.setTheme(obacht.mp.roomDetail.theme);
+
+
+
+
+
 };
 
 obacht.Game.prototype = {
