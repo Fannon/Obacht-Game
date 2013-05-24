@@ -29,9 +29,7 @@ obacht.PlayerController = function() {
     this.tapAreaBottom = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setAnchorPoint(0, 0);
     this.tapAreaPuffer = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT).setPosition(0, 0).setAnchorPoint(0, 0);
 
-    this.leftInventory = new obacht.Inventory('left');
-    this.centerInventory = new obacht.Inventory('center');
-    this.rightInventory = new obacht.Inventory('right');
+    this.inventory = new obacht.Inventory();
 
     this.bonus = new obacht.Bonus('snake');
 
@@ -39,9 +37,7 @@ obacht.PlayerController = function() {
     this.layer.appendChild(this.tapAreaTop);
     this.layer.appendChild(this.tapAreaBottom);
     this.layer.appendChild(this.tapAreaPuffer);
-    this.layer.appendChild(this.leftInventory.layer);
-    this.layer.appendChild(this.centerInventory.layer);
-    this.layer.appendChild(this.rightInventory.layer);
+    this.layer.appendChild(this.inventory.layer);
     this.layer.appendChild(this.bonus.layer);
 
     // Event Publisher/Subscriber
@@ -97,30 +93,6 @@ obacht.PlayerController = function() {
                 self.standUp();
                 self.isCrouching = false;
             }
-        }
-    });
-
-    //LEFT INVENTORY BUTTON
-   goog.events.listen(this.leftInventory.layer, ['touchstart', 'mousedown'], function(e) {
-       if(obacht.options.inventory.left.active === true){
-            //self.useItem(obacht.options.inventory.left.type);
-            obacht.options.inventory.left.active = false;
-       }
-    });
-
-    //CENTER INVENTORY BUTTON
-    goog.events.listen(this.centerInventory.layer, ['touchstart', 'mousedown'], function(e) {
-        if(obacht.options.inventory.center.active === true){
-            //self.useItem(obacht.options.inventory.center.type);
-            obacht.options.inventory.center.active = false;
-        }
-    });
-
-    //RIGHT INVENTORY BUTTON
-    goog.events.listen(this.rightInventory.layer, ['touchstart', 'mousedown'], function(e) {
-       if(obacht.options.inventory.right.active === true){
-            //self.useItem(obacht.options.inventory.right.type);
-            obacht.options.inventory.right.active = false;
         }
     });
 
