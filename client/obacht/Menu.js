@@ -104,7 +104,7 @@ obacht.Menu.prototype = {
         var mask_logo_big = new lime.Sprite().setPosition(640, 360).setAnchorPoint(0.5,0.5).setSize(1000, 200);
         layerMenu.appendChild(mask_logo_big);
         logo_big.setMask(mask_logo_big);
-        goog.events.listen(logo_big, lime.Button.Event.CLICK, function() {
+        goog.events.listen(logo_big, ['touchstart', 'mousedown'], function() {
             self.mainMenuScene();
         });
 
@@ -151,28 +151,28 @@ obacht.Menu.prototype = {
         //Play-Button
         var playButton = new obacht.Menu.Button(-760, 65, 1704, 1208, 640, 338, 400, 200, layerMenu);
         var playLabel = new obacht.Menu.Label('PLAY', 90, 640, 338, 400, 90, layerMenu);
-        goog.events.listen(playButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(playButton, ['touchstart', 'mousedown'], function() {
             self.newGameScene();
         });
 
         //Help-Button
         var helpButton = new obacht.Menu.Button(-458, 80, 1704, 1208, 315, 540, 170, 170, layerMenu);
         var helpLabel = new obacht.Menu.Label('HELP', 45, 309, 650, 170, 45, layerMenu);
-        goog.events.listen(helpButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(helpButton, ['touchstart', 'mousedown'], function() {
             self.helpScene();
         });
 
         //Credits-Button
         var creditsButton = new obacht.Menu.Button(-432, 80, 1704, 1208, 538, 540, 170, 170, layerMenu);
         var creditsLabel = new obacht.Menu.Label('CREDITS', 45, 525, 650, 170, 45, layerMenu);
-        goog.events.listen(creditsButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(creditsButton, ['touchstart', 'mousedown'], function() {
             self.creditsScene();
         });
 
         //Sound-Button
         var soundButton = new obacht.Menu.Button(-500, -163, 1704, 1208, 753, 540, 170, 170, layerMenu);
         var soundLabel = new obacht.Menu.Label('SOUND', 45, 749, 650, 170, 45, layerMenu);
-        goog.events.listen(soundButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(soundButton, ['touchstart', 'mousedown'], function() {
             //change Icon
             //sound off
         });
@@ -180,7 +180,7 @@ obacht.Menu.prototype = {
         //Quit-Button
         var quitButton = new obacht.Menu.Button(-350, 80, 1704, 1208, 963, 540, 170, 170, layerMenu);
         var quitLabel = new obacht.Menu.Label('QUIT', 45, 963, 650, 170, 45, layerMenu);
-        goog.events.listen(quitButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(quitButton, ['touchstart', 'mousedown'], function() {
             //quit Game
         });
 
@@ -210,7 +210,7 @@ obacht.Menu.prototype = {
 
         //Back
         var backButton = new obacht.Menu.Button(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
-        goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
             self.mainMenuScene();
         });
 
@@ -221,14 +221,14 @@ obacht.Menu.prototype = {
         //Create-Button
         var createButton = new obacht.Menu.Button(-910, 400, 1533, 1087, 400, 480, 450, 160, layerMenu);
         var createLabel = new obacht.Menu.Label('CREATE', 60, 400, 485, 400, 70, layerMenu);
-        goog.events.listen(createButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(createButton, ['touchstart', 'mousedown'], function() {
             self.selectThemeScene();
         });
 
         //Join-Button
         var joinButton = new obacht.Menu.Button(-910, 515, 1533, 1087, 400, 600, 450, 160, layerMenu);
         var joinLabel = new obacht.Menu.Label('JOIN', 60, 400, 600, 400, 70, layerMenu);
-        goog.events.listen(joinButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(joinButton, ['touchstart', 'mousedown'], function() {
             self.join();
         });
 
@@ -240,7 +240,7 @@ obacht.Menu.prototype = {
         //Random-Button
         var randomPlayButton = new obacht.Menu.Button(-440, 400, 1533, 1087, 870, 480, 450, 160, layerMenu);
         var randomPlayLabel = new obacht.Menu.Label('PLAY', 60, 870, 485, 400, 70, layerMenu);
-        goog.events.listen(randomPlayButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(randomPlayButton, ['touchstart', 'mousedown'], function() {
             obacht.mp.findMatch();
             obacht.mp.events.subscribeOnce('room_detail', function(data){
                 obacht.mp.playerReady();
@@ -275,7 +275,7 @@ obacht.Menu.prototype = {
 
         //Back - Door
         var backButton = new obacht.Menu.Button(-990, 10, 1704, 1208, 57, 57, 130, 130, layerMenu);
-        goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
             self.mainMenuScene();
         });
 
@@ -284,7 +284,7 @@ obacht.Menu.prototype = {
 
         //Theme-Desert
         var desert = new obacht.Menu.Button(-177, -5, 1704, 1208, 340, 485, 300, 300, layerMenu);
-        goog.events.listen(desert, lime.Button.Event.CLICK, function() {
+        goog.events.listen(desert, ['touchstart', 'mousedown'], function() {
             obacht.mp.newRoom('desert', {}, true);
             obacht.mp.events.subscribeOnce('room_detail', function(data){
                 self.getCodeScene(data);
@@ -293,7 +293,7 @@ obacht.Menu.prototype = {
 
         //Theme-Water
         var water = new obacht.Menu.Button(-675, -450, 1704, 1208, 640, 485, 300, 300, layerMenu);
-        goog.events.listen(water, lime.Button.Event.CLICK, function() {
+        goog.events.listen(water, ['touchstart', 'mousedown'], function() {
             obacht.mp.newRoom('water', {}, true);
             obacht.mp.events.subscribeOnce('room_detail', function(data){
                 self.getCodeScene(data);
@@ -302,7 +302,7 @@ obacht.Menu.prototype = {
 
         //Theme-Meadow
         var meadow = new obacht.Menu.Button(-60, -213, 1704, 1208, 940, 485, 300, 300, layerMenu);
-        goog.events.listen(meadow, lime.Button.Event.CLICK, function() {
+        goog.events.listen(meadow, ['touchstart', 'mousedown'], function() {
             obacht.mp.newRoom('meadow', {}, true);
             obacht.mp.events.subscribeOnce('room_detail', function(data){
                 self.getCodeScene(data);
@@ -337,7 +337,7 @@ obacht.Menu.prototype = {
 
         //Back
         var backButton = new obacht.Menu.Button(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
-        goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
             self.selectThemeScene();
         });
 
@@ -348,7 +348,7 @@ obacht.Menu.prototype = {
 
         //small Infotext Icon
         var infoButton = new obacht.Menu.Button(-350, 215, 1704, 1208, 805, 265, 90, 90, layerMenu);
-        goog.events.listen(infoButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(infoButton, ['touchstart', 'mousedown'], function() {
             //Pop-up display;
             layerToolTip.setHidden(false);
         });
@@ -356,7 +356,7 @@ obacht.Menu.prototype = {
         //Pop-up-Infotext
         var popupButton = new obacht.Menu.Button(820, -190, 1704, 1208, 1000, 260, 350, 260, layerToolTip);
         var popupLabel = new obacht.Menu.Label('PLEASE GIVE THIS CODE TO YOUR FRIEND', 36, 1018, 250, 280, 55, layerToolTip);
-        goog.events.listen(popupButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(popupButton, ['touchstart', 'mousedown'], function() {
             //Pop-up display none;
             layerToolTip.setHidden(true);
         });
@@ -364,7 +364,7 @@ obacht.Menu.prototype = {
         //Play-Button
         var playButton = new obacht.Menu.Button(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
         var playLabel = new obacht.Menu.Label('PLAY', 40, 637, 650, 700, 60, layerMenu);
-        goog.events.listen(playButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(playButton, ['touchstart', 'mousedown'], function() {
             obacht.mp.playerReady();
             layerMenu.removeChild(playLabel);
             playLabel = new obacht.Menu.Label('WAIT', 40, 637, 650, 700, 60, layerMenu);
@@ -563,13 +563,13 @@ obacht.Menu.prototype = {
 
         //Back
         var backButton = new obacht.Menu.Button(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
-        goog.events.listen(backButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
             self.newGameScene();
         });
 
         //small Infotext Icon
         var infoButton = new obacht.Menu.Button(-345, 215, 1704, 1208, 810, 265, 90, 90, layerMenu);
-        goog.events.listen(infoButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(infoButton, ['touchstart', 'mousedown'], function() {
             //Pop-up display;
             layerToolTip.setHidden(false);
         });
@@ -577,7 +577,7 @@ obacht.Menu.prototype = {
         //Pop-up-Infotext
         var popupButton = new obacht.Menu.Button(220, 145, 1704, 1208, 1020, 315, 400, 370, layerToolTip);
         var popupLabel = new obacht.Menu.Label('ENTER THE FOUR DIGIT CODE YOU GOT FROM YOUR FRIEND', 36, 1040, 248, 280, 55, layerToolTip);
-        goog.events.listen(popupButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(popupButton, ['touchstart', 'mousedown'], function() {
             //Pop-up display none;
             layerToolTip.setHidden(true);
         });
@@ -617,40 +617,40 @@ obacht.Menu.prototype = {
         // Register EventListeners //
         /////////////////////////////
 
-        goog.events.listen(key_labels[1], lime.Button.Event.CLICK, function() {
+        goog.events.listen(key_labels[1], ['touchstart', 'mousedown'], function() {
             addNumber(1);
         });
-        goog.events.listen(key_labels[2], lime.Button.Event.CLICK, function() {
+        goog.events.listen(key_labels[2], ['touchstart', 'mousedown'], function() {
             addNumber(2);
         });
-        goog.events.listen(key_labels[3], lime.Button.Event.CLICK, function() {
+        goog.events.listen(key_labels[3], ['touchstart', 'mousedown'], function() {
             addNumber(3);
         });
-        goog.events.listen(key_labels[4], lime.Button.Event.CLICK, function() {
+        goog.events.listen(key_labels[4], ['touchstart', 'mousedown'], function() {
             addNumber(4);
         });
-        goog.events.listen(key_labels[5], lime.Button.Event.CLICK, function() {
+        goog.events.listen(key_labels[5], ['touchstart', 'mousedown'], function() {
             addNumber(5);
         });
-        goog.events.listen(key_labels[6], lime.Button.Event.CLICK, function() {
+        goog.events.listen(key_labels[6], ['touchstart', 'mousedown'], function() {
             addNumber(6);
         });
-        goog.events.listen(key_labels[7], lime.Button.Event.CLICK, function() {
+        goog.events.listen(key_labels[7], ['touchstart', 'mousedown'], function() {
             addNumber(7);
         });
-        goog.events.listen(key_labels[8], lime.Button.Event.CLICK, function() {
+        goog.events.listen(key_labels[8], ['touchstart', 'mousedown'], function() {
             addNumber(8);
         });
-        goog.events.listen(key_labels[9], lime.Button.Event.CLICK, function() {
+        goog.events.listen(key_labels[9], ['touchstart', 'mousedown'], function() {
             addNumber(9);
         });
-        goog.events.listen(key_labels[0], lime.Button.Event.CLICK, function() {
+        goog.events.listen(key_labels[0], ['touchstart', 'mousedown'], function() {
             addNumber(0);
         });
-        goog.events.listen(keyDelete, lime.Button.Event.CLICK, function() {
+        goog.events.listen(keyDelete, ['touchstart', 'mousedown'], function() {
             deleteNumber();
         });
-        goog.events.listen(playButton, lime.Button.Event.CLICK, function() {
+        goog.events.listen(playButton, ['touchstart', 'mousedown'], function() {
             self.startGame();
         });
 
