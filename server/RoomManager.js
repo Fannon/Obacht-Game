@@ -284,14 +284,6 @@ RoomManager.prototype.checkReactiontime = function(pin, pid, data) {
             room.set({
                 creatingPlayerReactiontime: data.reaction_time
             });
-
-//            // After a specific Timeout, it will reset to false again. Just in case.
-//            setTimeout(function(){
-//                room.set({
-//                    creatingPlayerReactiontime: false
-//                });
-//            }, options.reactiontimeExpiration);
-
         } else if (room.attributes.joiningPlayerId === pid) {
             room.set({
                 joiningPlayerReactiontime: data.reaction_time
@@ -303,7 +295,7 @@ RoomManager.prototype.checkReactiontime = function(pin, pid, data) {
         if (room.attributes.creatingPlayerReactiontime && room.attributes.joiningPlayerReactiontime) {
 
             // Compare and declare the winner
-            if (room.attributes.creatingPlayerReactiontime > room.attributes.joiningPlayerReactiontime) {
+            if (room.attributes.creatingPlayerReactiontime < room.attributes.joiningPlayerReactiontime) {
                 receiveBonus.winner_pid = room.attributes.creatingPlayerId;
             } else {
                 receiveBonus.winner_pid = room.attributes.joiningPlayerId;
