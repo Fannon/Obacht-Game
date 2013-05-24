@@ -46,7 +46,7 @@ obacht.Game = function() {
 
     this.layer.appendChild(obacht.playerController.layer);
 
-    this.Generator=new obacht.Generator(this.layer,this.ownPlayer);
+    this.generator = new obacht.Generator(this.layer, this.ownPlayer);
 
     this.layer.appendChild(obacht.playerController.layer);
 

@@ -11,11 +11,10 @@ goog.require('goog.pubsub.PubSub');
  * It includes the communication protocol and registers functions and events
  * Uses Socket.io and connects to a Node.js Server
  *
- * @author Simon Heimler
  * @author Sebastian Huber
+ * @author Simon Heimler
  * @constructor
  */
-
 obacht.MultiplayerService = function(serverUrl) {
     "use strict";
 
@@ -24,16 +23,25 @@ obacht.MultiplayerService = function(serverUrl) {
     //////////////////////////////
 
     this.serverUrl = serverUrl;
+    /** Room PIN */
     this.pin = false;
+    /** Player ID */
     this.pid = false;
+    /** RoomDetail Object */
     this.roomDetail = false;
+    /** Socket.io */
     this.socket = io.connect(this.serverUrl); // Set up Socket-Connection to Server
 
     var self = this;
 
     console.log("Connecting to Multiplayer Server on " + serverUrl);
 
-    // Event Publisher/Subscriber (http://closure-library.googlecode.com/svn/docs/class_goog_pubsub_PubSub.html)
+    /**
+     * Event Publisher/Subscriber (http://closure-library.googlecode.com/svn/docs/class_goog_pubsub_PubSub.html)
+     * Handles all the Events from the Multiplayer Service
+     *
+     * @type {goog.pubsub.PubSub}
+     */
     this.events = new goog.pubsub.PubSub();
 
 
@@ -280,8 +288,8 @@ obacht.MultiplayerService.prototype.playerAction = function(type, data) {
 /**
  * Broadcast Player Status
  *
- * @param  {String} pid Player-ID
- * @param  {Number} life Lifecounter
+ * @param  {String} pid     Player-ID
+ * @param  {Number} life    Lifecounter
  */
 obacht.MultiplayerService.prototype.playerStatus = function (pid, life) {
     "use strict";

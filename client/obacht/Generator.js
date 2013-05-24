@@ -12,6 +12,8 @@ goog.require('obacht.Collision');
  * @constructor
  */
 obacht.Generator = function(layer, ownPlayer) {
+    "use strict";
+
     var trap = new obacht.Trap('test');
     layer.appendChild(trap.layer);
 
@@ -26,6 +28,7 @@ obacht.Generator = function(layer, ownPlayer) {
     faktor = 1070;
 
     lime.scheduleManager.schedule(function(dt) {
+
         var position = trap.character.getPosition();
         position.x = Math.sin(winkel) * faktor + groundx;
         position.y = Math.cos(winkel) * faktor + groundy;

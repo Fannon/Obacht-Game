@@ -25,8 +25,13 @@ goog.require('obacht.Game');
 obacht.Menu = function() {
     "use strict";
 
+    var self = this;
     lime.Label.defaultFont = 'Cartwheel';
     lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
+
+    obacht.mp.events.subscribe('game_ready', function(){
+        self.loadGameScene();
+    });
 
     // Start first Scene
     this.loadingScene();
@@ -246,9 +251,6 @@ obacht.Menu.prototype = {
                 obacht.mp.playerReady();
                 layerMenu.removeChild(randomPlayLabel);
                 randomPlayLabel = new obacht.Menu.Label('WAIT', 60, 870, 485, 400, 70, layerMenu);
-                obacht.mp.events.subscribeOnce('game_ready', function() {
-                    self.loadGameScene();
-                });
             });
         });
 
@@ -368,9 +370,6 @@ obacht.Menu.prototype = {
             obacht.mp.playerReady();
             layerMenu.removeChild(playLabel);
             playLabel = new obacht.Menu.Label('WAIT', 40, 637, 650, 700, 60, layerMenu);
-            obacht.mp.events.subscribeOnce('game_ready', function(){
-                self.loadGameScene();
-            });
         });
 
     },
@@ -385,10 +384,7 @@ obacht.Menu.prototype = {
 
         console.log('Set Theme to ' + obacht.mp.roomDetail.theme);
         obacht.themes.setTheme(obacht.mp.roomDetail.theme);
-        obacht.mp.playerReady();
 
-        // Connect to Multiplayer Server
-        //obacht.mp = new obacht.MultiplayerService(obacht.options.server.url);
         var gameScene = new lime.Scene();
 
         // set current scene active
@@ -402,29 +398,7 @@ obacht.Menu.prototype = {
         obacht.playerController = new obacht.PlayerController();
 
         obacht.currentGame = new obacht.Game();
-//        obacht.currentGame.pin = roomDetail.pin;
         gameScene.appendChild(obacht.currentGame.layer);
-
-
-
-//        obacht.mp.playerReady();
-//        obacht.themes.setTheme(roomDetail.theme);
-//
-//        /////////////////////////////
-//        // Start new Game          //
-//        /////////////////////////////
-//
-//        var gameScene = new lime.Scene();
-//        // set current scene active
-//        obacht.director.replaceScene(gameScene);
-//
-//        obacht.playerController = new obacht.PlayerController();
-//        obacht.currentGame = new obacht.Game();
-//        gameScene.appendChild(obacht.currentGame.layer);
-//
-//        obacht.mp.events.subscribe('game_ready', function() {
-//            console.log('TODO: Game Ready Event');
-//        });
 
     },
 
@@ -531,9 +505,6 @@ obacht.Menu.prototype = {
                     obacht.mp.playerReady();
                     layerMenu.removeChild(playLabel);
                     playLabel = new obacht.Menu.Label('WAIT', 40, 637, 650, 700, 60, layerMenu);
-                    obacht.mp.events.subscribeOnce('game_ready', function() {
-                        self.loadGameScene();
-                    });
                 });
             }
         };
