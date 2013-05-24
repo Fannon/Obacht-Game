@@ -1,5 +1,6 @@
 /* global goog, obacht, io, console */
-/* jshint devel: true, strict: false */
+/* jshint devel: true */
+
 goog.provide('obacht.MultiplayerService');
 
 goog.require('goog.pubsub.PubSub');
@@ -16,6 +17,7 @@ goog.require('goog.pubsub.PubSub');
  */
 
 obacht.MultiplayerService = function(serverUrl) {
+    "use strict";
 
     //////////////////////////////
     // Model                    //
@@ -153,6 +155,7 @@ obacht.MultiplayerService = function(serverUrl) {
 //////////////////////////////
 
 obacht.MultiplayerService.prototype.newRoom = function (theme, options, closed) {
+    "use strict";
     console.log('>> newRoom()');
     this.socket.emit('new_room', {
         theme: theme,
@@ -162,6 +165,7 @@ obacht.MultiplayerService.prototype.newRoom = function (theme, options, closed) 
 };
 
 obacht.MultiplayerService.prototype.joinRoom = function(pin, closed) {
+    "use strict";
     console.log('>> joinRoom(' + pin + ')');
     this.socket.emit('join_room', {
         pin: pin,
@@ -170,11 +174,13 @@ obacht.MultiplayerService.prototype.joinRoom = function(pin, closed) {
 };
 
 obacht.MultiplayerService.prototype.findMatch = function () {
+    "use strict";
     console.log('>> findMatch()');
     this.socket.emit('find_match');
 };
 
 obacht.MultiplayerService.prototype.playerReady = function () {
+    "use strict";
     console.log('>> playerReady()');
     this.socket.emit('player_ready');
 };
@@ -186,6 +192,7 @@ obacht.MultiplayerService.prototype.playerReady = function () {
  * @param  {object} data ActionData
  */
 obacht.MultiplayerService.prototype.playerAction = function(type, data) {
+    "use strict";
     this.socket.emit('player_action', {
         type: type,
         data: data
@@ -193,6 +200,7 @@ obacht.MultiplayerService.prototype.playerAction = function(type, data) {
 };
 
 obacht.MultiplayerService.prototype.playerStatus = function (pid, life) {
+    "use strict";
     this.socket.emit('player_status', {
         pid: pid,
         life: life
@@ -200,6 +208,7 @@ obacht.MultiplayerService.prototype.playerStatus = function (pid, life) {
 };
 
 obacht.MultiplayerService.prototype.leaveRoom = function() {
+    "use strict";
     console.log('>> leaveRoom()');
     this.socket.emit('leave_room');
 };
@@ -208,6 +217,7 @@ obacht.MultiplayerService.prototype.leaveRoom = function() {
  * Debugging Function
  */
 obacht.MultiplayerService.prototype.getRooms = function() {
+    "use strict";
     console.log('>> getRooms()');
     this.socket.emit('get_rooms', '');
 };
@@ -218,6 +228,7 @@ obacht.MultiplayerService.prototype.getRooms = function() {
 //////////////////////////////
 
 obacht.MultiplayerService.prototype.getRandomTheme = function() {
+    "use strict";
     console.dir(obacht.themes);
     var availableThemes = obacht.themes.availableThemes;
     var rand = Math.floor(availableThemes.length * Math.random());
