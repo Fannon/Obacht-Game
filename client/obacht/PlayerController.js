@@ -6,7 +6,6 @@ goog.provide('obacht.PlayerController');
 // Obacht Requirements
 goog.require('obacht.options');
 goog.require('obacht.Inventory');
-goog.require('obacht.Bonus');
 
 // Closure Library Requirements
 goog.require('goog.pubsub.PubSub');
@@ -31,14 +30,11 @@ obacht.PlayerController = function() {
 
     this.inventory = new obacht.Inventory();
 
-    this.bonus = new obacht.Bonus('snake');
-
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     this.layer.appendChild(this.tapAreaTop);
     this.layer.appendChild(this.tapAreaBottom);
     this.layer.appendChild(this.tapAreaPuffer);
     this.layer.appendChild(this.inventory.layer);
-    this.layer.appendChild(this.bonus.layer);
 
     // Event Publisher/Subscriber
     this.events = new goog.pubsub.PubSub();
