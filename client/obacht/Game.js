@@ -27,12 +27,15 @@ obacht.Game = function() {
     // Game Model (state)       //
     //////////////////////////////
 
-    this.ownWorld = new obacht.World('own');
-    this.enemyWorld = new obacht.World('enemy');
-    this.sky = new lime.Sprite().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT).setFill(obacht.themes.path.sky).setPosition(0, 0).setAnchorPoint(0, 0);
+    this.theme = obacht.themes[obacht.mp.roomDetail.theme];
+    console.dir(this.theme);
 
-    this.ownPlayer = new obacht.Player('own');
-    this.enemyPlayer = new obacht.Player('enemy');
+    this.ownWorld = new obacht.World('own', this.theme);
+    this.enemyWorld = new obacht.World('enemy', this.theme);
+    this.sky = new lime.Sprite().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT).setFill(this.theme.world.files.sky).setPosition(0, 0).setAnchorPoint(0, 0);
+
+    this.ownPlayer = new obacht.Player('own', this.theme);
+    this.enemyPlayer = new obacht.Player('enemy', this.theme);
 
     //this.bonus = new obacht.Bonus('snake');
 
@@ -49,18 +52,6 @@ obacht.Game = function() {
     this.generator = new obacht.Generator(this.layer, this.ownPlayer);
 
     this.layer.appendChild(obacht.playerController.layer);
-
-
-    //////////////////////////////
-    // Game Init                //
-    //////////////////////////////
-
-    console.log('Set Theme to ' + obacht.mp.roomDetail.theme);
-    obacht.themes.setTheme(obacht.mp.roomDetail.theme);
-
-
-
-
 
 };
 

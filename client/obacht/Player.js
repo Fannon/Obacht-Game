@@ -22,11 +22,12 @@ goog.require('obacht.Trap');
  *
  * @constructor
  */
-obacht.Player = function(type) {
+obacht.Player = function(type, theme) {
 
     console.log('New Player();');
 
     var self = this;
+    this.theme = theme;
 
 
     //////////////////

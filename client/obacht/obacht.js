@@ -11,9 +11,9 @@ goog.require('lime.Renderer.CANVAS');
 
 // Obacht Requirements
 goog.require('obacht.options');
+goog.require('obacht.themes');
 goog.require('obacht.MultiplayerService');
 goog.require('obacht.Menu');
-goog.require('obacht.themes');
 
 
 // entrypoint
