@@ -17,6 +17,7 @@ goog.require('obacht.Game');
  *
  * Inits the Menu and handles the different MenuScenes
  * Uses the MultiplayerService to join/create Rooms
+ * Creates a new Game as one of its Scenes
  *
  * TODO: Use Config
  *
@@ -25,9 +26,18 @@ goog.require('obacht.Game');
 obacht.Menu = function() {
     "use strict";
 
+    //////////////////////////////
+    // Variables                //
+    //////////////////////////////
+
     var self = this;
     lime.Label.defaultFont = 'Cartwheel';
     lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
+
+
+    //////////////////////////////
+    // Events                   //
+    //////////////////////////////
 
     obacht.mp.events.subscribe('game_ready', function(){
         self.loadGameScene();
@@ -36,6 +46,8 @@ obacht.Menu = function() {
     obacht.mp.events.subscribe('game_over', function(){
         self.loadingScene();
     });
+
+
 
     // Start first Scene
     this.loadingScene();
@@ -90,16 +102,13 @@ obacht.Menu.Label = function(text, size, x, y, w, h, layerMenu){
 obacht.Menu.prototype = {
 
     /**
-     * Loading Start Scene
+     * Loading Scene
      */
     loadingScene: function() {
         "use strict";
         var self = this;
 
         var loadingScene = new lime.Scene();
-
-        // set current scene active
-        obacht.director.replaceScene(loadingScene);
 
         var layerMenu = new lime.Layer();
         loadingScene.appendChild(layerMenu);
@@ -117,7 +126,8 @@ obacht.Menu.prototype = {
             self.mainMenuScene();
         });
 
-        //Loading ... Label
+        // Loading ... Label
+        // TODO: Performanter lösen.. nur wie?
         var loadingText = 'Loading ';
         var loadingStatus = '.';
         var loadingLabel = new obacht.Menu.Label(loadingText + loadingStatus, 40, 740, 520, 400, 90, layerMenu).setAlign('left');
@@ -132,6 +142,9 @@ obacht.Menu.prototype = {
             }
 
         }, 950);
+
+        // set current scene active
+        obacht.director.replaceScene(loadingScene);
 
     },
 
@@ -328,7 +341,10 @@ obacht.Menu.prototype = {
         "use strict";
         var self = this;
 
-        var pin = padPin(data.pin, 4);
+        // Pad the Pin with leading zeros, add spaces between Numbers
+        var pin = padPin(data.pin, 4, 0);
+        var pinArray = pin.split("");
+        var pinFormatted = pinArray.join(' ');
 
         var sceneMenu = new lime.Scene();
 
@@ -356,7 +372,7 @@ obacht.Menu.prototype = {
         //Code_Field
         var codeLabel = new obacht.Menu.Label('YOUR CODE', 50, 640, 320, 300, 90, layerMenu);
         var field = new obacht.Menu.Button(290, 315, 1704, 1208, 640, 405, 480, 160, layerMenu);
-        var codeNumbersLabel =  obacht.Menu.Label(pin, 90, 640, 425, 400, 130, layerMenu);
+        var codeNumbersLabel =  obacht.Menu.Label(pinFormatted, 90, 640, 425, 400, 130, layerMenu);
 
         //small Infotext Icon
         var infoButton = new obacht.Menu.Button(-350, 215, 1704, 1208, 805, 265, 90, 90, layerMenu);
@@ -411,12 +427,12 @@ obacht.Menu.prototype = {
      */
     joinGameScene: function() {
         "use strict";
-        var self = this;
-
 
         /////////////////////////////
         // Variables               //
         /////////////////////////////
+
+        var self = this;
 
         /** Array for PIN */
         var codeArray = ['_','_','_','_'];
@@ -647,7 +663,26 @@ obacht.Menu.prototype = {
     waitForPlayerScene: function() {
         "use strict";
 
+    },
+
+    /**
+     * Help / Tutorial Scene
+     * TODO: todo
+     */
+    helpScene: function() {
+        "use strict";
+
+    },
+
+    /**
+     * Credits Scene
+     * TODO: todo
+     */
+    creditsScene: function() {
+        "use strict";
+
     }
+
 
 };
 

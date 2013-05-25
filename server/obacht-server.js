@@ -294,7 +294,7 @@ obacht.server.leaveRoomHelper = function(socket) {
 
 obacht.server.gameoverHelper = function(socket, reason, pid) {
     "use strict";
-    log.debug('Game Over in Room #' + socket.pin);
+    log.debug('--- Game Over in Room #' + socket.pin);
     obacht.server.io.sockets['in'](socket.pin).emit('game_over', {
         reason: reason,
         pid: pid

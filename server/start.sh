@@ -43,4 +43,5 @@ echo '#################################'
 echo '# Tail current Output Log       #'
 echo '#################################'
 echo ''
+echo 'tail -f /home/fannon/.forever/obacht-out.log'
 tail -f /home/fannon/.forever/obacht-out.log
