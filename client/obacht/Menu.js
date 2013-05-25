@@ -33,6 +33,10 @@ obacht.Menu = function() {
         self.loadGameScene();
     });
 
+    obacht.mp.events.subscribe('game_over', function(){
+        self.loadingScene();
+    });
+
     // Start first Scene
     this.loadingScene();
 

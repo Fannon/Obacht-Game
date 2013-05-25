@@ -88,6 +88,29 @@ RoomManager.prototype.addRoom = function(pin, roomDetail) {
 };
 
 /**
+ * Resets / cleans up Room for a new Game, if exists
+ * Applied after GameOver
+ *
+ * @param {Number} pin  Room PIN
+ */
+RoomManager.prototype.resetRoom = function(pin) {
+    "use strict";
+
+    var room = this.getRoom(pin);
+    if (room) {
+        log.debug('--- resetRoom(): Room Removed');
+        room.set({
+            creatingPlayerReactiontime: false,
+            creatingPlayerReady: false,
+            joiningPlayerReactiontime: false,
+            joiningPlayerReady: false
+        });
+    } else {
+        log.debug('--- removeRoom(): Room did not exist');
+    }
+};
+
+/**
  * Remove Room, if exists
  *
  * @param {Number} pin  Room PIN

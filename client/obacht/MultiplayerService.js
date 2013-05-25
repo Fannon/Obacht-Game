@@ -200,9 +200,9 @@ obacht.MultiplayerService = function(serverUrl) {
     /**
      * Shows that a Player hast left the game
      */
-    this.socket.on('player_left', function () {
-        console.log('Player has left the Game!');
-        self.events.publish('player_left');
+    this.socket.on('game_over', function (data) {
+        console.log('Game over! -> ' + data.reason);
+        self.events.publish('game_over');
     });
 
     /**

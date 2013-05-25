@@ -27,8 +27,10 @@ obacht.Game = function() {
     // Game Model (state)       //
     //////////////////////////////
 
+    var self = this;
+
     this.theme = obacht.themes[obacht.mp.roomDetail.theme];
-    console.dir(this.theme);
+    this.roomDetail = {};
 
     this.ownWorld = new obacht.World('own', this.theme);
     this.enemyWorld = new obacht.World('enemy', this.theme);
@@ -38,6 +40,21 @@ obacht.Game = function() {
     this.enemyPlayer = new obacht.Player('enemy', this.theme);
 
     //this.bonus = new obacht.Bonus('snake');
+
+
+    //////////////////////////////
+    // Game Events              //
+    //////////////////////////////
+
+    // Update RoomDetails if Server sends new one
+    obacht.mp.events.subscribe('room_detail', function(data) {
+        self.roomDetail = data;
+    });
+
+
+    //////////////////////////////
+    // Game View                //
+    //////////////////////////////
 
     this.layer = new lime.Layer();
     this.layer.appendChild(this.sky);
