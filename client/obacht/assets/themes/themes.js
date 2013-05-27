@@ -19,7 +19,7 @@ obacht.themes = {
         traps: {
             //Krebs
             crab: {
-                file: '../crab.png',
+                file: 'assets/themes/water/traps/crab.png',
                 position: 'ground',
                 width: 150,
                 height: 91,
@@ -34,7 +34,7 @@ obacht.themes = {
 
             //Anker
             anchor: {
-                file: '../anchor.png',
+                file: 'assets/themes/water/traps/anchor.png',
                 position: 'ground',
                 width: 110,
                 height: 120,
@@ -50,7 +50,7 @@ obacht.themes = {
 
             //Qualle
             jellyfish: {
-                file: '../jellyfish.png',
+                file: 'assets/themes/water/traps/jellyfish.png',
                 position: 'ground',
                 width: 120,
                 height: 140,
@@ -63,7 +63,7 @@ obacht.themes = {
 
             //Seeigel
             seaurchin: {
-                file: '../seaurchin.png',
+                file: 'assets/themes/water/traps/seaurchin.png',
                 position: 'ground',
                 width: 150,
                 height: 115,
@@ -78,7 +78,7 @@ obacht.themes = {
 
             //Hai
             shark: {
-                file: '../shark.png',
+                file: 'assets/themes/water/traps/shark.png',
                 position: 'air',
                 width: 150,
                 height: 73,
@@ -95,19 +95,43 @@ obacht.themes = {
 
             //Schildkröte
             turtle: {
-                file: '../turtle.png',
+                file: 'assets/themes/water/traps/turtle.png',
                 position: 'air',
-                width: 0,  //sample values
-                height: 0, //sample values
+                width: 150,
+                height: 73,
                 boundingBoxes: [
-                    {x: 0, y: 0, width: 0, height: 0} //sample values
+                    {x: 1, y: 2, width: 30, height: 18},
+                    {x: 13, y: 20, width: 18, height: 36},
+                    {x: 19, y: 56, width: 27, height: 14},
+                    {x: 31, y: 6, width: 73, height: 37},
+                    {x: 104, y: 28, width: 44, height: 13},
+                    {x: 46, y: 43, width: 10, height: 12},
+                    {x: 56, y: 43, width: 10, height: 20},
+                    {x: 66, y: 56, width: 19, height: 14}
+
+                ]
+            },
+
+            //Clownfisch
+            clownfish: {
+                file: 'assets/themes/water/traps/clownfish.png',
+                position: 'air',
+                width: 150,
+                height: 82,
+                boundingBoxes: [
+                    {x: 75, y: 41, width: 150, height: 82},
+                    {x: 18, y: 19, width: 15, height: 47},
+                    {x: 33, y: 3, width: 39, height: 65},
+                    {x: 44, y: 68, width: 28, height: 12},
+                    {x: 72, y: 11, width: 44, height: 63},
+                    {x: 116, y: 35, width: 32, height: 29}
 
                 ]
             }
         },
         boni: {
             kaktus: {
-                file: '../KaktusBonus.png'
+                file: '../KaktusBonus.png' //sample value
             }
         }
     },
@@ -124,7 +148,7 @@ obacht.themes = {
         traps: {
             //Skorpion
             scorpion: {
-                file: '../scorpion.png',
+                file: 'assets/themes/desert/traps/scorpion.png',
                 position: 'ground',
                 width: 150,
                 height: 119,
@@ -136,7 +160,7 @@ obacht.themes = {
 
             //Schädel
             skull: {
-                file: '../skull.png',
+                file: 'assets/themes/desert/traps/skull.png',
                 position: 'ground',
                 width: 140,
                 height: 120,
@@ -150,7 +174,7 @@ obacht.themes = {
 
             //Geier
             vulture: {
-                file: '../vulture.png',
+                file: 'assets/themes/desert/traps/vulture.png',
                 position: 'air',
                 width: 170,
                 height: 90,
@@ -165,7 +189,7 @@ obacht.themes = {
 
             //Kaktus
             cactus: {
-                file: '../cactus.png',
+                file: 'assets/themes/desert/traps/cactus.png',
                 position: 'air',
                 width: 100,
                 height: 160,
@@ -177,7 +201,7 @@ obacht.themes = {
 
             //Schlange
             snake: {
-                file: '../snake.png',
+                file: 'assets/themes/desert/traps/snake.png',
                 position: 'ground',
                 width: 98,
                 height: 100,
@@ -192,7 +216,7 @@ obacht.themes = {
 
             //Falke
             hawk: {
-                file: '../hawk.png',
+                file: 'assets/themes/desert/traps/hawk.png',
                 position: 'air',
                 width: 110,
                 height: 104,
@@ -211,7 +235,7 @@ obacht.themes = {
         },
         boni: {
             kaktus: {
-                file: '../KaktusBonus.png'
+                file: '../KaktusBonus.png' //sample value
             }
         }
     },
@@ -226,6 +250,111 @@ obacht.themes = {
             }
         },
         traps: {
+            //Biene
+            bee: {
+                file: 'assets/themes/meadow/traps/bee.png',
+                position: 'air',
+                width: 0,
+                height: 0,
+                boundingBoxes: [
+                    {x: 0, y: 0, width: 0, height: 0},
+                    {x: 0, y: 0, width: 0, height: 0}
+                ]
+            },
+
+            //Schnecke
+            snail: {
+                file: 'assets/themes/meadow/traps/snail.png',
+                position: 'ground',
+                width: 140,
+                height: 116,
+                boundingBoxes: [
+                    {x: 3, y: 51, width: 12, height: 16},
+                    {x: 2, y: 67, width: 29, height: 32},
+                    {x: 18, y: 48, width: 4, height: 19},
+                    {x: 31, y: 20, width: 15, height: 65},
+                    {x: 46, y: 10, width: 24, height: 75},
+                    {x: 70, y: 2, width: 35, height: 83},
+                    {x: 105, y: 10, width: 21, height: 75},
+                    {x: 126, y: 27, width: 12, height: 58},
+                    {x: 31, y: 85, width: 98, height: 29}
+                ]
+            },
+
+            //Marienkäfer
+            beetle: {
+                file: 'assets/themes/meadow/traps/beetle.png',
+                position: 'air',
+                width: 0,
+                height: 0,
+                boundingBoxes: [
+                    {x: 0, y: 0, width: 0, height: 0},
+                    {x: 0, y: 0, width: 0, height: 0}
+                ]
+            },
+
+            //Baumstumpf
+            treestump: {
+                file: 'assets/themes/meadow/traps/treestump.png',
+                position: 'ground',
+                width: 120,
+                height: 129,
+                boundingBoxes: [
+                    {x: 14, y: 0, width: 95, height: 89},
+                    {x: 7, y: 89, width: 106, height: 33}
+                ]
+            },
+
+            //Igel
+            hedgehog: {
+                file: 'assets/themes/meadow/traps/hedgehog.png',
+                position: 'ground',
+                width: 150,
+                height: 87,
+                boundingBoxes: [
+                    {x: 1, y: 46, width: 10, height: 9},
+                    {x: 11, y: 44, width: 11, height: 22},
+                    {x: 22, y: 37, width: 14, height: 33},
+                    {x: 36, y: 20, width: 103, height: 58},
+                    {x: 53, y: 10, width: 78, height: 10},
+                    {x: 72, y: 2, width: 48, height: 8},
+                    {x: 139, y: 29, width: 9, height: 39},
+                    {x: 65, y: 78, width: 62, height: 8}
+                ]
+            },
+
+            //Pilz
+            mushroom: {
+                file: 'assets/themes/meadow/traps/mushroom.png',
+                position: 'ground',
+                width: 130,
+                height: 146,
+                boundingBoxes: [
+                    {x: 43, y: 1, width: 56, height: 9},
+                    {x: 23, y: 10, width: 93, height: 12},
+                    {x: 10, y: 22, width: 117, height: 16},
+                    {x: 104, y: 38, width: 24, height: 23},
+                    {x: 40, y: 77, width: 64, height: 59}
+
+                ]
+            },
+
+            //Vogelscheuche
+            scarecrow: {
+                file: 'assets/themes/meadow/traps/scarecrow.png',
+                position: 'ground',
+                width: 100,
+                height: 160,
+                boundingBoxes: [
+                    {x: 30, y: 1, width: 31, height: 15},
+                    {x: 24, y: 16, width: 56, height: 26},
+                    {x: 28, y: 42, width: 43, height: 32},
+                    {x: 2, y: 74, width: 96, height: 14},
+                    {x: 35, y: 88, width: 33, height: 47},
+                    {x: 44, y: 134, width: 13, height: 24}
+
+                ]
+            }
 
         },
         boni: {
