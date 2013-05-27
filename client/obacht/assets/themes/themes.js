@@ -226,7 +226,9 @@ obacht.themes = {
                 width: 0,
                 height: 0,
                 boundingBoxes: [
-                    {x: 0, y: 0, width: 0, height: 0}
+                    {x: 1, y: 25, width: 53, height: 66},
+                    {x: 54, y: 1, width: 72, height: 110},
+                    {x: 126, y: 52, width: 13, height: 23}
                 ]
             },
 
@@ -235,21 +237,10 @@ obacht.themes = {
                 file: 'assets/themes/meadow/traps/snail.png',
                 position: 'ground',
                 width: 140,
-                height: 116,
+                height: 113,
                 boundingBoxes: [
                     {x: 2, y: 50, width: 29, height: 49},
                     {x: 31, y: 3, width: 107, height: 82}
-                ]
-            },
-
-            //Marienkäfer
-            beetle: {
-                file: 'assets/themes/meadow/traps/beetle.png',
-                position: 'air',
-                width: 0,
-                height: 0,
-                boundingBoxes: [
-                    {x: 0, y: 0, width: 0, height: 0}
                 ]
             },
 
