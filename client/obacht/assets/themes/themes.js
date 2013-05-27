@@ -24,11 +24,8 @@ obacht.themes = {
                 width: 150,
                 height: 91,
                 boundingBoxes: [
-                    {x: 1, y: 10, width: 26, height: 31},
-                    {x: 21, y: 42, width: 26, height: 46},
-                    {x: 47, y: 24, width: 63, height: 55},
-                    {x: 110, y: 43, width: 28, height: 46},
-                    {x: 123, y: 2, width: 26, height: 41}
+                    {x: 1, y: 10, width: 26, height: 29},
+                    {x: 21, y: 25, width: 117, height: 54}
                 ]
             },
 
@@ -40,10 +37,7 @@ obacht.themes = {
                 height: 120,
                 boundingBoxes: [
                     {x: 0, y: 27, width: 29, height: 78},
-                    {x: 72, y: 0, width: 30, height: 32},
-                    {x: 49, y: 32, width: 32, height: 30},
-                    {x: 35, y: 62, width: 28, height: 18},
-                    {x: 29, y: 80, width: 79, height: 38}
+                    {x: 49, y: 2, width: 51, height: 78}
 
                 ]
             },
@@ -68,9 +62,7 @@ obacht.themes = {
                 width: 150,
                 height: 115,
                 boundingBoxes: [
-                    {x: 3, y: 18, width: 56, height: 56},
-                    {x: 13, y: 75, width: 45, height: 21},
-                    {x: 58, y: 5, width: 59, height: 100},
+                    {x: 5, y: 5, width: 112, height: 100},
                     {x: 117, y: 26, width: 29, height: 66}
 
                 ]
@@ -83,12 +75,8 @@ obacht.themes = {
                 width: 150,
                 height: 73,
                 boundingBoxes: [
-                    {x: 1, y: 12, width: 64, height: 22},
-                    {x: 9, y: 34, width: 56, height: 22},
-                    {x: 39, y: 56, width: 27, height: 15},
-                    {x: 65, y: 2, width: 26, height: 62},
-                    {x: 91, y: 22, width: 27, height: 36},
-                    {x: 119, y: 7, width: 22, height: 46}
+                    {x: 2, y: 12, width: 37, height: 47},
+                    {x: 0, y: 0, width: 0, height: 0}
 
                 ]
             },
@@ -100,14 +88,9 @@ obacht.themes = {
                 width: 150,
                 height: 73,
                 boundingBoxes: [
-                    {x: 1, y: 2, width: 30, height: 18},
-                    {x: 13, y: 20, width: 18, height: 36},
-                    {x: 19, y: 56, width: 27, height: 14},
-                    {x: 31, y: 6, width: 73, height: 37},
+                    {x: 2, y: 6, width: 102, height: 37},
                     {x: 104, y: 28, width: 44, height: 13},
-                    {x: 46, y: 43, width: 10, height: 12},
-                    {x: 56, y: 43, width: 10, height: 20},
-                    {x: 66, y: 56, width: 19, height: 14}
+                    {x: 14, y: 43, width: 71, height: 26}
 
                 ]
             },
@@ -119,11 +102,7 @@ obacht.themes = {
                 width: 150,
                 height: 82,
                 boundingBoxes: [
-                    {x: 75, y: 41, width: 150, height: 82},
-                    {x: 18, y: 19, width: 15, height: 47},
-                    {x: 33, y: 3, width: 39, height: 65},
-                    {x: 44, y: 68, width: 28, height: 12},
-                    {x: 72, y: 11, width: 44, height: 63},
+                    {x: 3, y: 3, width: 113, height: 76},
                     {x: 116, y: 35, width: 32, height: 29}
 
                 ]
@@ -153,8 +132,8 @@ obacht.themes = {
                 width: 150,
                 height: 119,
                 boundingBoxes: [
-                    {x: 83, y: 0, width: 66, height: 55},
-                    {x: 3, y: 55, width: 80, height: 60}
+                    {x: 3, y: 55, width: 80, height: 60},
+                    {x: 83, y: 2, width: 66, height: 83}
                 ]
             },
 
@@ -165,10 +144,9 @@ obacht.themes = {
                 width: 140,
                 height: 120,
                 boundingBoxes: [
-                    {x: 75, y: 0, width: 35, height: 64},
-                    {x: 56, y: 50, width: 18, height: 29},
-                    {x: 34, y: 65, width: 22, height: 14},
-                    {x: 3, y: 79, width: 53, height: 40}
+                    {x: 75, y: 1, width: 14, height: 50},
+                    {x: 3, y: 50, width: 105, height: 59},
+                    {x: 108, y: 75, width: 29, height: 13}
                 ]
             },
 
@@ -179,11 +157,9 @@ obacht.themes = {
                 width: 170,
                 height: 90,
                 boundingBoxes: [
-                    {x: 2, y: 14, width: 34, height: 32},
-                    {x: 36, y: 42, width: 37, height: 7},
-                    {x: 73, y: 2, width: 67, height: 58},
-                    {x: 96, y: 60, width: 42, height: 10},
-                    {x: 138, y: 67, width: 31, height: 23}
+                    {x: 1, y: 14, width: 64, height: 33},
+                    {x: 65, y: 1, width: 76, height: 67},
+                    {x: 129, y: 68, width: 39, height: 19}
                 ]
             },
 
@@ -206,11 +182,9 @@ obacht.themes = {
                 width: 98,
                 height: 100,
                 boundingBoxes: [
-                    {x: 36, y: 0, width: 32, height: 9},
-                    {x: 47, y: 9, width: 20, height: 30},
-                    {x: 39, y: 39, width: 15, height: 20},
-                    {x: 33, y: 59, width: 14, height: 19},
-                    {x: 1, y: 78, width: 31, height: 20}
+                    {x: 36, y: 1, width: 32, height: 78},
+                    {x: 2, y: 78, width: 94, height: 20},
+                    {x: 68, y: 66, width: 27, height: 12}
                 ]
             },
 
@@ -221,14 +195,9 @@ obacht.themes = {
                 width: 110,
                 height: 104,
                 boundingBoxes: [
-                    {x: 52, y: 4, width: 25, height: 15},
-                    {x: 34, y: 19, width: 25, height: 18},
-                    {x: 26, y: 37, width: 25, height: 20},
-                    {x: 1, y: 57, width: 25, height: 17},
-                    {x: 26, y: 69, width: 27, height: 11},
-                    {x: 53, y: 74, width: 31, height: 10},
-                    {x: 84, y: 83, width: 25, height: 8},
-                    {x: 34, y: 81, width: 10, height: 21}
+                    {x: 3, y: 4, width: 74, height: 79},
+                    {x: 77, y: 77, width: 31, height: 13},
+                    {x: 34, y: 83, width: 13, height: 19}
 
                 ]
             }
@@ -257,7 +226,6 @@ obacht.themes = {
                 width: 0,
                 height: 0,
                 boundingBoxes: [
-                    {x: 0, y: 0, width: 0, height: 0},
                     {x: 0, y: 0, width: 0, height: 0}
                 ]
             },
@@ -269,15 +237,8 @@ obacht.themes = {
                 width: 140,
                 height: 116,
                 boundingBoxes: [
-                    {x: 3, y: 51, width: 12, height: 16},
-                    {x: 2, y: 67, width: 29, height: 32},
-                    {x: 18, y: 48, width: 4, height: 19},
-                    {x: 31, y: 20, width: 15, height: 65},
-                    {x: 46, y: 10, width: 24, height: 75},
-                    {x: 70, y: 2, width: 35, height: 83},
-                    {x: 105, y: 10, width: 21, height: 75},
-                    {x: 126, y: 27, width: 12, height: 58},
-                    {x: 31, y: 85, width: 98, height: 29}
+                    {x: 2, y: 50, width: 29, height: 49},
+                    {x: 31, y: 3, width: 107, height: 82}
                 ]
             },
 
@@ -288,7 +249,6 @@ obacht.themes = {
                 width: 0,
                 height: 0,
                 boundingBoxes: [
-                    {x: 0, y: 0, width: 0, height: 0},
                     {x: 0, y: 0, width: 0, height: 0}
                 ]
             },
@@ -312,14 +272,8 @@ obacht.themes = {
                 width: 150,
                 height: 87,
                 boundingBoxes: [
-                    {x: 1, y: 46, width: 10, height: 9},
-                    {x: 11, y: 44, width: 11, height: 22},
-                    {x: 22, y: 37, width: 14, height: 33},
-                    {x: 36, y: 20, width: 103, height: 58},
-                    {x: 53, y: 10, width: 78, height: 10},
-                    {x: 72, y: 2, width: 48, height: 8},
-                    {x: 139, y: 29, width: 9, height: 39},
-                    {x: 65, y: 78, width: 62, height: 8}
+                    {x: 1, y: 46, width: 24, height: 19},
+                    {x: 25, y: 7, width: 119, height: 71}
                 ]
             },
 
@@ -330,11 +284,8 @@ obacht.themes = {
                 width: 130,
                 height: 146,
                 boundingBoxes: [
-                    {x: 43, y: 1, width: 56, height: 9},
-                    {x: 23, y: 10, width: 93, height: 12},
-                    {x: 10, y: 22, width: 117, height: 16},
-                    {x: 104, y: 38, width: 24, height: 23},
-                    {x: 40, y: 77, width: 64, height: 59}
+                    {x: 3, y: 2, width: 125, height: 67},
+                    {x: 40, y: 69, width: 64, height: 67}
 
                 ]
             },
@@ -346,13 +297,9 @@ obacht.themes = {
                 width: 100,
                 height: 160,
                 boundingBoxes: [
-                    {x: 30, y: 1, width: 31, height: 15},
-                    {x: 24, y: 16, width: 56, height: 26},
-                    {x: 28, y: 42, width: 43, height: 32},
+                    {x: 25, y: 2, width: 54, height: 72},
                     {x: 2, y: 74, width: 96, height: 14},
-                    {x: 35, y: 88, width: 33, height: 47},
-                    {x: 44, y: 134, width: 13, height: 24}
-
+                    {x: 35, y: 88, width: 33, height: 68}
                 ]
             }
 
