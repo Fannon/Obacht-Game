@@ -63,6 +63,10 @@ obacht.options = {
             crouchHeight: 0.5,
             maxHealth: 3
         },
+        //Noch nicht aktiv
+        boundingBoxes: [
+            {x: 5, y: 10, width: 210*0.7, height: 290*0.7}
+        ],
         own: {
             x: 150,
             y: 550
