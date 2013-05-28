@@ -146,19 +146,6 @@ obacht.MultiplayerService = function(serverUrl) {
     });
 
     /**
-     * Player status
-     * Show if player has life left or game is over
-     */
-    this.socket.on('player_status', function (data) {
-        self.events.publish('player_status', data.pid, data.life);
-        if (data.life === 0){
-            console.log('Game finished!');
-        } else {
-            console.log('>> playerStatus(' + data.life + ')');
-        }
-    });
-
-    /**
      * Receives a bonus to show it within the reactionbox
      */
     this.socket.on('bonus', function (data) {
@@ -198,10 +185,15 @@ obacht.MultiplayerService = function(serverUrl) {
     });
 
     /**
-     * Shows that a Player hast left the game
+     * Shows that the game is over and who won the game
      */
     this.socket.on('game_over', function (data) {
-        console.log('Game over! -> ' + data.reason);
+        console.log('Game over! -> ' + data.type);
+        if (data.pid === self.pid){
+            console.log('YOU LOSE!');
+        } else {
+            console.log('YOU WIN');
+        }
         self.events.publish('game_over');
     });
 
@@ -289,13 +281,13 @@ obacht.MultiplayerService.prototype.playerAction = function(type, data) {
  * Broadcast Player Status
  *
  * @param  {String} pid     Player-ID
- * @param  {Number} life    Lifecounter
+ * @param  {Number} health    Healthstatus
  */
-obacht.MultiplayerService.prototype.playerStatus = function (pid, life) {
+obacht.MultiplayerService.prototype.playerStatus = function (pid, health) {
     "use strict";
     this.socket.emit('player_status', {
         pid: pid,
-        life: life
+        health: health
     });
 };
 
