@@ -219,6 +219,18 @@ obacht.themes = {
             }
         },
         traps: {
+            //Schmetterling
+            butterfly: {
+                file: 'assets/themes/meadow/traps/butterfly.png',
+                position: 'air',
+                width: 0,
+                height: 0,
+                boundingBoxes: [
+                    {x: 1, y: 45, width: 47, height: 43},
+                    {x: 49, y: 1, width: 98, height: 97}
+                ]
+            },
+
             //Biene
             bee: {
                 file: 'assets/themes/meadow/traps/bee.png',
@@ -264,7 +276,7 @@ obacht.themes = {
                 height: 87,
                 boundingBoxes: [
                     {x: 1, y: 46, width: 24, height: 19},
-                    {x: 25, y: 7, width: 119, height: 71}
+                    {x: 25, y: 3, width: 121, height: 75}
                 ]
             },
 
