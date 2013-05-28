@@ -13,6 +13,7 @@ goog.require('obacht.Generator');
 goog.require('obacht.Bonus');
 
 
+    
 /**
  * Its a Game scene
  *
@@ -20,9 +21,18 @@ goog.require('obacht.Bonus');
  * @extends lime.Scene
  */
 obacht.Game = function() {
-
+   
     console.log('New Game();');
 
+    //Game Time
+    var time = 0;
+    setInterval(function(){clock();},1000);
+    function clock(){
+       time+=1;
+       console.log('clock:'+ time + 's');
+    } 
+ 
+        
     //////////////////////////////
     // Game Model (state)       //
     //////////////////////////////
@@ -73,5 +83,5 @@ obacht.Game = function() {
 };
 
 obacht.Game.prototype = {
-
+         
 };
