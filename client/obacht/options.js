@@ -126,24 +126,7 @@ obacht.options = {
             state: 'new',
             path: 'assets/boni/', //all files musst be a png file
             moveToDuration: 0.2
-        },
-        type: {
-            //MEADOW
-            slug: '#555555',
-            stub: '#555555',
-            //DESERT
-            skull: '#555555',
-            snake: '#555555',
-            cactus: '#555555',
-            scorpion: '#555555',
-            //WATER
-            urchins: '#555555',
-            fish: '#555555',
-            anchor: '#555555',
-            jelly: '#555555',
-            sharl: '#555555'
         }
-
     },
     "server": {
         "url": "http://obacht.informatik.hs-augsburg.de:8080"
