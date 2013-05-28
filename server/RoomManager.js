@@ -36,6 +36,7 @@ var RoomManager = function(io) {
 
     /** Room Model (Backbone.Model.extend) */
     this.RoomModel = Backbone.Model.extend({
+        // Default Values
         defaults: {
             pin: undefined,
             closed: false,
@@ -174,7 +175,6 @@ RoomManager.prototype.playerReady = function(socket) {
 
     var pin = socket.pin;
     var pid = socket.pid;
-
     var room = this.getRoom(pin);
 
     if (room.attributes.creatingPlayerId === pid) {

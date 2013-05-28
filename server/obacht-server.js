@@ -192,7 +192,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
         if (socket.pin) {
             obacht.server.rooms.playerStatus(socket, player_status);
             if (player_status.health < 1) {
-                obacht.server.gameoverHelper(socket, 'player_dead', player_status.pid);
+                obacht.server.gameoverHelper(socket, 'player_dead');
             }
         } else {
             log.warn('!!! Cannot send Player Status while not connected to a Game!', socket);
@@ -286,21 +286,27 @@ obacht.server.leaveRoomHelper = function(socket) {
     "use strict";
     if (socket.pin) {
         log.debug('--> Player leaves Room #' + socket.pin);
-        this.gameoverHelper(socket, 'player_left', socket.pid);
+        this.gameoverHelper(socket, 'player_left');
         obacht.server.rooms.leaveRoom(socket);
         socket.leave(socket.pin);
         socket.pin = false;
     } else {
-        log.warn('!!! Tried to leave Room, but there was none joined', socket);
+        log.warn('!!! Tried to leave Room, but player was not in a room', socket);
     }
 };
 
-obacht.server.gameoverHelper = function(socket, reason, pid) {
+/**
+ * Helper Function to send Game Over to both Players
+ *
+ * @param {Object} socket Current Socket PassThrough
+ * @param {String} reason Reason for GameOver (player_dead || player_left)
+ */
+obacht.server.gameoverHelper = function(socket, reason) {
     "use strict";
     log.debug('--- Game Over in Room #' + socket.pin);
     obacht.server.io.sockets['in'](socket.pin).emit('game_over', {
         reason: reason,
-        pid: pid
+        pid: socket.pid
     });
     obacht.server.rooms.resetRoom(socket.pin);
 };

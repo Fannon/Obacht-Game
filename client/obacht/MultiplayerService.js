@@ -188,7 +188,7 @@ obacht.MultiplayerService = function(serverUrl) {
      * Shows that the game is over and who won the game
      */
     this.socket.on('game_over', function (data) {
-        console.log('Game over! -> ' + data.type);
+        console.log('Game over! -> ' + data.reason);
         if (data.pid === self.pid){
             console.log('YOU LOSE!');
         } else {
