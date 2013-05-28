@@ -14,7 +14,7 @@ goog.require('obacht.Collision');
 obacht.Generator = function(layer, ownPlayer) {
     "use strict";
 
-    var trap = new obacht.Trap('test');
+    var trap = new obacht.Trap('scarecrow');
     layer.appendChild(trap.layer);
 
     //Startwinkel & Winkelgeschwindigkeit
