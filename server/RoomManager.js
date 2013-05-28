@@ -114,7 +114,7 @@ RoomManager.prototype.removeRoom = function(pin) {
         log.debug('--- removeRoom(): Room Removed');
         this.rooms.remove(room);
     } else {
-        log.debug('--- removeRoom(): Room did not exist');
+        log.warn('--- removeRoom(): Room did not exist');
     }
 };
 
@@ -154,13 +154,13 @@ RoomManager.prototype.playerReady = function(socket) {
     var pid = socket.pid;
     var room = this.getRoom(pin);
 
-    if (room.attributes.creatingPlayerId === pid) {
+    if (room && room.attributes.creatingPlayerId === pid) {
         room.set({
             creatingPlayerReady: true
         });
         log.debug('--- Creating Player ready in Room #' + pin);
 
-    } else if (room.attributes.joiningPlayerId === pid) {
+    } else if (room && room.attributes.joiningPlayerId === pid) {
         room.set({
             joiningPlayerReady: true
         });

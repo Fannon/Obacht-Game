@@ -91,6 +91,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
      */
     socket.on('new_room', function(roomDetail) {
 
+        socket.pin = false;
         var pin = obacht.server.rooms.getNewPin(roomDetail.closed);
 
         roomDetail.pin = pin;
@@ -100,6 +101,14 @@ obacht.server.io.sockets.on('connection', function(socket) {
             pin: pin,
             closed: roomDetail.closed
         });
+
+        if (roomDetail.friend) {
+            log.info('New Room Invite for a Friend');
+            obacht.server.io.sockets.socket(roomDetail.friend).emit('room_invite', {
+                pin: pin,
+                closed: roomDetail.closed
+            });
+        }
 
         log.debug('--> Player requested new Room PIN #' + pin);
 
@@ -122,7 +131,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
         if (room.pin) {
             socket.pin = room.pin;
             socket.join(roomDetail.pin);
-            obacht.server.io.sockets['in'](roomDetail.pin).emit('room_detail', roomDetail);
+            obacht.server.io.sockets['in'](roomDetail.pin).emit('room_detail', room);
         }
 
         // Room couldn't be joined, return message
@@ -283,6 +292,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
  */
 obacht.server.leaveRoomHelper = function(socket) {
     "use strict";
+//    var room = obacht.server.rooms.getRoom(socket.pin);
     if (socket.pin) {
         log.debug('--> Player leaves Room #' + socket.pin);
         obacht.server.rooms.leaveRoom(socket);
@@ -308,4 +318,5 @@ obacht.server.gameoverHelper = function(socket, reason) {
         pid: socket.pid
     });
     obacht.server.rooms.removeRoom(socket.pin);
+    socket.pin = false;
 };

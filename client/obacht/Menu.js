@@ -57,6 +57,9 @@ obacht.Menu = function() {
 
     // Start first Scene
     this.mainMenuScene();
+//    this.gameoverScene({
+//        reason: 'player_left'
+//    });
 
 };
 
@@ -161,6 +164,13 @@ obacht.Menu.prototype = {
     mainMenuScene: function() {
         "use strict";
         var self = this;
+
+        // Reset Variables and Event Listeners
+        obacht.mp.events.clear('room_detail');
+        obacht.mp.friend = false;
+        if (obacht.mp.roomDetail) {
+            obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);
+        }
 
         var sceneMenu = new lime.Scene();
 
@@ -286,7 +296,6 @@ obacht.Menu.prototype = {
                 obacht.mp.playerReady();
                 self.waitForPlayerScene();
             });
-
         });
 
         // set current scene active
@@ -327,7 +336,7 @@ obacht.Menu.prototype = {
         //Theme-Desert
         var desert = new obacht.Menu.Button(-177, -5, 1704, 1208, 340, 485, 300, 300, layerMenu);
         goog.events.listen(desert, ['touchstart', 'mousedown'], function() {
-            obacht.mp.newRoom('desert', {}, true);
+            obacht.mp.newRoom('desert', {}, true, false);
             obacht.mp.events.subscribeOnce('room_detail', function(data){
                 self.getCodeScene(data);
             });
@@ -336,7 +345,7 @@ obacht.Menu.prototype = {
         //Theme-Water
         var water = new obacht.Menu.Button(-675, -450, 1704, 1208, 640, 485, 300, 300, layerMenu);
         goog.events.listen(water, ['touchstart', 'mousedown'], function() {
-            obacht.mp.newRoom('water', {}, true);
+            obacht.mp.newRoom('water', {}, true, false);
             obacht.mp.events.subscribeOnce('room_detail', function(data){
                 self.getCodeScene(data);
             });
@@ -345,7 +354,7 @@ obacht.Menu.prototype = {
         //Theme-Meadow
         var meadow = new obacht.Menu.Button(-60, -213, 1704, 1208, 940, 485, 300, 300, layerMenu);
         goog.events.listen(meadow, ['touchstart', 'mousedown'], function() {
-            obacht.mp.newRoom('meadow', {}, true);
+            obacht.mp.newRoom('meadow', {}, true, false);
             obacht.mp.events.subscribeOnce('room_detail', function(data){
                 self.getCodeScene(data);
             });
@@ -681,7 +690,6 @@ obacht.Menu.prototype = {
         var gameoverText = '';
 
         var gameoverScene = new lime.Scene();
-
         var layerMenu = new lime.Layer();
         gameoverScene.appendChild(layerMenu);
 
@@ -689,25 +697,83 @@ obacht.Menu.prototype = {
         layerMenu.appendChild(background);
 
         if (data.reason === 'player_left' ) {
-            console.log('Player left the game!');
             gameoverText = 'Player left the game!';
         } else if (data.pid === obacht.mp.pid){
-            console.log('YOU LOSE!');
             gameoverText = 'YOU LOSE!';
         } else {
-            console.log('YOU WIN');
             gameoverText = 'YOU WIN';
         }
 
-        var gameoverLabel = new obacht.Menu.Label(gameoverText, 40, 740, 520, 400, 90, layerMenu).setAlign('left');
+        var gameoverLabel = new obacht.Menu.Label(gameoverText, 40, 740, 320, 400, 90, layerMenu).setAlign('left');
 
-        //NewGame-Button
-        var newGameButton = new obacht.Menu.Button(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
-        var newGameLabel = new obacht.Menu.Label('NEW GAME', 40, 637, 650, 700, 60, layerMenu);
 
-        //Cancel-Button
-        var cancelButton = new obacht.Menu.Button(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
-        var cancelLabel = new obacht.Menu.Label('CANCEL', 40, 637, 650, 700, 60, layerMenu);
+        obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);
+
+
+        ///////////////////////////////
+        // Play Again                //
+        ///////////////////////////////
+
+        var createButton = new obacht.Menu.Button(-910, 400, 1533, 1087, 400, 480, 450, 160, layerMenu);
+        var createLabel = new obacht.Menu.Label('Play Again', 60, 400, 485, 400, 70, layerMenu);
+
+
+        var serverReady = false;
+        obacht.mp.events.subscribeOnce('join_room', function(data){
+            serverReady = true;
+        });
+
+        goog.events.listen(createButton, ['touchstart', 'mousedown'], function() {
+
+            if (obacht.mp.roomDetail) {
+
+                if (obacht.mp.friend) {
+                    // New Custom Game with Friend from last Game
+
+                    if (obacht.mp.roomDetail.creatingPlayerId === obacht.mp.pid) {
+                        // If player is the host, create new Game
+                        console.log('Creating New Custom Game with Friend from last Game');
+                        obacht.mp.newRoom(obacht.mp.getRandomTheme(), obacht.mp.roomDetail.options, true, obacht.mp.friend);
+                        if (serverReady) {
+                            obacht.mp.playerReady();
+                        } else {
+                            obacht.mp.events.subscribeOnce('join_room', function(){
+                                obacht.mp.playerReady();
+                            });
+                        }
+                        self.waitForPlayerScene();
+                    } else {
+                        if (serverReady) {
+                            obacht.mp.playerReady();
+                        } else {
+                            obacht.mp.events.subscribeOnce('join_room', function(){
+                                obacht.mp.playerReady();
+                            });
+                        }
+                        self.waitForPlayerScene();
+                    }
+                } else {
+                    // New Random Game
+                    console.log('New Random Game');
+                    obacht.mp.findMatch();
+                    obacht.mp.events.subscribeOnce('join_room', function(){
+                        obacht.mp.playerReady();
+                        self.waitForPlayerScene();
+                    });
+                }
+            }
+        });
+
+
+        ///////////////////////////////
+        // Quit to Main Menu         //
+        ///////////////////////////////
+
+        var joinButton = new obacht.Menu.Button(-910, 515, 1533, 1087, 400, 600, 450, 160, layerMenu);
+        var joinLabel = new obacht.Menu.Label('Quit', 60, 400, 600, 400, 70, layerMenu);
+        goog.events.listen(joinButton, ['touchstart', 'mousedown'], function() {
+            self.mainMenuScene();
+        });
 
         // set current scene active
         obacht.director.replaceScene(gameoverScene);

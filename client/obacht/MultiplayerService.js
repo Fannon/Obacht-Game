@@ -29,6 +29,8 @@ obacht.MultiplayerService = function(serverUrl) {
     this.pid = false;
     /** RoomDetail Object */
     this.roomDetail = false;
+    /** Friend Player, if connected to one */
+    this.friend = false;
     /** Socket.io */
     this.socket = io.connect(this.serverUrl); // Set up Socket-Connection to Server
 
@@ -63,13 +65,15 @@ obacht.MultiplayerService = function(serverUrl) {
 
     /**
      * Receiving Roomdetails
+     * @event
      */
     this.socket.on('room_detail', function (data) {
         self.roomDetail = data;
         self.pin = data.pin;
-        console.log('RoomDetails received');
-        console.dir(data);
         self.events.publish('room_detail', data);
+
+        console.log('RoomDetails received:');
+        console.dir(data);
     });
 
     /**
@@ -103,13 +107,14 @@ obacht.MultiplayerService = function(serverUrl) {
 
         console.log('Room invite received: PIN: #' + data.pin);
 
+
         if (data.pin === 0) {
             console.log('Create new random Room.');
 
             var theme = self.getRandomTheme();
             console.log('Random Theme: ' + theme);
 
-            self.newRoom(theme, data.options, false);
+            self.newRoom(theme, data.options, false, false);
             self.events.publish('new_room');
 
         } else {
@@ -134,6 +139,16 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.socket.on('game_ready', function () {
         console.log('Game is ready!');
+
+        // Set Friend if playing closed Game
+        if (self.roomDetail.closed) {
+            if (self.roomDetail.creatingPlayerId === self.pid) {
+                self.friend = self.roomDetail.joiningPlayerId;
+            } else {
+                self.friend = self.roomDetail.creatingPlayerId;
+            }
+        }
+
         self.events.publish('game_ready');
     });
 
@@ -216,20 +231,28 @@ obacht.MultiplayerService = function(serverUrl) {
 /**
  * Broadcast New Room
  *
- * @param {String} theme Theme of the new world
- * @param {Object} options Options for the world, i.e. rotationspeed
- * @param {String} closed Indicator if room is privat or public
+ * @param {String} theme    Theme of the new world
+ * @param {Object} options  Options for the world, i.e. rotationspeed
+ * @param {String} closed   Indicator if room is privat or public
+ * @param {String} friend   Optional Friend PID, if playing with a specific friend
  */
-obacht.MultiplayerService.prototype.newRoom = function (theme, options, closed) {
+obacht.MultiplayerService.prototype.newRoom = function (theme, options, closed, friend) {
     "use strict";
     console.log('>> newRoom()');
-    this.socket.emit('new_room', {
+
+    var roomDetails = {
         theme: theme,
         options: options,
         closed: closed,
         creatingPlayerHealth: obacht.options.player.general.maxHealth,
         joiningPlayerHealth: obacht.options.player.general.maxHealth
-    });
+    };
+
+    if (friend) {
+        roomDetails.friend = friend;
+    }
+
+    this.socket.emit('new_room', roomDetails);
 };
 
 /**
@@ -254,6 +277,16 @@ obacht.MultiplayerService.prototype.findMatch = function () {
     "use strict";
     console.log('>> findMatch()');
     this.socket.emit('find_match');
+};
+
+
+/**
+ * Broadcast Find Match
+ */
+obacht.MultiplayerService.prototype.inviteFriend = function (pid, roomDetail) {
+    "use strict";
+    console.log('>> Inviting Friend for new Match');
+    this.socket.emit('invite_player', pid, roomDetail);
 };
 
 /**
@@ -326,6 +359,7 @@ obacht.MultiplayerService.prototype.checkReactiontime = function (type, reaction
 obacht.MultiplayerService.prototype.leaveRoom = function() {
     "use strict";
     console.log('>> leaveRoom()');
+    this.pin = false;
     this.socket.emit('leave_room');
 };
 
