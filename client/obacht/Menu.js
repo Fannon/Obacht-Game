@@ -284,8 +284,9 @@ obacht.Menu.prototype = {
             obacht.mp.findMatch();
             obacht.mp.events.subscribeOnce('room_detail', function(data){
                 obacht.mp.playerReady();
+                self.waitForPlayerScene();
             });
-            self.waitForPlayerScene();
+
         });
 
         // set current scene active

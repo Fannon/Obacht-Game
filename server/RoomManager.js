@@ -102,29 +102,6 @@ RoomManager.prototype.addRoom = function(pin, roomDetail) {
 };
 
 /**
- * Resets / cleans up Room for a new Game, if exists
- * Applied after GameOver
- *
- * @param {Number} pin  Room PIN
- */
-RoomManager.prototype.resetRoom = function(pin) {
-    "use strict";
-
-    var room = this.getRoom(pin);
-    if (room) {
-        log.debug('--- resetRoom(): Room Removed');
-        room.set({
-            creatingPlayerReactiontime: false,
-            creatingPlayerReady: false,
-            joiningPlayerReactiontime: false,
-            joiningPlayerReady: false
-        });
-    } else {
-        log.debug('--- removeRoom(): Room did not exist');
-    }
-};
-
-/**
  * Remove Room, if exists
  *
  * @param {Number} pin  Room PIN
@@ -306,17 +283,15 @@ RoomManager.prototype.leaveRoom = function(socket) {
                 playersCount: room.attributes.playersCount - 1
             });
             log.debug('--> Creating Player left Room #' + pin);
-            return room.attributes;
 
         } else if (room.attributes.joiningPlayerId === pid) {
             room.set({
-                creatingPlayerId: false,
-                creatingPlayerReactiontime: false,
-                creatingPlayerReady: false,
+                joiningPlayerId: false,
+                joiningPlayerReactiontime: false,
+                joiningPlayerReady: false,
                 playersCount: room.attributes.playersCount - 1
             });
             log.debug('--> Joining Player left Room #' + pin);
-            return room.attributes;
         } else {
             log.warn('!!! Player Left: Player has not been in Room! #' + pin, socket);
         }

@@ -285,8 +285,8 @@ obacht.server.leaveRoomHelper = function(socket) {
     "use strict";
     if (socket.pin) {
         log.debug('--> Player leaves Room #' + socket.pin);
-        this.gameoverHelper(socket, 'player_left');
         obacht.server.rooms.leaveRoom(socket);
+        this.gameoverHelper(socket, 'player_left');
         socket.leave(socket.pin);
         socket.pin = false;
     } else {
@@ -307,5 +307,5 @@ obacht.server.gameoverHelper = function(socket, reason) {
         reason: reason,
         pid: socket.pid
     });
-    obacht.server.rooms.resetRoom(socket.pin);
+    obacht.server.rooms.removeRoom(socket.pin);
 };
