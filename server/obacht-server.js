@@ -94,7 +94,6 @@ obacht.server.io.sockets.on('connection', function(socket) {
         var pin = obacht.server.rooms.getNewPin(roomDetail.closed);
 
         roomDetail.pin = pin;
-        roomDetail.creatingPlayerId = socket.pid;
 
         obacht.server.rooms.addRoom(pin, roomDetail);
         socket.emit('room_invite', {

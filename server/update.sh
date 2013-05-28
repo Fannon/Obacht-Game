@@ -5,7 +5,7 @@
 
 cd ..
 git reset --hard HEAD
-git pull
+git pull origin master
 cd server
 npm update
 chmod +x start.sh
