@@ -55,12 +55,12 @@ var RoomManager = function(io) {
     });
 
     /**
-     * on Model Change Event:
+     * On Model Change Event:
      * Publish current Room Details to every Player in Room
+     * @event
      */
     this.RoomModel.prototype.on("change", function(model) {
         self.io.sockets['in'](model.attributes.pin).emit('room_detail', model.attributes);
-        log.warn('CHANGE MODEL');
     });
 
 
@@ -199,12 +199,12 @@ RoomManager.prototype.playerReady = function(socket) {
 /**
  * Sets new Player Status (Health..)
  *
- * @param {Object} player_status
  * @param {Object} socket
+ * @param {Object} player_status
  *
  * @returns {*} roomDetails if successfull, false if not
  */
-RoomManager.prototype.playerStatus = function(player_status, socket) {
+RoomManager.prototype.playerStatus = function(socket, player_status) {
     "use strict";
 
     var pin = socket.pin;
@@ -224,7 +224,7 @@ RoomManager.prototype.playerStatus = function(player_status, socket) {
         });
         log.debug('--- Joining Player StatusUpdate in Room #' + pin);
     } else {
-        log.warn('!!! Player StatusUpdate: Player is not in Room! #' + pin);
+        log.warn('!!! Player StatusUpdate: Player is not in Room! #' + pin, socket);
         return false;
     }
 
@@ -235,23 +235,24 @@ RoomManager.prototype.playerStatus = function(player_status, socket) {
 /**
  * Player joins a Room
  *
+ * @param {Object}  socket      Current socket Object
  * @param {Number}  pin         Room PIN
- * @param {String}  pid         Player ID
  * @param {Boolean} isClosed    Room is private or not
  *
  * @return {*} RoomModel if successfull, false if room already full
  */
-RoomManager.prototype.joinRoom = function(pin, pid, isClosed) {
+RoomManager.prototype.joinRoom = function(socket, pin, isClosed) {
     "use strict";
 
+    var pid = socket.pid;
     var room = this.getRoom(pin);
 
     // Catch Error Cases
     if (!room) {
-        log.warn('!!! Tried to join Room #' + pin + ' that doesnt exist');
+        log.warn('!!! Tried to join Room #' + pin + ' that doesnt exist', socket);
         return {msg: 'Cannot join, room does not exist!'};
     } else if (room.attributes.closed !== isClosed) {
-        log.warn('!!! Tried to join Room with different Privacy Setting');
+        log.warn('!!! Tried to join Room with different Privacy Setting', socket);
         return false;
     }
 
@@ -272,7 +273,7 @@ RoomManager.prototype.joinRoom = function(pin, pid, isClosed) {
         log.debug('--> Joining Player joined Room #' + pin);
         return room.attributes;
     } else {
-        log.warn('!!! Room Already full! #' + pin);
+        log.warn('!!! Room Already full! #' + pin, socket);
         return {msg: 'Cannot join, room is already full!'};
     }
 
@@ -336,17 +337,18 @@ RoomManager.prototype.leaveRoom = function(socket) {
  * Checks (compares) Reaction Time between both Players and declares the winner.
  * If other Player hasn't committed his reactiontime yet, returns false
  *
- *
- * @param {Number} pin      Room PIN
- * @param {String} pid      Player ID
+ * @param {Object} socket Current socket Object
  * @param {Object} data     Reaction Time / Bonus Data
  *
  * @return {*} Receive Bonus Object or false if calculation incomplete yet
  */
-RoomManager.prototype.checkReactiontime = function(pin, pid, data) {
+RoomManager.prototype.checkReactiontime = function(socket, data) {
     "use strict";
 
+    var pin = socket.pin;
+    var pid = socket.pid;
     var room = this.getRoom(pin);
+
     var receiveBonus = {
         type: data.type,
         winner_pid: false
@@ -364,7 +366,7 @@ RoomManager.prototype.checkReactiontime = function(pin, pid, data) {
                 joiningPlayerReactiontime: data.reaction_time
             });
         } else {
-            log.warn('!!! Check Reaction Time : Player is not in Room! #' + pin);
+            log.warn('!!! Check Reaction Time : Player is not in Room! #' + pin, socket);
         }
 
         if (room.attributes.creatingPlayerReactiontime && room.attributes.joiningPlayerReactiontime) {

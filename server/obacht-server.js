@@ -116,12 +116,17 @@ obacht.server.io.sockets.on('connection', function(socket) {
         if (socket.pin) {
             obacht.server.leaveRoomHelper(socket);
         }
-        socket.pin = roomDetail.pin;
 
-        var room = obacht.server.rooms.joinRoom(socket.pin, socket.pid, roomDetail.closed);
+        var room = obacht.server.rooms.joinRoom(socket, roomDetail.pin, roomDetail.closed);
+
+        // Room sucessfully joined
         if (room.pin) {
-            socket.join(socket.pin);
+            socket.pin = room.pin;
+            socket.join(roomDetail.pin);
+            obacht.server.io.sockets['in'](roomDetail.pin).emit('room_detail', roomDetail);
         }
+
+        // Room couldn't be joined, return message
         if (room.msg) {
             socket.emit('message', room);
         }
@@ -185,9 +190,9 @@ obacht.server.io.sockets.on('connection', function(socket) {
      */
     socket.on('player_status', function(player_status){
         if (socket.pin) {
-            obacht.server.rooms.playerStatus(player_status, socket);
-            if (player_status.life < 1) {
-                this.gameoverHelper(socket, 'player_dead', player_status.pid);
+            obacht.server.rooms.playerStatus(socket, player_status);
+            if (player_status.health < 1) {
+                obacht.server.gameoverHelper(socket, 'player_dead', player_status.pid);
             }
         } else {
             log.warn('!!! Cannot send Player Status while not connected to a Game!', socket);
@@ -228,7 +233,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
         if (socket.pin) {
             log.debug('<-> Checking Reactiontime in Room #' + socket.pin);
 
-            var result = obacht.server.rooms.checkReactiontime(socket.pin, socket.pid, data);
+            var result = obacht.server.rooms.checkReactiontime(socket, data);
 
             if (result) {
                 obacht.server.io.sockets['in'](socket.pin).emit('receive_bonus', result);
