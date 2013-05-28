@@ -39,18 +39,24 @@ obacht.Menu = function() {
     // Events                   //
     //////////////////////////////
 
+    /**
+     * Subscribe Game Ready Event -> Start Game
+     * @event
+     */
     obacht.mp.events.subscribe('game_ready', function(){
         self.loadGameScene();
+
+        /**
+         * Subscribe Game Over Event
+         * @event
+         */
+        obacht.mp.events.subscribeOnce('game_over', function(){
+            self.loadingScene();
+        });
     });
-
-    obacht.mp.events.subscribe('game_over', function(){
-        self.loadingScene();
-    });
-
-
 
     // Start first Scene
-    this.loadingScene();
+    this.mainMenuScene();
 
 };
 
@@ -217,59 +223,73 @@ obacht.Menu.prototype = {
         var self = this;
 
         var sceneMenu = new lime.Scene();
-
-        // set current scene active
-        obacht.director.replaceScene(sceneMenu);
-
         var layerMenu = new lime.Layer();
         sceneMenu.appendChild(layerMenu);
 
+        ///////////////////////////////
+        // Layer Content             //
+        ///////////////////////////////
+
+        // Background
         var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
         layerMenu.appendChild(background);
+
+        //Play with a friend Background
+        var friendIcon = new obacht.Menu.Button(-680, 65, 1704, 1208, 410, 310, 220, 220, layerMenu);
+        var friendLabel = new obacht.Menu.Label('PLAY WITH YOUR FRIEND', 35, 400, 350, 500, 55, layerMenu);
+
+        // Random Game Background
+        var randomIcon = new obacht.Menu.Button(-655, -180, 1704, 1208, 880, 310, 220, 220, layerMenu);
+        var randomLabel = new obacht.Menu.Label('RANDOM GAME', 35, 885, 350, 500, 55, layerMenu);
 
         //Small Logo
         var smallLogoButton = new obacht.Menu.Button(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
-        //Back
+        //Back Button
         var backButton = new obacht.Menu.Button(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
             self.mainMenuScene();
         });
 
-        //Play with a friend
-        var friendIcon = new obacht.Menu.Button(-680, 65, 1704, 1208, 410, 310, 220, 220, layerMenu);
-        var friendLabel = new obacht.Menu.Label('PLAY WITH YOUR FRIEND', 35, 400, 350, 500, 55, layerMenu);
 
-        //Create-Button
+        ///////////////////////////////
+        // Create Custom Game        //
+        ///////////////////////////////
+
         var createButton = new obacht.Menu.Button(-910, 400, 1533, 1087, 400, 480, 450, 160, layerMenu);
         var createLabel = new obacht.Menu.Label('CREATE', 60, 400, 485, 400, 70, layerMenu);
         goog.events.listen(createButton, ['touchstart', 'mousedown'], function() {
             self.selectThemeScene();
         });
 
-        //Join-Button
+
+        ///////////////////////////////
+        // Join Custom Game          //
+        ///////////////////////////////
+
         var joinButton = new obacht.Menu.Button(-910, 515, 1533, 1087, 400, 600, 450, 160, layerMenu);
         var joinLabel = new obacht.Menu.Label('JOIN', 60, 400, 600, 400, 70, layerMenu);
         goog.events.listen(joinButton, ['touchstart', 'mousedown'], function() {
             self.joinGameScene();
         });
 
-        //Random Game
-        //Play with a friend
-        var randomIcon = new obacht.Menu.Button(-655, -180, 1704, 1208, 880, 310, 220, 220, layerMenu);
-        var randomLabel = new obacht.Menu.Label('RANDOM GAME', 35, 885, 350, 500, 55, layerMenu);
 
-        //Random-Button
+        ///////////////////////////////
+        // New Random Game           //
+        ///////////////////////////////
+
         var randomPlayButton = new obacht.Menu.Button(-440, 400, 1533, 1087, 870, 480, 450, 160, layerMenu);
         var randomPlayLabel = new obacht.Menu.Label('PLAY', 60, 870, 485, 400, 70, layerMenu);
         goog.events.listen(randomPlayButton, ['touchstart', 'mousedown'], function() {
             obacht.mp.findMatch();
             obacht.mp.events.subscribeOnce('room_detail', function(data){
                 obacht.mp.playerReady();
-                layerMenu.removeChild(randomPlayLabel);
-                randomPlayLabel = new obacht.Menu.Label('WAIT', 60, 870, 485, 400, 70, layerMenu);
             });
+            self.waitForPlayerScene();
         });
+
+        // set current scene active
+        obacht.director.replaceScene(sceneMenu);
 
     },
 
@@ -367,6 +387,8 @@ obacht.Menu.prototype = {
         var backButton = new obacht.Menu.Button(10, 10, 1704, 1208, 57, 57, 115, 115, layerMenu);
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
             self.selectThemeScene();
+            obacht.mp.leaveRoom();
+            obacht.mp.events.clear('room_detail');
         });
 
         //Code_Field
@@ -654,14 +676,59 @@ obacht.Menu.prototype = {
     gameoverScene: function() {
         "use strict";
 
+        // Play Again
+        // Quit to Menu
+
     },
 
     /**
      * Wait for the other Player Scene
-     * TODO: todo
+     * TODO: Not done yet!
      */
     waitForPlayerScene: function() {
         "use strict";
+        var self = this;
+
+        var loadingScene = new lime.Scene();
+
+        var layerMenu = new lime.Layer();
+        loadingScene.appendChild(layerMenu);
+
+        var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
+        layerMenu.appendChild(background);
+
+        //BIG LOGO FOR LOADING-SCREEN
+        var logo_big = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(190, -750).setAnchorPoint(0, 0);
+        layerMenu.appendChild(logo_big);
+        var mask_logo_big = new lime.Sprite().setPosition(640, 360).setAnchorPoint(0.5,0.5).setSize(1000, 200);
+        layerMenu.appendChild(mask_logo_big);
+        logo_big.setMask(mask_logo_big);
+
+
+        //Back - Door
+        var backButton = new obacht.Menu.Button(-990, 10, 1704, 1208, 57, 57, 130, 130, layerMenu);
+        goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
+            obacht.mp.events.clear('room_detail');
+            self.mainMenuScene();
+        });
+
+        var loadingText = 'Waiting for Player ';
+        var loadingStatus = '.';
+        var loadingLabel = new obacht.Menu.Label(loadingText + loadingStatus, 40, 550, 520, 400, 90, layerMenu).setAlign('left');
+
+        setInterval(function(){
+            layerMenu.removeChild(loadingLabel);
+            loadingStatus += '.';
+
+            loadingLabel = new obacht.Menu.Label(loadingText + loadingStatus, 40, 550, 520, 400, 90, layerMenu).setAlign('left');
+            if (loadingStatus === '.....') {
+                loadingStatus = '';
+            }
+
+        }, 950);
+
+        // set current scene active
+        obacht.director.replaceScene(loadingScene);
 
     },
 

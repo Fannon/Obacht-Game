@@ -322,7 +322,7 @@ RoomManager.prototype.leaveRoom = function(socket) {
         }
 
         // If no Players left, remove the room
-        if (room.attributes.players.length < 1) {
+        if (room.attributes.playersCount < 1) {
             this.removeRoom(pin);
         }
 
