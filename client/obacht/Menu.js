@@ -700,6 +700,14 @@ obacht.Menu.prototype = {
 
         var gameoverLabel = new obacht.Menu.Label(gameoverText, 40, 740, 520, 400, 90, layerMenu).setAlign('left');
 
+        //NewGame-Button
+        var newGameButton = new obacht.Menu.Button(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
+        var newGameLabel = new obacht.Menu.Label('NEW GAME', 40, 637, 650, 700, 60, layerMenu);
+
+        //Cancel-Button
+        var cancelButton = new obacht.Menu.Button(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
+        var cancelLabel = new obacht.Menu.Label('CANCEL', 40, 637, 650, 700, 60, layerMenu);
+
         // set current scene active
         obacht.director.replaceScene(gameoverScene);
 
