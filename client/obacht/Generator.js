@@ -34,10 +34,10 @@ obacht.Generator = function(layer, ownPlayer) {
         position.y = Math.cos(winkel) * faktor + groundy;
         trap.character.setPosition(position);
 
-        var Collision = new obacht.Collision(trap.character, ownPlayer.character);
+        var Collision = new obacht.Collision();
 
-        if (Collision.rect() === true) {
-            console.log('Kollsion mit User');
+        if (Collision.rect(ownPlayer, trap) === true) {
+            //console.log('Kollsion mit User');
             winkel = startwinkel;
         } else if (trap.character.getPosition().x < 0) {
             console.log('Gegen die Wand');
