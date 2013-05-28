@@ -13,7 +13,6 @@ goog.require('obacht.Generator');
 goog.require('obacht.Bonus');
 
 
-    
 /**
  * Its a Game scene
  *
@@ -48,8 +47,9 @@ obacht.Game = function() {
 
     this.ownPlayer = new obacht.Player('own', this.theme);
     this.enemyPlayer = new obacht.Player('enemy', this.theme);
+    
+    this.bonusButton = new obacht.Bonus('snake');
 
-    //this.bonus = new obacht.Bonus('snake');
 
 
     //////////////////////////////
@@ -72,7 +72,7 @@ obacht.Game = function() {
     this.layer.appendChild(this.ownWorld.layer);
     this.layer.appendChild(this.enemyPlayer.layer);
     this.layer.appendChild(this.ownPlayer.layer);
-    //this.layer.appendChild(this.bonus);
+    this.layer.appendChild(this.bonusButton.layer);
 
     this.layer.appendChild(obacht.playerController.layer);
 
