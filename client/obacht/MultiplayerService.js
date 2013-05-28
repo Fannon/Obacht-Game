@@ -194,7 +194,7 @@ obacht.MultiplayerService = function(serverUrl) {
         } else {
             console.log('YOU WIN');
         }
-        self.events.publish('game_over');
+        self.events.publish('game_over', data);
     });
 
     /**

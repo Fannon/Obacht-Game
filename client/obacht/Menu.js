@@ -50,8 +50,8 @@ obacht.Menu = function() {
          * Subscribe Game Over Event
          * @event
          */
-        obacht.mp.events.subscribeOnce('game_over', function(){
-            self.loadingScene();
+        obacht.mp.events.subscribeOnce('game_over', function(data){
+            self.gameoverScene(data);
         });
     });
 
@@ -673,11 +673,35 @@ obacht.Menu.prototype = {
      * Game Over Scene
      * TODO: Not implemented yet
      */
-    gameoverScene: function() {
+    gameoverScene: function(data) {
         "use strict";
 
-        // Play Again
-        // Quit to Menu
+        var self = this;
+        var gameoverText = '';
+
+        var gameoverScene = new lime.Scene();
+
+        var layerMenu = new lime.Layer();
+        gameoverScene.appendChild(layerMenu);
+
+        var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
+        layerMenu.appendChild(background);
+
+        if (data.reason === 'player_left' ) {
+            console.log('Player left the game!');
+            gameoverText = 'Player left the game!';
+        } else if (data.pid === obacht.mp.pid){
+            console.log('YOU LOSE!');
+            gameoverText = 'YOU LOSE!';
+        } else {
+            console.log('YOU WIN');
+            gameoverText = 'YOU WIN';
+        }
+
+        var gameoverLabel = new obacht.Menu.Label(gameoverText, 40, 740, 520, 400, 90, layerMenu).setAlign('left');
+
+        // set current scene active
+        obacht.director.replaceScene(gameoverScene);
 
     },
 
