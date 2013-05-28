@@ -57,6 +57,7 @@ obacht.Player = function(type, theme) {
 
     /** Character Graphic */
     this.character = new lime.Sprite().setSize(obacht.options.player.general.width, obacht.options.player.general.height).setPosition(this.x, this.y).setAnchorPoint(0.5, 1).setFill('assets/gfx/hugo.png').setRotation(this.rotation).setRenderer(obacht.renderer);
+    this.boundingBoxes = obacht.options.player.boundingBoxes[0];
 
     /** Player LimeJS Layer */
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
