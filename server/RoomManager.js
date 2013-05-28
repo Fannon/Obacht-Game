@@ -27,6 +27,7 @@ var RoomManager = function(io) {
 
     /** Socket.io */
     this.io = io; // Socket.io Loop Through
+    var self = this;
 
 
     /////////////////////////////
@@ -44,12 +45,24 @@ var RoomManager = function(io) {
             creatingPlayerId: false,
             creatingPlayerReactiontime: false,
             creatingPlayerReady: false,
+            creatingPlayerHealth: 3,
             joiningPlayerId: false,
             joiningPlayerReactiontime: false,
             joiningPlayerReady: false,
+            joiningPlayerHealth: 3,
             playersCount: 0 // Just for convenience
         }
     });
+
+    /**
+     * on Model Change Event:
+     * Publish current Room Details to every Player in Room
+     */
+    this.RoomModel.prototype.on("change", function(model) {
+        self.io.sockets['in'](model.attributes.pin).emit('room_detail', model.attributes);
+        log.warn('CHANGE MODEL');
+    });
+
 
     /**
      * Room Collection Instance
@@ -152,13 +165,15 @@ RoomManager.prototype.getRoomsDebug = function() {
 /**
  * Sets the player Ready
  *
- * @param {Number} pin  Room PIN
- * @param {String} pid  Player ID
+ * @param {Object} socket Current socket Object
  *
  * @returns {*} roomDetails if successfull, false if not
  */
-RoomManager.prototype.playerReady = function(pin, pid) {
+RoomManager.prototype.playerReady = function(socket) {
     "use strict";
+
+    var pin = socket.pin;
+    var pid = socket.pid;
 
     var room = this.getRoom(pin);
 
@@ -180,6 +195,42 @@ RoomManager.prototype.playerReady = function(pin, pid) {
 
     return room.attributes;
 };
+
+/**
+ * Sets new Player Status (Health..)
+ *
+ * @param {Object} player_status
+ * @param {Object} socket
+ *
+ * @returns {*} roomDetails if successfull, false if not
+ */
+RoomManager.prototype.playerStatus = function(player_status, socket) {
+    "use strict";
+
+    var pin = socket.pin;
+    var pid = socket.pid;
+
+    var room = this.getRoom(pin);
+
+    if (room.attributes.creatingPlayerId === pid) {
+        room.set({
+            creatingPlayerHealth: player_status.health
+        });
+        log.debug('--- Creating Player StatusUpdate in Room #' + pin);
+
+    } else if (room.attributes.joiningPlayerId === pid) {
+        room.set({
+            joiningPlayerHealth: player_status.health
+        });
+        log.debug('--- Joining Player StatusUpdate in Room #' + pin);
+    } else {
+        log.warn('!!! Player StatusUpdate: Player is not in Room! #' + pin);
+        return false;
+    }
+
+    return room.attributes;
+};
+
 
 /**
  * Player joins a Room
@@ -232,14 +283,15 @@ RoomManager.prototype.joinRoom = function(pin, pid, isClosed) {
  *
  * Removes Player Id from RoomDetail players and playersReady
  *
- * @param {Number} pin  Room PIN
- * @param {String} pid  Player ID
+ * @param {Object} socket Current socket Object
  *
  * @return {*} RoomModel if successfull
  */
-RoomManager.prototype.leaveRoom = function(pin, pid) {
+RoomManager.prototype.leaveRoom = function(socket) {
     "use strict";
 
+    var pin = socket.pin;
+    var pid = socket.pid;
     var room = this.getRoom(pin);
 
     if (room) {
@@ -265,7 +317,7 @@ RoomManager.prototype.leaveRoom = function(pin, pid) {
             log.debug('--> Joining Player left Room #' + pin);
             return room.attributes;
         } else {
-            log.warn('!!! Player Left: Player has not been in Room! #' + pin);
+            log.warn('!!! Player Left: Player has not been in Room! #' + pin, socket);
         }
 
         // If no Players left, remove the room

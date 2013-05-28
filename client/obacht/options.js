@@ -60,7 +60,8 @@ obacht.options = {
             jumpHeight: 280,
             crouchDuration: 0.1,
             crouchWidth: 1.6,
-            crouchHeight: 0.5
+            crouchHeight: 0.5,
+            maxHealth: 3
         },
         own: {
             x: 150,
@@ -145,7 +146,7 @@ obacht.options = {
 
     },
     "server": {
-        "url": "http://obacht.informatik.hs-augsburg.de:8080"
-//      "url": "http://192.168.2.100:8080/"
+//        "url": "http://obacht.informatik.hs-augsburg.de:8080"
+      "url": "http://192.168.2.100:8080/"
     }
 };

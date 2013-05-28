@@ -226,7 +226,9 @@ obacht.MultiplayerService.prototype.newRoom = function (theme, options, closed) 
     this.socket.emit('new_room', {
         theme: theme,
         options: options,
-        closed: closed
+        closed: closed,
+        creatingPlayerHealth: obacht.options.player.general.maxHealth,
+        joiningPlayerHealth: obacht.options.player.general.maxHealth
     });
 };
 
