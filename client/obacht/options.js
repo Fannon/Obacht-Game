@@ -51,8 +51,8 @@ obacht.options = {
             clouds: 75
         },
         initialSpeedFactor: 1.0,
-        incrementSpeedFactorTime: 3000,
-        incrementSpeedFactor: 1.05
+        decrementSpeedFactorTime: 3000,
+        decrementSpeedFactor: 0.03
     },
     player: {
         general: {

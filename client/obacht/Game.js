@@ -62,8 +62,8 @@ obacht.Game = function() {
     });
 
     setInterval(function(){
-        self.speedFactor *= obacht.options.world.incrementSpeedFactor;
-    }, obacht.options.world.incrementSpeedFactorTime);
+        self.speedFactor -= obacht.options.world.decrementSpeedFactor;
+    }, obacht.options.world.decrementSpeedFactorTime);
 
 
     //////////////////////////////
