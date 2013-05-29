@@ -347,7 +347,9 @@ RoomManager.prototype.checkReactiontime = function(socket, data) {
         if (room.attributes.creatingPlayerReactiontime && room.attributes.joiningPlayerReactiontime) {
 
             // Compare and declare the winner
-            if (room.attributes.creatingPlayerReactiontime < room.attributes.joiningPlayerReactiontime) {
+            if (room.attributes.creatingPlayerReactiontime === room.attributes.joiningPlayerReactiontime) {
+                log.debug('Player Reactiontime: Tie or both Players missed');
+            } else if (room.attributes.creatingPlayerReactiontime < room.attributes.joiningPlayerReactiontime) {
                 receiveBonus.winner_pid = room.attributes.creatingPlayerId;
             } else {
                 receiveBonus.winner_pid = room.attributes.joiningPlayerId;

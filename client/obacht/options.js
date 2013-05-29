@@ -15,13 +15,20 @@ obacht.options = {
         VIEWPORT_HEIGHT: 720,
         DEFAULT_RENDERER: 'CANVAS'
     },
-
     sound: {
         music: true,
         sound: true,
         vibration: true
     },
-
+    gameplay: {
+        initialSpeedFactor: 1.0,
+        decrementSpeedFactorTime: 5000,
+        decrementSpeedFactor: 0.01,
+        generateBoniMinInterval: 10000,
+        generateBoniMaxInterval: 20000,
+        generateTrapsMinInterval: 6000,
+        generateTrapsMaxInterval: 12000
+    },
     world: {
         size: {
             ground: 1470,
@@ -49,10 +56,7 @@ obacht.options = {
             front: 20,
             middle: 35,
             clouds: 75
-        },
-        initialSpeedFactor: 1.0,
-        decrementSpeedFactorTime: 5000,
-        decrementSpeedFactor: 0.01
+        }
     },
     player: {
         general: {

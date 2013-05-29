@@ -421,14 +421,7 @@ obacht.Menu.prototype = {
             layerToolTip.setHidden(true);
         });
 
-        //Play-Button
-        var playButton = new obacht.Menu.Button(85, -278, 1704, 1208, 640, 640, 350, 130, layerMenu);
-        var playLabel = new obacht.Menu.Label('PLAY', 40, 637, 650, 700, 60, layerMenu);
-        goog.events.listen(playButton, ['touchstart', 'mousedown'], function() {
-            obacht.mp.playerReady();
-            layerMenu.removeChild(playLabel);
-            playLabel = new obacht.Menu.Label('WAIT', 40, 637, 650, 700, 60, layerMenu);
-        });
+        obacht.mp.playerReady();
 
     },
 
@@ -555,8 +548,6 @@ obacht.Menu.prototype = {
                 obacht.mp.joinRoom(pin, true);
                 obacht.mp.events.subscribeOnce('room_detail', function(data){
                     obacht.mp.playerReady();
-                    layerMenu.removeChild(playLabel);
-                    playLabel = new obacht.Menu.Label('WAIT', 40, 637, 650, 700, 60, layerMenu);
                 });
             }
         };
