@@ -49,7 +49,10 @@ obacht.options = {
             front: 20,
             middle: 35,
             clouds: 75
-        }
+        },
+        initialSpeedFactor: 1.0,
+        decrementSpeedFactorTime: 3000,
+        decrementSpeedFactor: 0.03
     },
     player: {
         general: {
@@ -67,13 +70,15 @@ obacht.options = {
         boundingBoxes: [
             {x: 5, y: 10, width: 210*0.7, height: 290*0.7}
         ],
-        own: {
-            x: 150,
-            y: 550
-        },
-        enemy: {
-            x: 1130,
-            y: 170
+        location: {
+            bottom: {
+                x: 150,
+                y: 550
+            },
+            top: {
+                x: 1130,
+                y: 170
+            }
         },
         stateVar: {
             isJumping: false

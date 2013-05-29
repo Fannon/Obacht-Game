@@ -47,6 +47,7 @@ obacht.MultiplayerService = function(serverUrl) {
     this.events = new goog.pubsub.PubSub();
 
 
+
     //////////////////////////////
     // Communication Events     //
     //////////////////////////////
@@ -157,7 +158,7 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.socket.on('player_action', function (data) {
         console.log('player_action: ' + data.type);
-        self.events.publish('player_action', data.type, data.data);
+        self.events.publish('player_action', data);
     });
 
     /**
@@ -335,6 +336,18 @@ obacht.MultiplayerService.prototype.playerStatus = function (pid, health) {
 obacht.MultiplayerService.prototype.throwBonus = function (type) {
     "use strict";
     this.socket.emit('bonus', {
+        type: type
+    });
+};
+
+/**
+ * Broadcast generated Traps
+ *
+ * @param  {String} type Type of the Bonus, i.e. 'snake'
+ */
+obacht.MultiplayerService.prototype.throwGeneratedTrap = function (type) {
+    "use strict";
+    this.socket.emit('generated_trap', {
         type: type
     });
 };
