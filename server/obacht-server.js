@@ -44,6 +44,8 @@ obacht.server.io.enable('browser client minification'); // send minified client
 obacht.server.io.enable('browser client etag'); // apply etag caching logic based on version number
 obacht.server.io.enable('browser client gzip'); // gzip the file
 obacht.server.io.set('log level', 1); // reduce logging
+obacht.server.io.set('heartbeat timeout', 12);
+obacht.server.io.set('heartbeat interval', 5);
 
 
 //////////////////////////////
