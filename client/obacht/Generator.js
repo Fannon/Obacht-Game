@@ -43,12 +43,12 @@ obacht.Generator = function(layer, ownPlayer) {
     });
 
     lime.scheduleManager.schedule(function(dt) {
-
+            /*
         var position = trap.character.getPosition();
         position.x = Math.sin(winkel) * faktor + groundx;
         position.y = Math.cos(winkel) * faktor + groundy;
         trap.character.setPosition(position);
-
+              */
 //        var Collision = new obacht.Collision();
 
 //        if (Collision.rect(ownPlayer, trap) === true) {
