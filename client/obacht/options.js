@@ -129,7 +129,7 @@ obacht.options = {
             type: '',
             state: 'new',
             path: 'assets/boni/', //all files musst be a png file
-            moveToDuration: 0.2
+            displayTime: 5000
         }
     },
     "server": {

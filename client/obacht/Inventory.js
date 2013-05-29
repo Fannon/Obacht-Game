@@ -24,8 +24,8 @@ obacht.Inventory = function() {
     this.trays = [];
 
     this.trays[0] = [];
-    this.trays[0].active = true;
-    this.trays[0].type = 'snake';
+    this.trays[0].active = false;
+    this.trays[0].type = 'none';
     this.trays[0].fill = "assets/boni/" + this.trays[0].type + '.png';
     this.trays[0].button = new lime.RoundedRect().setSize(obacht.options.inventory.size, obacht.options.inventory.size).setPosition(obacht.options.inventory.right.x, obacht.options.inventory.y).setFill(this.trays[0].fill).setOpacity(0.5).setAnchorPoint(0, 0).setRadius(15);
 
@@ -66,8 +66,9 @@ obacht.Inventory = function() {
     goog.events.listen(this.trays[2].button, ['touchstart', 'mousedown'], function(e) {
         self.checkTray(2);
     });
-    obacht.mp.events.subscribe('receive_bonus', function(data) {
-        self.checkBoni(data.success, data.type);
+    obacht.mp.events.subscribe('bonus', function(data) {
+        console.log('receive bonus: Type: ' + data.type + 'Success: ' + data.success);
+        self.checkBoni(data.type, data.success);
     });
 
 };

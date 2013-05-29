@@ -61,8 +61,15 @@ obacht.Bonus.prototype = {
         "use strict";
         var self = this;
         setTimeout(function(){
-           self.deleteBonus();
-        },5000);
+           self.noReaction();
+        },obacht.options.bonus.general.displayTime);
+    },
+    
+    noReaction: function() {
+        "use strict";
+        this.deleteBonus();
+        var reactiontime = this.drawtime + obacht.options.bonus.general.displayTime;
+        obacht.mp.checkReactiontime(this.type, reactiontime);
     },
     
     /**
