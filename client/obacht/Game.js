@@ -28,7 +28,6 @@ obacht.Game = function() {
     setInterval(function(){clock();},1000);
     function clock(){
        time+=1;
-       console.log('clock:'+ time + 's');
     } 
  
         

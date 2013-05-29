@@ -71,7 +71,6 @@ obacht.Generator.prototype = {
     //throw trap
     startThrowTrap: function(){
        "use strict";
-       console.log('throwTrap');
        var self = this;
        self.timeout();
     },
@@ -79,7 +78,6 @@ obacht.Generator.prototype = {
     //waiting for a trap
     startRandomTime: function(){
         "use strict";
-        console.log('start random Time');
         randomTimeCalculation = Math.floor(Math.random()*randomTime.length);
         var self = this;
         setTimeout(function() {
@@ -90,7 +88,6 @@ obacht.Generator.prototype = {
     //timeout - no trap can be thrown
     timeout: function(){
         "use strict";
-        console.log('start timeout');
         var self = this;
         setTimeout(function() {
             self.startRandomTime();
