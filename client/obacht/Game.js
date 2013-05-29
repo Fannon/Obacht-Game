@@ -49,6 +49,7 @@ obacht.Game = function() {
 
     this.bonusButton = new obacht.Bonus('snake');
 
+    this.speedFactor = obacht.options.world.initialSpeedFactor;
 
 
     //////////////////////////////
@@ -59,6 +60,10 @@ obacht.Game = function() {
     obacht.mp.events.subscribe('room_detail', function(data) {
         self.roomDetail = data;
     });
+
+    setInterval(function(){
+        self.speedFactor *= obacht.options.world.incrementSpeedFactor;
+    }, obacht.options.world.incrementSpeedFactorTime);
 
 
     //////////////////////////////

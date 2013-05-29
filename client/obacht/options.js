@@ -49,7 +49,10 @@ obacht.options = {
             front: 20,
             middle: 35,
             clouds: 75
-        }
+        },
+        initialSpeedFactor: 1.0,
+        incrementSpeedFactorTime: 3000,
+        incrementSpeedFactor: 1.05
     },
     player: {
         general: {
