@@ -340,6 +340,18 @@ obacht.MultiplayerService.prototype.throwBonus = function (type) {
 };
 
 /**
+ * Broadcast generated Traps
+ *
+ * @param  {String} type Type of the Bonus, i.e. 'snake'
+ */
+obacht.MultiplayerService.prototype.throwGeneratedTraps = function (type) {
+    "use strict";
+    this.socket.emit('generated_trap', {
+        type: type
+    });
+};
+
+/**
  * Broadcast Check Reactiontime
  *
  * @param  {String} type Type of the Bonus, i.e. 'snake'
