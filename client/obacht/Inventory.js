@@ -66,8 +66,8 @@ obacht.Inventory = function() {
     goog.events.listen(this.trays[2].button, ['touchstart', 'mousedown'], function(e) {
         self.checkTray(2);
     });
-    obacht.mp.events.subscribe('bonus', function(data) {
-        console.log('receive bonus: Type: ' + data.type + 'Success: ' + data.success);
+    obacht.mp.events.subscribe('bonus', function(type, success) {
+        console.log('receive bonus: Type: ' + type + 'Success: ' + success);
         self.checkBoni(data.type, data.success);
     });
 
