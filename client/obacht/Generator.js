@@ -14,7 +14,10 @@ goog.require('obacht.Collision');
 obacht.Generator = function(layer, ownPlayer) {
     "use strict";
 
-    var trap = new obacht.Trap('scarecrow');
+//    var trap = new obacht.Trap(obacht.mp.roomDetail.theme, 'scarecrow');
+    var trap = new obacht.Trap('meadow', 'scarecrow');
+
+
     layer.appendChild(trap.layer);
 
     //Startwinkel & Winkelgeschwindigkeit
@@ -34,17 +37,17 @@ obacht.Generator = function(layer, ownPlayer) {
         position.y = Math.cos(winkel) * faktor + groundy;
         trap.character.setPosition(position);
 
-        var Collision = new obacht.Collision();
+//        var Collision = new obacht.Collision();
 
-        if (Collision.rect(ownPlayer, trap) === true) {
-            //console.log('Kollsion mit User');
-            winkel = startwinkel;
-        } else if (trap.character.getPosition().x < 0) {
-            console.log('Gegen die Wand');
-            winkel = startwinkel;
-        }
-
-        winkel = winkel + winkelgeschwindigkeit;
+//        if (Collision.rect(ownPlayer, trap) === true) {
+//            //console.log('Kollsion mit User');
+//            winkel = startwinkel;
+//        } else if (trap.character.getPosition().x < 0) {
+//            console.log('Gegen die Wand');
+//            winkel = startwinkel;
+//        }
+//
+//        winkel = winkel + winkelgeschwindigkeit;
 
     }, trap);
 
