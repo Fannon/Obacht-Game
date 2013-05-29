@@ -33,8 +33,6 @@ obacht.Bonus = function(type) {
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     self.drawBonus();
     
-    //this.layer.appendChild(this.bonusButton);
-
     /////////////////////////
     // SUBSCRIBE TO EVENTS //
     /////////////////////////    
@@ -56,12 +54,15 @@ obacht.Bonus.prototype = {
         this.bonusTimer();
     },
     
+    /**
+     * Delete the bonus after 2 seconds
+     */
     bonusTimer: function() {
         "use strict";
         var self = this;
         setTimeout(function(){
            self.deleteBonus();
-        },2000);
+        },5000);
     },
     
     /**
@@ -79,14 +80,18 @@ obacht.Bonus.prototype = {
         "use strict";
         this.clicktime = this.getTime();
         var reactiontime = this.clicktime - this.drawtime;
-        console.log('Reaktionszeit in ms: ' + reactiontime);
+        obacht.mp.checkReactiontime(this.type, reactiontime);
     }, 
     
+    /**
+     * determine time in ms
+     * 
+     * @returns {Number} ms current time in ms
+     */
     getTime: function() {
         "use strict";
         var time = new Date(),
-            ms = time.getTime();
-        
+            ms = time.getTime();  
         return ms;
     }
     
