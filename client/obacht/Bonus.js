@@ -58,7 +58,10 @@ obacht.Bonus.prototype = {
     
     bonusTimer: function() {
         "use strict";
-        
+        var self = this;
+        setTimeout(function(){
+           self.deleteBonus();
+        },2000);
     },
     
     /**
