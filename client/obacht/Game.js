@@ -20,7 +20,7 @@ goog.require('obacht.Bonus');
  * @extends lime.Scene
  */
 obacht.Game = function() {
-   
+
     console.log('New Game();');
 
     //Game Time
@@ -28,9 +28,9 @@ obacht.Game = function() {
     setInterval(function(){clock();},1000);
     function clock(){
        time+=1;
-    } 
- 
-        
+    }
+
+
     //////////////////////////////
     // Game Model (state)       //
     //////////////////////////////
@@ -44,12 +44,12 @@ obacht.Game = function() {
     this.enemyWorld = new obacht.World('enemy', this.theme);
     this.sky = new lime.Sprite().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT).setFill(this.theme.world.files.sky).setPosition(0, 0).setAnchorPoint(0, 0);
 
-    this.ownPlayer = new obacht.Player('own', this.theme);
-    this.enemyPlayer = new obacht.Player('enemy', this.theme);
-    
-    
+    this.ownPlayer = new obacht.Player('bottom', this.theme);
+    this.enemyPlayer = new obacht.Player('top', this.theme);
+
     this.bonusButton = new obacht.Bonus('snake');
 
+    this.speedFactor = obacht.options.world.initialSpeedFactor;
 
 
     //////////////////////////////
@@ -60,6 +60,11 @@ obacht.Game = function() {
     obacht.mp.events.subscribe('room_detail', function(data) {
         self.roomDetail = data;
     });
+
+    // Decrement SpeedFactor (lower is faster)
+    setInterval(function(){
+        self.speedFactor -= obacht.options.world.decrementSpeedFactor;
+    }, obacht.options.world.decrementSpeedFactorTime);
 
 
     //////////////////////////////
@@ -83,5 +88,5 @@ obacht.Game = function() {
 };
 
 obacht.Game.prototype = {
-         
+
 };
