@@ -35,18 +35,32 @@ obacht.Collision = function (player, trap) {
     this.bbobj1 = player.boundingBoxes;
     this.bbobj2 = trap.boundingBoxes;
 
+    var state = false;
     var i = 0;
     while (i < trap.boundingBoxes.length) {
 
-        //New Calculation Bounding Boxes
+        //New Player i==0
+        this.obj1x = this.obj1x - this.bbobj1[0].x;
+        this.obj1y = this.obj1y + this.bbobj1[0].y;
+
+        this.obj1w = this.bbobj1[0].width;
+        this.obj1h = this.bbobj1[0].height;
+
+        //New Trap
         this.obj2x = this.obj2x - this.bbobj2[i].x;
         this.obj2y = this.obj2y + this.bbobj2[i].y;
 
-        //New Size like Bounding Boxes
         this.obj2w = this.bbobj2[i].width;
         this.obj2h = this.bbobj2[i].height;
 
-        console.log(i);
+        if (this.obj1x < this.obj2x + this.obj2w  &&
+            this.obj2x < this.obj1x + this.obj1w  &&
+            this.obj1y < this.obj2y + this.obj2h &&
+            this.obj2y < this.obj1y + this.obj1h === true){
+        state=true;
+        }
+
+        //console.log(i);
         i = i + 1;
     }
 };
@@ -55,11 +69,7 @@ obacht.Collision.prototype = {
 
     rect: function () {
         "use strict";
-
-        return this.obj1x < this.obj2x + this.obj2w  &&
-            this.obj2x < this.obj1x + this.obj1w  &&
-            this.obj1y < this.obj2y + this.obj2h &&
-            this.obj2y < this.obj1y + this.obj1h;
+        return this.state;
 
     }
 };
