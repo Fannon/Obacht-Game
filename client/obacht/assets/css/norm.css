@@ -1,11 +1,15 @@
 
 * {
-vertical-align: baseline;
-font-family: inherit;
-font-style: inherit;
-font-size: 100%;
-border: none;
-padding: 0;
-margin: 0;
-line-height: 1.25;
+    vertical-align: baseline;
+    font-family: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-weight: normal;
+    border: none;
+    padding: 0;
+    margin: 0;
+    line-height: 1.25;
+    text-decoration: none;
+    -webkit-text-size-adjust: none;
+    -ms-text-size-adjust: none;
 }

@@ -269,7 +269,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        RoomManager.js, line 37
+        RoomManager.js, line 38
     </li></ul></dd>
     
     
@@ -323,7 +323,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        RoomManager.js, line 58
+        RoomManager.js, line 72
     </li></ul></dd>
     
     
@@ -459,7 +459,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        RoomManager.js, line 74
+        RoomManager.js, line 88
     </li></ul></dd>
     
     
@@ -509,7 +509,7 @@
         
             
 <dt>
-    <h4 class="name" id="checkReactiontime"><span class="type-signature"></span>checkReactiontime<span class="signature">(pin, pid, data)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    <h4 class="name" id="checkReactiontime"><span class="type-signature"></span>checkReactiontime<span class="signature">(socket, data)</span><span class="type-signature"> &rarr; {*}</span></h4>
     
     
 </dt>
@@ -551,13 +551,13 @@
 	
         <tr>
             
-                <td class="name"><code>pin</code></td>
+                <td class="name"><code>socket</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">Number</span>
+<span class="param-type">Object</span>
 
 
             
@@ -567,30 +567,7 @@
             
             
             
-            <td class="description last">Room PIN</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>pid</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">Player ID</td>
+            <td class="description last">Current socket Object</td>
         </tr>
 	
 	
@@ -644,7 +621,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        RoomManager.js, line 294
+        RoomManager.js, line 320
     </li></ul></dd>
     
     
@@ -735,7 +712,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        RoomManager.js, line 375
+        RoomManager.js, line 404
     </li></ul></dd>
     
     
@@ -874,7 +851,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        RoomManager.js, line 352
+        RoomManager.js, line 381
     </li></ul></dd>
     
     
@@ -1013,7 +990,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        RoomManager.js, line 136
+        RoomManager.js, line 127
     </li></ul></dd>
     
     
@@ -1104,7 +1081,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        RoomManager.js, line 146
+        RoomManager.js, line 137
     </li></ul></dd>
     
     
@@ -1154,7 +1131,7 @@
         
             
 <dt>
-    <h4 class="name" id="joinRoom"><span class="type-signature"></span>joinRoom<span class="signature">(pin, pid, isClosed)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    <h4 class="name" id="joinRoom"><span class="type-signature"></span>joinRoom<span class="signature">(socket, pin, isClosed)</span><span class="type-signature"> &rarr; {*}</span></h4>
     
     
 </dt>
@@ -1196,6 +1173,29 @@
 	
         <tr>
             
+                <td class="name"><code>socket</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Current socket Object</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
                 <td class="name"><code>pin</code></td>
             
             
@@ -1213,29 +1213,6 @@
             
             
             <td class="description last">Room PIN</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>pid</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">Player ID</td>
         </tr>
 	
 	
@@ -1289,7 +1266,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        RoomManager.js, line 193
+        RoomManager.js, line 221
     </li></ul></dd>
     
     
@@ -1339,7 +1316,7 @@
         
             
 <dt>
-    <h4 class="name" id="leaveRoom"><span class="type-signature"></span>leaveRoom<span class="signature">(pin, pid)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    <h4 class="name" id="leaveRoom"><span class="type-signature"></span>leaveRoom<span class="signature">(socket)</span><span class="type-signature"> &rarr; {*}</span></h4>
     
     
 </dt>
@@ -1381,13 +1358,13 @@
 	
         <tr>
             
-                <td class="name"><code>pin</code></td>
+                <td class="name"><code>socket</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">Number</span>
+<span class="param-type">Object</span>
 
 
             
@@ -1397,30 +1374,7 @@
             
             
             
-            <td class="description last">Room PIN</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>pid</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">Player ID</td>
+            <td class="description last">Current socket Object</td>
         </tr>
 	
 	
@@ -1451,7 +1405,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        RoomManager.js, line 240
+        RoomManager.js, line 268
     </li></ul></dd>
     
     
@@ -1501,7 +1455,7 @@
         
             
 <dt>
-    <h4 class="name" id="playerReady"><span class="type-signature"></span>playerReady<span class="signature">(pin, pid)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    <h4 class="name" id="playerReady"><span class="type-signature"></span>playerReady<span class="signature">(socket)</span><span class="type-signature"> &rarr; {*}</span></h4>
     
     
 </dt>
@@ -1543,13 +1497,13 @@
 	
         <tr>
             
-                <td class="name"><code>pin</code></td>
+                <td class="name"><code>socket</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">Number</span>
+<span class="param-type">Object</span>
 
 
             
@@ -1559,30 +1513,7 @@
             
             
             
-            <td class="description last">Room PIN</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>pid</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">Player ID</td>
+            <td class="description last">Current socket Object</td>
         </tr>
 	
 	
@@ -1613,7 +1544,169 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        RoomManager.js, line 160
+        RoomManager.js, line 150
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    roomDetails if successfull, false if not
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">*</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="playerStatus"><span class="type-signature"></span>playerStatus<span class="signature">(socket, player_status)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Sets new Player Status (Health..)
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>socket</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>player_status</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        RoomManager.js, line 184
     </li></ul></dd>
     
     
@@ -1752,124 +1845,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        RoomManager.js, line 118
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="resetRoom"><span class="type-signature"></span>resetRoom<span class="signature">(pin)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Resets / cleans up Room for a new Game, if existsApplied after GameOver
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>pin</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">Room PIN</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        RoomManager.js, line 96
+        RoomManager.js, line 109
     </li></ul></dd>
     
     
@@ -1916,7 +1892,7 @@
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Sat May 25 2013 09:14:38 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Wed May 29 2013 10:41:46 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

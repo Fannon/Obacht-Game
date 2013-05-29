@@ -372,7 +372,7 @@ obacht.Menu.prototype = {
         var self = this;
 
         // Pad the Pin with leading zeros, add spaces between Numbers
-        var pin = padPin(data.pin, 4, 0);
+        var pin = this.padPin(data.pin, 4, 0);
         var pinArray = pin.split("");
         var pinFormatted = pinArray.join(' ');
 
@@ -847,22 +847,27 @@ obacht.Menu.prototype = {
     creditsScene: function() {
         "use strict";
 
-    }
+    },
 
+    /////////////////////////////
+    // Helper Functions        //
+    /////////////////////////////
+
+
+    /**
+     * Adds (left) Padding to the PIN Number
+     *
+     * @param n
+     * @param width
+     * @param z
+     * @returns {string}
+     */
+    padPin: function(n, width, z) {
+        "use strict";
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    }
 
 };
 
-/**
- * Adds (left) Padding to the PIN Number
- *
- * @param n
- * @param width
- * @param z
- * @returns {string}
- */
-function padPin(n, width, z) {
-    "use strict";
-    z = z || '0';
-    n = n + '';
-    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-}
