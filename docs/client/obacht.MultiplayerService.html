@@ -179,7 +179,61 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        MultiplayerService.js, line 45
+        MultiplayerService.js, line 47
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="friend"><span class="type-signature"></span>friend<span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Friend Player, if connected to one
+    </div>
+    
+    
+    
+
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        MultiplayerService.js, line 33
     </li></ul></dd>
     
     
@@ -395,7 +449,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        MultiplayerService.js, line 33
+        MultiplayerService.js, line 35
     </li></ul></dd>
     
     
@@ -531,7 +585,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        MultiplayerService.js, line 321
+        MultiplayerService.js, line 348
     </li></ul></dd>
     
     
@@ -600,7 +654,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        MultiplayerService.js, line 259
+        MultiplayerService.js, line 276
     </li></ul></dd>
     
     
@@ -669,7 +723,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        MultiplayerService.js, line 358
+        MultiplayerService.js, line 386
     </li></ul></dd>
     
     
@@ -760,7 +814,76 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        MultiplayerService.js, line 341
+        MultiplayerService.js, line 369
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="inviteFriend"><span class="type-signature"></span>inviteFriend<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Broadcast Find Match
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        MultiplayerService.js, line 286
     </li></ul></dd>
     
     
@@ -900,7 +1023,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        MultiplayerService.js, line 247
+        MultiplayerService.js, line 264
     </li></ul></dd>
     
     
@@ -969,7 +1092,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        MultiplayerService.js, line 332
+        MultiplayerService.js, line 359
     </li></ul></dd>
     
     
@@ -997,7 +1120,7 @@
         
             
 <dt>
-    <h4 class="name" id="newRoom"><span class="type-signature"></span>newRoom<span class="signature">(theme, options, closed)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="newRoom"><span class="type-signature"></span>newRoom<span class="signature">(theme, options, closed, friend)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -1105,6 +1228,29 @@
         </tr>
 	
 	
+	
+        <tr>
+            
+                <td class="name"><code>friend</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Optional Friend PID, if playing with a specific friend</td>
+        </tr>
+	
+	
 	</tbody>
 </table>
     
@@ -1132,7 +1278,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        MultiplayerService.js, line 231
+        MultiplayerService.js, line 239
     </li></ul></dd>
     
     
@@ -1272,7 +1418,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        MultiplayerService.js, line 280
+        MultiplayerService.js, line 307
     </li></ul></dd>
     
     
@@ -1341,7 +1487,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        MultiplayerService.js, line 268
+        MultiplayerService.js, line 295
     </li></ul></dd>
     
     
@@ -1369,7 +1515,7 @@
         
             
 <dt>
-    <h4 class="name" id="playerStatus"><span class="type-signature"></span>playerStatus<span class="signature">(pid, life)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="playerStatus"><span class="type-signature"></span>playerStatus<span class="signature">(pid, health)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -1434,7 +1580,7 @@
 	
         <tr>
             
-                <td class="name"><code>life</code></td>
+                <td class="name"><code>health</code></td>
             
             
             <td class="type">
@@ -1450,7 +1596,7 @@
             
             
             
-            <td class="description last">Lifecounter</td>
+            <td class="description last">Healthstatus</td>
         </tr>
 	
 	
@@ -1481,7 +1627,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        MultiplayerService.js, line 294
+        MultiplayerService.js, line 321
     </li></ul></dd>
     
     
@@ -1598,7 +1744,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        MultiplayerService.js, line 308
+        MultiplayerService.js, line 335
     </li></ul></dd>
     
     
@@ -1639,13 +1785,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="obacht.Bonus.html">Bonus</a></li><li><a href="obacht.Collision.html">Collision</a></li><li><a href="obacht.Game.html">Game</a></li><li><a href="obacht.Generator.html">Generator</a></li><li><a href="obacht.Inventory.html">Inventory</a></li><li><a href="obacht.Menu.html">Menu</a></li><li><a href="obacht.Menu.Button.html">Button</a></li><li><a href="obacht.Menu.Label.html">Label</a></li><li><a href="obacht.MultiplayerService.html">MultiplayerService</a></li><li><a href="obacht.Player.html">Player</a></li><li><a href="obacht.PlayerController.html">PlayerController</a></li><li><a href="obacht.Trap.html">Trap</a></li><li><a href="obacht.World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#options">options</a></li><li><a href="global.html#padPin">padPin</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="obacht.Bonus.html">Bonus</a></li><li><a href="obacht.Collision.html">Collision</a></li><li><a href="obacht.Game.html">Game</a></li><li><a href="obacht.Generator.html">Generator</a></li><li><a href="obacht.Inventory.html">Inventory</a></li><li><a href="obacht.Menu.html">Menu</a></li><li><a href="obacht.Menu.Button.html">Button</a></li><li><a href="obacht.Menu.Label.html">Label</a></li><li><a href="obacht.MultiplayerService.html">MultiplayerService</a></li><li><a href="obacht.Player.html">Player</a></li><li><a href="obacht.PlayerController.html">PlayerController</a></li><li><a href="obacht.Trap.html">Trap</a></li><li><a href="obacht.World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#options">options</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Sat May 25 2013 09:14:31 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Wed May 29 2013 10:41:30 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>
