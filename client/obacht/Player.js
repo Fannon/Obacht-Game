@@ -110,7 +110,6 @@ obacht.Player = function(location, theme) {
             }
         });
     }
-
 };
 
 

@@ -73,7 +73,6 @@ obacht.Game = function() {
     this.layer.appendChild(this.ownWorld.layer);
     this.layer.appendChild(this.enemyPlayer.layer);
     this.layer.appendChild(this.ownPlayer.layer);
-
     this.layer.appendChild(obacht.playerController.layer);
 
     // Just start the generator if player is the creating Player
@@ -82,8 +81,6 @@ obacht.Game = function() {
         this.generator.startThrowTrap();
         this.generator.startThrowBonus();
     }
-
-    this.layer.appendChild(obacht.playerController.layer);
 
 };
 
