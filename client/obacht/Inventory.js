@@ -68,7 +68,7 @@ obacht.Inventory = function() {
     });
     obacht.mp.events.subscribe('bonus', function(type, success) {
         console.log('receive bonus: Type: ' + type + 'Success: ' + success);
-        self.checkBoni(data.type, data.success);
+        self.checkBoni(type, success);
     });
 
 };
