@@ -47,6 +47,7 @@ obacht.Game = function() {
     this.ownPlayer = new obacht.Player('own', this.theme);
     this.enemyPlayer = new obacht.Player('enemy', this.theme);
     
+    
     this.bonusButton = new obacht.Bonus('snake');
 
 
