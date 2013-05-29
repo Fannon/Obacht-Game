@@ -20,7 +20,7 @@ obacht.Collision = function (player, trap) {
     this.obj1h = player.character.getSize().height;
 
     /*Left Top Corner Player*/
-    this.obj1x = Math.round(this.object1pos.x / 10) * 10 - (this.obj1w / 2);
+    this.obj1x = Math.round(this.object1pos.x / 10) * 10 + (this.obj1w / 2);
     this.obj1y = Math.round(this.object1pos.y / 10) * 10 - (this.obj1h / 2);
 
     /*Size Object2*/
@@ -28,7 +28,7 @@ obacht.Collision = function (player, trap) {
     this.obj2h = trap.character.getSize().height;
 
     /*Left Top Corner Trap*/
-    this.obj2x = Math.round(this.object2pos.x / 10) * 10 - (this.obj2w / 2);
+    this.obj2x = Math.round(this.object2pos.x / 10) * 10 + (this.obj2w / 2);
     this.obj2y = Math.round(this.object2pos.y / 10) * 10 - (this.obj2h / 2);
 
     /*Request BoundingBoxes | Name = BoundingBoxes Object 2*/
