@@ -82,9 +82,15 @@ obacht.Game = function() {
     this.layer.appendChild(this.ownPlayer.layer);
 
     this.layer.appendChild(obacht.playerController.layer);
+    
+    // Just start the generator if player is the creating Player
+    if (obacht.mp.pid === obacht.mp.roomDetail.creatingPlayerId) {
+        this.generator = new obacht.Generator(this.layer, this.ownPlayer);
+        this.generator.startThrowTrap();
+        this.generator.startThrowBonus();
+    }
 
-    this.generator = new obacht.Generator(this.layer, this.ownPlayer);
-
+    
     this.layer.appendChild(obacht.playerController.layer);
 
 };

@@ -6,13 +6,7 @@ goog.provide('obacht.Generator');
 goog.require('obacht.Trap');
 goog.require('obacht.Collision');
 
-//Array for different random Times
-var randomTime = [];
-    randomTime[0] = 3000;
-    randomTime[1] = 3500;
-    randomTime[2] = 4000;
-    randomTime[3] = 4500;
-    randomTime[4] = 5000;
+
 
 //random Value between 0 and 5 for the Array Position
 var randomTimeCalculation;
@@ -27,9 +21,9 @@ obacht.Generator = function(layer, ownPlayer) {
 
 //    var trap = new obacht.Trap(obacht.mp.roomDetail.theme, 'scarecrow');
     var trap = new obacht.Trap('meadow', 'scarecrow');
-
-    this.timeout();
-
+    
+    this.trapInterval = undefined;
+    this.bonusInterval = undefined;
 
     layer.appendChild(trap.layer);
 
@@ -42,6 +36,11 @@ obacht.Generator = function(layer, ownPlayer) {
     var groundy = 1490;
     var faktor = 950;
     faktor = 1070;
+    
+    obacht.mp.events.subscribe('game_over', function(data){
+        this.stopThrowTrap();
+        this.stopThrowBonus();
+    });
 
     lime.scheduleManager.schedule(function(dt) {
             /*
@@ -67,31 +66,47 @@ obacht.Generator = function(layer, ownPlayer) {
 };
 
 obacht.Generator.prototype = {
+    
+    getRandomTime: function(minTime, maxTime) {
+        "use strict";
+        var speedFactor = 1.1;
+        return (Math.random() * (maxTime - minTime) + minTime) * speedFactor; // TODO: Faktor
+    },
+    
+    getRandomTrap: function() {
+        var traps = obacht.themes[obacht.mp.roomDetail.theme].traps;
+        var availableTraps = Object.keys(traps);
+        var rand = Math.floor(availableTraps.length * Math.random());
+        return availableTraps[rand];        
+    },
 
     //throw trap
     startThrowTrap: function(){
        "use strict";
-       var self = this;
-       self.timeout();
+        var self = this;
+        
+        self.trapInterval = setInterval(function() {
+           obacht.mp.throwGeneratedTrap(self.getRandomTrap());
+        }, self.getRandomTime(2000, 6000));
+    },
+    
+    stopThrowTrap: function() {
+        "use strict";
+        clearInterval(this.trapInterval);
     },
 
-    //waiting for a trap
-    startRandomTime: function(){
-        "use strict";
-        randomTimeCalculation = Math.floor(Math.random()*randomTime.length);
+    //throw bonus
+    startThrowBonus: function(){
+       "use strict";
         var self = this;
-        setTimeout(function() {
-            self.startThrowTrap();
-        }, randomTime[randomTimeCalculation]);
+        
+        self.trapInterval = setInterval(function() {
+           obacht.mp.throwBonus(self.getRandomTrap());
+        }, self.getRandomTime(4000, 8000));
     },
-
-    //timeout - no trap can be thrown
-    timeout: function(){
+    
+    stopThrowBonus: function() {
         "use strict";
-        var self = this;
-        setTimeout(function() {
-            self.startRandomTime();
-        }, 2000);
+        clearInterval(this.trapInterval);
     }
-
 };
