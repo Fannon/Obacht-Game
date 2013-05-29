@@ -47,15 +47,18 @@ obacht.Game = function() {
     this.ownPlayer = new obacht.Player('bottom', this.theme);
     this.enemyPlayer = new obacht.Player('top', this.theme);
 
-    this.bonusButton = new obacht.Bonus('snake');
-
     this.speedFactor = obacht.options.world.initialSpeedFactor;
 
 
     //////////////////////////////
     // Game Events              //
     //////////////////////////////
-
+    
+    //
+    obacht.mp.events.subscribe('bonus', function(type) {
+        self.bonusButton = new obacht.Bonus(type);
+        self.layer.appendChild(self.bonusButton.layer);
+    });
     // Update RoomDetails if Server sends new one
     obacht.mp.events.subscribe('room_detail', function(data) {
         self.roomDetail = data;
@@ -77,7 +80,6 @@ obacht.Game = function() {
     this.layer.appendChild(this.ownWorld.layer);
     this.layer.appendChild(this.enemyPlayer.layer);
     this.layer.appendChild(this.ownPlayer.layer);
-    this.layer.appendChild(this.bonusButton.layer);
 
     this.layer.appendChild(obacht.playerController.layer);
 

@@ -175,10 +175,10 @@ obacht.MultiplayerService = function(serverUrl) {
     this.socket.on('receive_bonus', function (data) {
         if (data.winner_pid === self.pid) {
             console.log('You won Bonus: ' + data.type);
-            self.events.publish('bonus', data.type, true);
+            self.events.publish('receive_bonus', data.type, true);
         } else {
             console.log('You lost Bonus: ' + data.type);
-            self.events.publish('bonus', data.type, false);
+            self.events.publish('receive_bonus', data.type, false);
         }
     });
 
