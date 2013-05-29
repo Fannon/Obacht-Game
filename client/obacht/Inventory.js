@@ -137,6 +137,10 @@ obacht.Inventory.prototype = {
         this.trays[tray].type = type;
         this.trays[tray].fill = "assets/boni/" + this.trays[tray].type + '.png';
         this.trays[tray].button.setFill(this.trays[tray].fill);
+    },
+    
+    setFail: function(){
+        console.log('to late');
     }
 
 
