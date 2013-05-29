@@ -6,6 +6,17 @@ goog.provide('obacht.Generator');
 goog.require('obacht.Trap');
 goog.require('obacht.Collision');
 
+//Array for different random Times
+var randomTime = [];
+    randomTime[0] = 3000;
+    randomTime[1] = 3500;
+    randomTime[2] = 4000;
+    randomTime[3] = 4500;
+    randomTime[4] = 5000;
+
+//random Value between 0 and 5 for the Array Position
+var randomTimeCalculation;
+
 /**
  * Trap and Bonus Generator
  *
@@ -16,6 +27,8 @@ obacht.Generator = function(layer, ownPlayer) {
 
 //    var trap = new obacht.Trap(obacht.mp.roomDetail.theme, 'scarecrow');
     var trap = new obacht.Trap('meadow', 'scarecrow');
+
+    this.timeout();
 
 
     layer.appendChild(trap.layer);
@@ -54,5 +67,31 @@ obacht.Generator = function(layer, ownPlayer) {
 };
 
 obacht.Generator.prototype = {
+
+    //throw trap
+    startThrowTrap: function(){
+       "use strict";
+       var self = this;
+       self.timeout();
+    },
+
+    //waiting for a trap
+    startRandomTime: function(){
+        "use strict";
+        randomTimeCalculation = Math.floor(Math.random()*randomTime.length);
+        var self = this;
+        setTimeout(function() {
+            self.startThrowTrap();
+        }, randomTime[randomTimeCalculation]);
+    },
+
+    //timeout - no trap can be thrown
+    timeout: function(){
+        "use strict";
+        var self = this;
+        setTimeout(function() {
+            self.startRandomTime();
+        }, 2000);
+    }
 
 };
