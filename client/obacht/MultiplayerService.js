@@ -345,7 +345,7 @@ obacht.MultiplayerService.prototype.throwBonus = function (type) {
  *
  * @param  {String} type Type of the Bonus, i.e. 'snake'
  */
-obacht.MultiplayerService.prototype.throwGeneratedTraps = function (type) {
+obacht.MultiplayerService.prototype.throwGeneratedTrap = function (type) {
     "use strict";
     this.socket.emit('generated_trap', {
         type: type
