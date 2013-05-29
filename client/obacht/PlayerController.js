@@ -96,28 +96,39 @@ obacht.PlayerController = function() {
 
 obacht.PlayerController.prototype = {
 
+    /**
+     * Publishes the player action with type "jump".
+     * Calls the playerAction function in MultiplayerService.
+     */
     jump: function() {
         "use strict";
-        this.events.publish('player_jump');
-        obacht.mp.playerAction('jump', {
-            d: 1
+        obacht.mp.playerAction('jump', {});
+        this.events.publish('own_player_action', {
+            type: 'jump'
         });
     },
 
+    /**
+     * Publishes the player action with type "crouch".
+     * Calls the playerAction function in MultiplayerService.
+     */
     crouch: function() {
         "use strict";
-        this.events.publish('player_crouch');
-        obacht.mp.playerAction('crouch', {
-            d: 2
+        obacht.mp.playerAction('crouch', {});
+        this.events.publish('own_player_action', {
+            type: 'crouch'
         });
     },
 
+    /**
+     * Publishes the player action with type "standUp".
+     * Calls the playerAction function in MultiplayerService.
+     */
     standUp: function() {
         "use strict";
-        this.events.publish('player_standUp');
-        obacht.mp.playerAction('standUp', {
-            d: 3
+        obacht.mp.playerAction('standUp', {});
+        this.events.publish('own_player_action', {
+            type: 'standUp'
         });
     }
-
 };

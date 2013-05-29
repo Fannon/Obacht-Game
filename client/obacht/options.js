@@ -67,13 +67,15 @@ obacht.options = {
         boundingBoxes: [
             {x: 5, y: 10, width: 210*0.7, height: 290*0.7}
         ],
-        own: {
-            x: 150,
-            y: 550
-        },
-        enemy: {
-            x: 1130,
-            y: 170
+        location: {
+            bottom: {
+                x: 150,
+                y: 550
+            },
+            top: {
+                x: 1130,
+                y: 170
+            }
         },
         stateVar: {
             isJumping: false

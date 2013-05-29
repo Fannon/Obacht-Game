@@ -22,7 +22,7 @@ goog.require('obacht.Trap');
  *
  * @constructor
  */
-obacht.Player = function(type, theme) {
+obacht.Player = function(location, theme) {
 
     console.log('New Player();');
 
@@ -34,25 +34,21 @@ obacht.Player = function(type, theme) {
     /* PLAYER MODEL */
     //////////////////
 
-    if (type === 'own') {
-        this.x = obacht.options.player.own.x;
-        this.y = obacht.options.player.own.y;
+    if (location === 'bottom') {
+        this.x = obacht.options.player.location.bottom.x;
+        this.y = obacht.options.player.location.bottom.y;
         this.rotation = 0;
         this.jumpHeight = -obacht.options.player.general.jumpHeight;
     }
 
-    if (type === 'enemy') {
-        this.x = obacht.options.player.enemy.x;
-        this.y = obacht.options.player.enemy.y;
+    if (location === 'top') {
+        this.x = obacht.options.player.location.top.x;
+        this.y = obacht.options.player.location.top.y;
         this.rotation = 180;
         this.jumpHeight = obacht.options.player.general.jumpHeight;
     }
 
-    /**
-     * Current Player Health
-     *
-     * @type {Number}
-     */
+    /** Player Health */
     this.health = 3;
 
     /** Character Graphic */
@@ -89,21 +85,23 @@ obacht.Player = function(type, theme) {
     /* SUBSCRIBE TO EVENTS */
     /////////////////////////
 
-    if (type === "own") {
-        obacht.playerController.events.subscribe('player_jump', function() {
-            self.jump();
-        });
-
-        obacht.playerController.events.subscribe('player_crouch', function() {
-            self.crouch();
-        });
-
-        obacht.playerController.events.subscribe('player_standUp', function() {
-            self.standUp();
+    // Sets up event subscription for own player.
+    if (location === 'bottom') {
+        obacht.playerController.events.subscribe('own_player_action', function(data) {
+            if (data.type === 'jump') {
+                self.jump();
+            }
+            if (data.type === 'crouch') {
+                self.crouch();
+            }
+            if (data.type === 'standUp') {
+                self.standUp();
+            }
         });
     }
 
-    if (type === "enemy") {
+    // Sets up event subscription for enemy player.
+    if (location === 'top') {
         obacht.mp.events.subscribe('player_action', function(data) {
             if (data.type === 'jump') {
                 self.jump();

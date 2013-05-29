@@ -20,7 +20,7 @@ goog.require('obacht.Bonus');
  * @extends lime.Scene
  */
 obacht.Game = function() {
-   
+
     console.log('New Game();');
 
     //Game Time
@@ -28,10 +28,10 @@ obacht.Game = function() {
     setInterval(function(){clock();},1000);
     function clock(){
        time+=1;
-       console.log('clock:'+ time + 's');
-    } 
- 
-        
+       //console.log('clock:'+ time + 's');
+    }
+
+
     //////////////////////////////
     // Game Model (state)       //
     //////////////////////////////
@@ -45,9 +45,9 @@ obacht.Game = function() {
     this.enemyWorld = new obacht.World('enemy', this.theme);
     this.sky = new lime.Sprite().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT).setFill(this.theme.world.files.sky).setPosition(0, 0).setAnchorPoint(0, 0);
 
-    this.ownPlayer = new obacht.Player('own', this.theme);
-    this.enemyPlayer = new obacht.Player('enemy', this.theme);
-    
+    this.ownPlayer = new obacht.Player('bottom', this.theme);
+    this.enemyPlayer = new obacht.Player('top', this.theme);
+
     this.bonusButton = new obacht.Bonus('snake');
 
 
@@ -83,5 +83,5 @@ obacht.Game = function() {
 };
 
 obacht.Game.prototype = {
-         
+
 };

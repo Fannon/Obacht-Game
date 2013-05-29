@@ -47,6 +47,7 @@ obacht.MultiplayerService = function(serverUrl) {
     this.events = new goog.pubsub.PubSub();
 
 
+
     //////////////////////////////
     // Communication Events     //
     //////////////////////////////
@@ -157,7 +158,7 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.socket.on('player_action', function (data) {
         console.log('player_action: ' + data.type);
-        self.events.publish('player_action', data.type, data.data);
+        self.events.publish('player_action', data);
     });
 
     /**
