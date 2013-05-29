@@ -17,7 +17,6 @@ goog.require('lime.animation.RotateBy');
  * @constructor
  */
 obacht.World = function(type, theme) {
-    console.log('New World()');
 
     this.theme = theme;
 

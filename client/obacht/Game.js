@@ -21,7 +21,6 @@ goog.require('obacht.Bonus');
  */
 obacht.Game = function() {
 
-    console.log('New Game();');
 
     //Game Time
     var time = 0;
@@ -38,7 +37,6 @@ obacht.Game = function() {
     var self = this;
 
     this.theme = obacht.themes[obacht.mp.roomDetail.theme];
-    this.roomDetail = {};
 
     this.ownWorld = new obacht.World('own', this.theme);
     this.enemyWorld = new obacht.World('enemy', this.theme);
@@ -54,14 +52,9 @@ obacht.Game = function() {
     // Game Events              //
     //////////////////////////////
 
-    //
     obacht.mp.events.subscribe('bonus', function(type) {
         self.bonusButton = new obacht.Bonus(type);
         self.layer.appendChild(self.bonusButton.layer);
-    });
-    // Update RoomDetails if Server sends new one
-    obacht.mp.events.subscribe('room_detail', function(data) {
-        self.roomDetail = data;
     });
 
     // Decrement SpeedFactor (lower is faster)
@@ -89,7 +82,6 @@ obacht.Game = function() {
         this.generator.startThrowTrap();
         this.generator.startThrowBonus();
     }
-
 
     this.layer.appendChild(obacht.playerController.layer);
 

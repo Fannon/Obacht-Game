@@ -399,7 +399,6 @@ obacht.MultiplayerService.prototype.getRooms = function() {
 obacht.MultiplayerService.prototype.getRandomTheme = function() {
     "use strict";
     var availableThemes = Object.keys(obacht.themes);
-    console.dir(availableThemes);
     var rand = Math.floor(availableThemes.length * Math.random());
     return availableThemes[rand];
 };
