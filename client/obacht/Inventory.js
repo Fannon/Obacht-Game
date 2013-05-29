@@ -68,7 +68,7 @@ obacht.Inventory = function() {
     });
     obacht.mp.events.subscribe('bonus', function(type, success) {
         console.log('receive bonus: Type: ' + type + 'Success: ' + success);
-        self.checkBoni(type, success);
+        self.checkBoni(success, type);
     });
 
 };
@@ -104,6 +104,7 @@ obacht.Inventory.prototype = {
      */
     checkBoni: function(success, type){
         "use strict";
+        console.log('checkBoni');
         if(success === true) {
             this.fillTray(type);
         }
@@ -117,6 +118,7 @@ obacht.Inventory.prototype = {
     * @param {Object} type Type of trap
     */
     fillTray: function(type){
+        console.log('fillTray');
         "use strict";
         for(var i = 0; i < this.trays.length; i++) {
             if(this.trays[i].active === false) {
