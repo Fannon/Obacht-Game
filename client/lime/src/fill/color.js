@@ -1,5 +1,6 @@
 goog.provide('lime.fill.Color');
 
+goog.require('goog.array');
 goog.require('goog.color');
 
 goog.require('goog.color.alpha');
@@ -15,7 +16,7 @@ lime.fill.Color = function(clr) {
     lime.fill.Fill.call(this);
 
     this.a = 1;
-    
+
     this.setColor(clr);
 
 };
@@ -143,4 +144,19 @@ lime.fill.Color.prototype.clone = function() {
     c.a = this.a;
     c.str = this.str;
     return c;
+};
+
+/**
+ * Compares a {lime.fill.Color} to the calling {lime.fill.Color}
+ * instance for equality of RGBa values.
+ * @param {lime.fill.Color} a A Color instance.
+ * @return {boolean} True if the RGBa or hex str values are equal
+ */
+lime.fill.Color.prototype.equals = function(a) {
+    return a && a instanceof lime.fill.Color && (
+        this.str === a.str || (
+            a.r !== undefined && a.r === this.r && a.g === this.g &&
+            a.b === this.b && r.a === this.a
+        ) || goog.array.equals(this.getRgba(), a.getRgba())
+    );
 };

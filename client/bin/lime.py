@@ -17,6 +17,7 @@ from os.path import join, splitext, split, exists
 from shutil import copyfile
 from datetime import datetime
 import base64
+import json
 
 if sys.version_info[0]==3:
     from urllib.request import urlretrieve
@@ -229,7 +230,7 @@ def genSoy(path):
             infile= open(path,'r')
             outfile = open(path+'.js','w')
             outfile.write('goog.provide(\'lime.ASSETS.'+fname+'\');\ngoog.require(\'soy\');\n\n'+ \
-                'lime.ASSETS.'+fname+'.data = function(opt_data) { \nreturn '+infile.read()+';\n}')
+                'lime.ASSETS.'+fname+'.data = function(opt_data) { \nreturn JSON.parse("'+ json.dumps(json.loads(infile.read()), separators=(',',':')).replace("\"", "\\\"")+'");\n}')
             infile.close()
             outfile.close()
 
@@ -288,30 +289,55 @@ def build(name,options):
     if options.externs_file:
         for i, opt in enumerate(options.externs_file):
             call+=" -f --externs="+opt
-            
+
+    outname = options.output
+    if options.output[-3:] != '.js':
+        outname += '.js' 
+    
     if options.map_file:
-        call+=" -f --formatting=PRETTY_PRINT -f --create_source_map='"+options.map_file+"'"
+        call+=" -f --formatting=PRETTY_PRINT -f --source_map_format=V3 -f --create_source_map="+outname+'.map'
     else:
         call+=" -f --define='goog.DEBUG=false'"
+        
+    if options.use_strict:
+        call+=" -f --language_in=ECMASCRIPT5_STRICT"
         
     if options.define:
         for i, opt in enumerate(options.define):
             call+=" -f --define='"+opt+"'"
-        
-    outname = options.output    
-        
+
     if options.output:
-        if options.output[-3:] == '.js':
-            outname = options.output[:-3]
-        call+=' --output_file="'+outname+'.js"'
+        call+=' --output_file="'+outname+'"'
         if not exists(os.path.dirname(outname)):
             os.makedirs(os.path.dirname(outname))
-        
+
+    errhandle = 0
+    try:
+        subprocess.check_call(call, shell=True);
+    except subprocess.CalledProcessError:
+        # handle error later
+        errhandle = 1
+        pass
     
-    subprocess.call(call,shell=True);
+    if options.map_file:
+        map_filename = outname+'.map'
+        map_file = open(map_filename, 'r+')
+
+        # make source paths relative in map file
+        data = json.load(map_file)
+        data['sources'] = map(lambda p: os.path.relpath(p, os.path.dirname(map_filename)), data['sources'])
+        map_file.close()
+        map_file = open(map_filename, 'w')
+        json.dump(data, map_file)
+        map_file.close()
+    
+        # add path to map file
+        out_file = open(outname, 'a')
+        out_file.write('\n//@ sourceMappingURL=' + os.path.relpath(map_filename, os.path.dirname(outname)))
+        out_file.close()
     
     if options.output and options.preload:
-        name = os.path.basename(outname)
+        name = os.path.basename(outname)[:-3]
         target = os.path.dirname(outname)
         source = os.path.join(basedir,'lime/templates/preloader')
 
@@ -339,7 +365,8 @@ def build(name,options):
                             line = re.sub(r'# Updated on:.*','# Updated on: '+datetime.now().strftime("%Y-%m-%d %H:%M:%S"),line)
                         print(line.rstrip())
         
-    
+    if errhandle == 1:
+        exit(1)
 
 def main():
     """The entrypoint for this script."""
@@ -363,8 +390,11 @@ Commands:
     parser.add_option("-o", "--output", dest="output", action="store", type="string",
                       help="Output file for build result")
     
-    parser.add_option("-m", "--map", dest="map_file", action="store",
+    parser.add_option("-m", "--map", dest="map_file", action="store_true",
                       help="Build result sourcemap for debugging. Also turns on pretty print.")
+
+    parser.add_option("-s", "--use-strict", dest="use_strict", action="store_true",
+                    help="Use EcmaScript5 strict mode.")
                       
     parser.add_option("-p", "--preload", dest="preload", action="store", type="string",
                         help="Generate preloader code with given callback as start point.")
