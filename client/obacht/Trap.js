@@ -16,17 +16,16 @@ goog.require('lime.Sprite');
  *
  * @constructor
  */
-obacht.Trap = function(theme, type) {
+obacht.Trap = function(type) {
 
-    console.log('New Trap();');
 
     ////////////////
     // ATTRIBUTES //
     ////////////////
     var self = this;
     this.type = type;
-    this.theme = theme;
-    this.fill = obacht.themes[this.theme].traps[this.type]+'.png';
+    this.fill = 'assets/themes/' + obacht.mp.roomDetail.theme + '/traps/' + [this.type] + '.png';
+    console.log('New Trap: ' + this.fill);
 
     ////////////////////
     // LIMEJS OBJECTS //

@@ -19,30 +19,27 @@ var randomTimeCalculation;
 obacht.Generator = function(layer, ownPlayer) {
     "use strict";
 
-//    var trap = new obacht.Trap(obacht.mp.roomDetail.theme, 'scarecrow');
-    var trap = new obacht.Trap('meadow', 'scarecrow');
-
     this.trapInterval = undefined;
     this.bonusInterval = undefined;
 
-    layer.appendChild(trap.layer);
+//    layer.appendChild(trap.layer);
 
     //Startwinkel & Winkelgeschwindigkeit
-    var startwinkel = 45;
-    var winkel = startwinkel;
-    var winkelgeschwindigkeit = 0.05;
-    //Startposition
-    var groundx = 200;
-    var groundy = 1490;
-    var faktor = 950;
-    faktor = 1070;
+//    var startwinkel = 45;
+//    var winkel = startwinkel;
+//    var winkelgeschwindigkeit = 0.05;
+//    //Startposition
+//    var groundx = 200;
+//    var groundy = 1490;
+//    var faktor = 950;
+//    faktor = 1070;
 
     obacht.mp.events.subscribe('game_over', function(data){
         this.stopThrowTrap();
         this.stopThrowBonus();
     });
 
-    lime.scheduleManager.schedule(function(dt) {
+//    lime.scheduleManager.schedule(function(dt) {
             /*
         var position = trap.character.getPosition();
         position.x = Math.sin(winkel) * faktor + groundx;
@@ -61,7 +58,7 @@ obacht.Generator = function(layer, ownPlayer) {
 //
 //        winkel = winkel + winkelgeschwindigkeit;
 
-    }, trap);
+//    }, trap);
 
 };
 
@@ -74,6 +71,7 @@ obacht.Generator.prototype = {
     },
 
     getRandomTrap: function() {
+        "use strict";
         var traps = obacht.themes[obacht.mp.roomDetail.theme].traps;
         var availableTraps = Object.keys(traps);
         var rand = Math.floor(availableTraps.length * Math.random());
@@ -100,13 +98,13 @@ obacht.Generator.prototype = {
        "use strict";
         var self = this;
 
-        self.trapInterval = setInterval(function() {
+        self.bonusInterval = setInterval(function() {
            obacht.mp.throwBonus(self.getRandomTrap());
         }, self.getRandomTime(obacht.options.gameplay.generateBoniMinInterval, obacht.options.gameplay.generateBoniMaxInterval));
     },
 
     stopThrowBonus: function() {
         "use strict";
-        clearInterval(this.trapInterval);
+        clearInterval(this.bonusInterval);
     }
 };
