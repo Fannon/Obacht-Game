@@ -47,6 +47,10 @@ obacht.Game = function() {
 
     this.speedFactor = obacht.options.gameplay.initialSpeedFactor;
 
+    // Decrement SpeedFactor (lower is faster)
+    setInterval(function(){
+        self.speedFactor -= obacht.options.gameplay.decrementSpeedFactor;
+    }, obacht.options.gameplay.decrementSpeedFactorTime);
 
     //////////////////////////////
     // Game Events              //
@@ -57,11 +61,10 @@ obacht.Game = function() {
         self.layer.appendChild(self.bonusButton.layer);
     });
 
-    // Decrement SpeedFactor (lower is faster)
-    setInterval(function(){
-        self.speedFactor -= obacht.options.gameplay.decrementSpeedFactor;
-    }, obacht.options.gameplay.decrementSpeedFactorTime);
-
+    obacht.mp.events.subscribe('trap', function(type) {
+        self.trapFigure = new obacht.Trap(type);
+        self.layer.appendChild(self.trapFigure.layer);
+    });
 
     //////////////////////////////
     // Game View                //

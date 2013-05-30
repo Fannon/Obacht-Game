@@ -22,44 +22,10 @@ obacht.Generator = function(layer, ownPlayer) {
     this.trapInterval = undefined;
     this.bonusInterval = undefined;
 
-//    layer.appendChild(trap.layer);
-
-    //Startwinkel & Winkelgeschwindigkeit
-//    var startwinkel = 45;
-//    var winkel = startwinkel;
-//    var winkelgeschwindigkeit = 0.05;
-//    //Startposition
-//    var groundx = 200;
-//    var groundy = 1490;
-//    var faktor = 950;
-//    faktor = 1070;
-
     obacht.mp.events.subscribe('game_over', function(data){
         this.stopThrowTrap();
         this.stopThrowBonus();
     });
-
-//    lime.scheduleManager.schedule(function(dt) {
-            /*
-        var position = trap.character.getPosition();
-        position.x = Math.sin(winkel) * faktor + groundx;
-        position.y = Math.cos(winkel) * faktor + groundy;
-        trap.character.setPosition(position);
-              */
-//        var Collision = new obacht.Collision();
-
-//        if (Collision.rect(ownPlayer, trap) === true) {
-//            //console.log('Kollsion mit User');
-//            winkel = startwinkel;
-//        } else if (trap.character.getPosition().x < 0) {
-//            console.log('Gegen die Wand');
-//            winkel = startwinkel;
-//        }
-//
-//        winkel = winkel + winkelgeschwindigkeit;
-
-//    }, trap);
-
 };
 
 obacht.Generator.prototype = {
