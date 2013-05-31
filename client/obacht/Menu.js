@@ -444,8 +444,8 @@ obacht.Menu.prototype = {
 
         obacht.playerController = new obacht.PlayerController();
         obacht.currentGame = new obacht.Game();
+        gameScene.appendChild(obacht.playerController.layer);
         gameScene.appendChild(obacht.currentGame.layer);
-
     },
 
     /**
