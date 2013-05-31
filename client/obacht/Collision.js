@@ -3,7 +3,6 @@
 
 goog.provide('obacht.Collision');
 goog.require('obacht.themes');
-//goog.require('obacht.Game');
 
 /**
  * Collision Detector

@@ -16,6 +16,7 @@ obacht.themes = {
                 sky: 'assets/themes/water/sky.jpg'
             }
         },
+        sky: 'background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#64a2eb), color-stop(46%,#002f99), color-stop(55%,#002f99), color-stop(100%,#65a0ec));',
         traps: {
             //Krebs
             crab: {

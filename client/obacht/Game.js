@@ -38,9 +38,12 @@ obacht.Game = function() {
 
     this.theme = obacht.themes[obacht.mp.roomDetail.theme];
 
+    // Set Background Gradient
+    this.setBackground(obacht.mp.roomDetail.theme);
+
+
     this.ownWorld = new obacht.World('own', this.theme);
     this.enemyWorld = new obacht.World('enemy', this.theme);
-    this.sky = new lime.Sprite().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT).setFill(this.theme.world.files.sky).setPosition(0, 0).setAnchorPoint(0, 0);
 
     this.ownPlayer = new obacht.Player('bottom', this.theme);
     this.enemyPlayer = new obacht.Player('top', this.theme);
@@ -71,7 +74,7 @@ obacht.Game = function() {
     //////////////////////////////
 
     this.layer = new lime.Layer();
-    this.layer.appendChild(this.sky);
+//    this.layer.appendChild(this.sky);
     this.layer.appendChild(this.enemyWorld.layer);
     this.layer.appendChild(this.ownWorld.layer);
     this.layer.appendChild(this.enemyPlayer.layer);
@@ -88,5 +91,9 @@ obacht.Game = function() {
 };
 
 obacht.Game.prototype = {
-
+    setBackground: function(theme) {
+        console.log('Set Background to .' + theme);
+        var limeDirectorElement = document.getElementsByClassName('lime-director')[0];
+        limeDirectorElement.setAttribute("class", 'lime-director ' + theme);
+    }
 };

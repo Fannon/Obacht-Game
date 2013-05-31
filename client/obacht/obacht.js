@@ -50,14 +50,24 @@ obacht.start = function() {
 obacht.cleanUp = function() {
     "use strict";
 
+    // Clear running Intervals
     clearInterval(obacht.intervals.trapInterval);
     clearInterval(obacht.intervals.bonusInterval);
 
+    // Clear Event Subscriptions
     obacht.mp.events.clear('room_detail');
     obacht.mp.events.clear('bonus');
     obacht.mp.events.clear('trap');
     obacht.mp.events.clear('receive_bonus');
     obacht.mp.events.clear('game_over');
+
+    // Reset Friend, if player has one
+    obacht.mp.friend = false;
+
+    // Leave Room if still connected to one
+    if (obacht.mp.roomDetail.pin) {
+        obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);
+    }
 };
 
 // this is required for outside access after code is compiled in ADVANCED_COMPILATIONS mode

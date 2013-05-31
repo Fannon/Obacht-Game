@@ -91,24 +91,24 @@ obacht.server.io.sockets.on('connection', function(socket) {
      * Draws new private PIN (closed Room) and sends it back to Client
      * @event
      */
-    socket.on('new_room', function(roomDetail) {
+    socket.on('new_room', function(data) {
 
         socket.pin = false;
-        var pin = obacht.server.rooms.getNewPin(roomDetail.closed);
+        var pin = obacht.server.rooms.getNewPin(data.closed);
 
-        roomDetail.pin = pin;
+        data.pin = pin;
 
-        obacht.server.rooms.addRoom(pin, roomDetail);
+        obacht.server.rooms.addRoom(pin, data);
         socket.emit('room_invite', {
             pin: pin,
-            closed: roomDetail.closed
+            closed: data.closed
         });
 
-        if (roomDetail.friend) {
+        if (data.friend) {
             log.info('New Room Invite for a Friend');
-            obacht.server.io.sockets.socket(roomDetail.friend).emit('room_invite', {
+            obacht.server.io.sockets.socket(data.friend).emit('room_invite', {
                 pin: pin,
-                closed: roomDetail.closed
+                closed: data.closed
             });
         }
 

@@ -168,10 +168,7 @@ obacht.Menu.prototype = {
 
         // Reset Variables and Event Listeners
         obacht.cleanUp();
-        obacht.mp.friend = false;
-        if (obacht.mp.roomDetail) {
-            obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);
-        }
+
 
         var sceneMenu = new lime.Scene();
 
@@ -700,6 +697,7 @@ obacht.Menu.prototype = {
 
 
         obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);
+        obacht.cleanUp();
 
 
         ///////////////////////////////
@@ -709,10 +707,10 @@ obacht.Menu.prototype = {
         var createButton = new obacht.Menu.Button(-910, 400, 1533, 1087, 400, 480, 450, 160, layerMenu);
         var createLabel = new obacht.Menu.Label('Play Again', 60, 400, 485, 400, 70, layerMenu);
 
+        var alreadyJoined = false;
 
-        var serverReady = false;
         obacht.mp.events.subscribeOnce('join_room', function(data){
-            serverReady = true;
+            alreadyJoined = true;
         });
 
         goog.events.listen(createButton, ['touchstart', 'mousedown'], function() {
@@ -726,23 +724,23 @@ obacht.Menu.prototype = {
                         // If player is the host, create new Game
                         console.log('Creating New Custom Game with Friend from last Game');
                         obacht.mp.newRoom(obacht.mp.getRandomTheme(), obacht.mp.roomDetail.options, true, obacht.mp.friend);
-                        if (serverReady) {
+                        self.waitForPlayerScene();
+                        if (alreadyJoined) {
                             obacht.mp.playerReady();
                         } else {
                             obacht.mp.events.subscribeOnce('join_room', function(){
                                 obacht.mp.playerReady();
                             });
                         }
-                        self.waitForPlayerScene();
                     } else {
-                        if (serverReady) {
+                        self.waitForPlayerScene();
+                        if (alreadyJoined) {
                             obacht.mp.playerReady();
                         } else {
                             obacht.mp.events.subscribeOnce('join_room', function(){
                                 obacht.mp.playerReady();
                             });
                         }
-                        self.waitForPlayerScene();
                     }
                 } else {
                     // New Random Game

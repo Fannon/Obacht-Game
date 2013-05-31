@@ -28,7 +28,7 @@ obacht.MultiplayerService = function(serverUrl) {
     /** Player ID */
     this.pid = false;
     /** RoomDetail Object */
-    this.roomDetail = false;
+    this.roomDetail = {};
     /** Friend Player, if connected to one */
     this.friend = false;
     /** Socket.io */
@@ -106,7 +106,6 @@ obacht.MultiplayerService = function(serverUrl) {
 
         console.log('Room invite received: PIN: #' + data.pin);
 
-
         if (data.pin === 0) {
             console.log('Create new random Room.');
 
@@ -114,12 +113,12 @@ obacht.MultiplayerService = function(serverUrl) {
             console.log('Random Theme: ' + theme);
 
             self.newRoom(theme, data.options, false, false);
-            self.events.publish('new_room');
+            self.events.publish('new_room', data);
 
         } else {
             console.log('Joining Room ' + data.pin);
             self.joinRoom(data.pin, data.closed);
-            self.events.publish('join_room');
+            self.events.publish('join_room', data);
         }
     });
 
