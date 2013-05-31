@@ -110,8 +110,7 @@ obacht.Inventory.prototype = {
         console.log('checkBoni');
         if(success === true) {
             this.fillTray(type);
-        }
-        if(success === false) {
+        } else {
             this.setFail();
         }
     },

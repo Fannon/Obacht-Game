@@ -22,6 +22,7 @@ obacht.Bonus = function(type) {
 //	this.fill = obacht.options.bonus.general.path + this.type + '.png';
     this.fill = 'assets/themes/' + obacht.mp.roomDetail.theme + '/boni/' + this.type + '.png';
 	console.log("new Bonus: " + this.fill);
+    this.clicked = false;
 
 	//this.time = new Date();
 	this.drawtime = 0;
@@ -62,14 +63,16 @@ obacht.Bonus.prototype = {
         "use strict";
         var self = this;
         setTimeout(function(){
-           self.noReaction();
-        },obacht.options.bonus.general.displayTime);
+            if(!self.clicked) {
+                self.noReaction();
+            }
+        }, obacht.options.bonus.general.displayTime);
     },
 
     noReaction: function() {
         "use strict";
         this.deleteBonus();
-        var reactiontime = this.drawtime + obacht.options.bonus.general.displayTime;
+        var reactiontime = 9999;
         obacht.mp.checkReactiontime(this.type, reactiontime);
     },
 
@@ -86,6 +89,7 @@ obacht.Bonus.prototype = {
      */
     checkReactiontime: function() {
         "use strict";
+        this.clicked = true;
         this.clicktime = this.getTime();
         var reactiontime = this.clicktime - this.drawtime;
         obacht.mp.checkReactiontime(this.type, reactiontime);
@@ -98,9 +102,8 @@ obacht.Bonus.prototype = {
      */
     getTime: function() {
         "use strict";
-        var time = new Date(),
-            ms = time.getTime();
-        return ms;
+        var time = new Date();
+        return time.getTime();
     }
 
 };

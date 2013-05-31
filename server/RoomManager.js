@@ -346,6 +346,8 @@ RoomManager.prototype.checkReactiontime = function(socket, data) {
 
         if (room.attributes.creatingPlayerReactiontime && room.attributes.joiningPlayerReactiontime) {
 
+            log.info('--- Check Reactiontime: ' + room.attributes.creatingPlayerReactiontime + ' vs. ' + room.attributes.joiningPlayerReactiontime);
+
             // Compare and declare the winner
             if (room.attributes.creatingPlayerReactiontime === room.attributes.joiningPlayerReactiontime) {
                 log.debug('Player Reactiontime: Tie or both Players missed');
@@ -362,6 +364,7 @@ RoomManager.prototype.checkReactiontime = function(socket, data) {
             });
 
             return receiveBonus;
+
         } else {
             // Missing at least one ReactionTime. Waiting for other Player.
             return false;
