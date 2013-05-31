@@ -155,7 +155,7 @@ obacht.MultiplayerService = function(serverUrl) {
      * Player took an action
      */
     this.socket.on('player_action', function (data) {
-        console.log('player_action: ' + data.type);
+        console.log('player_action: ' + data.action);
         self.events.publish('player_action', data);
     });
 
@@ -184,8 +184,7 @@ obacht.MultiplayerService = function(serverUrl) {
      * Receives a trap
      */
     this.socket.on('trap', function (data) {
-        console.log('Trap Data received');
-        console.dir(data);
+        console.log('Trap received: ' + data.type);
         self.events.publish('trap', data);
     });
 
@@ -291,13 +290,13 @@ obacht.MultiplayerService.prototype.playerReady = function () {
 /**
  * Broadcast Player Action
  *
- * @param  {String} type Type of Player Action, i.e. 'jump'
+ * @param  {String} action Action of Player, i.e. 'jump'
  * @param  {Object} data ActionData
  */
-obacht.MultiplayerService.prototype.playerAction = function(type, data) {
+obacht.MultiplayerService.prototype.playerAction = function(action, data) {
     "use strict";
     this.socket.emit('player_action', {
-        type: type,
+        action: action,
         data: data
     });
 };
@@ -316,7 +315,6 @@ obacht.MultiplayerService.prototype.playerStatus = function (pid, health) {
     });
 };
 
-
 /**
  * Broadcast Throw Bonus
  *
@@ -326,6 +324,20 @@ obacht.MultiplayerService.prototype.throwBonus = function (type) {
     "use strict";
     this.socket.emit('bonus', {
         type: type
+    });
+};
+
+/**
+ * Broadcast Throw Trap
+ *
+ * @param {String} type Type of the Trap
+ * @param {Object} data Trapdata, i.e. distance
+ */
+obacht.MultiplayerService.prototype.throwTrap = function(type, data) {
+    "use strict";
+    this.socket.emit('trap', {
+        type: type,
+        data: data
     });
 };
 
