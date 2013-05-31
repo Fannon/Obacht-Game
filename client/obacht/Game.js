@@ -48,7 +48,7 @@ obacht.Game = function() {
     this.speedFactor = obacht.options.gameplay.initialSpeedFactor;
 
     // Decrement SpeedFactor (lower is faster)
-    setInterval(function(){
+    setInterval(function() {
         self.speedFactor -= obacht.options.gameplay.decrementSpeedFactor;
     }, obacht.options.gameplay.decrementSpeedFactorTime);
 
@@ -61,8 +61,8 @@ obacht.Game = function() {
         self.layer.appendChild(self.bonusButton.layer);
     });
 
-    obacht.mp.events.subscribe('trap', function(type) {
-        self.trapFigure = new obacht.Trap(type);
+    obacht.mp.events.subscribe('trap', function(data) {
+        self.trapFigure = new obacht.Trap(data.type);
         self.layer.appendChild(self.trapFigure.layer);
     });
 
@@ -80,7 +80,7 @@ obacht.Game = function() {
 
     // Just start the generator if player is the creating Player
     if (obacht.mp.pid === obacht.mp.roomDetail.creatingPlayerId) {
-        this.generator = new obacht.Generator(this.layer, this.ownPlayer);
+        this.generator = new obacht.Generator(this.speedFactor);
         this.generator.startThrowTrap();
         this.generator.startThrowBonus();
     }

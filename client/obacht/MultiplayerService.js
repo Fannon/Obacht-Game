@@ -46,8 +46,6 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.events = new goog.pubsub.PubSub();
 
-
-
     //////////////////////////////
     // Communication Events     //
     //////////////////////////////
@@ -180,15 +178,6 @@ obacht.MultiplayerService = function(serverUrl) {
             console.log('You lost Bonus: ' + data.type);
             self.events.publish('receive_bonus', data.type, false);
         }
-    });
-
-    /**
-     * Receives an item
-     */
-    this.socket.on('item', function (data) {
-        console.log('Item Data received');
-        console.dir(data);
-        self.events.publish('item', data);
     });
 
     /**
@@ -401,4 +390,8 @@ obacht.MultiplayerService.prototype.getRandomTheme = function() {
     var availableThemes = Object.keys(obacht.themes);
     var rand = Math.floor(availableThemes.length * Math.random());
     return availableThemes[rand];
+};
+obacht.MultiplayerService.prototype.resetEvents = function() {
+    "use strict";
+    this.events = new goog.pubsub.PubSub();
 };

@@ -52,6 +52,7 @@ obacht.Menu = function() {
          */
         obacht.mp.events.subscribeOnce('game_over', function(data){
             self.gameoverScene(data);
+            obacht.cleanUp();
         });
     });
 
@@ -136,7 +137,7 @@ obacht.Menu.prototype = {
         });
 
         // Loading ... Label
-        // TODO: Performanter lösen.. nur wie?
+        // TODO: Loading GIF
         var loadingText = 'Loading ';
         var loadingStatus = '.';
         var loadingLabel = new obacht.Menu.Label(loadingText + loadingStatus, 40, 740, 520, 400, 90, layerMenu).setAlign('left');
@@ -166,7 +167,7 @@ obacht.Menu.prototype = {
         var self = this;
 
         // Reset Variables and Event Listeners
-        obacht.mp.events.clear('room_detail');
+        obacht.cleanUp();
         obacht.mp.friend = false;
         if (obacht.mp.roomDetail) {
             obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);

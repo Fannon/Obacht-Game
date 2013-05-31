@@ -346,7 +346,7 @@ RoomManager.prototype.checkReactiontime = function(socket, data) {
 
         if (room.attributes.creatingPlayerReactiontime && room.attributes.joiningPlayerReactiontime) {
 
-            log.info('--- Check Reactiontime: ' + room.attributes.creatingPlayerReactiontime + ' vs. ' + room.attributes.joiningPlayerReactiontime);
+            log.debug('--- Check Reactiontime: ' + room.attributes.creatingPlayerReactiontime + ' vs. ' + room.attributes.joiningPlayerReactiontime);
 
             // Compare and declare the winner
             if (room.attributes.creatingPlayerReactiontime === room.attributes.joiningPlayerReactiontime) {
