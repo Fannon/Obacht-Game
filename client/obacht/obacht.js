@@ -53,6 +53,7 @@ obacht.cleanUp = function() {
     // Clear running Intervals
     clearInterval(obacht.intervals.trapInterval);
     clearInterval(obacht.intervals.bonusInterval);
+    clearInterval(obacht.intervals.speedFactorInterval);
 
     // Clear Event Subscriptions
     obacht.mp.events.clear('room_detail');

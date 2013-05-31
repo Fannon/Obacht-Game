@@ -8,6 +8,7 @@ goog.require('goog.pubsub.PubSub');
 
 // Obacht Requirements
 goog.require('obacht.World');
+goog.require('obacht.TrapManager');
 goog.require('obacht.Player');
 goog.require('obacht.Generator');
 goog.require('obacht.Bonus');
@@ -38,23 +39,19 @@ obacht.Game = function() {
     var self = this;
 
     this.theme = obacht.themes[obacht.mp.roomDetail.theme];
+    this.speedFactor = obacht.options.gameplay.initialSpeedFactor;
 
-    // Set Background Gradient
     this.setBackground(obacht.mp.roomDetail.theme);
-
 
     this.ownWorld = new obacht.World('own', this.theme);
     this.enemyWorld = new obacht.World('enemy', this.theme);
 
+    this.ownTrapManager = new obacht.TrapManager('own', this.ownWorld);
+    this.enemyTrapManager = new obacht.TrapManager('enemy', this.enemyWorld);
+
     this.ownPlayer = new obacht.Player('bottom', this.theme);
     this.enemyPlayer = new obacht.Player('top', this.theme);
 
-    this.speedFactor = obacht.options.gameplay.initialSpeedFactor;
-
-    // Decrement SpeedFactor (lower is faster)
-    setInterval(function() {
-        self.speedFactor -= obacht.options.gameplay.decrementSpeedFactor;
-    }, obacht.options.gameplay.decrementSpeedFactorTime);
 
     //////////////////////////////
     // Game Events              //
@@ -65,17 +62,17 @@ obacht.Game = function() {
         self.layer.appendChild(self.bonusButton.layer);
     });
 
-    obacht.mp.events.subscribe('trap', function(data) {
-        self.trapFigure = new obacht.Trap(data.type);
-        self.ownWorld.ground1.appendChild(self.trapFigure.layer);
-    });
+
+    // Decrement SpeedFactor (lower is faster)
+    obacht.intervals.speedFactorInterval = setInterval(function() {
+        self.speedFactor -= obacht.options.gameplay.decrementSpeedFactor;
+    }, obacht.options.gameplay.decrementSpeedFactorTime);
 
     //////////////////////////////
     // Game View                //
     //////////////////////////////
 
     this.layer = new lime.Layer();
-//    this.layer.appendChild(this.sky);
     this.layer.appendChild(this.enemyWorld.layer);
     this.layer.appendChild(this.ownWorld.layer);
     this.layer.appendChild(this.enemyPlayer.layer);

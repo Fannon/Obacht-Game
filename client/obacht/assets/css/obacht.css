@@ -1,14 +1,31 @@
-@import url("norm.css");
+/* Normalize CSS */
+* {
+    vertical-align: baseline;
+    font-family: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-weight: normal;
+    border: none;
+    padding: 0;
+    margin: 0;
+    line-height: 1.25;
+    text-decoration: none;
+    -webkit-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+}
 
 /**
  * 	OBACHT STYLES
  */
-
 html {
     background-color: #000000;
     letter-spacing: 3px;
 }
+
+
 /**
+ * Themes Background Gradients
+ *
  * Tool for gradient - set angle to 24 degree
  * http://www.colorzilla.com/gradient-editor/
 */
@@ -22,7 +39,6 @@ html {
     background: linear-gradient(24deg,  #ffffff 0%,#fefced 30%,#fde7b5 47%,#fde7b5 53%,#fefced 70%,#ffffff 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
-
 .meadow {
     background: #b4d4ed; /* Old browsers */
     background: -moz-linear-gradient(24deg,  #ffffff 0%, #f5fafe 30%, #b4d4ed 47%, #b4d4ed 53%, #f5fafe 70%, #ffffff 100%); /* FF3.6+ */
@@ -33,7 +49,6 @@ html {
     background: linear-gradient(24deg,  #ffffff 0%,#f5fafe 30%,#b4d4ed 47%,#b4d4ed 53%,#f5fafe 70%,#ffffff 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
-
 .water {
     background: #002cad; /* Old browsers */
     background: -moz-linear-gradient(24deg,  #66a4ed 0%, #1b4db0 30%, #002cad 48%, #002cad 52%, #1b4db0 70%, #66a4ed 100%); /* FF3.6+ */
