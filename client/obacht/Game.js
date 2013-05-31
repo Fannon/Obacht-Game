@@ -11,6 +11,7 @@ goog.require('obacht.World');
 goog.require('obacht.Player');
 goog.require('obacht.Generator');
 goog.require('obacht.Bonus');
+goog.require('obacht.Trap');
 
 
 /**
@@ -66,7 +67,7 @@ obacht.Game = function() {
 
     obacht.mp.events.subscribe('trap', function(data) {
         self.trapFigure = new obacht.Trap(data.type);
-        self.layer.appendChild(self.trapFigure.layer);
+        self.ownWorld.ground1.appendChild(self.trapFigure.layer);
     });
 
     //////////////////////////////
