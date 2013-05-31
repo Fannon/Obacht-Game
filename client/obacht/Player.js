@@ -84,13 +84,13 @@ obacht.Player = function(location, theme) {
     // Sets up event subscription for own player.
     if (location === 'bottom') {
         obacht.playerController.events.subscribe('own_player_action', function(data) {
-            if (data.type === 'jump') {
+            if (data.action === 'jump') {
                 self.jump();
             }
-            if (data.type === 'crouch') {
+            if (data.action === 'crouch') {
                 self.crouch();
             }
-            if (data.type === 'standUp') {
+            if (data.action === 'standUp') {
                 self.standUp();
             }
         });
@@ -99,13 +99,13 @@ obacht.Player = function(location, theme) {
     // Sets up event subscription for enemy player.
     if (location === 'top') {
         obacht.mp.events.subscribe('player_action', function(data) {
-            if (data.type === 'jump') {
+            if (data.action === 'jump') {
                 self.jump();
             }
-            if (data.type === 'crouch') {
+            if (data.action === 'crouch') {
                 self.crouch();
             }
-            if (data.type === 'standUp') {
+            if (data.action === 'standUp') {
                 self.standUp();
             }
         });
