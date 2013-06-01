@@ -61,8 +61,8 @@ obacht.TrapManager = function(type, world, player, layer) {
             }
 
             if(type==='enemy'){
-            position.x = Math.cos(angle) * factor + obacht.options.trap.own.x;
-            position.y = Math.sin(angle) * factor + obacht.options.trap.own.y;
+            position.x = Math.cos(angle) * factor + obacht.options.trap.enemy.x;
+            position.y = Math.sin(angle) * factor + obacht.options.trap.enemy.y;
             }
 
             trap.trap.setPosition(position);
@@ -95,9 +95,9 @@ obacht.TrapManager.prototype = {
                 var position = trap.trap.getPosition();
                 var width = trap.trap.getSize().width;
                 if (position.x < 0 - width) {
-                    this.layer.removeChild(trap.layer);
+                    /*this.layer.removeChild(trap.layer);
                     delete traps[i];
-                    console.log('Trap removed');
+                    console.log('Trap removed');*/
                 }
             }
         }

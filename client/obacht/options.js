@@ -133,10 +133,10 @@ obacht.options = {
         },
         enemy: {
             x: 0,
-            y: 50,
+            y: 0,
             angle: 45,
-            anchorx: 0,
-            anchory: 2
+            anchorx: 0.5,
+            anchory: 0.5
         }
     },
     bonus: {
