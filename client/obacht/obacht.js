@@ -25,6 +25,8 @@ obacht.intervals = {};
 // entrypoint
 obacht.start = function() {
 
+    console.log('PERFORMANCE: PRE-MENU - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
+
     /** Multiplayer Service */
     obacht.mp = new obacht.MultiplayerService(obacht.options.server.url);
 

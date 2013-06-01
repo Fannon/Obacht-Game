@@ -48,6 +48,8 @@ obacht.Game = function() {
 //    this.enemyTrapManager = new obacht.TrapManager('enemy', this.enemyWorld, this.enemyPlayer);
 
 
+    console.log('PERFORMANCE: GAME - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
+
     //////////////////////////////
     // Game Events              //
     //////////////////////////////
@@ -55,6 +57,7 @@ obacht.Game = function() {
     obacht.mp.events.subscribe('bonus', function(type) {
         self.bonusButton = new obacht.Bonus(type);
         self.layer.appendChild(self.bonusButton.layer);
+        console.log('PERFORMANCE: GAME - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
     });
 
 

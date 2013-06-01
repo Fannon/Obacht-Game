@@ -43,6 +43,8 @@ obacht.Menu = function() {
 
     this.spritesheet = new lime.SpriteSheet('assets/spritesheets/menuSpritesheet.png',lime.ASSETS.menuSpritesheet.json,lime.parser.JSON);
 
+    console.log('PERFORMANCE: MENU - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
+
 
     //////////////////////////////
     // Events                   //
