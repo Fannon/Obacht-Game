@@ -19,7 +19,6 @@ obacht.Trap = function(type) {
     this.type = type;
 
     this.fill = 'assets/themes/' + obacht.mp.roomDetail.theme + '/traps/' + this.type + '.png';
-    console.log('New Trap: ' + this.type);
 
     ////////////////////
     // LIMEJS OBJECTS //

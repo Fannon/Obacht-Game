@@ -23,7 +23,13 @@ obacht.TrapManager = function(type, world, player, layer) {
     this.world = world;
     this.layer = layer;
 
-    // TODO: Own || Enemy Traps!
+    this.type = type;
+
+    if(type==='own') {
+        console.log('OWN');
+    }else if(type==='enemy') {
+        console.log('OTHERS');
+    }
 
     obacht.mp.events.subscribe('trap', function(data) {
         var trap = new obacht.Trap(data.type);
@@ -32,7 +38,14 @@ obacht.TrapManager = function(type, world, player, layer) {
 
         var anglespeed=0.01;
 
+        //Do you fly low or high?
+        var positiontype=obacht.themes[obacht.mp.roomDetail.theme].traps[data.type].position;
+        if (positiontype==='air'){
         var factor=obacht.options.trap.own.factorlow;
+        }else if(positiontype==='ground'){
+        var factor=obacht.options.trap.own.factorhigh;
+        }
+
         var angle=obacht.options.trap.own.angle;
 
         lime.scheduleManager.scheduleWithDelay(function(dt){
