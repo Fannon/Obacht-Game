@@ -48,7 +48,6 @@ obacht.TrapManager = function(type, world, player, layer) {
 
         trap.trap.setPosition(groundx,groundy);
 
-        //lime.scheduleManager.schedule(function(dt){
         lime.scheduleManager.scheduleWithDelay(function(dt){
 
             var position = trap.trap.getPosition();
@@ -57,9 +56,7 @@ obacht.TrapManager = function(type, world, player, layer) {
             position.y = Math.cos(winkel) * faktor + groundy;
 
             trap.trap.setPosition(position);
-//                     console.log(trap.trap.getPosition());
             winkel=winkel+winkelgeschwindigkeit;
-//            console.log(trap.trap.getPosition());
         }, trap,1);
 
     });
@@ -90,8 +87,7 @@ obacht.TrapManager.prototype = {
                 if (position.x < 0 - width) {
                     delete traps[i];
                     this.layer.removeChild(trap.layer);
-                    lime.scheduleManager.unschedule(function(dt){
-                    }, trap);
+
                     console.log('Trap removed');
                 }
             }
