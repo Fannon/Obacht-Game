@@ -118,11 +118,15 @@ obacht.options = {
     trap: {
         general: {
             width: 200*0.7,
-            height: 200*0.7
+            height: 200*0.7,
+            anchorx: 0,
+            anchory: -2
         },
         own: {
-            x: 350,
-            y: 550,
+            x: 0,
+            y: 1400,
+            factorlow: 1225,
+            factorhigh: 1400,
             angle: 45
         },
         enemy: {

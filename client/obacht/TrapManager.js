@@ -28,35 +28,22 @@ obacht.TrapManager = function(type, world, player, layer) {
     obacht.mp.events.subscribe('trap', function(data) {
         var trap = new obacht.Trap(data.type);
         self.traps[self.traps.length] = trap;
-
         self.layer.appendChild(trap.layer);
 
-        trap.trap.setPosition(1200, 400);
-        trap.trap.setAnchorPoint(0, -2);
+        var anglespeed=0.01;
 
-        var startwinkel=45;
-        var winkel=startwinkel;
-        var winkelgeschwindigkeit=0.01;
-        //Startposition
-        var groundx=0;
-        var groundy=1400;
-
-        //1225
-        //1400
-
-        var faktor=1400;
-
-        trap.trap.setPosition(groundx,groundy);
+        var factor=obacht.options.trap.own.factorlow;
+        var angle=obacht.options.trap.own.angle;
 
         lime.scheduleManager.scheduleWithDelay(function(dt){
 
             var position = trap.trap.getPosition();
 
-            position.x = Math.sin(winkel) * faktor + groundx;
-            position.y = Math.cos(winkel) * faktor + groundy;
+            position.x = Math.sin(angle) * factor + obacht.options.trap.own.x;
+            position.y = Math.cos(angle) * factor + obacht.options.trap.own.y;
 
             trap.trap.setPosition(position);
-            winkel=winkel+winkelgeschwindigkeit;
+            angle=angle+anglespeed;
         }, trap,1);
 
     });
@@ -87,7 +74,6 @@ obacht.TrapManager.prototype = {
                 if (position.x < 0 - width) {
                     delete traps[i];
                     this.layer.removeChild(trap.layer);
-
                     console.log('Trap removed');
                 }
             }
