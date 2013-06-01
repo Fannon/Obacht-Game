@@ -14,7 +14,9 @@ obacht.options = {
     graphics: {
         VIEWPORT_WIDTH: 1280,
         VIEWPORT_HEIGHT: 720,
-        DEFAULT_RENDERER: 'CANVAS'
+        DEFAULT_RENDERER: 'CANVAS',
+        worldQuality: 0.5,
+        characterQuality: 1.0
     },
     sound: {
         music: true,

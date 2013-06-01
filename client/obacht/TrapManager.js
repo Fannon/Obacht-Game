@@ -72,8 +72,8 @@ obacht.TrapManager.prototype = {
                 var position = trap.trap.getPosition();
                 var width = trap.trap.getSize().width;
                 if (position.x < 0 - width) {
-                    delete traps[i];
                     this.layer.removeChild(trap.layer);
+                    delete traps[i];
                     console.log('Trap removed');
                 }
             }

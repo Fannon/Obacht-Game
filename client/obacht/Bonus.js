@@ -17,27 +17,33 @@ obacht.Bonus = function(type) {
 	////////////////
     // ATTRIBUTES //
     ////////////////
+
     var self = this;
+
     this.type = type;
-//	this.fill = obacht.options.bonus.general.path + this.type + '.png';
     this.fill = 'assets/themes/' + obacht.mp.roomDetail.theme + '/boni/' + this.type + '.png';
-	console.log("new Bonus: " + this.fill);
+
+	console.log("New Bonus: " + this.fill);
     this.clicked = false;
 
-	//this.time = new Date();
 	this.drawtime = 0;
 	this.clicktime = 0;
+
 
 	////////////////////
     // LIMEJS OBJECTS //
     ////////////////////
+
 	this.bonusButton = new lime.RoundedRect().setSize(obacht.options.bonus.general.size, obacht.options.bonus.general.size).setPosition(obacht.options.bonus.general.x, obacht.options.bonus.general.y).setFill(this.fill).setAnchorPoint(0, 0).setRadius(15);
+
     this.layer = new lime.Layer().setSize(obacht.options.bonus.general.size, obacht.options.bonus.general.size);
     self.drawBonus();
+
 
     /////////////////////////
     // SUBSCRIBE TO EVENTS //
     /////////////////////////
+
     goog.events.listen(this.bonusButton, ['touchstart', 'mousedown'], function(e) {
         self.checkReactiontime();
         self.deleteBonus();
