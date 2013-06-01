@@ -215,194 +215,207 @@ obacht.MultiplayerService = function(serverUrl) {
 // Communication Functions  //
 //////////////////////////////
 
+obacht.MultiplayerService.prototype = {
+    /**
+     * Broadcast New Room
+     *
+     * @param {String} theme    Theme of the new world
+     * @param {Object} options  Options for the world, i.e. rotationspeed
+     * @param {String} closed   Indicator if room is privat or public
+     * @param {String} friend   Optional Friend PID, if playing with a specific friend
+     */
+    newRoom: function (theme, options, closed, friend) {
+        "use strict";
+        console.log('>> newRoom()');
 
-/**
- * Broadcast New Room
- *
- * @param {String} theme    Theme of the new world
- * @param {Object} options  Options for the world, i.e. rotationspeed
- * @param {String} closed   Indicator if room is privat or public
- * @param {String} friend   Optional Friend PID, if playing with a specific friend
- */
-obacht.MultiplayerService.prototype.newRoom = function (theme, options, closed, friend) {
-    "use strict";
-    console.log('>> newRoom()');
+        var roomDetails = {
+            theme: theme,
+            options: options,
+            closed: closed,
+            creatingPlayerHealth: obacht.options.player.general.maxHealth,
+            joiningPlayerHealth: obacht.options.player.general.maxHealth
+        };
 
-    var roomDetails = {
-        theme: theme,
-        options: options,
-        closed: closed,
-        creatingPlayerHealth: obacht.options.player.general.maxHealth,
-        joiningPlayerHealth: obacht.options.player.general.maxHealth
-    };
+        if (friend) {
+            roomDetails.friend = friend;
+        }
 
-    if (friend) {
-        roomDetails.friend = friend;
+        this.socket.emit('new_room', roomDetails);
+    },
+
+    /**
+     * Broadcast Join Room
+     *
+     * @param {Number} pin Code for joining into the room
+     * @param {String} closed Indicator if Room is privat or public
+     */
+    joinRoom: function(pin, closed) {
+        "use strict";
+        console.log('>> joinRoom(' + pin + ')');
+        this.socket.emit('join_room', {
+            pin: pin,
+            closed: closed
+        });
+    },
+
+    /**
+     * Broadcast Find Match
+     */
+    findMatch: function () {
+        "use strict";
+        console.log('>> findMatch()');
+        this.socket.emit('find_match');
+    },
+
+    /**
+     * Broadcast Find Match
+     */
+    inviteFriend: function (pid, roomDetail) {
+        "use strict";
+        console.log('>> Inviting Friend for new Match');
+        this.socket.emit('invite_player', pid, roomDetail);
+    },
+
+    /**
+     * Broadcast Player Ready
+     */
+    playerReady: function () {
+        "use strict";
+        console.log('>> playerReady()');
+        this.socket.emit('player_ready');
+    },
+
+    /**
+     * Broadcast Player Action
+     *
+     * @param  {String} action Action of Player, i.e. 'jump'
+     * @param  {Object} data ActionData
+     */
+    playerAction: function(action, data) {
+        "use strict";
+        this.socket.emit('player_action', {
+            action: action,
+            data: data
+        });
+    },
+
+    /**
+     * Broadcast Player Status
+     *
+     * @param  {String} pid     Player-ID
+     * @param  {Number} health    Healthstatus
+     */
+    playerStatus: function (pid, health) {
+        "use strict";
+        this.socket.emit('player_status', {
+            pid: pid,
+            health: health
+        });
+    },
+
+    /**
+     * Broadcast Throw Bonus
+     *
+     * @param  {String} type Type of the Bonus, i.e. 'snake'
+     */
+    throwBonus: function (type) {
+        "use strict";
+        this.socket.emit('bonus', {
+            type: type
+        });
+    },
+
+    /**
+     * Broadcast Throw Trap
+     *
+     * @param {String} type Type of the Trap
+     * @param {Object} data Trapdata, i.e. distance
+     */
+    throwTrap: function(type, data) {
+        "use strict";
+        this.socket.emit('trap', {
+            type: type,
+            data: data
+        });
+    },
+
+    /**
+     * Broadcast generated Traps
+     *
+     * @param  {String} type Type of the Bonus, i.e. 'snake'
+     */
+    throwGeneratedTrap: function (type) {
+        "use strict";
+        this.socket.emit('generated_trap', {
+            type: type
+        });
+    },
+
+    /**
+     * Broadcast Check Reactiontime
+     *
+     * @param  {String} type Type of the Bonus, i.e. 'snake'
+     * @param  {Number} reaction_time Time the player needed to push the reactionbutton in milliseconds
+     */
+    checkReactiontime: function (type, reaction_time) {
+        "use strict";
+        this.socket.emit('check_reactiontime', {
+            type: type,
+            reaction_time: reaction_time
+        });
+    },
+
+    /**
+     * Broadcast Leave Room
+     */
+    leaveRoom: function() {
+        "use strict";
+        console.log('>> leaveRoom()');
+        this.pin = false;
+        this.socket.emit('leave_room');
+    },
+
+    /**
+     * Debugging Function
+     */
+    getRooms: function() {
+        "use strict";
+        console.log('>> getRooms()');
+        this.socket.emit('get_rooms', '');
+    },
+
+    //////////////////////////////
+    // Helper Functions         //
+    //////////////////////////////
+
+
+    /**
+     * Broadcast Get Random Theme
+     *
+     * @returns {String} theme Theme for the Random World
+     */
+    getRandomTheme: function() {
+        "use strict";
+        var availableThemes = Object.keys(obacht.themes);
+        var rand = Math.floor(availableThemes.length * Math.random());
+        return availableThemes[rand];
+    },
+
+    /**
+     * Broadcast Reset Events
+     */
+    resetEvents: function() {
+        "use strict";
+        this.events = new goog.pubsub.PubSub();
     }
-
-    this.socket.emit('new_room', roomDetails);
-};
-
-/**
- * Broadcast Join Room
- *
- * @param {Number} pin Code for joining into the room
- * @param {String} closed Indicator if Room is privat or public
- */
-obacht.MultiplayerService.prototype.joinRoom = function(pin, closed) {
-    "use strict";
-    console.log('>> joinRoom(' + pin + ')');
-    this.socket.emit('join_room', {
-        pin: pin,
-        closed: closed
-    });
-};
-
-/**
- * Broadcast Find Match
- */
-obacht.MultiplayerService.prototype.findMatch = function () {
-    "use strict";
-    console.log('>> findMatch()');
-    this.socket.emit('find_match');
 };
 
 
-/**
- * Broadcast Find Match
- */
-obacht.MultiplayerService.prototype.inviteFriend = function (pid, roomDetail) {
-    "use strict";
-    console.log('>> Inviting Friend for new Match');
-    this.socket.emit('invite_player', pid, roomDetail);
-};
-
-/**
- * Broadcast Player Ready
- */
-obacht.MultiplayerService.prototype.playerReady = function () {
-    "use strict";
-    console.log('>> playerReady()');
-    this.socket.emit('player_ready');
-};
-
-/**
- * Broadcast Player Action
- *
- * @param  {String} action Action of Player, i.e. 'jump'
- * @param  {Object} data ActionData
- */
-obacht.MultiplayerService.prototype.playerAction = function(action, data) {
-    "use strict";
-    this.socket.emit('player_action', {
-        action: action,
-        data: data
-    });
-};
-
-/**
- * Broadcast Player Status
- *
- * @param  {String} pid     Player-ID
- * @param  {Number} health    Healthstatus
- */
-obacht.MultiplayerService.prototype.playerStatus = function (pid, health) {
-    "use strict";
-    this.socket.emit('player_status', {
-        pid: pid,
-        health: health
-    });
-};
-
-/**
- * Broadcast Throw Bonus
- *
- * @param  {String} type Type of the Bonus, i.e. 'snake'
- */
-obacht.MultiplayerService.prototype.throwBonus = function (type) {
-    "use strict";
-    this.socket.emit('bonus', {
-        type: type
-    });
-};
-
-/**
- * Broadcast Throw Trap
- *
- * @param {String} type Type of the Trap
- * @param {Object} data Trapdata, i.e. distance
- */
-obacht.MultiplayerService.prototype.throwTrap = function(type, data) {
-    "use strict";
-    this.socket.emit('trap', {
-        type: type,
-        data: data
-    });
-};
-
-/**
- * Broadcast generated Traps
- *
- * @param  {String} type Type of the Bonus, i.e. 'snake'
- */
-obacht.MultiplayerService.prototype.throwGeneratedTrap = function (type) {
-    "use strict";
-    this.socket.emit('generated_trap', {
-        type: type
-    });
-};
-
-/**
- * Broadcast Check Reactiontime
- *
- * @param  {String} type Type of the Bonus, i.e. 'snake'
- * @param  {Number} reaction_time Time the player needed to push the reactionbutton in milliseconds
- */
-obacht.MultiplayerService.prototype.checkReactiontime = function (type, reaction_time) {
-    "use strict";
-    this.socket.emit('check_reactiontime', {
-        type: type,
-        reaction_time: reaction_time
-    });
-};
-
-/**
- * Broadcast Leave Room
- */
-obacht.MultiplayerService.prototype.leaveRoom = function() {
-    "use strict";
-    console.log('>> leaveRoom()');
-    this.pin = false;
-    this.socket.emit('leave_room');
-};
-
-/**
- * Debugging Function
- */
-obacht.MultiplayerService.prototype.getRooms = function() {
-    "use strict";
-    console.log('>> getRooms()');
-    this.socket.emit('get_rooms', '');
-};
 
 
-//////////////////////////////
-// Helper Functions         //
-//////////////////////////////
 
 
-/**
- * Broadcast Get Random Theme
- *
- * @returns {String} theme Theme for the Random World
- */
-obacht.MultiplayerService.prototype.getRandomTheme = function() {
-    "use strict";
-    var availableThemes = Object.keys(obacht.themes);
-    var rand = Math.floor(availableThemes.length * Math.random());
-    return availableThemes[rand];
-};
-obacht.MultiplayerService.prototype.resetEvents = function() {
-    "use strict";
-    this.events = new goog.pubsub.PubSub();
-};
+
+
+
+
