@@ -468,6 +468,10 @@ obacht.Menu.prototype = {
         // Start new Game          //
         /////////////////////////////
 
+        if (obacht.currentGame) {
+            obacht.currentGame.destruct();
+        }
+
         obacht.playerController = new obacht.PlayerController();
         obacht.currentGame = new obacht.Game();
         gameScene.appendChild(obacht.currentGame.layer);
@@ -857,6 +861,7 @@ obacht.Menu.prototype = {
         "use strict";
 
     },
+
 
     /////////////////////////////
     // Helper Functions        //

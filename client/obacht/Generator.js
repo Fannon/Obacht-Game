@@ -51,8 +51,7 @@ obacht.Generator.prototype = {
     startThrowTrap: function(){
        "use strict";
         var self = this;
-
-        obacht.intervals.trapInterval = setInterval(function() {
+        this.trapInterval = setInterval(function() {
            obacht.mp.throwGeneratedTrap(self.getRandomTrap());
         }, self.getRandomTime(obacht.options.gameplay.generateTrapsMinInterval, obacht.options.gameplay.generateTrapsMaxInterval));
     },
@@ -63,9 +62,19 @@ obacht.Generator.prototype = {
     startThrowBonus: function(){
        "use strict";
         var self = this;
-
-        obacht.intervals.bonusInterval = setInterval(function() {
-           obacht.mp.throwBonus(self.getRandomTrap());
+        this.bonusInterval = setInterval(function() {
+            obacht.mp.throwBonus(self.getRandomTrap());
         }, self.getRandomTime(obacht.options.gameplay.generateBoniMinInterval, obacht.options.gameplay.generateBoniMaxInterval));
+    },
+
+    /**
+     * Destructor - Cleans up all Lime Elements and DataStructures
+     */
+    destruct: function() {
+        "use strict";
+        console.log('Cleaning up Generator');
+        console.log(this.trapInterval);
+        clearInterval(this.trapInterval);
+        clearInterval(this.bonusInterval);
     }
 };

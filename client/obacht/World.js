@@ -108,5 +108,12 @@ obacht.World.prototype = {
             new lime.animation.RotateBy(rotation2).setDuration(duration2).setEasing(lime.animation.Easing.LINEAR).enableOptimizations(),
             new lime.animation.RotateBy(rotation2).setDuration(duration2).setEasing(lime.animation.Easing.LINEAR).enableOptimizations()))
         );
+    },
+
+    /**
+     * Destructor - Cleans up all Lime Elements and DataStructures
+     */
+    destruct: function() {
+
     }
 };

@@ -24,20 +24,13 @@ goog.require('obacht.Trap');
 obacht.Game = function() {
 
 
-    //Game Time
-    var time = 0;
-    setInterval(function(){clock();},1000);
-    function clock(){
-       time+=1;
-    }
-
-
     //////////////////////////////
     // Game Model (state)       //
     //////////////////////////////
 
     var self = this;
 
+    this.layer = new lime.Layer();
     this.theme = obacht.themes[obacht.mp.roomDetail.theme];
     this.speedFactor = obacht.options.gameplay.initialSpeedFactor;
 
@@ -51,7 +44,9 @@ obacht.Game = function() {
     this.enemyPlayer = new obacht.Player('top', this.theme);
 
 
+    this.ownTrapManager = new obacht.TrapManager('own', this.ownWorld, this.ownPlayer, this.layer);
 //    this.enemyTrapManager = new obacht.TrapManager('enemy', this.enemyWorld, this.enemyPlayer);
+
 
     //////////////////////////////
     // Game Events              //
@@ -72,13 +67,11 @@ obacht.Game = function() {
     // Game View                //
     //////////////////////////////
 
-    this.layer = new lime.Layer();
     this.layer.appendChild(this.enemyWorld.layer);
     this.layer.appendChild(this.ownWorld.layer);
     this.layer.appendChild(this.enemyPlayer.layer);
     this.layer.appendChild(this.ownPlayer.layer);
 
-    this.ownTrapManager = new obacht.TrapManager('own', this.ownWorld, this.ownPlayer, this.layer);
 
     // Just start the generator if player is the creating Player
     if (obacht.mp.pid === obacht.mp.roomDetail.creatingPlayerId) {
@@ -89,3 +82,32 @@ obacht.Game = function() {
 
 };
 
+obacht.Game.prototype = {
+
+    /**
+     * Destructor - Cleans up all Lime Elements and DataStructures
+     */
+    destruct: function() {
+
+        // Call Destructors of created Instances
+        this.ownWorld.destruct();
+        this.enemyWorld.destruct();
+
+        this.ownPlayer.destruct();
+        this.enemyPlayer.destruct();
+
+        this.ownTrapManager.destruct();
+
+        if (this.generator) {
+            this.generator.destruct();
+        }
+
+        obacht.mp.events.clear('bonus');
+
+        this.layer.removeChild(this.enemyWorld.layer);
+        this.layer.removeChild(this.ownWorld.layer);
+        this.layer.removeChild(this.enemyPlayer.layer);
+        this.layer.removeChild(this.ownPlayer.layer);
+
+    }
+};

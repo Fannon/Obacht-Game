@@ -16,7 +16,7 @@ goog.require('obacht.MultiplayerService');
 goog.require('obacht.Menu');
 
 /**
- * Persistent Store for temporary values
+ * Store for setInterval handler
  * @type {Object}
  */
 obacht.intervals = {};
@@ -50,11 +50,23 @@ obacht.start = function() {
 obacht.cleanUp = function() {
     "use strict";
 
+    console.log('Cleaning up...!');
+
+    // Clean up Game if one still running
+    if (obacht.currentGame) {
+        obacht.currentGame.destruct();
+        delete obacht.currentGame;
+    }
+
+    if (obacht.playerController) {
+        obacht.playerController.destruct();
+        delete obacht.playerController;
+    }
+
+    // Remove CSS Gradients from Theme and show Menu Background again
     obacht.setBackground(false);
 
     // Clear running Intervals
-    clearInterval(obacht.intervals.trapInterval);
-    clearInterval(obacht.intervals.bonusInterval);
     clearInterval(obacht.intervals.speedFactorInterval);
     clearInterval(obacht.intervals.cleanUpTraps);
 
@@ -72,8 +84,13 @@ obacht.cleanUp = function() {
     if (obacht.mp.roomDetail.pin) {
         obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);
     }
+
 };
 
+/**
+ * Sets the LimeJS Directory Background via HTML Classes (see obacht.css)
+ * @param {*} theme Themename or false to reset
+ */
 obacht.setBackground = function(theme) {
     console.log('Set Background to .' + theme);
     var limeDirectorElement = document.getElementsByClassName('lime-director')[0];
@@ -83,7 +100,3 @@ obacht.setBackground = function(theme) {
         limeDirectorElement.setAttribute("class", 'lime-director');
     }
 };
-
-
-// this is required for outside access after code is compiled in ADVANCED_COMPILATIONS mode
-goog.exportSymbol('obacht.start', obacht.start);
