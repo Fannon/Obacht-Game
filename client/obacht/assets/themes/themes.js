@@ -12,11 +12,9 @@ obacht.themes = {
                 ground: 'assets/themes/water/ground.png',
                 landscapeA: 'assets/themes/water/landscapeA.png',
                 landscapeB: 'assets/themes/water/landscapeB.png',
-                clouds: 'assets/themes/water/clouds.png',
-                sky: 'assets/themes/water/sky.jpg'
+                clouds: 'assets/themes/water/clouds.png'
             }
         },
-        sky: 'background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#64a2eb), color-stop(46%,#002f99), color-stop(55%,#002f99), color-stop(100%,#65a0ec));',
         traps: {
             //Krebs
             crab: {
@@ -121,8 +119,7 @@ obacht.themes = {
                 ground: 'assets/themes/desert/ground.png',
                 landscapeA: 'assets/themes/desert/landscapeA.png',
                 landscapeB: 'assets/themes/desert/landscapeB.png',
-                clouds: 'assets/themes/desert/clouds.png',
-                sky: 'assets/themes/desert/sky.jpg'
+                clouds: 'assets/themes/desert/clouds.png'
             }
         },
         traps: {
@@ -215,8 +212,7 @@ obacht.themes = {
                 ground: 'assets/themes/meadow/ground.png',
                 landscapeA: 'assets/themes/meadow/landscapeA.png',
                 landscapeB: 'assets/themes/meadow/landscapeB.png',
-                clouds: 'assets/themes/meadow/clouds.png',
-                sky: 'assets/themes/meadow/sky.jpg'
+                clouds: 'assets/themes/meadow/clouds.png'
             }
         },
         traps: {
@@ -311,7 +307,6 @@ obacht.themes = {
         boni: {
 
         }
-
 
     }
 };
