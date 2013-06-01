@@ -58,9 +58,15 @@ obacht.Menu = function() {
 
     // Start first Scene
     this.mainMenuScene();
-//    this.gameoverScene({
-//        reason: 'player_left'
-//    });
+
+    // If fastStart Option is set to true, immediatly start a random Game
+    if (obacht.options.fastStart) {
+        obacht.mp.findMatch();
+        obacht.mp.events.subscribeOnce('room_detail', function(data){
+            obacht.mp.playerReady();
+            self.waitForPlayerScene();
+        });
+    }
 
 };
 

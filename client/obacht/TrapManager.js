@@ -31,18 +31,19 @@ obacht.TrapManager = function(type, world, player, layer) {
 
         self.layer.appendChild(trap.layer);
 
+        trap.trap.setPosition(1200, 400);
+        trap.trap.setAnchorPoint(0, -2);
+
         lime.scheduleManager.schedule(function(dt){
 
             var rotation = trap.trap.getRotation();
             rotation += 0.1;
             trap.trap.setRotation(rotation);
 
-            console.dir(trap.trap.position());
-
+//            console.log(trap.trap.getPosition());
 
         }, trap);
 
-        //self.world.ground1.appendChild(trap.layer);
 
     });
 
