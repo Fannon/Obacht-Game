@@ -43,8 +43,8 @@ obacht.Game = function() {
 
     this.setBackground(obacht.mp.roomDetail.theme);
 
-    this.ownWorld = new obacht.World('own', this.theme);
-    this.enemyWorld = new obacht.World('enemy', this.theme);
+    this.ownWorld = new obacht.World('bottom', this.theme);
+    this.enemyWorld = new obacht.World('top', this.theme);
 
 
     this.ownPlayer = new obacht.Player('bottom', this.theme);
