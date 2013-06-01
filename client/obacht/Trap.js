@@ -24,7 +24,8 @@ obacht.Trap = function(type) {
     ////////////////////
     // LIMEJS OBJECTS //
     ////////////////////
-    this.trap = new lime.Sprite().setSize(obacht.options.trap.general.width, obacht.options.trap.general.height).setPosition(1470, 0).setFill(this.fill).setAnchorPoint(0.5, 0.5).setRotation(270);
+    this.trap = new lime.Sprite().setSize(
+        obacht.options.trap.general.width, obacht.options.trap.general.height).setPosition(1280, 500).setFill(this.fill).setAnchorPoint(0, 1);
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     self.drawTrap();
 };

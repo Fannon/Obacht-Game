@@ -26,8 +26,8 @@ obacht.options = {
         decrementSpeedFactor: 0.01,
         generateBoniMinInterval: 10000,
         generateBoniMaxInterval: 20000,
-        generateTrapsMinInterval: 6000,
-        generateTrapsMaxInterval: 12000
+        generateTrapsMinInterval: 1000,
+        generateTrapsMaxInterval: 5000
     },
     world: {
         size: {

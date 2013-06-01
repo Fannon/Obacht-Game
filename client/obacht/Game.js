@@ -46,12 +46,12 @@ obacht.Game = function() {
     this.ownWorld = new obacht.World('own', this.theme);
     this.enemyWorld = new obacht.World('enemy', this.theme);
 
-    this.ownTrapManager = new obacht.TrapManager('own', this.ownWorld);
-    this.enemyTrapManager = new obacht.TrapManager('enemy', this.enemyWorld);
 
     this.ownPlayer = new obacht.Player('bottom', this.theme);
     this.enemyPlayer = new obacht.Player('top', this.theme);
 
+
+//    this.enemyTrapManager = new obacht.TrapManager('enemy', this.enemyWorld, this.enemyPlayer);
 
     //////////////////////////////
     // Game Events              //
@@ -78,6 +78,7 @@ obacht.Game = function() {
     this.layer.appendChild(this.enemyPlayer.layer);
     this.layer.appendChild(this.ownPlayer.layer);
 
+    this.ownTrapManager = new obacht.TrapManager('own', this.ownWorld, this.ownPlayer, this.layer);
 
     // Just start the generator if player is the creating Player
     if (obacht.mp.pid === obacht.mp.roomDetail.creatingPlayerId) {
