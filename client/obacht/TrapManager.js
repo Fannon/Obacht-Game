@@ -34,12 +34,31 @@ obacht.TrapManager = function(type, world, player, layer) {
         trap.trap.setPosition(1200, 400);
         trap.trap.setAnchorPoint(0, -2);
 
+        var startwinkel=45;
+        var winkel=startwinkel;
+        var winkelgeschwindigkeit=0.01;
+//Startposition
+        var groundx=0;
+        var groundy=1400;
+
+        var faktor=1400;
+
+        trap.trap.setPosition(groundx,groundy);
+
         lime.scheduleManager.schedule(function(dt){
 
             var rotation = trap.trap.getRotation();
             rotation += 0.1;
             trap.trap.setRotation(rotation);
 
+            var position = trap.trap.getPosition();
+
+            position.x = Math.sin(winkel) * faktor + groundx;
+            position.y = Math.cos(winkel) * faktor + groundy;
+
+            trap.trap.setPosition(position);
+                     console.log(trap.trap.getPosition());
+            winkel=winkel+winkelgeschwindigkeit;
 //            console.log(trap.trap.getPosition());
 
         }, trap);
