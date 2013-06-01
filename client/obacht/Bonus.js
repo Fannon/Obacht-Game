@@ -32,7 +32,7 @@ obacht.Bonus = function(type) {
     // LIMEJS OBJECTS //
     ////////////////////
 	this.bonusButton = new lime.RoundedRect().setSize(obacht.options.bonus.general.size, obacht.options.bonus.general.size).setPosition(obacht.options.bonus.general.x, obacht.options.bonus.general.y).setFill(this.fill).setAnchorPoint(0, 0).setRadius(15);
-    this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
+    this.layer = new lime.Layer().setSize(obacht.options.bonus.general.size, obacht.options.bonus.general.size);
     self.drawBonus();
 
     /////////////////////////
