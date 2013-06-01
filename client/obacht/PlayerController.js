@@ -13,6 +13,8 @@ goog.require('goog.pubsub.PubSub');
 //LimeJS Requirements
 goog.require('lime.RoundedRect');
 
+
+
 /**
  * Its a Player Controller
  *
@@ -22,10 +24,8 @@ obacht.PlayerController = function() {
     "use strict";
     var self = this;
 
-    this.isCrouching = false;
-
-    this.tapAreaTop = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, 0).setAnchorPoint(0, 0);
-    this.tapAreaBottom = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setAnchorPoint(0, 0);
+    this.tapAreaTop = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 4, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, 0).setAnchorPoint(0, 0);
+    this.tapAreaBottom = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 4, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setAnchorPoint(0, 0);
     this.tapAreaPuffer = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT).setPosition(0, 0).setAnchorPoint(0, 0);
 
     this.inventory = new obacht.Inventory();
@@ -69,7 +69,7 @@ obacht.PlayerController = function() {
         }
     });
 
-    goog.events.listen(this.tapAreaPuffer, ['touchend', 'mouseup'], function(e) {
+    goog.events.listen(this.tapAreaPuffer, ['touchend', 'touchcancel', 'mouseup'], function(e) {
         if (self.isCrouching === true) {
             self.standUp();
             self.isCrouching = false;
@@ -85,7 +85,11 @@ obacht.PlayerController = function() {
         self.tapPositionY = Math.round(e.position.y);
 
         if (self.isCrouching === true) {
-            if (self.tapPositionY < self.tapToleranceArea || self.tapPositionY > obacht.options.graphics.VIEWPORT_HEIGHT / 2 - self.tapToleranceArea || self.tapPositionX < self.tapToleranceArea || self.tapPositionX > obacht.options.graphics.VIEWPORT_WIDTH / 2 -self.tapToleranceArea) {
+            if (self.tapPositionY < self.tapToleranceArea ||
+                self.tapPositionY > obacht.options.graphics.VIEWPORT_HEIGHT / 2 - self.tapToleranceArea ||
+                self.tapPositionX < self.tapToleranceArea ||
+                self.tapPositionX > obacht.options.graphics.VIEWPORT_WIDTH / 4 -self.tapToleranceArea) {
+
                 self.standUp();
                 self.isCrouching = false;
             }

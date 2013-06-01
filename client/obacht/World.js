@@ -24,7 +24,7 @@ obacht.World = function(type, theme) {
     // DECIDE IF BOTTOM WORLD OR TOP WORLD //
     /////////////////////////////////////////
 
-    if (type === 'own') {
+    if (type === 'bottom') {
         this.x = obacht.options.world.bottom.x;
         this.y = obacht.options.world.bottom.y;
         this.rotation1 = obacht.options.world.bottom.rotation1;
@@ -33,7 +33,7 @@ obacht.World = function(type, theme) {
         this.rotation4 = obacht.options.world.bottom.startRotation2;
     }
 
-    if (type === 'enemy') {
+    if (type === 'top') {
         this.x = obacht.options.world.top.x;
         this.y = obacht.options.world.top.y;
         this.rotation1 = obacht.options.world.top.rotation1;

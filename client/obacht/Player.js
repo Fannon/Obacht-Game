@@ -1,20 +1,18 @@
 /* global goog, lime, obacht */
 /* jshint strict: false, devel: true */
 
+// Obacht Requirements
+goog.provide('obacht.Player');
+
 // Closure Library Requirements
 goog.require('goog.pubsub.PubSub');
 
 // Lime.js Requirements
-goog.require('lime.RoundedRect');
 goog.require('lime.Sprite');
-goog.require('lime.Node');
 goog.require('lime.animation.Sequence');
 goog.require('lime.animation.MoveBy');
 goog.require('lime.animation.ScaleTo');
 
-// Obacht Requirements
-goog.provide('obacht.Player');
-goog.require('obacht.Trap');
 
 
 /**
@@ -25,6 +23,8 @@ goog.require('obacht.Trap');
 obacht.Player = function(location, theme) {
 
     var self = this;
+
+
 
     //////////////////
     /* PLAYER MODEL */
@@ -56,6 +56,7 @@ obacht.Player = function(location, theme) {
     this.layer.appendChild(this.character);
 
 
+
     ////////////////
     /* ANIMATIONS */
     ////////////////
@@ -68,6 +69,7 @@ obacht.Player = function(location, theme) {
     this.standUpAnimation = new lime.animation.ScaleTo(1, 1).setDuration(obacht.options.player.general.crouchDuration);
 
 
+
     //////////////////////////////////////
     /* STOP-EVENT FOR OPTIMIZED JUMPING */
     //////////////////////////////////////
@@ -75,6 +77,7 @@ obacht.Player = function(location, theme) {
     goog.events.listen(this.jumpAnimation, 'stop', function() {
         obacht.options.player.stateVar.isJumping = false;
     });
+
 
 
     /////////////////////////
@@ -111,6 +114,7 @@ obacht.Player = function(location, theme) {
         });
     }
 };
+
 
 
 //////////////////////////////

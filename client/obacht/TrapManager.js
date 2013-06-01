@@ -37,7 +37,7 @@ obacht.TrapManager = function(type, world, player, layer) {
         var startwinkel=45;
         var winkel=startwinkel;
         var winkelgeschwindigkeit=0.01;
-//Startposition
+        //Startposition
         var groundx=0;
         var groundy=1400;
 
@@ -57,7 +57,7 @@ obacht.TrapManager = function(type, world, player, layer) {
             position.y = Math.cos(winkel) * faktor + groundy;
 
             trap.trap.setPosition(position);
-                     console.log(trap.trap.getPosition());
+//                     console.log(trap.trap.getPosition());
             winkel=winkel+winkelgeschwindigkeit;
 //            console.log(trap.trap.getPosition());
 
@@ -66,11 +66,35 @@ obacht.TrapManager = function(type, world, player, layer) {
 
     });
 
-
+    obacht.intervals.cleanUpTraps = setInterval(function() {
+        self.cleanUpTraps(self.traps);
+    }, 500);
 
 };
 
 obacht.TrapManager.prototype = {
 
+    /**
+     * Removes all Traps that are beyond the player
+     *
+     * @param {Object} traps Traps Array
+     */
+    cleanUpTraps: function(traps) {
+        "use strict";
+
+        for (var i = 0; i < traps.length; i++) {
+
+            var trap = traps[i];
+
+            if (trap) { // Removed Traps are 'undefined'
+                var position = trap.trap.getPosition();
+                if (position.x < 0) {
+                    delete traps[i];
+                    this.layer.removeChild(trap.layer);
+                    console.log('Trap removed');
+                }
+            }
+        }
+    }
 };
 

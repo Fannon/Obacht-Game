@@ -10,7 +10,7 @@ goog.provide('obacht.options');
  * @global
  */
 obacht.options = {
-    fastStart: true,
+    fastStart: false,
     graphics: {
         VIEWPORT_WIDTH: 1280,
         VIEWPORT_HEIGHT: 720,
