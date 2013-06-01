@@ -41,7 +41,7 @@ obacht.Game = function() {
     this.theme = obacht.themes[obacht.mp.roomDetail.theme];
     this.speedFactor = obacht.options.gameplay.initialSpeedFactor;
 
-    this.setBackground(obacht.mp.roomDetail.theme);
+    obacht.setBackground(obacht.mp.roomDetail.theme);
 
     this.ownWorld = new obacht.World('bottom', this.theme);
     this.enemyWorld = new obacht.World('top', this.theme);
@@ -89,10 +89,3 @@ obacht.Game = function() {
 
 };
 
-obacht.Game.prototype = {
-    setBackground: function(theme) {
-        console.log('Set Background to .' + theme);
-        var limeDirectorElement = document.getElementsByClassName('lime-director')[0];
-        limeDirectorElement.setAttribute("class", 'lime-director ' + theme);
-    }
-};
