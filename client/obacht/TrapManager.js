@@ -99,6 +99,13 @@ obacht.TrapManager.prototype = {
                 }
             }
         }
+    },
+
+    /**
+     * Destructor - Cleans up all Lime Elements and DataStructures
+     */
+    destruct: function() {
+
     }
 };
 

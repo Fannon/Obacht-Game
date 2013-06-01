@@ -148,6 +148,13 @@ obacht.Inventory.prototype = {
     setFail: function(){
         "use strict";
         console.log('to late for Bonus');
+    },
+
+    /**
+     * Destructor - Cleans up all Lime Elements and DataStructures
+     */
+    destruct: function() {
+
     }
 
 

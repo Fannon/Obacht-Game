@@ -134,5 +134,14 @@ obacht.PlayerController.prototype = {
         this.events.publish('own_player_action', {
             action: 'standUp'
         });
+    },
+
+    /**
+     * Destructor - Cleans up all Lime Elements and DataStructures
+     */
+    destruct: function() {
+        "use strict";
+
+        this.inventory.destruct();
     }
 };

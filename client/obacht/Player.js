@@ -145,5 +145,12 @@ obacht.Player.prototype = {
     standUp: function() {
         "use strict";
         this.character.runAction(this.standUpAnimation);
+    },
+
+    /**
+     * Destructor - Cleans up all Lime Elements and DataStructures
+     */
+    destruct: function() {
+
     }
 };
