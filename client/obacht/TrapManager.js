@@ -91,7 +91,8 @@ obacht.TrapManager.prototype = {
 
             if (trap) { // Removed Traps are 'undefined'
                 var position = trap.trap.getPosition();
-                if (position.x < 0 - trap.trap.getSize().width) {
+                var width = trap.trap.getSize().width;
+                if (position.x < 0 - width) {
                     delete traps[i];
                     this.layer.removeChild(trap.layer);
                     console.log('Trap removed');
