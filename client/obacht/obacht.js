@@ -50,6 +50,8 @@ obacht.start = function() {
 obacht.cleanUp = function() {
     "use strict";
 
+    obacht.setBackground(false);
+
     // Clear running Intervals
     clearInterval(obacht.intervals.trapInterval);
     clearInterval(obacht.intervals.bonusInterval);
@@ -71,6 +73,17 @@ obacht.cleanUp = function() {
         obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);
     }
 };
+
+obacht.setBackground = function(theme) {
+    console.log('Set Background to .' + theme);
+    var limeDirectorElement = document.getElementsByClassName('lime-director')[0];
+    if (theme) {
+        limeDirectorElement.setAttribute("class", 'lime-director ' + theme);
+    } else {
+        limeDirectorElement.setAttribute("class", 'lime-director');
+    }
+};
+
 
 // this is required for outside access after code is compiled in ADVANCED_COMPILATIONS mode
 goog.exportSymbol('obacht.start', obacht.start);

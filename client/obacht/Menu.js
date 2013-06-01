@@ -40,6 +40,7 @@ obacht.Menu = function() {
 
     lime.Label.defaultFont = 'Cartwheel';
     lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
+
     this.spritesheet = new lime.SpriteSheet('assets/spritesheets/menuSpritesheet.png',lime.ASSETS.menuSpritesheet.json,lime.parser.JSON);
 
 
@@ -138,9 +139,6 @@ obacht.Menu.prototype = {
         var layerMenu = new lime.Layer();
         loadingScene.appendChild(layerMenu);
 
-        var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
-        layerMenu.appendChild(background);
-
         //BIG LOGO FOR LOADING-SCREEN
         var logo_big = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(190, -750).setAnchorPoint(0, 0);
         layerMenu.appendChild(logo_big);
@@ -192,9 +190,6 @@ obacht.Menu.prototype = {
 
         var layerMenu = new lime.Layer();
         sceneMenu.appendChild(layerMenu);
-
-        var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
-        layerMenu.appendChild(background);
 
         //Small Logo
         var logo_small = new obacht.Menu.Button(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
@@ -257,13 +252,10 @@ obacht.Menu.prototype = {
         var layerMenu = new lime.Layer();
         sceneMenu.appendChild(layerMenu);
 
+
         ///////////////////////////////
         // Layer Content             //
         ///////////////////////////////
-
-        // Background
-        var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
-        layerMenu.appendChild(background);
 
         //Play with a friend Background
         var friendIcon = new obacht.Menu.Button(-680, 65, 1704, 1208, 410, 310, 220, 220, layerMenu);
@@ -339,9 +331,6 @@ obacht.Menu.prototype = {
         var layerMenu = new lime.Layer();
         sceneMenu.appendChild(layerMenu);
 
-        var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
-        layerMenu.appendChild(background);
-
         //Small Logo
         var logo_small = new obacht.Menu.Button(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
@@ -407,9 +396,6 @@ obacht.Menu.prototype = {
 
         var layerToolTip = new lime.Layer().setHidden(true);
         sceneMenu.appendChild(layerToolTip);
-
-        var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
-        layerMenu.appendChild(background);
 
         //Small Logo
         var logo_small = new obacht.Menu.Button(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
@@ -589,10 +575,6 @@ obacht.Menu.prototype = {
         var layerToolTip = new lime.Layer().setHidden(true);
         sceneMenu.appendChild(layerToolTip);
 
-        // Background
-        var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
-        layerMenu.appendChild(background);
-
         //Small Logo
         var smallLogoButton = new obacht.Menu.Button(360, -570, 1704, 1208, 640, 130, 600, 150, layerMenu);
 
@@ -705,9 +687,6 @@ obacht.Menu.prototype = {
         var layerMenu = new lime.Layer();
         gameoverScene.appendChild(layerMenu);
 
-        var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
-        layerMenu.appendChild(background);
-
         if (data.reason === 'player_left' ) {
             gameoverText = 'Player left the game!';
         } else if (data.pid === obacht.mp.pid){
@@ -805,9 +784,6 @@ obacht.Menu.prototype = {
 
         var layerMenu = new lime.Layer();
         loadingScene.appendChild(layerMenu);
-
-        var background = new lime.Sprite().setSize(obacht.options.VIEWPORT_WIDTH, obacht.options.VIEWPORT_HEIGHT).setFill('assets/gfx/bg_clean.jpg').setPosition(0, 0).setAnchorPoint(0, 0);
-        layerMenu.appendChild(background);
 
         //BIG LOGO FOR LOADING-SCREEN
         var logo_big = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(190, -750).setAnchorPoint(0, 0);
