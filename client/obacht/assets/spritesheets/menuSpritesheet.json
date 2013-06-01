@@ -176,7 +176,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
 	"sourceSize": {"w":112,"h":112}
 },
-"theme_dessert.png":
+"theme_desert.png":
 {
 	"frame": {"x":92,"y":603,"w":149,"h":135},
 	"rotated": true,
