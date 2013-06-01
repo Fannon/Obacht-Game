@@ -41,12 +41,12 @@ obacht.TrapManager = function(type, world, player, layer) {
         var groundx=0;
         var groundy=1400;
 
-        var faktor=1400;
+        var faktor=1350;
 
         trap.trap.setPosition(groundx,groundy);
 
-        lime.scheduleManager.schedule(function(dt){
-
+        //lime.scheduleManager.schedule(function(dt){
+        lime.scheduleManager.scheduleWithDelay(function(dt){
             var rotation = trap.trap.getRotation();
             rotation += 0.1;
             trap.trap.setRotation(rotation);
@@ -61,7 +61,7 @@ obacht.TrapManager = function(type, world, player, layer) {
             winkel=winkel+winkelgeschwindigkeit;
 //            console.log(trap.trap.getPosition());
 
-        }, trap);
+        }, trap,5);
 
 
     });
