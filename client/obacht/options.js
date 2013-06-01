@@ -121,20 +121,22 @@ obacht.options = {
         general: {
             width: 200*0.7,
             height: 200*0.7,
-            anchorx: 0,
-            anchory: -2
+            factorlow: 1225,
+            factorhigh: 1400
         },
         own: {
             x: 0,
             y: 1400,
-            factorlow: 1225,
-            factorhigh: 1400,
-            angle: 45
+            angle: 45,
+            anchorx: 0,
+            anchory: -2
         },
         enemy: {
-            x: 1130,
-            y: 170,
-            angle: 45
+            x: 0,
+            y: 0,
+            angle: 45,
+            anchorx: 0.5,
+            anchory: 0.5
         }
     },
     bonus: {
