@@ -29,7 +29,7 @@ obacht.Trap = function(type) {
         .setFill(this.fill)
         .setPosition(obacht.options.trap.x, obacht.options.trap.y)
         .setAnchorPoint(obacht.options.trap.general.anchorx, obacht.options.trap.general.anchory);
-    this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
+    this.layer = new lime.Layer().setSize(obacht.options.trap.general.width, obacht.options.trap.general.height);
     self.drawTrap();
 
 

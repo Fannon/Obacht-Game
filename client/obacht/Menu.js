@@ -263,11 +263,11 @@ obacht.Menu.prototype = {
 
         /** Small Logo */
         var logoSmall = new lime.Sprite().setFill(this.spritesheet.getFrame('obacht_small.png')).setPosition(640,130).setSize(544,114);
-        
+
         /** Play with a friend Background */
         var friendIcon = new lime.Sprite().setFill(this.spritesheet.getFrame('friend.png')).setPosition(410,310).setSize(192,220);
         var friendLabel = new lime.Label().setText('PLAY WITH YOUR FRIEND').setFontColor('#fff').setFontSize(35).setPosition(400,350).setSize(500,55).setAlign('center');
-        
+
         /** Random Game Background */
         var randomIcon = new lime.Sprite().setFill(this.spritesheet.getFrame('random.png')).setPosition(880,310).setSize(224,224);
         var randomLabel = new lime.Label().setText('RANDOM GAME').setFontColor('#fff').setFontSize(35).setPosition(885,350).setSize(500,55).setAlign('center');
@@ -330,7 +330,7 @@ obacht.Menu.prototype = {
         layerMenu.appendChild(joinLabel);
         layerMenu.appendChild(randomPlayButton);
         layerMenu.appendChild(randomPlayLabel);
-                
+
         // set current scene active
         obacht.director.replaceScene(sceneMenu);
 
@@ -469,11 +469,12 @@ obacht.Menu.prototype = {
         /////////////////////////////
 
         if (obacht.currentGame) {
-            obacht.currentGame.destruct();
+            obacht.cleanUp();
         }
 
         obacht.playerController = new obacht.PlayerController();
         obacht.currentGame = new obacht.Game();
+
         gameScene.appendChild(obacht.currentGame.layer);
         gameScene.appendChild(obacht.playerController.layer);
     },

@@ -52,7 +52,7 @@ obacht.Player = function(location, theme) {
     this.boundingBoxes = obacht.options.player.boundingBoxes[0];
 
     /** Player LimeJS Layer */
-    this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
+    this.layer = new lime.Layer().setSize(obacht.options.player.general.width, obacht.options.player.general.height);
     this.layer.appendChild(this.character);
 
 
