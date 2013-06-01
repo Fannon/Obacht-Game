@@ -12,6 +12,12 @@ goog.require('lime.Button');
 goog.require('obacht.PlayerController');
 goog.require('obacht.Game');
 
+//Spritesheets Requirements
+goog.require('lime.parser.JSON');
+goog.require('lime.ASSETS.menuSpritesheet.json');
+goog.require('lime.SpriteSheet');
+
+
 /**
  * Game Menu
  *
@@ -225,6 +231,10 @@ obacht.Menu.prototype = {
         goog.events.listen(quitButton, ['touchstart', 'mousedown'], function() {
             //quit Game
         });
+        
+        var ss = new lime.SpriteSheet('assets/spritesheets/menuSpritesheet.png',lime.ASSETS.menuSpritesheet.json,lime.parser.JSON);
+        var frame = new lime.Sprite().setFill(ss.getFrame('button_info.png')).setSize(200,200).setPosition(100,100);
+        layerMenu.appendChild(frame);
 
     },
 
