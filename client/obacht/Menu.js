@@ -37,8 +37,10 @@ obacht.Menu = function() {
     //////////////////////////////
 
     var self = this;
+
     lime.Label.defaultFont = 'Cartwheel';
     lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
+    this.spritesheet = new lime.SpriteSheet('assets/spritesheets/menuSpritesheet.png',lime.ASSETS.menuSpritesheet.json,lime.parser.JSON);
 
 
     //////////////////////////////
@@ -50,10 +52,11 @@ obacht.Menu = function() {
      * @event
      */
     obacht.mp.events.subscribe('game_ready', function(){
+
         self.loadGameScene();
 
         /**
-         * Subscribe Game Over Event
+         * Subscribe (once) Game Over Event
          * @event
          */
         obacht.mp.events.subscribeOnce('game_over', function(data){
@@ -231,10 +234,14 @@ obacht.Menu.prototype = {
         goog.events.listen(quitButton, ['touchstart', 'mousedown'], function() {
             //quit Game
         });
-        
-        var ss = new lime.SpriteSheet('assets/spritesheets/menuSpritesheet.png',lime.ASSETS.menuSpritesheet.json,lime.parser.JSON);
-        var frame = new lime.Sprite().setFill(ss.getFrame('button_info.png')).setSize(200,200).setPosition(100,100);
-        layerMenu.appendChild(frame);
+
+
+        /** Info Button */
+        var infoButton = new lime.Sprite().setFill(this.spritesheet.getFrame('button_info.png')).setPosition(100,100).setSize(200,200);
+
+
+
+        layerMenu.appendChild(infoButton);
 
     },
 
