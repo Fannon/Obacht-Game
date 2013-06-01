@@ -23,6 +23,16 @@ obacht.TrapManager = function(type, world, player, layer) {
     this.world = world;
     this.layer = layer;
 
+    this.type = type;
+
+
+
+    if(type==='own') {
+        console.log('OWN');
+    }else if(type==='enemy') {
+        console.log('OTHERS');
+    }
+
     // TODO: Own || Enemy Traps!
 
     obacht.mp.events.subscribe('trap', function(data) {
@@ -78,6 +88,10 @@ obacht.TrapManager.prototype = {
                 }
             }
         }
+    },
+    getTrapPosition: function(type) {
+        var position = obacht.themes[obacht.mp.roomDetail.theme].traps[type].position;
+        console.log(position);
     },
 
     /**
