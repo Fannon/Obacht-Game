@@ -27,34 +27,38 @@ obacht.TrapManager = function(type, world, player, layer) {
 
     this.type = type;
 
+    //TESTVAR 1
+
+
     obacht.mp.events.subscribe('trap', function(data) {
         var trap = new obacht.Trap(data.type);
         self.traps[self.traps.length] = trap;
         self.layer.appendChild(trap.layer);
 
-        self.who='enemy';
+        var anglespeed=0.01;
+        var milleseconds=15;
+        var factor;
+        var angle;
 
         //Are you own or enemy?
-        if(self.who==='own') {
+        if(trap.who==='own') {
             trap.trap.setPosition(obacht.options.trap.own.x, obacht.options.trap.own.y);
             trap.trap.setAnchorPoint(obacht.options.trap.general.anchorx, obacht.options.trap.general.anchory);
-            var angle = obacht.options.trap.own.angle;
-        }else if(self.who==='enemy') {
+            angle = obacht.options.trap.own.angle;
+        }else if(trap.who==='enemy') {
             trap.trap.setPosition(obacht.options.trap.enemy.x, obacht.options.trap.enemy.y);
             trap.trap.setAnchorPoint(obacht.options.trap.general.anchorx, obacht.options.trap.general.anchory);
-            var angle = obacht.options.trap.enemy.angle;
+            trap.trap.setRotation(180);
+            angle = obacht.options.trap.enemy.angle;
         }
 
         //Do you fly low or high?
         var positiontype=obacht.themes[obacht.mp.roomDetail.theme].traps[data.type].position;
         if (positiontype==='air') {
-        var factor = obacht.options.trap.general.factorhigh;
+        factor = obacht.options.trap.general.factorhigh;
         }else if(positiontype==='ground') {
-        var factor = obacht.options.trap.general.factorlow;
+        factor = obacht.options.trap.general.factorlow;
         }
-
-        var anglespeed=0.01;
-        var milleseconds=15;
 
         lime.scheduleManager.scheduleWithDelay(function(dt){
 
@@ -66,10 +70,10 @@ obacht.TrapManager = function(type, world, player, layer) {
                 //console.log('boom: '+trap.type);
             }
 
-            position.x = Math.sin(angle) * factor + obacht.options.trap.own.x;
-            position.y = Math.cos(angle) * factor + obacht.options.trap.own.y;
-
+            position.x = Math.sin(angle) * factor + obacht.options.trap[trap.who].x;
+            position.y = Math.cos(angle) * factor + obacht.options.trap[trap.who].y;
             trap.trap.setPosition(position);
+
             angle=angle+anglespeed;
         }, trap,milleseconds);
 
@@ -99,19 +103,19 @@ obacht.TrapManager.prototype = {
                 var position = trap.trap.getPosition();
                 var width = trap.trap.getSize().width;
 
-                if(self.who==='own'){
+                /*if(trap.who==='enemy'){
                     if (position.x < 0 - width) {
                         this.layer.removeChild(trap.layer);
                         delete traps[i];
                         console.log('Trap removed left side');
                     }
-                }else if(self.who==='enemy'){
+                }else if(trap.who==='own'){
                     if (position.x > obacht.options.graphics.VIEWPORT_WIDTH + width){
                         this.layer.removeChild(trap.layer);
                         delete traps[i];
                         console.log('Trap removed right side');
                     }
-                }
+                }*/
 
 
             }

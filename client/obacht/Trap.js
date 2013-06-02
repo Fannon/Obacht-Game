@@ -29,6 +29,14 @@ obacht.Trap = function(type) {
     this.layer = new lime.Layer().setSize(obacht.options.trap.general.width, obacht.options.trap.general.height);
     self.drawTrap();
 
+    //
+    this.zahl = Math.random();
+
+    if (this.zahl<=0.5){
+        this.who='enemy';
+    }else{
+        this.who='own';
+    }
 
 };
 

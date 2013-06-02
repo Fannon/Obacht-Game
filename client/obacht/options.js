@@ -131,8 +131,8 @@ obacht.options = {
             angle: 45
         },
         enemy: {
-            x: 1055,
-            y: -800,
+            x: 1200,
+            y: -675,
             angle: -45
         }
     },
