@@ -4,6 +4,7 @@
 goog.provide('obacht.TrapManager');
 
 goog.require('obacht.Trap');
+goog.require('obacht.Collision');
 
 /**
  * Trap Manager/Collection
@@ -22,6 +23,7 @@ obacht.TrapManager = function(type, world, player, layer) {
     this.traps = [];
     this.world = world;
     this.layer = layer;
+    this.player = player;
 
     this.type = type;
 
@@ -30,25 +32,25 @@ obacht.TrapManager = function(type, world, player, layer) {
         self.traps[self.traps.length] = trap;
         self.layer.appendChild(trap.layer);
 
-        self.who='B';
+        self.who='enemy';
 
         //Are you own or enemy?
-        if(self.who==='A') {
+        if(self.who==='own') {
             trap.trap.setPosition(obacht.options.trap.own.x, obacht.options.trap.own.y);
             trap.trap.setAnchorPoint(obacht.options.trap.general.anchorx, obacht.options.trap.general.anchory);
-            var angle=obacht.options.trap.own.angle;
-        }else if(self.who==='B') {
+            var angle = obacht.options.trap.own.angle;
+        }else if(self.who==='enemy') {
             trap.trap.setPosition(obacht.options.trap.enemy.x, obacht.options.trap.enemy.y);
             trap.trap.setAnchorPoint(obacht.options.trap.general.anchorx, obacht.options.trap.general.anchory);
-            var angle=obacht.options.trap.enemy.angle;
+            var angle = obacht.options.trap.enemy.angle;
         }
 
         //Do you fly low or high?
         var positiontype=obacht.themes[obacht.mp.roomDetail.theme].traps[data.type].position;
         if (positiontype==='air') {
-        var factor=obacht.options.trap.general.factorhigh;
+        var factor = obacht.options.trap.general.factorhigh;
         }else if(positiontype==='ground') {
-        var factor=obacht.options.trap.general.factorlow;
+        var factor = obacht.options.trap.general.factorlow;
         }
 
         var anglespeed=0.01;
@@ -58,17 +60,17 @@ obacht.TrapManager = function(type, world, player, layer) {
 
             var position = trap.trap.getPosition();
 
-            //if(self.who==='A') {
+            //Kollision detection
+            var kol=new obacht.Collision(player,trap);
+            if(kol.rect()===true){
+                //console.log('boom: '+trap.type);
+            }
+
             position.x = Math.sin(angle) * factor + obacht.options.trap.own.x;
             position.y = Math.cos(angle) * factor + obacht.options.trap.own.y;
-            //}else if(self.who==='B') {
-            /*position.x = Math.sin(angle) * factor + obacht.options.trap.enemy.x;
-            position.y = Math.cos(angle) * factor + obacht.options.trap.enemy.y;
-            }*/
 
             trap.trap.setPosition(position);
             angle=angle+anglespeed;
-            console.log(position);
         }, trap,milleseconds);
 
     });
@@ -96,11 +98,22 @@ obacht.TrapManager.prototype = {
             if (trap) { // Removed Traps are 'undefined'
                 var position = trap.trap.getPosition();
                 var width = trap.trap.getSize().width;
-                if (position.x < 0 - width) {
-                    //this.layer.removeChild(trap.layer);
-                    //delete traps[i];
-                    //console.log('Trap removed');
+
+                if(self.who==='own'){
+                    if (position.x < 0 - width) {
+                        this.layer.removeChild(trap.layer);
+                        delete traps[i];
+                        console.log('Trap removed left side');
+                    }
+                }else if(self.who==='enemy'){
+                    if (position.x > obacht.options.graphics.VIEWPORT_WIDTH + width){
+                        this.layer.removeChild(trap.layer);
+                        delete traps[i];
+                        console.log('Trap removed right side');
+                    }
                 }
+
+
             }
         }
     },
