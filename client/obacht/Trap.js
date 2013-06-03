@@ -32,11 +32,11 @@ obacht.Trap = function(type) {
     //
     this.zahl = Math.random();
 
-    if (this.zahl<=0.5){
+    /*if (this.zahl<=0.5){
         this.who='enemy';
-    }else{
+    }else{*/
         this.who='own';
-    }
+    //}
 
 };
 

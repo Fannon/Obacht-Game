@@ -6,32 +6,41 @@ goog.require('obacht.themes');
 
 /**
  * Collision Detector
+ * @param {Object} layer    Layer which is reference
  * @param {Object} player   Player
  * @param {Object} trap   Trap
  */
-obacht.Collision = function (player, trap) {
+obacht.Collision = function (layer, player, trap) {
 
     this.state=false;
 
     "use strict";
-    this.object1pos = player.character.getPosition();
-    this.object2pos = trap.trap.getPosition();
-
     /*Size Object1*/
+    //if(player.playerstate===false){
     this.obj1w = player.character.getSize().width;
     this.obj1h = player.character.getSize().height;
-
-    /*Left Top Corner Player*/
-    this.obj1x = Math.round(this.object1pos.x / 10) * 10 - (this.obj1w / 2);
-    this.obj1y = Math.round(this.object1pos.y / 10) * 10 - (this.obj1h / 2);
+    //}else if(player.playerstate===true){
+    this.obj1w = player.character.getSize().width*1.3;
+    this.obj1h = player.character.getSize().height*0.5;
+    //}
 
     /*Size Object2*/
     this.obj2w = trap.trap.getSize().width;
     this.obj2h = trap.trap.getSize().height;
 
-    /*Left Top Corner Trap*/
-    this.obj2x = Math.round(this.object2pos.x / 10) * 10 - (this.obj2w / 2);
-    this.obj2y = Math.round(this.object2pos.y / 10) * 10 - (this.obj2h / 2);
+    //Get Positions
+    this.obj1x=layer.screenToLocal(player.character.getPosition()).ceil().x;
+    this.obj1y=layer.screenToLocal(player.character.getPosition()).ceil().y;
+
+    this.obj2x=layer.screenToLocal(trap.trap.getPosition()).ceil().x;
+    this.obj2y=layer.screenToLocal(trap.trap.getPosition()).ceil().y;
+
+    //Set left top corner
+    this.obj1x=this.obj1x-(this.obj1w)/2;
+    this.obj1y=this.obj1y+(this.obj1h)/2;
+
+    this.obj2x=this.obj2x-(this.obj2w)/2;
+    this.obj2y=this.obj2y+(this.obj2h)/2;
 
     /*Request BoundingBoxes | Name = BoundingBoxes Object 2*/
     this.bbobj1 = obacht.options.player.boundingBoxes;
@@ -42,14 +51,14 @@ obacht.Collision = function (player, trap) {
 
         //Just one Bounding Box for Hugo
         this.obj1x = this.obj1x + this.bbobj1[0].x;
-        this.obj1y = this.obj1y + this.bbobj1[0].y;
+        this.obj1y = this.obj1y - this.bbobj1[0].y;
 
         this.obj1w = this.bbobj1[0].width;
         this.obj1h = this.bbobj1[0].height;
 
         //New Trap
         this.obj2x = this.obj2x + this.bbobj2[i].x;
-        this.obj2y = this.obj2y + this.bbobj2[i].y;
+        this.obj2y = this.obj2y - this.bbobj2[i].y;
 
         this.obj2w = this.bbobj2[i].width;
         this.obj2h = this.bbobj2[i].height;
