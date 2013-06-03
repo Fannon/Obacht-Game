@@ -13,7 +13,11 @@ goog.require('lime.animation.Sequence');
 goog.require('lime.animation.MoveBy');
 goog.require('lime.animation.ScaleTo');
 
-
+//Spritesheets Requirements
+goog.require('lime.parser.JSON');
+goog.require('lime.ASSETS.meadowSpritesheet.json');
+goog.require('lime.SpriteSheet');
+goog.require('lime.animation.KeyframeAnimation');
 
 /**
  * Its a Player Object
@@ -48,12 +52,21 @@ obacht.Player = function(location, theme) {
     this.health = 3;
 
     /** Character Graphic */
-    this.character = new lime.Sprite().setSize(obacht.options.player.general.width, obacht.options.player.general.height).setPosition(this.x, this.y).setAnchorPoint(0.5, 1).setFill('assets/gfx/hugo.png').setRotation(this.rotation).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.characterQuality);
+    this.spritesheet = new lime.SpriteSheet('assets/spritesheets/meadowSpritesheet.png',lime.ASSETS.meadowSpritesheet.json,lime.parser.JSON);
+
+    this.character = new lime.Sprite().setFill(this.spritesheet.getFrame('green0001.png')).setPosition(this.x, this.y).setSize(205,240).setAnchorPoint(0.5, 1).setRotation(this.rotation).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.characterQuality);
     this.boundingBoxes = obacht.options.player.boundingBoxes[0];
 
     /** Player LimeJS Layer */
     this.layer = new lime.Layer().setSize(obacht.options.player.general.width, obacht.options.player.general.height);
     this.layer.appendChild(this.character);
+
+    var anim = new lime.animation.KeyframeAnimation();
+    var i;
+    for(i=1;i<=16;i++){
+        anim.addFrame(this.spritesheet.getFrame('green'+goog.string.padNumber(i,4)+'.png'));
+    }
+    this.character.runAction(anim);
 
 
 
