@@ -39,7 +39,7 @@ obacht.Collision = function (player, trap) {
 
     var i = 0;
     while (i < this.bbobj2.length) {
-        console.log(i);
+
         //Just one Bounding Box for Hugo
         this.obj1x = this.obj1x + this.bbobj1[0].x;
         this.obj1y = this.obj1y + this.bbobj1[0].y;
