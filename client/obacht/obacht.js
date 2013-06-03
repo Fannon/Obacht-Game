@@ -32,6 +32,7 @@ obacht.start = function() {
 
     obacht.director = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     obacht.director.makeMobileWebAppCapable();
+    obacht.director.setDisplayFPS(obacht.options.displayFps);
 
     if (obacht.options.graphics.DEFAULT_RENDERER === 'DOM') {
         obacht.renderer = lime.Renderer.DOM;
