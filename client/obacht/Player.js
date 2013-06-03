@@ -15,6 +15,8 @@ goog.require('lime.animation.ScaleTo');
 
 //Spritesheets Requirements
 goog.require('lime.parser.JSON');
+goog.require('lime.ASSETS.waterSpritesheet.json');
+goog.require('lime.ASSETS.desertSpritesheet.json');
 goog.require('lime.ASSETS.meadowSpritesheet.json');
 goog.require('lime.SpriteSheet');
 goog.require('lime.animation.KeyframeAnimation');
@@ -51,10 +53,22 @@ obacht.Player = function(location, theme) {
     /** Player Health */
     this.health = 3;
 
+    /** variable for json path */
+    this.jsonPath = undefined;    
+        if (obacht.mp.roomDetail.theme === 'water'){
+            this.jsonPath = lime.ASSETS.waterSpritesheet.json;
+        }    
+        if (obacht.mp.roomDetail.theme === 'desert'){
+            this.jsonPath = lime.ASSETS.desertSpritesheet.json;
+        }
+        if (obacht.mp.roomDetail.theme === 'meadow'){
+            this.jsonPath = lime.ASSETS.meadowSpritesheet.json;
+        }
+    
     /** Character Graphic */
-    this.spritesheet = new lime.SpriteSheet('assets/spritesheets/meadowSpritesheet.png',lime.ASSETS.meadowSpritesheet.json,lime.parser.JSON);
+    this.spritesheet = new lime.SpriteSheet('assets/spritesheets/' + obacht.mp.roomDetail.theme + 'Spritesheet.png', this.jsonPath, lime.parser.JSON);
 
-    this.character = new lime.Sprite().setFill(this.spritesheet.getFrame('green0001.png')).setPosition(this.x, this.y).setSize(205,240).setAnchorPoint(0.5, 1).setRotation(this.rotation).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.characterQuality);
+    this.character = new lime.Sprite().setFill(this.spritesheet.getFrame('character_0001.png')).setPosition(this.x, this.y).setSize(205,240).setAnchorPoint(0.5, 1).setRotation(this.rotation).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.characterQuality);
     this.boundingBoxes = obacht.options.player.boundingBoxes[0];
 
     /** Player LimeJS Layer */
@@ -64,7 +78,7 @@ obacht.Player = function(location, theme) {
     var anim = new lime.animation.KeyframeAnimation();
     var i;
     for(i=1;i<=16;i++){
-        anim.addFrame(this.spritesheet.getFrame('green'+goog.string.padNumber(i,4)+'.png'));
+        anim.addFrame(this.spritesheet.getFrame('character_'+goog.string.padNumber(i,4)+'.png'));
     }
     this.character.runAction(anim);
 
