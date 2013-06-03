@@ -64,27 +64,29 @@ obacht.options = {
     },
     player: {
         general: {
-            width: 205,
-            height: 240,
+            width: 235*0.7,
+            height: 300*0.7,
             jumpUpDuration: 0.2,
             jumpDownDuration: 0.35,
-            jumpHeight: 280,
+            jumpHeight: 320,
             crouchDuration: 0.1,
             crouchWidth: 1.6,
             crouchHeight: 0.5,
-            maxHealth: 3
+            maxHealth: 3,
+            anchorx: 0,
+            anchory: 1
         },
         boundingBoxes: [
             {x: 5, y: 10, width: 225*0.7, height: 280*0.7}
         ],
         location: {
             bottom: {
-                x: 130,
-                y: 550
+                x: 100,
+                y: 575
             },
             top: {
-                x: 1150,
-                y: 170
+                x: 1180,
+                y: 145
             }
         },
         stateVar: {
@@ -101,19 +103,19 @@ obacht.options = {
         y: 20,
 
         left: {
-			x: 880,
-			active: false,
-			type: 'none'
+            x: 880,
+            active: false,
+            type: 'none'
         },
         center: {
-			x: 1010,
-			active: false,
-			type: 'none'
+            x: 1010,
+            active: false,
+            type: 'none'
         },
         right: {
-			x: 1140,
-			active: false,
-			type: 'none'
+            x: 1140,
+            active: false,
+            type: 'none'
         }
     },
 
@@ -121,19 +123,19 @@ obacht.options = {
         general: {
             width: 200*0.7,
             height: 200*0.7,
-            factorlow: 935,
-            factorhigh: 1120,
+            factorlow: 885,
+            factorhigh: 1035,
             anchorx: 0,
-            anchory: 0
+            anchory: 1
         },
         own: {
-            x: 75,
-            y: 1400,
+            x: 100,
+            y: 1470,
             angle: 45
         },
         enemy: {
-            x: 1200,
-            y: -675,
+            x: 1180,
+            y: -750,
             angle: -45
         }
     },

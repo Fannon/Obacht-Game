@@ -22,7 +22,7 @@ obacht.Collision = function (player, trap) {
     this.obj1h = player.character.getSize().height;
 
     /*Left Top Corner Player*/
-    this.obj1x = Math.round(this.object1pos.x / 10) * 10 + (this.obj1w / 2);
+    this.obj1x = Math.round(this.object1pos.x / 10) * 10 - (this.obj1w / 2);
     this.obj1y = Math.round(this.object1pos.y / 10) * 10 - (this.obj1h / 2);
 
     /*Size Object2*/
@@ -30,7 +30,7 @@ obacht.Collision = function (player, trap) {
     this.obj2h = trap.trap.getSize().height;
 
     /*Left Top Corner Trap*/
-    this.obj2x = Math.round(this.object2pos.x / 10) * 10 + (this.obj2w / 2);
+    this.obj2x = Math.round(this.object2pos.x / 10) * 10 - (this.obj2w / 2);
     this.obj2y = Math.round(this.object2pos.y / 10) * 10 - (this.obj2h / 2);
 
     /*Request BoundingBoxes | Name = BoundingBoxes Object 2*/
@@ -39,16 +39,16 @@ obacht.Collision = function (player, trap) {
 
     var i = 0;
     while (i < this.bbobj2.length) {
-
+        console.log(i);
         //Just one Bounding Box for Hugo
-        this.obj1x = this.obj1x - this.bbobj1[0].x;
+        this.obj1x = this.obj1x + this.bbobj1[0].x;
         this.obj1y = this.obj1y + this.bbobj1[0].y;
 
         this.obj1w = this.bbobj1[0].width;
         this.obj1h = this.bbobj1[0].height;
 
         //New Trap
-        this.obj2x = this.obj2x - this.bbobj2[i].x;
+        this.obj2x = this.obj2x + this.bbobj2[i].x;
         this.obj2y = this.obj2y + this.bbobj2[i].y;
 
         this.obj2w = this.bbobj2[i].width;
@@ -58,9 +58,8 @@ obacht.Collision = function (player, trap) {
             this.obj2x < this.obj1x + this.obj1w  &&
             this.obj1y < this.obj2y + this.obj2h &&
             this.obj2y < this.obj1y + this.obj1h === true){
-        this.state=true;
+            this.state=true;
         }
-
         i = i + 1;
     }
 };

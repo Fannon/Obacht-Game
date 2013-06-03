@@ -35,8 +35,9 @@ obacht.TrapManager = function(type, world, player, layer) {
         self.traps[self.traps.length] = trap;
         self.layer.appendChild(trap.layer);
 
-        var anglespeed=0.01;
-        var milleseconds=15;
+        var anglespeed=0.015;
+        var millesecondsmove=15;
+        var millesecondscoll=100;
         var factor;
         var angle;
 
@@ -55,28 +56,32 @@ obacht.TrapManager = function(type, world, player, layer) {
         //Do you fly low or high?
         var positiontype=obacht.themes[obacht.mp.roomDetail.theme].traps[data.type].position;
         if (positiontype==='air') {
-        factor = obacht.options.trap.general.factorhigh;
+            factor = obacht.options.trap.general.factorhigh;
         }else if(positiontype==='ground') {
-        factor = obacht.options.trap.general.factorlow;
+            factor = obacht.options.trap.general.factorlow;
         }
 
+        //Movement
         lime.scheduleManager.scheduleWithDelay(function(dt){
+
+            if(player.location==='bottom' && trap.who==='own'){
+                var kol=new obacht.Collision(player,trap);
+                if(kol.rect()===true){
+                    console.log('boom!');
+                    //Trap gets cleaned
+                    trap.trap.setPosition(-200,0);
+                }
+            }
 
             var position = trap.trap.getPosition();
 
-            //Kollision detection
-            var kol=new obacht.Collision(player,trap);
-            if(kol.rect()===true){
-                //console.log('boom: '+trap.type);
-            }
-
             position.x = Math.sin(angle) * factor + obacht.options.trap[trap.who].x;
             position.y = Math.cos(angle) * factor + obacht.options.trap[trap.who].y;
+
             trap.trap.setPosition(position);
 
             angle=angle+anglespeed;
-        }, trap,milleseconds);
-
+        }, trap,millesecondsmove);
     });
 
     obacht.intervals.cleanUpTraps = setInterval(function() {
@@ -103,19 +108,19 @@ obacht.TrapManager.prototype = {
                 var position = trap.trap.getPosition();
                 var width = trap.trap.getSize().width;
 
-                /*if(trap.who==='enemy'){
+                if(trap.who==='own'){
                     if (position.x < 0 - width) {
                         this.layer.removeChild(trap.layer);
                         delete traps[i];
-                        console.log('Trap removed left side');
+                        //console.log('Trap removed left side');
                     }
-                }else if(trap.who==='own'){
+                }else if(trap.who==='enemy'){
                     if (position.x > obacht.options.graphics.VIEWPORT_WIDTH + width){
                         this.layer.removeChild(trap.layer);
                         delete traps[i];
-                        console.log('Trap removed right side');
+                        //console.log('Trap removed right side');
                     }
-                }*/
+                }
 
 
             }
