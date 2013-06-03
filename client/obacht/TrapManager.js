@@ -125,7 +125,7 @@ obacht.TrapManager.prototype = {
         for (var i = 0; i < traps.length; i++) {
 
             var trap = traps[i];
-            var position = trap.trap.getPosition();
+            //var position = trap.trap.getPosition();
 
             /*if(position.x<200){
                 var kol=new obacht.Collision(layer,player,trap);
