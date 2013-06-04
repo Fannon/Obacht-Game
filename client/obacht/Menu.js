@@ -69,7 +69,7 @@ obacht.Menu = function() {
     });
 
     // Start first Scene
-    this.mainMenuScene();
+    this.loadingScene();
 
     // If fastStart Option is set to true, immediatly start a random Game
     if (obacht.options.fastStart) {
@@ -80,6 +80,51 @@ obacht.Menu = function() {
         });
     }
 
+};
+
+/**
+* Menu Button
+*
+* @param pos_x
+* @param pos_y
+* @param size_x
+* @param size_y
+* @param posMask_x
+* @param posMask_y
+* @param sizeMask_w
+* @param sizeMask_h
+* @param layerMenu
+* @returns {*}
+* @constructor
+*/
+obacht.Menu.Button = function(pos_x, pos_y, size_x, size_y, posMask_x, posMask_y, sizeMask_w, sizeMask_h, layerMenu) {
+    "use strict";
+    var button = new lime.Sprite().setSize(size_x, size_y).setFill('assets/gfx/menu_spritesheet.png').setPosition(pos_x, pos_y).setAnchorPoint(0, 0);
+    layerMenu.appendChild(button);
+    var maskButton = new lime.Sprite().setPosition(posMask_x, posMask_y).setAnchorPoint(0.5,0.5).setSize(sizeMask_w, sizeMask_h);
+    layerMenu.appendChild(maskButton);
+    button.setMask(maskButton);
+    return maskButton;
+};
+
+/**
+* Menu Label
+*
+* @param text
+* @param size
+* @param x
+* @param y
+* @param w
+* @param h
+* @param layerMenu
+* @returns {*}
+* @constructor
+*/
+obacht.Menu.Label = function(text, size, x, y, w, h, layerMenu){
+    "use strict";
+    var label = new lime.Label().setText(text).setFontColor('#fff').setFontSize(size).setPosition(x, y).setSize(w,h).setAlign('center');
+    layerMenu.appendChild(label);
+    return label;
 };
 
 obacht.Menu.prototype = {
@@ -96,13 +141,9 @@ obacht.Menu.prototype = {
         var layerMenu = new lime.Layer();
         loadingScene.appendChild(layerMenu);
 
-        //BIG LOGO FOR LOADING-SCREEN
-        var logo_big = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(190, -750).setAnchorPoint(0, 0);
-        layerMenu.appendChild(logo_big);
-        var mask_logo_big = new lime.Sprite().setPosition(640, 360).setAnchorPoint(0.5,0.5).setSize(1000, 200);
-        layerMenu.appendChild(mask_logo_big);
-        logo_big.setMask(mask_logo_big);
-        goog.events.listen(logo_big, ['touchstart', 'mousedown'], function() {
+        /** Big Logo with character */
+        var logoBig = new lime.Sprite().setFill(this.spritesheet.getFrame('obacht_character.png')).setPosition(690,310).setSize(1008,496);
+        goog.events.listen(logoBig, ['touchstart', 'mousedown'], function() {
             self.mainMenuScene();
         });
 
@@ -110,13 +151,16 @@ obacht.Menu.prototype = {
         // TODO: Loading GIF
         var loadingText = 'Loading ';
         var loadingStatus = '.';
-        var loadingLabel = new obacht.Menu.Label(loadingText + loadingStatus, 40, 740, 520, 400, 90, layerMenu).setAlign('left');
+        var loadingLabel = new lime.Label().setText(loadingText + loadingStatus).setFontColor('#fff').setFontSize(40).setPosition(420,510).setSize(400,40).setAlign('left');
+        layerMenu.appendChild(logoBig);
+        layerMenu.appendChild(loadingLabel);
 
         setInterval(function(){
             layerMenu.removeChild(loadingLabel);
             loadingStatus += '.';
-
-            loadingLabel = new obacht.Menu.Label(loadingText + loadingStatus, 40, 740, 520, 400, 90, layerMenu).setAlign('left');
+  
+            loadingLabel = new lime.Label().setText(loadingText + loadingStatus).setFontColor('#fff').setFontSize(40).setPosition(420,510).setSize(400,40).setAlign('left');
+            layerMenu.appendChild(loadingLabel);
             if (loadingStatus === '.....') {
                 loadingStatus = '';
             }
@@ -125,6 +169,7 @@ obacht.Menu.prototype = {
 
         // set current scene active
         obacht.director.replaceScene(loadingScene);
+        
 
     },
 
@@ -799,16 +844,11 @@ obacht.Menu.prototype = {
         var layerMenu = new lime.Layer();
         loadingScene.appendChild(layerMenu);
 
-        //BIG LOGO FOR LOADING-SCREEN
-        var logo_big = new lime.Sprite().setSize(1704, 1208).setFill('assets/gfx/menu_spritesheet.png').setPosition(190, -750).setAnchorPoint(0, 0);
-        layerMenu.appendChild(logo_big);
-        var mask_logo_big = new lime.Sprite().setPosition(640, 360).setAnchorPoint(0.5,0.5).setSize(1000, 200);
-        layerMenu.appendChild(mask_logo_big);
-        logo_big.setMask(mask_logo_big);
+        /** Big Logo with character */
+        var logoBig = new lime.Sprite().setFill(this.spritesheet.getFrame('obacht_character.png')).setPosition(690,310).setSize(1008,496);
 
-
-        //Back - Door
-        var backButton = new obacht.Menu.Button(-990, 10, 1704, 1208, 57, 57, 130, 130, layerMenu);
+        /** Back Button - Door */
+        var backButton = new lime.Sprite().setFill(this.spritesheet.getFrame('exit.png')).setPosition(65,75).setSize(92,112);
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
             obacht.mp.events.clear('room_detail');
             self.mainMenuScene();
@@ -816,18 +856,23 @@ obacht.Menu.prototype = {
 
         var loadingText = 'Waiting for Player ';
         var loadingStatus = '.';
-        var loadingLabel = new obacht.Menu.Label(loadingText + loadingStatus, 40, 550, 520, 400, 90, layerMenu).setAlign('left');
-
+        var loadingLabel = new lime.Label().setText(loadingText + loadingStatus).setFontColor('#fff').setFontSize(40).setPosition(470,510).setSize(500,40).setAlign('left');
+        layerMenu.appendChild(loadingLabel);
+        
         setInterval(function(){
             layerMenu.removeChild(loadingLabel);
             loadingStatus += '.';
 
-            loadingLabel = new obacht.Menu.Label(loadingText + loadingStatus, 40, 550, 520, 400, 90, layerMenu).setAlign('left');
+            loadingLabel = new lime.Label().setText(loadingText + loadingStatus).setFontColor('#fff').setFontSize(40).setPosition(470,510).setSize(500,40).setAlign('left');
+            layerMenu.appendChild(loadingLabel);
             if (loadingStatus === '.....') {
                 loadingStatus = '';
             }
 
         }, 950);
+
+        layerMenu.appendChild(logoBig);
+        layerMenu.appendChild(backButton);
 
         // set current scene active
         obacht.director.replaceScene(loadingScene);
