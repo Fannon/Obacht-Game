@@ -241,25 +241,10 @@ obacht.server.io.sockets.on('connection', function(socket) {
      */
     socket.on('trap', function(data) {
         if (socket.pin) {
-            log.debug('<-> Player throws Trap "' + data.type + '" in Room #' + socket.pin);
-            socket.broadcast.to(socket.pin).emit('trap', data);
-        } else {
-            log.warn('!!! Cannot broadcast Trap while not connected to a Game!', socket);
-        }
-    });
-
-
-    /**
-     * Broadcast generated Traps to both Players
-     * (Dont use this for player thrown Traps!)
-     * @event
-     */
-    socket.on('generated_trap', function(data) {
-        if (socket.pin) {
-            log.debug('<-> Broadcasting generated Trap "' + data.type + '" in Room #' + socket.pin);
+            log.debug('<-> Broadcasting Trap "' + data.type + '" in Room #' + socket.pin);
             obacht.server.io.sockets['in'](socket.pin).emit('trap', data);
         } else {
-            log.warn('!!! Cannot broadcast Bonus while not connected to a Game!', socket);
+            log.warn('!!! Cannot broadcast Trap while not connected to a Game!', socket);
         }
     });
 
