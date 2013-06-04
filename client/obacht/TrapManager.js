@@ -38,7 +38,7 @@ obacht.TrapManager = function(type, world, player, layer) {
         var trap = new obacht.Trap(data.type);
         self.traps[self.traps.length] = trap;
         self.layer.appendChild(trap.trap);
-        self.who='enemy';
+        trap.who='enemy';
 
         trap.trap.setPosition(obacht.options.trap.enemy.x, obacht.options.trap.enemy.y);
         trap.trap.setAnchorPoint(obacht.options.trap.general.anchorx, obacht.options.trap.general.anchory);
@@ -83,7 +83,7 @@ obacht.TrapManager = function(type, world, player, layer) {
         var trap = new obacht.Trap(data.type);
         self.traps[self.traps.length] = trap;
         self.layer.appendChild(trap.trap);
-        self.who='own';
+        trap.who='own';
 
         trap.trap.setPosition(obacht.options.trap.own.x, obacht.options.trap.own.y);
         trap.trap.setAnchorPoint(obacht.options.trap.general.anchorx, obacht.options.trap.general.anchory);
@@ -143,7 +143,7 @@ obacht.TrapManager.prototype = {
                 if(trap.who==='own'){
                     if (position.x < 0 - width) {
                         this.layer.removeChild(trap.layer);
-                        //console.log('Trap removed left side: '+traps[i].type);
+                        console.log('Trap removed left side: '+traps[i].type);
                         delete traps[i];
                     }
                 }else if(trap.who==='enemy'){

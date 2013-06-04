@@ -17,6 +17,7 @@ obacht.Trap = function(type) {
     ////////////////
     var self = this;
     this.type = type;
+    this.who='undefined';
 
     this.fill = 'assets/themes/' + obacht.mp.roomDetail.theme + '/traps/' + this.type + '.png';
 
@@ -30,11 +31,8 @@ obacht.Trap = function(type) {
     //
     this.zahl = Math.random();
 
-    /*if (this.zahl<=0.5){
-        this.who='enemy';
-    }else{*/
-        this.who='own';
-    //}
+
+
 
 };
 
