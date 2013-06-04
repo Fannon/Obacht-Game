@@ -79,16 +79,16 @@ obacht.options = {
             anchory: 1
         },
         boundingBoxes: [
-            {x: 5, y: 10, width: 225*0.7, height: 285*0.7}
+            {x: 5, y: 10, width: 235*0.7, height: 300*0.7}
         ],
         location: {
             bottom: {
                 x: 135,
-                y: 575
+                y: 580
             },
             top: {
                 x: 1145,
-                y: 145
+                y: 140
             }
         },
         stateVar: {
@@ -125,8 +125,8 @@ obacht.options = {
         general: {
             width: 200*0.7,
             height: 200*0.7,
-            factorlow: 885,
-            factorhigh: 1035,
+            factorlow: 895,
+            factorhigh: 1025,
             anchorx: 0,
             anchory: 1
         },

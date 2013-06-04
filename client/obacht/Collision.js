@@ -15,37 +15,32 @@ obacht.Collision = function (layer, player, trap) {
     this.state=false;
 
     "use strict";
-    /*Size Object1*/
-    //if(player.playerstate===false){
     this.obj1w = player.character.getSize().width;
     this.obj1h = player.character.getSize().height;
-    //}else if(player.playerstate===true){
-    this.obj1w = player.character.getSize().width*1.3;
-    this.obj1h = player.character.getSize().height*0.5;
-    //}
 
     /*Size Object2*/
     this.obj2w = trap.trap.getSize().width;
     this.obj2h = trap.trap.getSize().height;
 
-    //Get Positions
+    //Get Positions of the objects
     this.obj1x=layer.screenToLocal(player.character.getPosition()).ceil().x;
     this.obj1y=layer.screenToLocal(player.character.getPosition()).ceil().y;
 
     this.obj2x=layer.screenToLocal(trap.trap.getPosition()).ceil().x;
     this.obj2y=layer.screenToLocal(trap.trap.getPosition()).ceil().y;
 
-    //Set left top corner
+    //Set left top corner of box
     this.obj1x=this.obj1x-(this.obj1w)/2;
     this.obj1y=this.obj1y+(this.obj1h)/2;
 
     this.obj2x=this.obj2x-(this.obj2w)/2;
     this.obj2y=this.obj2y+(this.obj2h)/2;
 
-    /*Request BoundingBoxes | Name = BoundingBoxes Object 2*/
+    /*Request BoundingBoxes | Name = BoundingBoxes Object */
     this.bbobj1 = obacht.options.player.boundingBoxes;
     this.bbobj2 = obacht.themes[obacht.mp.roomDetail.theme].traps[trap.type].boundingBoxes;
 
+    //Iterate through bounding boxes
     var i = 0;
     while (i < this.bbobj2.length) {
 
@@ -53,8 +48,15 @@ obacht.Collision = function (layer, player, trap) {
         this.obj1x = this.obj1x + this.bbobj1[0].x;
         this.obj1y = this.obj1y - this.bbobj1[0].y;
 
-        this.obj1w = this.bbobj1[0].width;
-        this.obj1h = this.bbobj1[0].height;
+        //If player is crouched
+        /*Size Object1*/
+        if(player.playerstate===false){
+            this.obj1w = this.bbobj1[0].width;
+            this.obj1h = this.bbobj1[0].height;
+        }else if(player.playerstate===true){
+            this.obj1w = this.bbobj1[0].width*obacht.options.player.general.crouchWidth;
+            this.obj1h = this.bbobj1[0].height*obacht.options.player.general.crouchHeight;
+        }
 
         //New Trap
         this.obj2x = this.obj2x + this.bbobj2[i].x;

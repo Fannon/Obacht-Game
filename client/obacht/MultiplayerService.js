@@ -71,7 +71,7 @@ obacht.MultiplayerService = function(serverUrl) {
         self.pin = data.pin;
         self.events.publish('room_detail', data);
 
-        console.log('RoomDetails received:');
+        //console.log('RoomDetails received:');
         console.dir(data);
     });
 
@@ -162,7 +162,7 @@ obacht.MultiplayerService = function(serverUrl) {
      * Receives a bonus to show it within the reactionbox
      */
     this.socket.on('bonus', function (data) {
-        console.log('bonus: ' + data.type);
+        //console.log('bonus: ' + data.type);
         self.events.publish('bonus', data.type);
     });
 
@@ -171,10 +171,10 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.socket.on('receive_bonus', function (data) {
         if (data.winner_pid === self.pid) {
-            console.log('You won Bonus: ' + data.type);
+            //console.log('You won Bonus: ' + data.type);
             self.events.publish('receive_bonus', data.type, true);
         } else {
-            console.log('You lost Bonus: ' + data.type);
+            //console.log('You lost Bonus: ' + data.type);
             self.events.publish('receive_bonus', data.type, false);
         }
     });
@@ -183,7 +183,7 @@ obacht.MultiplayerService = function(serverUrl) {
      * Receives a trap
      */
     this.socket.on('trap', function (data) {
-        console.log('Trap received: ' + data.type);
+        //console.log('Trap received: ' + data.type);
         self.events.publish('trap', data);
     });
 
