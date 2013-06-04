@@ -47,12 +47,14 @@ obacht.PlayerController = function() {
 
     // JUMP
 
+    this.isJumping = false;
+
     goog.events.listen(this.tapAreaTop, ['touchstart', 'mousedown'], function(e) {
-        if (obacht.options.player.stateVar.isJumping === true) {
+        if (self.isJumping === true) {
             return false;
         } else {
             self.jump();
-            obacht.options.player.stateVar.isJumping = true;
+            self.isJumping = true;
         }
     });
 

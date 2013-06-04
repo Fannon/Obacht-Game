@@ -90,9 +90,6 @@ obacht.options = {
                 x: 1145,
                 y: 140
             }
-        },
-        stateVar: {
-            isJumping: false
         }
     },
 

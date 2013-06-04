@@ -31,13 +31,15 @@ obacht.Player = function(layer, location, theme) {
 
     var self = this;
 
-    this.gameLayer = layer;
-    this.location = location;
-    this.playerstate = false;
+
 
     //////////////////
     /* PLAYER MODEL */
     //////////////////
+
+    this.gameLayer = layer;
+    this.location = location;
+    this.playerstate = false;
 
     if (location === 'bottom') {
         this.x = obacht.options.player.location.bottom.x;
@@ -83,6 +85,8 @@ obacht.Player = function(layer, location, theme) {
     }
     this.character.runAction(anim);
 
+
+
     ////////////////
     /* ANIMATIONS */
     ////////////////
@@ -95,13 +99,16 @@ obacht.Player = function(layer, location, theme) {
     this.standUpAnimation = new lime.animation.ScaleTo(1, 1).setDuration(obacht.options.player.general.crouchDuration);
 
 
+
     //////////////////////////////////////
     /* STOP-EVENT FOR OPTIMIZED JUMPING */
     //////////////////////////////////////
 
     goog.events.listen(this.jumpAnimation, 'stop', function() {
-        obacht.options.player.stateVar.isJumping = false;
+        obacht.playerController.isJumping = false;
     });
+
+
 
     /////////////////////////
     /* SUBSCRIBE TO EVENTS */
