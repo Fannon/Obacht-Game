@@ -142,13 +142,13 @@ obacht.TrapManager.prototype = {
 
                 if(trap.who==='own'){
                     if (position.x < 0 - width) {
-                        this.layer.removeChild(trap.layer);
+                        this.layer.removeChild(trap.trap);
                         console.log('Trap removed left side: '+traps[i].type);
                         delete traps[i];
                     }
                 }else if(trap.who==='enemy'){
                     if (position.x > obacht.options.graphics.VIEWPORT_WIDTH + width){
-                        this.layer.removeChild(trap.layer);
+                        this.layer.removeChild(trap.trap);
                         console.log('Trap removed right side:' +traps[i].type);
                         delete traps[i];
                     }
