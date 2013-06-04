@@ -68,8 +68,8 @@ obacht.options = {
         general: {
             width: 235*0.7,
             height: 300*0.7,
-            jumpUpDuration: 0.2,
-            jumpDownDuration: 0.35,
+            jumpUpDuration: 0.3,
+            jumpDownDuration: 0.45,
             jumpHeight: 320,
             crouchDuration: 0.1,
             crouchWidth: 1.6,

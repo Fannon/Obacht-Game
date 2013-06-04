@@ -25,9 +25,11 @@ goog.require('lime.animation.KeyframeAnimation');
 /**
  * Its a Player Object
  *
+ * @param {Object} currentGame  Current Game Object
+ * @param {String} location     Location
  * @constructor
  */
-obacht.Player = function(layer, location, theme) {
+obacht.Player = function(currentGame, location) {
 
     var self = this;
 
@@ -37,7 +39,8 @@ obacht.Player = function(layer, location, theme) {
     /* PLAYER MODEL */
     //////////////////
 
-    this.gameLayer = layer;
+    this.gameLayer = currentGame.layer;
+    this.spritesheet = currentGame.spritesheet;
     this.location = location;
     this.playerstate = false;
     this.health = 3;
@@ -56,20 +59,8 @@ obacht.Player = function(layer, location, theme) {
         this.jumpHeight = obacht.options.player.general.jumpHeight;
     }
 
-    /** variable for json path */
-    this.jsonPath = undefined;
-        if (obacht.mp.roomDetail.theme === 'water'){
-            this.jsonPath = lime.ASSETS.waterSpritesheet.json;
-        }
-        if (obacht.mp.roomDetail.theme === 'desert'){
-            this.jsonPath = lime.ASSETS.desertSpritesheet.json;
-        }
-        if (obacht.mp.roomDetail.theme === 'meadow'){
-            this.jsonPath = lime.ASSETS.meadowSpritesheet.json;
-        }
 
     /** Character Graphic */
-    this.spritesheet = new lime.SpriteSheet('assets/spritesheets/' + obacht.mp.roomDetail.theme + 'Spritesheet.png', this.jsonPath, lime.parser.JSON);
     this.character = new lime.Sprite().setFill(this.spritesheet.getFrame('character_0001.png')).setPosition(this.x, this.y).setSize(205,240).setAnchorPoint(0.5, 1).setRotation(this.rotation).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.characterQuality);
     this.gameLayer.appendChild(this.character);
 

@@ -11,15 +11,17 @@ goog.require('lime.animation.RotateBy');
 /**
  * Its a World Object
  *
+ * @param {Object} currentGame    Current Game Object
  * @param {String} type
- * @param {Object} theme    Current Theme Object
  *
  * @constructor
  */
-obacht.World = function(layer, type, theme) {
+obacht.World = function(currentGame, type) {
 
-    this.theme = theme;
-    this.gameLayer = layer;
+    this.theme = currentGame.theme;
+    this.gameLayer = currentGame.layer;
+    this.spritesheet = currentGame.spritesheet;
+
 
     /////////////////////////////////////////
     // DECIDE IF BOTTOM WORLD OR TOP WORLD //
@@ -48,14 +50,42 @@ obacht.World = function(layer, type, theme) {
     // LIME.JS - OBJECTS //
     ///////////////////////
 
-    this.clouds1 = new lime.Sprite().setSize(obacht.options.world.size.clouds, obacht.options.world.size.clouds).setFill(theme.world.files.clouds).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation1).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.worldQualityC);
-    this.clouds2 = new lime.Sprite().setSize(obacht.options.world.size.clouds, obacht.options.world.size.clouds).setFill(theme.world.files.clouds).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation2).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.worldQualityC);
-    this.landscapeA1 = new lime.Sprite().setSize(obacht.options.world.size.landscapeA, obacht.options.world.size.landscapeA).setFill(theme.world.files.landscapeA).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation1).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.worldQualityA);
-    this.landscapeA2 = new lime.Sprite().setSize(obacht.options.world.size.landscapeA, obacht.options.world.size.landscapeA).setFill(theme.world.files.landscapeA).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation2).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.worldQualityA);
-    this.landscapeB1 = new lime.Sprite().setSize(obacht.options.world.size.landscapeB, obacht.options.world.size.landscapeB).setFill(theme.world.files.landscapeB).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation1).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.worldQualityB);
-    this.landscapeB2 = new lime.Sprite().setSize(obacht.options.world.size.landscapeB, obacht.options.world.size.landscapeB).setFill(theme.world.files.landscapeB).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation2).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.worldQualityB);
-    this.ground1 = new lime.Sprite().setSize(obacht.options.world.size.ground, obacht.options.world.size.ground).setFill(theme.world.files.ground).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation1).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.worldQualityA);
-    this.ground2 = new lime.Sprite().setSize(obacht.options.world.size.ground, obacht.options.world.size.ground).setFill(theme.world.files.ground).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation2).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.worldQualityA);
+    console.log(this.spritesheet);
+
+
+    this.clouds1 = new lime.Sprite()
+        .setSize(obacht.options.world.size.clouds, obacht.options.world.size.clouds)
+        .setFill(this.spritesheet.getFrame('clouds.png'))
+        .setPosition(this.x, this.y)
+        .setAnchorPoint(0, 1)
+        .setRotation(this.rotation1)
+        .setRenderer(obacht.renderer)
+        .setQuality(obacht.options.graphics.worldQualityC);
+
+    this.clouds2 = new lime.Sprite()
+        .setSize(obacht.options.world.size.clouds, obacht.options.world.size.clouds)
+        .setFill(this.spritesheet.getFrame('clouds.png'))
+        .setPosition(this.x, this.y)
+        .setAnchorPoint(0, 1)
+        .setRotation(this.rotation2)
+        .setRenderer(obacht.renderer)
+        .setQuality(obacht.options.graphics.worldQualityC);
+
+
+    this.landscapeA1 = new lime.Sprite()
+        .setSize(obacht.options.world.size.landscapeA, obacht.options.world.size.landscapeA)
+        .setFill(this.theme.world.files.landscapeA)
+        .setPosition(this.x, this.y)
+        .setAnchorPoint(0, 1)
+        .setRotation(this.rotation1)
+        .setRenderer(obacht.renderer)
+        .setQuality(obacht.options.graphics.worldQualityA);
+
+    this.landscapeA2 = new lime.Sprite().setSize(obacht.options.world.size.landscapeA, obacht.options.world.size.landscapeA).setFill(this.theme.world.files.landscapeA).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation2).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.worldQualityA);
+    this.landscapeB1 = new lime.Sprite().setSize(obacht.options.world.size.landscapeB, obacht.options.world.size.landscapeB).setFill(this.theme.world.files.landscapeB).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation1).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.worldQualityB);
+    this.landscapeB2 = new lime.Sprite().setSize(obacht.options.world.size.landscapeB, obacht.options.world.size.landscapeB).setFill(this.theme.world.files.landscapeB).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation2).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.worldQualityB);
+    this.ground1 = new lime.Sprite().setSize(obacht.options.world.size.ground, obacht.options.world.size.ground).setFill(this.theme.world.files.ground).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation1).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.worldQualityA);
+    this.ground2 = new lime.Sprite().setSize(obacht.options.world.size.ground, obacht.options.world.size.ground).setFill(this.theme.world.files.ground).setPosition(this.x, this.y).setAnchorPoint(0, 1).setRotation(this.rotation2).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.worldQualityA);
 
     this.gameLayer.appendChild(this.clouds2);
     this.gameLayer.appendChild(this.clouds1);
