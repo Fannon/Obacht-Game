@@ -33,7 +33,7 @@ obacht.TrapManager = function(type, world, player, layer) {
     obacht.mp.events.subscribe('trap', function(data) {
         var trap = new obacht.Trap(data.type);
         self.traps[self.traps.length] = trap;
-        self.layer.appendChild(trap.layer);
+        self.layer.appendChild(trap.trap);
 
         var anglespeed=0.015;
         var millesecondsmove=15;

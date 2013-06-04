@@ -26,8 +26,6 @@ obacht.Trap = function(type) {
     this.trap = new lime.Sprite()
         .setSize(obacht.options.trap.general.width, obacht.options.trap.general.height)
         .setFill(this.fill);
-    this.layer = new lime.Layer().setSize(obacht.options.trap.general.width, obacht.options.trap.general.height);
-    self.drawTrap();
 
     //
     this.zahl = Math.random();
@@ -41,11 +39,5 @@ obacht.Trap = function(type) {
 };
 
 obacht.Trap.prototype = {
-    /**
-     * Draw the trap
-     */
-    drawTrap: function() {
-        "use strict";
-        this.layer.appendChild(this.trap);
-    }
+
 };
