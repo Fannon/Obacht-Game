@@ -38,8 +38,8 @@ obacht.Bonus = function(currentGame, type) {
 	this.bonusButton = new lime.RoundedRect()
         .setSize(obacht.options.bonus.general.size, obacht.options.bonus.general.size)
         .setPosition(obacht.options.bonus.general.x, obacht.options.bonus.general.y)
-//        .setFill(this.spritesheet.getFrame(this.type + '.png'))
-        .setFill(this.fill)
+        .setFill(this.spritesheet.getFrame('boni_' + this.type + '.png'))
+//        .setFill(this.fill)
         .setAnchorPoint(0, 0)
         .setRadius(15);
 
