@@ -193,7 +193,13 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.socket.on('trap', function (data) {
         //console.log('Trap received: ' + data.type);
-        self.events.publish('trap', data);
+        if (data.target === self.pid) {
+            console.log('Trap on bottom world.');
+            self.events.publish('own_trap', data);
+        } else {
+            console.log('Trap on top world.');
+            self.events.publish('enemy_trap', data);
+        }
     });
 
     /**
@@ -338,25 +344,13 @@ obacht.MultiplayerService.prototype = {
      * Broadcast Throw Trap
      *
      * @param {String} type Type of the Trap
-     * @param {Object} data Trapdata, i.e. distance
+     * @param {Object} target Indicates which player receives the Trap
      */
-    throwTrap: function(type, data) {
+    throwTrap: function(type, target) {
         "use strict";
         this.socket.emit('trap', {
             type: type,
-            data: data
-        });
-    },
-
-    /**
-     * Broadcast generated Traps
-     *
-     * @param  {String} type Type of the Bonus, i.e. 'snake'
-     */
-    throwGeneratedTrap: function (type) {
-        "use strict";
-        this.socket.emit('generated_trap', {
-            type: type
+            target: target
         });
     },
 
