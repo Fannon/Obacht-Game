@@ -38,6 +38,7 @@ obacht.TrapManager = function(type, world, player, layer) {
         var trap = new obacht.Trap(data.type);
         self.traps[self.traps.length] = trap;
         self.layer.appendChild(trap.trap);
+        self.who='enemy';
 
         trap.trap.setPosition(obacht.options.trap.enemy.x, obacht.options.trap.enemy.y);
         trap.trap.setAnchorPoint(obacht.options.trap.general.anchorx, obacht.options.trap.general.anchory);
@@ -82,6 +83,7 @@ obacht.TrapManager = function(type, world, player, layer) {
         var trap = new obacht.Trap(data.type);
         self.traps[self.traps.length] = trap;
         self.layer.appendChild(trap.trap);
+        self.who='own';
 
         trap.trap.setPosition(obacht.options.trap.own.x, obacht.options.trap.own.y);
         trap.trap.setAnchorPoint(obacht.options.trap.general.anchorx, obacht.options.trap.general.anchory);
@@ -99,7 +101,6 @@ obacht.TrapManager = function(type, world, player, layer) {
         lime.scheduleManager.schedule(function(dt){
             self.checkColl(self.layer,player,self.traps);
         },player);
-
 
         //Movement
         lime.scheduleManager.scheduleWithDelay(function(dt){
@@ -146,9 +147,10 @@ obacht.TrapManager.prototype = {
                         delete traps[i];
                     }
                 }else if(trap.who==='enemy'){
+                    console.log('JAHIER: '+trap);
                     if (position.x > obacht.options.graphics.VIEWPORT_WIDTH + width){
                         this.layer.removeChild(trap.layer);
-                        //console.log('Trap removed right side:' +traps[i].type);
+                        console.log('Trap removed right side:' +traps[i].type);
                         delete traps[i];
                     }
                 }
