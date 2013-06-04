@@ -31,17 +31,18 @@ obacht.Game = function() {
     var self = this;
 
     this.layer = new lime.Layer();
+
     this.theme = obacht.themes[obacht.mp.roomDetail.theme];
     this.speedFactor = obacht.options.gameplay.initialSpeedFactor;
 
     obacht.setBackground(obacht.mp.roomDetail.theme);
 
-    this.ownWorld = new obacht.World('bottom', this.theme);
-    this.enemyWorld = new obacht.World('top', this.theme);
+    this.ownWorld = new obacht.World(this.layer, 'bottom', this.theme);
+    this.enemyWorld = new obacht.World(this.layer, 'top', this.theme);
 
 
-    this.ownPlayer = new obacht.Player('bottom', this.theme);
-    this.enemyPlayer = new obacht.Player('top', this.theme);
+    this.ownPlayer = new obacht.Player(this.layer, 'bottom', this.theme);
+    this.enemyPlayer = new obacht.Player(this.layer, 'top', this.theme);
 
 
     this.ownTrapManager = new obacht.TrapManager('own', this.ownWorld, this.ownPlayer, this.layer);
@@ -55,8 +56,10 @@ obacht.Game = function() {
     //////////////////////////////
 
     obacht.mp.events.subscribe('bonus', function(type) {
-        self.bonusButton = new obacht.Bonus(type);
-        self.layer.appendChild(self.bonusButton.layer);
+
+        self.bonusButton = new obacht.Bonus(self.layer, type);
+        self.layer.appendChild(self.bonusButton.bonusButton);
+
         console.log('PERFORMANCE: GAME - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
     });
 
@@ -69,12 +72,6 @@ obacht.Game = function() {
     //////////////////////////////
     // Game View                //
     //////////////////////////////
-
-    this.layer.appendChild(this.enemyWorld.layer);
-    this.layer.appendChild(this.ownWorld.layer);
-    this.layer.appendChild(this.enemyPlayer.layer);
-    this.layer.appendChild(this.ownPlayer.layer);
-
 
     // Just start the generator if player is the creating Player
     if (obacht.mp.pid === obacht.mp.roomDetail.creatingPlayerId) {

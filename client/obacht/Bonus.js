@@ -11,7 +11,7 @@ goog.require('lime.RoundedRect');
  *
  * @author Lukas Jaborsky
  */
-obacht.Bonus = function(type) {
+obacht.Bonus = function(layer, type) {
 	"use strict";
 
 	////////////////
@@ -20,6 +20,7 @@ obacht.Bonus = function(type) {
 
     var self = this;
 
+    this.gameLayer = layer;
     this.type = type;
     this.fill = 'assets/themes/' + obacht.mp.roomDetail.theme + '/boni/' + this.type + '.png';
 
@@ -36,7 +37,7 @@ obacht.Bonus = function(type) {
 
 	this.bonusButton = new lime.RoundedRect().setSize(obacht.options.bonus.general.size, obacht.options.bonus.general.size).setPosition(obacht.options.bonus.general.x, obacht.options.bonus.general.y).setFill(this.fill).setAnchorPoint(0, 0).setRadius(15);
 
-    this.layer = new lime.Layer().setSize(obacht.options.bonus.general.size, obacht.options.bonus.general.size);
+//    this.layer = new lime.Layer().setSize(obacht.options.bonus.general.size, obacht.options.bonus.general.size);
     self.drawBonus();
 
 
@@ -57,7 +58,7 @@ obacht.Bonus.prototype = {
      */
     drawBonus: function() {
         "use strict";
-        this.layer.appendChild(this.bonusButton);
+//        this.layer.appendChild(this.bonusButton);
         this.drawtime = this.getTime();
         this.bonusTimer();
     },
@@ -87,7 +88,7 @@ obacht.Bonus.prototype = {
      */
     deleteBonus: function() {
         "use strict";
-        this.layer.removeChild(this.bonusButton);
+        this.gameLayer.removeChild(this.bonusButton);
     },
 
     /**

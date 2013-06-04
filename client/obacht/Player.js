@@ -27,12 +27,13 @@ goog.require('lime.animation.KeyframeAnimation');
  *
  * @constructor
  */
-obacht.Player = function(location, theme) {
+obacht.Player = function(layer, location, theme) {
 
     var self = this;
 
-    this.location=location;
-    this.playerstate=false;
+    this.gameLayer = layer;
+    this.location = location;
+    this.playerstate = false;
 
     //////////////////
     /* PLAYER MODEL */
@@ -73,8 +74,7 @@ obacht.Player = function(location, theme) {
     this.character = new lime.Sprite().setFill(this.spritesheet.getFrame('character_0001.png')).setPosition(this.x, this.y).setSize(205,240).setAnchorPoint(0.5, 1).setRotation(this.rotation).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.characterQuality);
 
     /** Player LimeJS Layer */
-    this.layer = new lime.Layer().setSize(obacht.options.player.general.width, obacht.options.player.general.height);
-    this.layer.appendChild(this.character);
+    this.gameLayer.appendChild(this.character);
 
     var anim = new lime.animation.KeyframeAnimation();
     var i;
