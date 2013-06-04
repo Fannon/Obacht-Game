@@ -9,23 +9,22 @@ goog.require('obacht.Collision');
 /**
  * Trap Manager/Collection
  *
- * @param {String} type     Own or enemy TrapManager
- * @param {Object} world    World the TrapManager manages
- * @param {Object} player   Player
- * @param {Object} layer   Layer
+ * @param {Object} currentGame  Current Game Object
+ * @param {Object} world        World the TrapManager manages
+ * @param {Object} player       Player
  *
  * @constructor
  */
-obacht.TrapManager = function(type, world, player, layer) {
+obacht.TrapManager = function(currentGame, world, player) {
     "use strict";
 
     var self = this;
-    this.traps = [];
+    this.currentGame = currentGame;
     this.world = world;
-    this.layer = layer;
     this.player = player;
-    this.type = type;
+    this.layer = currentGame.layer;
 
+    this.traps = [];
 
 
     //TESTVAR 1
