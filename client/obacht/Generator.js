@@ -16,6 +16,7 @@ goog.require('obacht.Collision');
 obacht.Generator = function(speedFactor) {
     "use strict";
     this.speedFactor = speedFactor;
+    this.thrownTrapsCounter = 0;
 };
 
 obacht.Generator.prototype = {
@@ -52,7 +53,13 @@ obacht.Generator.prototype = {
        "use strict";
         var self = this;
         this.trapInterval = setInterval(function() {
-           obacht.mp.throwGeneratedTrap(self.getRandomTrap());
+            if (self.thrownTrapsCounter % 2) {
+                obacht.mp.throwTrap(self.getRandomTrap(), self.pid);
+            } else {
+                obacht.mp.throwTrap(self.getRandomTrap(), obacht.mp.enemy);
+            }
+            self.thrownTrapsCounter += 1;
+
         }, self.getRandomTime(obacht.options.gameplay.generateTrapsMinInterval, obacht.options.gameplay.generateTrapsMaxInterval));
     },
 

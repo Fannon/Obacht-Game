@@ -97,7 +97,7 @@ obacht.Inventory.prototype = {
     throwTrap: function(type) {
         "use strict";
         console.log('throwTrap: ' + type);
-        obacht.mp.throwTrap(type, {});
+        obacht.mp.throwTrap(type, obacht.mp.enemy);
     },
 
     /**

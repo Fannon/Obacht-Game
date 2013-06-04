@@ -30,7 +30,7 @@ obacht.TrapManager = function(type, world, player, layer) {
     //TESTVAR 1
 
 
-    obacht.mp.events.subscribe('trap', function(data) {
+    obacht.mp.events.subscribe('own_trap', function(data) {
         var trap = new obacht.Trap(data.type);
         self.traps[self.traps.length] = trap;
         self.layer.appendChild(trap.trap);
