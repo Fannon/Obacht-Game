@@ -82,11 +82,11 @@ obacht.options = {
         location: {
             bottom: {
                 x: 135,
-                y: 575
+                y: 580
             },
             top: {
                 x: 1145,
-                y: 145
+                y: 140
             }
         },
         stateVar: {

@@ -61,15 +61,14 @@ obacht.TrapManager = function(type, world, player, layer) {
             factor = obacht.options.trap.general.factorlow;
         }
 
+        //Collision
+        lime.scheduleManager.schedule(function(dt){
+            self.checkColl(self.layer,player,self.traps);
+        },player);
+
+
         //Movement
         lime.scheduleManager.scheduleWithDelay(function(dt){
-
-            /*var kol=new obacht.Collision(layer,player,trap);
-            if(kol.rect()===true){
-                console.log('boom! '+trap.type);
-                delete traps[i];
-            }*/
-            self.checkColl(self.layer,player,self.traps);
 
             var position = trap.trap.getPosition();
 
