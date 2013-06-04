@@ -231,6 +231,7 @@ obacht.MultiplayerService = function(serverUrl) {
 //////////////////////////////
 
 obacht.MultiplayerService.prototype = {
+
     /**
      * Broadcast New Room
      *
