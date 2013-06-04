@@ -22,13 +22,11 @@ obacht.Bonus = function(currentGame, type) {
     this.gameLayer = currentGame.layer;
     this.spritesheet = currentGame.spritesheet;
     this.type = type;
-    this.fill = 'assets/themes/' + obacht.mp.roomDetail.theme + '/boni/' + this.type + '.png';
-
-	console.log("New Bonus: " + this.fill);
     this.clicked = false;
-
 	this.drawtime = 0;
 	this.clicktime = 0;
+
+    console.log("New Bonus: " + this.fill);
 
 
 	////////////////////
@@ -39,7 +37,6 @@ obacht.Bonus = function(currentGame, type) {
         .setSize(obacht.options.bonus.general.size, obacht.options.bonus.general.size)
         .setPosition(obacht.options.bonus.general.x, obacht.options.bonus.general.y)
         .setFill(this.spritesheet.getFrame('boni_' + this.type + '.png'))
-//        .setFill(this.fill)
         .setAnchorPoint(0, 0)
         .setRadius(15);
 
