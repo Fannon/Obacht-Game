@@ -29,13 +29,9 @@ obacht.Collision = function (layer, player, trap) {
     this.obj2x=layer.screenToLocal(trap.trap.getPosition()).ceil().x;
     this.obj2y=layer.screenToLocal(trap.trap.getPosition()).ceil().y;
 
-    console.log(this.obj1x+'>'+this.obj1y);
-
     //Set left top corner of box
     this.obj1x=this.obj1x-(this.obj1w)/2;
     this.obj1y=this.obj1y+(this.obj1h)/2;
-
-    console.log(this.obj1x+'>>'+this.obj1y);
 
     this.obj2x=this.obj2x-(this.obj2w)/2;
     this.obj2y=this.obj2y+(this.obj2h)/2;
@@ -51,8 +47,6 @@ obacht.Collision = function (layer, player, trap) {
         //Just one Bounding Box for Hugo
         this.obj1x = this.obj1x + this.bbobj1[0].x;
         this.obj1y = this.obj1y - this.bbobj1[0].y;
-
-        console.log(this.obj1x+'>>>'+this.obj1y);
 
         //If player is crouched
         /*Size Object1*/

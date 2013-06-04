@@ -64,11 +64,12 @@ obacht.TrapManager = function(type, world, player, layer) {
         //Movement
         lime.scheduleManager.scheduleWithDelay(function(dt){
 
-            var kol=new obacht.Collision(layer,player,trap);
-            /*if(kol.rect()===true){
+            /*var kol=new obacht.Collision(layer,player,trap);
+            if(kol.rect()===true){
                 console.log('boom! '+trap.type);
                 delete traps[i];
             }*/
+            self.checkColl(self.layer,player,self.traps);
 
             var position = trap.trap.getPosition();
 
@@ -82,7 +83,6 @@ obacht.TrapManager = function(type, world, player, layer) {
     });
 
     obacht.intervals.cleanUpTraps = setInterval(function() {
-        self.checkColl(self.layer,player,self.traps);
         self.cleanUpTraps(self.traps);
     }, 500);
 
@@ -109,13 +109,13 @@ obacht.TrapManager.prototype = {
                 if(trap.who==='own'){
                     if (position.x < 0 - width) {
                         this.layer.removeChild(trap.layer);
-                        console.log('Trap removed left side: '+traps[i].type);
+                        //console.log('Trap removed left side: '+traps[i].type);
                         delete traps[i];
                     }
                 }else if(trap.who==='enemy'){
                     if (position.x > obacht.options.graphics.VIEWPORT_WIDTH + width){
                         this.layer.removeChild(trap.layer);
-                        console.log('Trap removed right side:' +traps[i].type);
+                        //console.log('Trap removed right side:' +traps[i].type);
                         delete traps[i];
                     }
                 }
@@ -129,17 +129,16 @@ obacht.TrapManager.prototype = {
         "use strict";
 
         for (var i = 0; i < traps.length; i++) {
+            if(typeof traps[i] !== 'undefined' && traps[i].who==='own'){
+                var trap = traps[i];
 
-            var trap = traps[i];
-            //var position = trap.trap.getPosition();
-
-            /*if(position.x<200){
                 var kol=new obacht.Collision(layer,player,trap);
                 if(kol.rect()===true){
-                    console.log('boom! '+trap.type);
+                    this.layer.removeChild(trap.layer);
+                    console.log('Kollision! '+trap.type);
                     delete traps[i];
                 }
-            }*/
+            }
         }
     },
 

@@ -162,7 +162,7 @@ obacht.MultiplayerService = function(serverUrl) {
      * Receives a bonus to show it within the reactionbox
      */
     this.socket.on('bonus', function (data) {
-        console.log('bonus: ' + data.type);
+        //console.log('bonus: ' + data.type);
         self.events.publish('bonus', data.type);
     });
 
