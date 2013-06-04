@@ -147,7 +147,6 @@ obacht.TrapManager.prototype = {
                         delete traps[i];
                     }
                 }else if(trap.who==='enemy'){
-                    console.log('JAHIER: '+trap);
                     if (position.x > obacht.options.graphics.VIEWPORT_WIDTH + width){
                         this.layer.removeChild(trap.layer);
                         console.log('Trap removed right side:' +traps[i].type);
