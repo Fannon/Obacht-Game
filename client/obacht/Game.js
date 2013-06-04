@@ -66,8 +66,7 @@ obacht.Game = function() {
     this.enemyPlayer = new obacht.Player(this, 'top');
 
 
-    this.ownTrapManager = new obacht.TrapManager('own', this.ownWorld, this.ownPlayer, this.layer);
-//    this.enemyTrapManager = new obacht.TrapManager('enemy', this.enemyWorld, this.enemyPlayer);
+    this.trapManager = new obacht.TrapManager(this, this.ownWorld, this.ownPlayer);
 
 
     console.log('PERFORMANCE: GAME - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
@@ -117,7 +116,7 @@ obacht.Game.prototype = {
         this.ownPlayer.destruct();
         this.enemyPlayer.destruct();
 
-        this.ownTrapManager.destruct();
+        this.trapManager.destruct();
 
         if (this.generator) {
             this.generator.destruct();

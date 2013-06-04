@@ -34,7 +34,6 @@ obacht.Player = function(currentGame, location) {
     var self = this;
 
 
-
     //////////////////
     /* PLAYER MODEL */
     //////////////////
@@ -50,9 +49,7 @@ obacht.Player = function(currentGame, location) {
         this.y = obacht.options.player.location.bottom.y;
         this.rotation = 0;
         this.jumpHeight = -obacht.options.player.general.jumpHeight;
-    }
-
-    if (this.location === 'top') {
+    } else {
         this.x = obacht.options.player.location.top.x;
         this.y = obacht.options.player.location.top.y;
         this.rotation = 180;
