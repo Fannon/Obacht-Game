@@ -31,6 +31,8 @@ obacht.MultiplayerService = function(serverUrl) {
     this.roomDetail = {};
     /** Friend Player, if connected to one */
     this.friend = false;
+    /** Enemy Player, if game running */
+    this.enemy = false;
     /** Socket.io */
     this.socket = io.connect(this.serverUrl); // Set up Socket-Connection to Server
 
@@ -137,6 +139,13 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.socket.on('game_ready', function () {
         console.log('Game is ready!');
+
+        // Set Enemy PID
+        if (self.roomDetail.creatingPlayerId === self.pid) {
+            self.enemy = self.roomDetail.joiningPlayerId;
+        } else {
+            self.enemy = self.roomDetail.creatingPlayerId;
+        }
 
         // Set Friend if playing closed Game
         if (self.roomDetail.closed) {
