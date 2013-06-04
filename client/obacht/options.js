@@ -125,7 +125,9 @@ obacht.options = {
             factorlow: 895,
             factorhigh: 1025,
             anchorx: 0,
-            anchory: 1
+            anchory: 1,
+            millesecondsmove: 25,
+            anglespeed: 0.015
         },
         own: {
             x: 100,
