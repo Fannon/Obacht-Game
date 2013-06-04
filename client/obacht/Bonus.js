@@ -5,13 +5,12 @@ goog.provide('obacht.Bonus');
 goog.require('lime.RoundedRect');
 
 /**
- * Bonus Object.
+ * This is a Bonus Object.
  *
- * @constructor
- *
- * @author Lukas Jaborsky
+ * @param  {Object} currentGame Current Game Object
+ * @param  {String} type        Type
  */
-obacht.Bonus = function(layer, type) {
+obacht.Bonus = function(currentGame, type) {
 	"use strict";
 
 	////////////////
@@ -20,7 +19,8 @@ obacht.Bonus = function(layer, type) {
 
     var self = this;
 
-    this.gameLayer = layer;
+    this.gameLayer = currentGame.layer;
+    this.spritesheet = currentGame.spritesheet;
     this.type = type;
     this.fill = 'assets/themes/' + obacht.mp.roomDetail.theme + '/boni/' + this.type + '.png';
 
@@ -35,9 +35,14 @@ obacht.Bonus = function(layer, type) {
     // LIMEJS OBJECTS //
     ////////////////////
 
-	this.bonusButton = new lime.RoundedRect().setSize(obacht.options.bonus.general.size, obacht.options.bonus.general.size).setPosition(obacht.options.bonus.general.x, obacht.options.bonus.general.y).setFill(this.fill).setAnchorPoint(0, 0).setRadius(15);
+	this.bonusButton = new lime.RoundedRect()
+        .setSize(obacht.options.bonus.general.size, obacht.options.bonus.general.size)
+        .setPosition(obacht.options.bonus.general.x, obacht.options.bonus.general.y)
+//        .setFill(this.spritesheet.getFrame(this.type + '.png'))
+        .setFill(this.fill)
+        .setAnchorPoint(0, 0)
+        .setRadius(15);
 
-//    this.layer = new lime.Layer().setSize(obacht.options.bonus.general.size, obacht.options.bonus.general.size);
     self.drawBonus();
 
 
@@ -58,7 +63,7 @@ obacht.Bonus.prototype = {
      */
     drawBonus: function() {
         "use strict";
-//        this.layer.appendChild(this.bonusButton);
+        this.gameLayer.appendChild(this.bonusButton);
         this.drawtime = this.getTime();
         this.bonusTimer();
     },

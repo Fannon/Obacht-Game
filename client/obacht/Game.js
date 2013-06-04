@@ -77,8 +77,7 @@ obacht.Game = function() {
 
     obacht.mp.events.subscribe('bonus', function(type) {
 
-        self.bonusButton = new obacht.Bonus(self.layer, type);
-        self.layer.appendChild(self.bonusButton.bonusButton);
+        self.bonusButton = new obacht.Bonus(self, type);
 
         console.log('PERFORMANCE: GAME - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
     });
@@ -128,6 +127,5 @@ obacht.Game.prototype = {
         this.layer.removeChild(this.ownWorld.layer);
         this.layer.removeChild(this.enemyPlayer.layer);
         this.layer.removeChild(this.ownPlayer.layer);
-
     }
 };
