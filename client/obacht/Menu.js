@@ -82,51 +82,6 @@ obacht.Menu = function() {
 
 };
 
-/**
- * Menu Button
- *
- * @param pos_x
- * @param pos_y
- * @param size_x
- * @param size_y
- * @param posMask_x
- * @param posMask_y
- * @param sizeMask_w
- * @param sizeMask_h
- * @param layerMenu
- * @returns {*}
- * @constructor
- */
-obacht.Menu.Button = function(pos_x, pos_y, size_x, size_y, posMask_x, posMask_y, sizeMask_w, sizeMask_h, layerMenu) {
-    "use strict";
-    var button = new lime.Sprite().setSize(size_x, size_y).setFill('assets/gfx/menu_spritesheet.png').setPosition(pos_x, pos_y).setAnchorPoint(0, 0);
-    layerMenu.appendChild(button);
-    var maskButton = new lime.Sprite().setPosition(posMask_x, posMask_y).setAnchorPoint(0.5,0.5).setSize(sizeMask_w, sizeMask_h);
-    layerMenu.appendChild(maskButton);
-    button.setMask(maskButton);
-    return maskButton;
-};
-
-/**
- * Menu Label
- *
- * @param text
- * @param size
- * @param x
- * @param y
- * @param w
- * @param h
- * @param layerMenu
- * @returns {*}
- * @constructor
- */
-obacht.Menu.Label = function(text, size, x, y, w, h, layerMenu){
-    "use strict";
-    var label = new lime.Label().setText(text).setFontColor('#fff').setFontSize(size).setPosition(x, y).setSize(w,h).setAlign('center');
-    layerMenu.appendChild(label);
-    return label;
-};
-
 obacht.Menu.prototype = {
 
     /**
@@ -196,6 +151,9 @@ obacht.Menu.prototype = {
         /** Small Logo */
         var logoSmall = new lime.Sprite().setFill(this.spritesheet.getFrame('obacht_small.png')).setPosition(640,130).setSize(544,114);
 
+        /** Character */
+        var character = new lime.Sprite().setFill(this.spritesheet.getFrame('character_right.png')).setPosition(1055,340).setSize(450,536);
+        
         /** Play Button */
         var playButton = new lime.Sprite().setFill(this.spritesheet.getFrame('play.png')).setPosition(640,338).setSize(368,176);
         var playLabel = new lime.Label().setText('PLAY').setFontColor('#fff').setFontSize(90).setPosition(640,338).setSize(400,90).setAlign('center');
@@ -234,6 +192,7 @@ obacht.Menu.prototype = {
 
 
         layerMenu.appendChild(logoSmall);
+        layerMenu.appendChild(character);
         layerMenu.appendChild(playButton);
         layerMenu.appendChild(playLabel);
         layerMenu.appendChild(helpButton);
@@ -431,6 +390,9 @@ obacht.Menu.prototype = {
         /** Small Logo */
         var logoSmall = new lime.Sprite().setFill(this.spritesheet.getFrame('obacht_small.png')).setPosition(640,130).setSize(544,114);
 
+        /** Character */
+        var character = new lime.Sprite().setFill(this.spritesheet.getFrame('character_top.png')).setPosition(290,360).setSize(580,720);
+
         /** Back Button */
         var backButton = new lime.Sprite().setFill(this.spritesheet.getFrame('back.png')).setPosition(75,75).setSize(80,96);
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
@@ -443,7 +405,7 @@ obacht.Menu.prototype = {
         var codeLabel = new lime.Label().setText('YOUR CODE').setFontColor('#fff').setFontSize(50).setPosition(640, 300).setSize(300,50).setAlign('center');
 
         /** Code Field */
-        var field = new lime.Sprite().setFill(this.spritesheet.getFrame('code.png')).setPosition(640, 405).setSize(478,154);
+        var field = new lime.Sprite().setFill(this.spritesheet.getFrame('code.png')).setPosition(640, 405).setSize(455,154);
         var code =  new lime.Label().setText(pinFormatted).setFontColor('#fff').setFontSize(90).setPosition(640, 408).setSize(300,90).setAlign('center');
 
         /** small Infotext Icon */
@@ -464,6 +426,7 @@ obacht.Menu.prototype = {
         obacht.mp.playerReady();
 
         layerMenu.appendChild(logoSmall);
+        layerMenu.appendChild(character);
         layerMenu.appendChild(backButton);
         layerMenu.appendChild(codeLabel);
         layerMenu.appendChild(field);
