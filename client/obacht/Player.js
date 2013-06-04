@@ -13,7 +13,7 @@ goog.require('lime.animation.Sequence');
 goog.require('lime.animation.MoveBy');
 goog.require('lime.animation.ScaleTo');
 
-//Spritesheets Requirements
+//Spritesheet Requirements
 goog.require('lime.parser.JSON');
 goog.require('lime.ASSETS.waterSpritesheet.json');
 goog.require('lime.ASSETS.desertSpritesheet.json');
@@ -40,23 +40,21 @@ obacht.Player = function(layer, location, theme) {
     this.gameLayer = layer;
     this.location = location;
     this.playerstate = false;
+    this.health = 3;
 
-    if (location === 'bottom') {
+    if (this.location === 'bottom') {
         this.x = obacht.options.player.location.bottom.x;
         this.y = obacht.options.player.location.bottom.y;
         this.rotation = 0;
         this.jumpHeight = -obacht.options.player.general.jumpHeight;
     }
 
-    if (location === 'top') {
+    if (this.location === 'top') {
         this.x = obacht.options.player.location.top.x;
         this.y = obacht.options.player.location.top.y;
         this.rotation = 180;
         this.jumpHeight = obacht.options.player.general.jumpHeight;
     }
-
-    /** Player Health */
-    this.health = 3;
 
     /** variable for json path */
     this.jsonPath = undefined;
@@ -72,24 +70,21 @@ obacht.Player = function(layer, location, theme) {
 
     /** Character Graphic */
     this.spritesheet = new lime.SpriteSheet('assets/spritesheets/' + obacht.mp.roomDetail.theme + 'Spritesheet.png', this.jsonPath, lime.parser.JSON);
-
     this.character = new lime.Sprite().setFill(this.spritesheet.getFrame('character_0001.png')).setPosition(this.x, this.y).setSize(205,240).setAnchorPoint(0.5, 1).setRotation(this.rotation).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.characterQuality);
-
-    /** Player LimeJS Layer */
     this.gameLayer.appendChild(this.character);
-
-    var anim = new lime.animation.KeyframeAnimation();
-    var i;
-    for(i=1;i<=16;i++){
-        anim.addFrame(this.spritesheet.getFrame('character_'+goog.string.padNumber(i,4)+'.png'));
-    }
-    this.character.runAction(anim);
 
 
 
     ////////////////
     /* ANIMATIONS */
     ////////////////
+
+    this.runAnimation = new lime.animation.KeyframeAnimation();
+    for (var i = 1; i <= 16; i++) {
+        this.runAnimation.addFrame(self.spritesheet.getFrame('character_' + goog.string.padNumber(i, 4) + '.png'));
+    }
+
+    this.run();
 
     this.jumpUp = new lime.animation.MoveBy(0, this.jumpHeight).setDuration(obacht.options.player.general.jumpUpDuration).setEasing(lime.animation.Easing.EASEOUT);
     this.jumpDown = this.jumpUp.reverse().setDuration(obacht.options.player.general.jumpDownDuration).setEasing(lime.animation.Easing.EASEIN);
@@ -115,7 +110,7 @@ obacht.Player = function(layer, location, theme) {
     /////////////////////////
 
     // Sets up event subscription for own player.
-    if (location === 'bottom') {
+    if (this.location === 'bottom') {
         obacht.playerController.events.subscribe('own_player_action', function(data) {
             if (data.action === 'jump') {
                 self.jump();
@@ -130,7 +125,7 @@ obacht.Player = function(layer, location, theme) {
     }
 
     // Sets up event subscription for enemy player.
-    if (location === 'top') {
+    if (this.location === 'top') {
         obacht.mp.events.subscribe('player_action', function(data) {
             if (data.action === 'jump') {
                 self.jump();
@@ -154,10 +149,18 @@ obacht.Player = function(layer, location, theme) {
 obacht.Player.prototype = {
 
     /**
+     * Runs the running animation on the character.
+     */
+    run: function() {
+        'use strict';
+        this.character.runAction(this.runAnimation);
+    },
+
+    /**
      * Runs the jumping animation on the character.
      */
     jump: function() {
-        "use strict";
+        'use strict';
         this.character.runAction(this.jumpAnimation);
     },
 
@@ -165,7 +168,7 @@ obacht.Player.prototype = {
      * Runs the crouching animation on the character.
      */
     crouch: function() {
-        "use strict";
+        'use strict';
         this.playerstate=true;
         this.character.runAction(this.crouchAnimation);
     },
@@ -174,7 +177,7 @@ obacht.Player.prototype = {
      * Runs the standUp animation on the character.
      */
     standUp: function() {
-        "use strict";
+        'use strict';
         this.playerstate=false;
         this.character.runAction(this.standUpAnimation);
     },
