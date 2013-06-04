@@ -14,13 +14,12 @@ goog.require('obacht.Generator');
 goog.require('obacht.Bonus');
 goog.require('obacht.Trap');
 
-
 //Spritesheet Requirements
+goog.require('lime.SpriteSheet');
 goog.require('lime.parser.JSON');
 goog.require('lime.ASSETS.waterSpritesheet.json');
 goog.require('lime.ASSETS.desertSpritesheet.json');
 goog.require('lime.ASSETS.meadowSpritesheet.json');
-goog.require('lime.SpriteSheet');
 
 /**
  * Its a Game scene
@@ -38,18 +37,18 @@ obacht.Game = function() {
     var self = this;
 
     this.layer = new lime.Layer();
+    /** Game Spritesheet (changes with current theme) */
+    this.spritesheet = false;
 
     this.theme = obacht.themes[obacht.mp.roomDetail.theme];
 
     // Load Spritesheet according to current Theme
-    var spritesheetUrl = this.theme.spritesheet;
-
     if (obacht.mp.roomDetail.theme === 'desert') {
-        this.spritesheet = new lime.SpriteSheet(spritesheetUrl, lime.ASSETS.desertSpritesheet.json, lime.parser.JSON);
+        this.spritesheet = new lime.SpriteSheet(this.theme.spritesheet, lime.ASSETS.desertSpritesheet.json, lime.parser.JSON);
     } else if (obacht.mp.roomDetail.theme === 'meadow') {
-        this.spritesheet = new lime.SpriteSheet(spritesheetUrl, lime.ASSETS.meadowSpritesheet.json, lime.parser.JSON);
+        this.spritesheet = new lime.SpriteSheet(this.theme.spritesheet, lime.ASSETS.meadowSpritesheet.json, lime.parser.JSON);
     } else if (obacht.mp.roomDetail.theme === 'water') {
-        this.spritesheet = new lime.SpriteSheet(spritesheetUrl, lime.ASSETS.waterSpritesheet.json, lime.parser.JSON);
+        this.spritesheet = new lime.SpriteSheet(this.theme.spritesheet, lime.ASSETS.waterSpritesheet.json, lime.parser.JSON);
     } else {
         console.warn('Error loading Theme Spritesheet');
     }
@@ -58,9 +57,8 @@ obacht.Game = function() {
 
     obacht.setBackground(obacht.mp.roomDetail.theme);
 
-    this.ownWorld = new obacht.World(this, 'bottom');
-    this.enemyWorld = new obacht.World(this, 'top');
-
+    self.ownWorld = new obacht.World(this, 'bottom');
+    self.enemyWorld = new obacht.World(this, 'top');
 
     this.ownPlayer = new obacht.Player(this, 'bottom');
     this.enemyPlayer = new obacht.Player(this, 'top');

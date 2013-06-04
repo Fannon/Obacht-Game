@@ -4,6 +4,8 @@
 goog.provide('obacht.World');
 goog.require('obacht.options');
 goog.require('obacht.Bonus');
+
+goog.require('lime.Sprite');
 goog.require('lime.animation.Sequence');
 goog.require('lime.animation.Loop');
 goog.require('lime.animation.RotateBy');
@@ -34,9 +36,7 @@ obacht.World = function(currentGame, type) {
         this.rotation2 = obacht.options.world.bottom.rotation2;
         this.rotation3 = obacht.options.world.bottom.startRotation1;
         this.rotation4 = obacht.options.world.bottom.startRotation2;
-    }
-
-    if (type === 'top') {
+    } else {
         this.x = obacht.options.world.top.x;
         this.y = obacht.options.world.top.y;
         this.rotation1 = obacht.options.world.top.rotation1;
@@ -46,12 +46,10 @@ obacht.World = function(currentGame, type) {
     }
 
 
+
     ///////////////////////
     // LIME.JS - OBJECTS //
     ///////////////////////
-
-    console.log(this.spritesheet);
-
 
     this.clouds1 = new lime.Sprite()
         .setSize(obacht.options.world.size.clouds, obacht.options.world.size.clouds)
@@ -59,7 +57,7 @@ obacht.World = function(currentGame, type) {
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation1)
-        .setRenderer(obacht.renderer)
+//        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityC);
 
     this.clouds2 = new lime.Sprite()
@@ -68,7 +66,7 @@ obacht.World = function(currentGame, type) {
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation2)
-        .setRenderer(obacht.renderer)
+//        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityC);
 
 
@@ -78,7 +76,7 @@ obacht.World = function(currentGame, type) {
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation1)
-        .setRenderer(obacht.renderer)
+//        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityA);
 
     this.landscapeA2 = new lime.Sprite()
@@ -87,7 +85,7 @@ obacht.World = function(currentGame, type) {
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation2)
-        .setRenderer(obacht.renderer)
+//        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityA);
 
     this.landscapeB1 = new lime.Sprite()
@@ -96,7 +94,7 @@ obacht.World = function(currentGame, type) {
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation1)
-        .setRenderer(obacht.renderer)
+//        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityB);
 
     this.landscapeB2 = new lime.Sprite()
@@ -105,7 +103,7 @@ obacht.World = function(currentGame, type) {
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation2)
-        .setRenderer(obacht.renderer)
+//        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityB);
 
     this.ground1 = new lime.Sprite()
@@ -114,7 +112,7 @@ obacht.World = function(currentGame, type) {
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation1)
-        .setRenderer(obacht.renderer)
+//        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityA);
 
     this.ground2 = new lime.Sprite()
@@ -123,7 +121,7 @@ obacht.World = function(currentGame, type) {
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation2)
-        .setRenderer(obacht.renderer)
+//        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityA);
 
     this.gameLayer.appendChild(this.clouds2);

@@ -14,11 +14,6 @@ goog.require('lime.animation.MoveBy');
 goog.require('lime.animation.ScaleTo');
 
 //Spritesheet Requirements
-goog.require('lime.parser.JSON');
-goog.require('lime.ASSETS.waterSpritesheet.json');
-goog.require('lime.ASSETS.desertSpritesheet.json');
-goog.require('lime.ASSETS.meadowSpritesheet.json');
-goog.require('lime.SpriteSheet');
 goog.require('lime.animation.KeyframeAnimation');
 
 
@@ -58,7 +53,15 @@ obacht.Player = function(currentGame, location) {
 
 
     /** Character Graphic */
-    this.character = new lime.Sprite().setFill(this.spritesheet.getFrame('character_0001.png')).setPosition(this.x, this.y).setSize(205,240).setAnchorPoint(0.5, 1).setRotation(this.rotation).setRenderer(obacht.renderer).setQuality(obacht.options.graphics.characterQuality);
+    this.character = new lime.Sprite()
+        .setFill(this.spritesheet.getFrame('character_0001.png'))
+        .setPosition(this.x, this.y)
+        .setSize(205,240)
+        .setAnchorPoint(0.5, 1)
+        .setRotation(this.rotation)
+//        .setRenderer(obacht.renderer)
+        .setQuality(obacht.options.graphics.characterQuality);
+
     this.gameLayer.appendChild(this.character);
 
 
