@@ -16,10 +16,12 @@ obacht.options = {
         VIEWPORT_WIDTH: 1280,
         VIEWPORT_HEIGHT: 720,
         DEFAULT_RENDERER: 'CANVAS',
-        worldQualityA: 0.4,
+        worldQualityA: 0.3,
         worldQualityB: 0.3,
         worldQualityC: 0.2,
-        characterQuality: 1.0
+        characterQuality: 1.0,
+        trapQuality: 1.0,
+        bonusQuality: 1.0
     },
     sound: {
         music: true,
@@ -59,16 +61,16 @@ obacht.options = {
             startRotation2: 225
         },
         spinDuration: {
-            front: 20,
-            middle: 35,
-            clouds: 75
+            front: 20 * 0.8,
+            middle: 35 * 0.8,
+            clouds: 75 * 0.8
         }
     },
     player: {
         general: {
             width: 235*0.7,
             height: 300*0.7,
-            jumpUpDuration: 0.3,
+            jumpUpDuration: 0.45,
             jumpDownDuration: 0.45,
             jumpHeight: 320,
             crouchDuration: 0.1,
