@@ -82,51 +82,6 @@ obacht.Menu = function() {
 
 };
 
-/**
- * Menu Button
- *
- * @param pos_x
- * @param pos_y
- * @param size_x
- * @param size_y
- * @param posMask_x
- * @param posMask_y
- * @param sizeMask_w
- * @param sizeMask_h
- * @param layerMenu
- * @returns {*}
- * @constructor
- */
-obacht.Menu.Button = function(pos_x, pos_y, size_x, size_y, posMask_x, posMask_y, sizeMask_w, sizeMask_h, layerMenu) {
-    "use strict";
-    var button = new lime.Sprite().setSize(size_x, size_y).setFill('assets/gfx/menu_spritesheet.png').setPosition(pos_x, pos_y).setAnchorPoint(0, 0);
-    layerMenu.appendChild(button);
-    var maskButton = new lime.Sprite().setPosition(posMask_x, posMask_y).setAnchorPoint(0.5, 0.5).setSize(sizeMask_w, sizeMask_h);
-    layerMenu.appendChild(maskButton);
-    button.setMask(maskButton);
-    return maskButton;
-};
-
-/**
- * Menu Label
- *
- * @param text
- * @param size
- * @param x
- * @param y
- * @param w
- * @param h
- * @param layerMenu
- * @returns {*}
- * @constructor
- */
-obacht.Menu.Label = function(text, size, x, y, w, h, layerMenu) {
-    "use strict";
-    var label = new lime.Label().setText(text).setFontColor('#fff').setFontSize(size).setPosition(x, y).setSize(w, h).setAlign('center');
-    layerMenu.appendChild(label);
-    return label;
-};
-
 obacht.Menu.prototype = {
 
     /**
@@ -1035,10 +990,20 @@ obacht.Menu.prototype = {
 
         var self = this;
         var gameoverText = '';
+        var alreadyJoined = false;
 
         var gameoverScene = new lime.Scene();
         var layerMenu = new lime.Layer();
         gameoverScene.appendChild(layerMenu);
+
+        obacht.mp.events.subscribeOnce('join_room', function() {
+            alreadyJoined = true;
+        });
+
+
+        ///////////////////////////////
+        // Game Over Text            //
+        ///////////////////////////////
 
         if (data.reason === 'player_left') {
             gameoverText = 'Player left the game!';
@@ -1048,8 +1013,15 @@ obacht.Menu.prototype = {
             gameoverText = 'YOU WIN';
         }
 
-        var gameoverLabel = new obacht.Menu.Label(gameoverText, 40, 740, 320, 400, 90, layerMenu).setAlign('left');
-
+        /** Game over Text Label */
+        var gameoverLabel = new lime.Label()
+            .setAlign('center')
+            .setText(gameoverText)
+            .setFontColor('#fff')
+            .setFontSize(50)
+            .setSize(400, 50)
+            .setPosition(250, 250)
+            .setAlign('left');
 
         obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);
         obacht.cleanUp();
@@ -1059,16 +1031,25 @@ obacht.Menu.prototype = {
         // Play Again                //
         ///////////////////////////////
 
-        var createButton = new obacht.Menu.Button(-910, 400, 1533, 1087, 400, 480, 450, 160, layerMenu);
-        var createLabel = new obacht.Menu.Label('Play Again', 60, 400, 485, 400, 70, layerMenu);
+        /** Play Again Button */
+        var playAgainButton = new lime.Sprite()
+            .setFill(this.spritesheet.getFrame('options.png'))
+            .setPosition(400, 480)
+            .setSize(430, 138);
 
-        var alreadyJoined = false;
+        var playAgainLabel = new lime.Label()
+            .setText('Play Again')
+            .setFontColor('#fff')
+            .setFontSize(60)
+            .setPosition(400, 481)
+            .setSize(400, 60)
+            .setAlign('center');
 
-        obacht.mp.events.subscribeOnce('join_room', function() {
-            alreadyJoined = true;
-        });
-
-        goog.events.listen(createButton, ['touchstart', 'mousedown'], function() {
+        /**
+         * Play Again Event
+         * If playing a Random
+         */
+        goog.events.listen(playAgainButton, ['touchstart', 'mousedown'], function() {
 
             if (obacht.mp.roomDetail) {
 
@@ -1114,14 +1095,37 @@ obacht.Menu.prototype = {
         // Quit to Main Menu         //
         ///////////////////////////////
 
-        var joinButton = new obacht.Menu.Button(-910, 515, 1533, 1087, 400, 600, 450, 160, layerMenu);
-        var joinLabel = new obacht.Menu.Label('Quit', 60, 400, 600, 400, 70, layerMenu);
+        /** Quit to Main Menu Button */
+        var quitButton = new lime.Sprite()
+            .setFill(this.spritesheet.getFrame('options.png'))
+            .setPosition(400, 280)
+            .setSize(430, 138);
 
-        goog.events.listen(joinButton, ['touchstart', 'mousedown'], function() {
+        /** Quit to Main Menu Label */
+        var quitLabel = new lime.Label()
+            .setText('Quit')
+            .setFontColor('#fff')
+            .setFontSize(60)
+            .setPosition(400, 281)
+            .setSize(400, 60)
+            .setAlign('center');
+
+        /** Quit Event Listener -> Back to Main Menu Scene @event */
+        goog.events.listen(quitButton, ['touchstart', 'mousedown'], function() {
             self.mainMenuScene();
         });
 
-        // set current scene active
+
+        ///////////////////////////////
+        // Draw the Scene            //
+        ///////////////////////////////
+
+        layerMenu.appendChild(gameoverLabel);
+        layerMenu.appendChild(playAgainButton);
+        layerMenu.appendChild(playAgainLabel);
+        layerMenu.appendChild(quitButton);
+        layerMenu.appendChild(quitLabel);
+
         obacht.director.replaceScene(gameoverScene);
 
     },
