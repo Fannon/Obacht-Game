@@ -39,9 +39,8 @@ obacht.options = {
     },
     world: {
         size: {
-            ground: 1470,
-            landscapeA: 1590,
-            landscapeB: 1680,
+            ground: 1590,
+            landscape: 1680,
             clouds: 1750
         },
         bottom: {

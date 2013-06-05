@@ -71,40 +71,20 @@ obacht.World = function(currentGame, type) {
         .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityC);
 
-    this.landscapeA1 = new lime.Sprite()
-        .setSize(obacht.options.world.size.landscapeA, obacht.options.world.size.landscapeA)
-//        .setFill(this.spritesheet.getFrame('landscapeA.png'))
-        .setFill(this.theme.world.files.landscapeA)
-        .setPosition(this.x, this.y)
-        .setAnchorPoint(0, 1)
-        .setRotation(this.rotation1)
-        .setRenderer(obacht.renderer)
-        .setQuality(obacht.options.graphics.worldQualityA);
-
-    this.landscapeA2 = new lime.Sprite()
-        .setSize(obacht.options.world.size.landscapeA, obacht.options.world.size.landscapeA)
-//        .setFill(this.spritesheet.getFrame('landscapeA.png'))
-        .setFill(this.theme.world.files.landscapeA)
-        .setPosition(this.x, this.y)
-        .setAnchorPoint(0, 1)
-        .setRotation(this.rotation2)
-        .setRenderer(obacht.renderer)
-        .setQuality(obacht.options.graphics.worldQualityA);
-
-    this.landscapeB1 = new lime.Sprite()
-        .setSize(obacht.options.world.size.landscapeB, obacht.options.world.size.landscapeB)
+    this.landscape1 = new lime.Sprite()
+        .setSize(obacht.options.world.size.landscape, obacht.options.world.size.landscape)
 //        .setFill(this.spritesheet.getFrame('landscapeB.png'))
-        .setFill(this.theme.world.files.landscapeB)
+        .setFill(this.theme.world.files.landscape)
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation1)
         .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityB);
 
-    this.landscapeB2 = new lime.Sprite()
-        .setSize(obacht.options.world.size.landscapeB, obacht.options.world.size.landscapeB)
+    this.landscape2 = new lime.Sprite()
+        .setSize(obacht.options.world.size.landscape, obacht.options.world.size.landscape)
 //        .setFill(this.spritesheet.getFrame('landscapeB.png'))
-        .setFill(this.theme.world.files.landscapeB)
+        .setFill(this.theme.world.files.landscape)
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation2)
@@ -133,10 +113,8 @@ obacht.World = function(currentGame, type) {
 
     this.gameLayer.appendChild(this.clouds2);
     this.gameLayer.appendChild(this.clouds1);
-    this.gameLayer.appendChild(this.landscapeB1);
-    this.gameLayer.appendChild(this.landscapeB2);
-    this.gameLayer.appendChild(this.landscapeA1);
-    this.gameLayer.appendChild(this.landscapeA2);
+    this.gameLayer.appendChild(this.landscape1);
+    this.gameLayer.appendChild(this.landscape2);
     this.gameLayer.appendChild(this.ground1);
     this.gameLayer.appendChild(this.ground2);
 
@@ -157,10 +135,8 @@ obacht.World.prototype = {
     spin: function() {
         this.createAnimation1(this.ground1, this.rotation3, this.rotation4, obacht.options.world.spinDuration.front, 0);
         this.createAnimation2(this.ground2, this.rotation4, this.rotation3, 0, obacht.options.world.spinDuration.front);
-        this.createAnimation1(this.landscapeA1, this.rotation3, this.rotation4, obacht.options.world.spinDuration.front, 0);
-        this.createAnimation2(this.landscapeA2, this.rotation4, this.rotation3, 0, obacht.options.world.spinDuration.front);
-        this.createAnimation1(this.landscapeB1, this.rotation3, this.rotation4, obacht.options.world.spinDuration.middle, 0);
-        this.createAnimation2(this.landscapeB2, this.rotation4, this.rotation3, 0, obacht.options.world.spinDuration.middle);
+        this.createAnimation1(this.landscape1, this.rotation3, this.rotation4, obacht.options.world.spinDuration.middle, 0);
+        this.createAnimation2(this.landscape2, this.rotation4, this.rotation3, 0, obacht.options.world.spinDuration.middle);
         this.createAnimation1(this.clouds1, this.rotation3, this.rotation4, obacht.options.world.spinDuration.clouds, 0);
         this.createAnimation2(this.clouds2, this.rotation4, this.rotation3, 0, obacht.options.world.spinDuration.clouds);
     },
