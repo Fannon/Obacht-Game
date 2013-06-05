@@ -13,6 +13,7 @@ goog.require('obacht.Player');
 goog.require('obacht.Generator');
 goog.require('obacht.Bonus');
 goog.require('obacht.Trap');
+goog.require('obacht.Inventory');
 
 //Spritesheet Requirements
 goog.require('lime.SpriteSheet');
@@ -63,6 +64,7 @@ obacht.Game = function() {
     this.ownPlayer = new obacht.Player(this, 'bottom');
     this.enemyPlayer = new obacht.Player(this, 'top');
 
+    this.inventory = new obacht.Inventory(this);
 
     this.trapManager = new obacht.TrapManager(this, this.ownWorld, this.ownPlayer);
 
@@ -112,6 +114,8 @@ obacht.Game.prototype = {
 
         this.ownPlayer.destruct();
         this.enemyPlayer.destruct();
+
+        this.inventory.destruct();
 
         this.trapManager.destruct();
 

@@ -5,7 +5,6 @@ goog.provide('obacht.PlayerController');
 
 // Obacht Requirements
 goog.require('obacht.options');
-goog.require('obacht.Inventory');
 
 // Closure Library Requirements
 goog.require('goog.pubsub.PubSub');
@@ -24,17 +23,21 @@ obacht.PlayerController = function() {
     "use strict";
     var self = this;
 
-    this.tapAreaTop = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 4, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, 0).setAnchorPoint(0, 0);
-    this.tapAreaBottom = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 4, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setPosition(0, obacht.options.graphics.VIEWPORT_HEIGHT / 2).setAnchorPoint(0, 0);
-    this.tapAreaPuffer = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT).setPosition(0, 0).setAnchorPoint(0, 0);
-
-    this.inventory = new obacht.Inventory();
+    this.tapAreaTop = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 4, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
+        .setPosition(0, 0)
+        .setAnchorPoint(0, 0);
+    this.tapAreaBottom = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 4, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
+        .setPosition(0, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
+        .setAnchorPoint(0, 0);
+    this.tapAreaPuffer = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT)
+        .setPosition(0, 0)
+        .setAnchorPoint(0, 0);
 
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     this.layer.appendChild(this.tapAreaTop);
     this.layer.appendChild(this.tapAreaBottom);
     this.layer.appendChild(this.tapAreaPuffer);
-    this.layer.appendChild(this.inventory.layer);
+
 
     // Event Publisher/Subscriber
     this.events = new goog.pubsub.PubSub();
@@ -144,6 +147,6 @@ obacht.PlayerController.prototype = {
     destruct: function() {
         "use strict";
 
-        this.inventory.destruct();
+
     }
 };

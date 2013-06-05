@@ -4,6 +4,7 @@
 goog.provide('obacht.Inventory');
 
 goog.require('lime.RoundedRect');
+goog.require('lime.Sprite');
 
 /**
  * Inventory Object.
@@ -12,11 +13,20 @@ goog.require('lime.RoundedRect');
  *
  * @author Lukas Jaborsky
  */
-obacht.Inventory = function() {
+
+/**
+ *
+ * @param currentGame
+ * @constructor
+ */
+obacht.Inventory = function(currentGame) {
 	"use strict";
 	console.log("new Inventory");
 
 	var self = this;
+
+    this.gameLayer = currentGame.layer;
+    this.spritesheet = currentGame.spritesheet;
 
 	/////////////////////
     // INVENTORY ARRAY //
@@ -26,24 +36,39 @@ obacht.Inventory = function() {
     this.trays[0] = [];
     this.trays[0].active = false;
     this.trays[0].type = 'none';
-//    this.trays[0].fill = "assets/boni/" + this.trays[0].type + '.png';
-    this.trays[0].fill = 'assets/themes/' + obacht.mp.roomDetail.theme + '/boni/' + this.trays[0].type + '.png';
-    this.trays[0].button = new lime.RoundedRect().setSize(obacht.options.inventory.size, obacht.options.inventory.size).setPosition(obacht.options.inventory.right.x, obacht.options.inventory.y).setFill(this.trays[0].fill).setOpacity(0.5).setAnchorPoint(0, 0).setRadius(15);
+    this.trays[0].fill = this.spritesheet.getFrame('boni_' + this.trays[0].type + '.png');
+    this.trays[0].button = new lime.RoundedRect()
+        .setSize(obacht.options.inventory.size, obacht.options.inventory.size)
+        .setPosition(obacht.options.inventory.right.x, obacht.options.inventory.y)
+        .setFill(this.trays[0].fill)
+        .setOpacity(0.5)
+        .setAnchorPoint(0, 0)
+        .setRadius(15);
 
 
     this.trays[1] = [];
     this.trays[1].active = false;
     this.trays[1].type = 'none';
-//    this.trays[1].fill = "assets/boni/" + this.trays[1].type + '.png';
-    this.trays[1].fill = 'assets/themes/' + obacht.mp.roomDetail.theme + '/boni/' + this.trays[1].type + '.png';
-    this.trays[1].button = new lime.RoundedRect().setSize(obacht.options.inventory.size, obacht.options.inventory.size).setPosition(obacht.options.inventory.center.x, obacht.options.inventory.y).setFill(this.trays[1].fill).setOpacity(0.5).setAnchorPoint(0, 0).setRadius(15);
+    this.trays[1].fill = this.spritesheet.getFrame('boni_' + this.trays[0].type + '.png');
+    this.trays[1].button = new lime.RoundedRect()
+        .setSize(obacht.options.inventory.size, obacht.options.inventory.size)
+        .setPosition(obacht.options.inventory.center.x, obacht.options.inventory.y)
+        .setFill(this.trays[1].fill)
+        .setOpacity(0.5)
+        .setAnchorPoint(0, 0)
+        .setRadius(15);
 
     this.trays[2] = [];
     this.trays[2].active = false;
     this.trays[2].type = 'none';
-//    this.trays[2].fill = "assets/boni/" + this.trays[2].type + '.png';
-    this.trays[2].fill = 'assets/themes/' + obacht.mp.roomDetail.theme + '/boni/' + this.trays[2].type + '.png';
-    this.trays[2].button = new lime.RoundedRect().setSize(obacht.options.inventory.size, obacht.options.inventory.size).setPosition(obacht.options.inventory.left.x, obacht.options.inventory.y).setFill(this.trays[2].fill).setOpacity(0.5).setAnchorPoint(0, 0).setRadius(15);
+    this.trays[2].fill =this.spritesheet.getFrame('boni_' + this.trays[0].type + '.png');
+    this.trays[2].button = new lime.RoundedRect()
+        .setSize(obacht.options.inventory.size, obacht.options.inventory.size)
+        .setPosition(obacht.options.inventory.left.x, obacht.options.inventory.y)
+        .setFill(this.trays[2].fill)
+        .setOpacity(0.5)
+        .setAnchorPoint(0, 0)
+        .setRadius(15);
 
 
     ////////////////////
@@ -73,6 +98,8 @@ obacht.Inventory = function() {
         console.log('receive bonus: Type: ' + type + 'Success: ' + success);
         self.checkBoni(success, type);
     });
+
+    obacht.playerController.layer.appendChild(self.layer);
 
 };
 
@@ -140,8 +167,7 @@ obacht.Inventory.prototype = {
         "use strict";
         this.trays[tray].active = active;
         this.trays[tray].type = type;
-//        this.trays[tray].fill = "assets/boni/" + this.trays[tray].type + '.png';
-       this.trays[tray].fill = 'assets/themes/' + obacht.mp.roomDetail.theme + '/boni/' + this.trays[tray].type + '.png';
+        this.trays[tray].fill = this.spritesheet.getFrame('boni_' + this.trays[0].type + '.png');
         this.trays[tray].button.setFill(this.trays[tray].fill);
     },
 
