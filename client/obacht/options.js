@@ -80,7 +80,7 @@ obacht.options = {
             anchory: 1
         },
         boundingBoxes: [
-            {x: 5, y: 10, width: 235*0.7, height: 300*0.7}
+            {x: 5, y: 10, width: 200*0.7, height: 280*0.7}
         ],
         location: {
             bottom: {

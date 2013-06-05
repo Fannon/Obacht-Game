@@ -20,19 +20,18 @@ obacht.Trap = function(currentGame, type) {
     var self = this;
     this.type = type;
     this.who = 'undefined';
-    this.zahl = Math.random();
 
     this.spritesheet = currentGame.spritesheet;
 
-    var traps = obacht.themes[obacht.mp.roomDetail.theme].traps;
+    var trapDetail = obacht.themes[obacht.mp.roomDetail.theme].traps[type];
 
     ////////////////////
     // LIMEJS OBJECTS //
     ////////////////////
 
     this.trap = new lime.Sprite()
-        .setSize(traps[type].width, traps[type].height)
-        .setFill(this.spritesheet.getFrame(traps[type].file));
+        .setSize(trapDetail.width, trapDetail.height)
+        .setFill(this.spritesheet.getFrame(trapDetail.file));
 //        .setFill('assets/themes/' + obacht.mp.roomDetail.theme + '/traps/' + this.type + '.png');
 
 };

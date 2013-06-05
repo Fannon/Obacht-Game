@@ -182,11 +182,12 @@ obacht.TrapManager.prototype = {
                 var obj2y=layer.screenToLocal(trap.trap.getPosition()).ceil().y;
 
                 //Set left top corner of box
+                //Attention => TOP: Y=0 Middle: X=0
                 obj1x=obj1x-(obj1w)/2;
-                obj1y=obj1y+(obj1h)/2;
+                obj1y=obj1y-(obj1h)/2;
 
                 obj2x=obj2x-(obj2w)/2;
-                obj2y=obj2y+(obj2h)/2;
+                obj2y=obj2y-(obj2h)/2;
 
                 /*Request BoundingBoxes | Name = BoundingBoxes Object */
                 var bbobj1 = obacht.options.player.boundingBoxes;
@@ -197,7 +198,7 @@ obacht.TrapManager.prototype = {
                 while (y < bbobj2.length) {
 
                     obj1x = obj1x + bbobj1[0].x;
-                    obj1y = obj1y - bbobj1[0].y;
+                    obj1y = obj1y + bbobj1[0].y;
 
                     if(obacht.playerController.isCrouching===false){
                         obj1w = bbobj1[0].width;
@@ -208,7 +209,7 @@ obacht.TrapManager.prototype = {
                     }
 
                     obj2x = obj2x + bbobj2[y].x;
-                    obj2y = obj2y - bbobj2[y].y;
+                    obj2y = obj2y + bbobj2[y].y;
 
                     obj2w = bbobj2[y].width;
                     obj2h = bbobj2[y].height;
