@@ -33,7 +33,7 @@ obacht.TrapManager = function(currentGame, world, player) {
         var factor;
         var angle;
 
-        var trap = new obacht.Trap(data.type);
+        var trap = new obacht.Trap(currentGame, data.type);
         self.traps[self.traps.length] = trap;
         self.layer.appendChild(trap.trap);
         trap.who='enemy';
@@ -78,7 +78,7 @@ obacht.TrapManager = function(currentGame, world, player) {
         var factor;
         var angle;
 
-        var trap = new obacht.Trap(data.type);
+        var trap = new obacht.Trap(currentGame, data.type);
         self.traps[self.traps.length] = trap;
         self.layer.appendChild(trap.trap);
         trap.who='own';

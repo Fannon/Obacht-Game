@@ -1222,7 +1222,6 @@ obacht.Menu.prototype = {
     // Helper Functions        //
     /////////////////////////////
 
-
     /**
      * Adds (left) Padding to the PIN Number
      *

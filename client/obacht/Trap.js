@@ -10,29 +10,30 @@ goog.require('lime.Sprite');
  *
  * @constructor
  */
-obacht.Trap = function(type) {
+obacht.Trap = function(currentGame, type) {
+
+    console.log('New Trap(): ' + type);
 
     ////////////////
     // ATTRIBUTES //
     ////////////////
     var self = this;
     this.type = type;
-    this.who='undefined';
+    this.who = 'undefined';
+    this.zahl = Math.random();
 
-    this.fill = 'assets/themes/' + obacht.mp.roomDetail.theme + '/traps/' + this.type + '.png';
+    this.spritesheet = currentGame.spritesheet;
+
+    var traps = obacht.themes[obacht.mp.roomDetail.theme].traps;
 
     ////////////////////
     // LIMEJS OBJECTS //
     ////////////////////
+
     this.trap = new lime.Sprite()
-        .setSize(obacht.options.trap.general.width, obacht.options.trap.general.height)
-        .setFill(this.fill);
-
-    //
-    this.zahl = Math.random();
-
-
-
+        .setSize(traps[type].width, traps[type].height)
+        .setFill(this.spritesheet.getFrame(traps[type].file));
+//        .setFill('assets/themes/' + obacht.mp.roomDetail.theme + '/traps/' + this.type + '.png');
 
 };
 
