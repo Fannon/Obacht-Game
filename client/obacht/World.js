@@ -54,74 +54,81 @@ obacht.World = function(currentGame, type) {
     this.clouds1 = new lime.Sprite()
         .setSize(obacht.options.world.size.clouds, obacht.options.world.size.clouds)
         .setFill(this.spritesheet.getFrame('clouds.png'))
+//        .setFill(this.theme.world.files.clouds)
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation1)
-//        .setRenderer(obacht.renderer)
+        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityC);
 
     this.clouds2 = new lime.Sprite()
         .setSize(obacht.options.world.size.clouds, obacht.options.world.size.clouds)
         .setFill(this.spritesheet.getFrame('clouds.png'))
+//        .setFill(this.theme.world.files.clouds)
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation2)
-//        .setRenderer(obacht.renderer)
+        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityC);
-
 
     this.landscapeA1 = new lime.Sprite()
         .setSize(obacht.options.world.size.landscapeA, obacht.options.world.size.landscapeA)
         .setFill(this.spritesheet.getFrame('landscapeA.png'))
+//        .setFill(this.theme.world.files.landscapeA)
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation1)
-//        .setRenderer(obacht.renderer)
+        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityA);
 
     this.landscapeA2 = new lime.Sprite()
         .setSize(obacht.options.world.size.landscapeA, obacht.options.world.size.landscapeA)
         .setFill(this.spritesheet.getFrame('landscapeA.png'))
+//        .setFill(this.theme.world.files.landscapeA)
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation2)
-//        .setRenderer(obacht.renderer)
+        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityA);
 
     this.landscapeB1 = new lime.Sprite()
         .setSize(obacht.options.world.size.landscapeB, obacht.options.world.size.landscapeB)
         .setFill(this.spritesheet.getFrame('landscapeB.png'))
+//        .setFill(this.theme.world.files.landscapeB)
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation1)
-//        .setRenderer(obacht.renderer)
+        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityB);
 
     this.landscapeB2 = new lime.Sprite()
         .setSize(obacht.options.world.size.landscapeB, obacht.options.world.size.landscapeB)
         .setFill(this.spritesheet.getFrame('landscapeB.png'))
+//        .setFill(this.theme.world.files.landscapeB)
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation2)
-//        .setRenderer(obacht.renderer)
+        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityB);
 
     this.ground1 = new lime.Sprite()
         .setSize(obacht.options.world.size.ground, obacht.options.world.size.ground)
         .setFill(this.spritesheet.getFrame('ground.png'))
+//        .setFill(this.theme.world.files.ground)
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation1)
-//        .setRenderer(obacht.renderer)
+        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityA);
 
     this.ground2 = new lime.Sprite()
         .setSize(obacht.options.world.size.ground, obacht.options.world.size.ground)
         .setFill(this.spritesheet.getFrame('ground.png'))
+//        .setFill(this.theme.world.files.ground)
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation2)
-//        .setRenderer(obacht.renderer)
+        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.worldQualityA);
 
     this.gameLayer.appendChild(this.clouds2);
@@ -161,9 +168,21 @@ obacht.World.prototype = {
     createAnimation1: function(object, rotation1, rotation2, duration1, duration2) {
         object.runAction(new lime.animation.Loop(
             new lime.animation.Sequence(
-                new lime.animation.RotateBy(rotation1).setDuration(duration1).setEasing(lime.animation.Easing.LINEAR).enableOptimizations(),
-                new lime.animation.RotateBy(rotation2).setDuration(duration2).setEasing(lime.animation.Easing.LINEAR).enableOptimizations(),
-                new lime.animation.RotateBy(rotation1).setDuration(duration1).setEasing(lime.animation.Easing.LINEAR).enableOptimizations()
+                new lime.animation
+                    .RotateBy(rotation1)
+                    .setDuration(duration1)
+                    .setEasing(lime.animation.Easing.LINEAR)
+                    .enableOptimizations(),
+                new lime.animation
+                    .RotateBy(rotation2)
+                    .setDuration(duration2)
+                    .setEasing(lime.animation.Easing.LINEAR)
+                    .enableOptimizations(),
+                new lime.animation
+                    .RotateBy(rotation1)
+                    .setDuration(duration1)
+                    .setEasing(lime.animation.Easing.LINEAR)
+                    .enableOptimizations()
             )
         ));
     },
@@ -171,9 +190,21 @@ obacht.World.prototype = {
     createAnimation2: function(object, rotation1, rotation2, duration1, duration2) {
         object.runAction(new lime.animation.Loop(
             new lime.animation.Sequence(
-                new lime.animation.RotateBy(rotation1).setDuration(duration1).setEasing(lime.animation.Easing.LINEAR).enableOptimizations(),
-                new lime.animation.RotateBy(rotation2).setDuration(duration2).setEasing(lime.animation.Easing.LINEAR).enableOptimizations(),
-                new lime.animation.RotateBy(rotation2).setDuration(duration2).setEasing(lime.animation.Easing.LINEAR).enableOptimizations()
+                new lime.animation
+                    .RotateBy(rotation1)
+                    .setDuration(duration1)
+                    .setEasing(lime.animation.Easing.LINEAR)
+                    .enableOptimizations(),
+                new lime.animation
+                    .RotateBy(rotation2)
+                    .setDuration(duration2)
+                    .setEasing(lime.animation.Easing.LINEAR)
+                    .enableOptimizations(),
+                new lime.animation
+                    .RotateBy(rotation2)
+                    .setDuration(duration2)
+                    .setEasing(lime.animation.Easing.LINEAR)
+                    .enableOptimizations()
             )
         ));
     },
