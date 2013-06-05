@@ -4,7 +4,6 @@
 goog.provide('obacht.Generator');
 
 goog.require('obacht.Trap');
-goog.require('obacht.Collision');
 
 /**
  * Trap and Bonus Generator

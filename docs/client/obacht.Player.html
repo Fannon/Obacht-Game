@@ -39,7 +39,7 @@
     
         
 <dt>
-    <h4 class="name" id="Player"><span class="type-signature"></span>new Player<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Player"><span class="type-signature"></span>new Player<span class="signature">(currentGame, location)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -55,6 +55,77 @@
     
     
     
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>currentGame</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Current Game Object</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>location</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Location</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
     
     
     
@@ -80,7 +151,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        Player.js, line 25
+        Player.js, line 27
     </li></ul></dd>
     
     
@@ -160,125 +231,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        Player.js, line 59
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="health"><span class="type-signature"></span>health<span class="type-signature"> :Number</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Current Player Health
-    </div>
-    
-    
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">Number</span>
-
-
-            </li>
-        </ul>
-    
-
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
         Player.js, line 56
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="layer"><span class="type-signature"></span>layer<span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Player LimeJS Layer
-    </div>
-    
-    
-    
-
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        Player.js, line 63
     </li></ul></dd>
     
     
@@ -343,7 +296,76 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        Player.js, line 140
+        Player.js, line 161
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="destruct"><span class="type-signature"></span>destruct<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Destructor - Cleans up all Lime Elements and DataStructures
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        Player.js, line 179
     </li></ul></dd>
     
     
@@ -412,7 +434,76 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        Player.js, line 132
+        Player.js, line 153
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="run"><span class="type-signature"></span>run<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Runs the running animation on the character.
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        Player.js, line 145
     </li></ul></dd>
     
     
@@ -481,7 +572,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        Player.js, line 148
+        Player.js, line 170
     </li></ul></dd>
     
     
@@ -522,13 +613,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="obacht.Bonus.html">Bonus</a></li><li><a href="obacht.Collision.html">Collision</a></li><li><a href="obacht.Game.html">Game</a></li><li><a href="obacht.Generator.html">Generator</a></li><li><a href="obacht.Inventory.html">Inventory</a></li><li><a href="obacht.Menu.html">Menu</a></li><li><a href="obacht.Menu.Button.html">Button</a></li><li><a href="obacht.Menu.Label.html">Label</a></li><li><a href="obacht.MultiplayerService.html">MultiplayerService</a></li><li><a href="obacht.Player.html">Player</a></li><li><a href="obacht.PlayerController.html">PlayerController</a></li><li><a href="obacht.Trap.html">Trap</a></li><li><a href="obacht.World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#options">options</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="obacht.Game.html">Game</a></li><li><a href="obacht.Generator.html">Generator</a></li><li><a href="obacht.Inventory.html">Inventory</a></li><li><a href="obacht.Menu.html">Menu</a></li><li><a href="obacht.Menu.Button.html">Button</a></li><li><a href="obacht.Menu.Label.html">Label</a></li><li><a href="obacht.MultiplayerService.html">MultiplayerService</a></li><li><a href="obacht.Player.html">Player</a></li><li><a href="obacht.PlayerController.html">PlayerController</a></li><li><a href="obacht.Trap.html">Trap</a></li><li><a href="obacht.TrapManager.html">TrapManager</a></li><li><a href="obacht.World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#options">options</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Wed May 29 2013 10:41:30 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Wed Jun 05 2013 09:47:24 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

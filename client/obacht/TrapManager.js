@@ -4,7 +4,6 @@
 goog.provide('obacht.TrapManager');
 
 goog.require('obacht.Trap');
-goog.require('obacht.Collision');
 
 /**
  * Trap Manager/Collection
