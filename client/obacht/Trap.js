@@ -20,7 +20,6 @@ obacht.Trap = function(currentGame, type) {
     var self = this;
     this.type = type;
     this.who = 'undefined';
-    this.zahl = Math.random();
 
     this.spritesheet = currentGame.spritesheet;
 
