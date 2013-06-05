@@ -52,6 +52,7 @@ obacht.Generator.prototype = {
        "use strict";
         var self = this;
         this.trapInterval = setInterval(function() {
+
             if (self.thrownTrapsCounter % 2) {
                 obacht.mp.throwTrap(self.getRandomTrap(), obacht.mp.pid);
             } else {

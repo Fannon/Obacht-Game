@@ -7,7 +7,7 @@ goog.provide('obacht.themes');
  */
 obacht.themes = {
     'water': {
-        spritesheet: "assets/spritesheets/waterSpritesheet.png",
+        spritesheet: "assets/themes/water/waterSpritesheet.png",
         world: {
             files: {
                 ground: 'assets/themes/water/ground.png',
@@ -109,7 +109,7 @@ obacht.themes = {
         }
     },
     'desert': {
-        spritesheet: "assets/spritesheets/desertSpritesheet.png",
+        spritesheet: "assets/themes/desert/desertSpritesheet.png",
         world: {
             files: {
                 ground: 'assets/themes/desert/ground.png',
@@ -197,7 +197,7 @@ obacht.themes = {
         }
     },
     'meadow': {
-        spritesheet: "assets/spritesheets/meadowSpritesheet.png",
+        spritesheet: "assets/themes/meadow/meadowSpritesheet.png",
         world: {
             files: {
                 ground: 'assets/themes/meadow/ground.png',

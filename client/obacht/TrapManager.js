@@ -151,8 +151,6 @@ obacht.TrapManager.prototype = {
                         delete traps[i];
                     }
                 }
-
-
             }
         }
     },
