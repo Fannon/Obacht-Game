@@ -11,8 +11,7 @@ obacht.themes = {
         world: {
             files: {
                 ground: 'assets/themes/water/ground.png',
-                landscapeA: 'assets/themes/water/landscapeA.png',
-                landscapeB: 'assets/themes/water/landscapeB.png',
+                landscape: 'assets/themes/water/landscape.png',
                 clouds: 'assets/themes/water/clouds.png'
             }
         },
@@ -119,8 +118,7 @@ obacht.themes = {
         world: {
             files: {
                 ground: 'assets/themes/desert/ground.png',
-                landscapeA: 'assets/themes/desert/landscapeA.png',
-                landscapeB: 'assets/themes/desert/landscapeB.png',
+                landscape: 'assets/themes/desert/landscape.png',
                 clouds: 'assets/themes/desert/clouds.png'
             }
         },
@@ -213,8 +211,7 @@ obacht.themes = {
         world: {
             files: {
                 ground: 'assets/themes/meadow/ground.png',
-                landscapeA: 'assets/themes/meadow/landscapeA.png',
-                landscapeB: 'assets/themes/meadow/landscapeB.png',
+                landscape: 'assets/themes/meadow/landscape.png',
                 clouds: 'assets/themes/meadow/clouds.png'
             }
         },
