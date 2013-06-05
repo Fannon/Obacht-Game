@@ -18,7 +18,7 @@ obacht.themes = {
         traps: {
             //Krebs
             crab: {
-                file: 'assets/themes/water/traps/crab.png',
+                file: 'trap_crab.png',
                 position: 'ground',
                 width: 150,
                 height: 91,
@@ -30,7 +30,7 @@ obacht.themes = {
 
             //Anker
             anchor: {
-                file: 'assets/themes/water/traps/anchor.png',
+                file: 'trap_anchor.png',
                 position: 'ground',
                 width: 110,
                 height: 120,
@@ -43,7 +43,7 @@ obacht.themes = {
 
             //Qualle
             jellyfish: {
-                file: 'assets/themes/water/traps/jellyfish.png',
+                file: 'trap_jellyfish.png',
                 position: 'ground',
                 width: 120,
                 height: 140,
@@ -56,7 +56,7 @@ obacht.themes = {
 
             //Seeigel
             seaurchin: {
-                file: 'assets/themes/water/traps/seaurchin.png',
+                file: 'trap_seaurchin.png',
                 position: 'ground',
                 width: 150,
                 height: 115,
@@ -69,7 +69,7 @@ obacht.themes = {
 
             //Hai
             shark: {
-                file: 'assets/themes/water/traps/shark.png',
+                file: 'trap_shark.png',
                 position: 'air',
                 width: 150,
                 height: 73,
@@ -82,7 +82,7 @@ obacht.themes = {
 
             //Schildkröte
             turtle: {
-                file: 'assets/themes/water/traps/turtle.png',
+                file: 'trap_turtle.png',
                 position: 'air',
                 width: 150,
                 height: 73,
@@ -96,7 +96,7 @@ obacht.themes = {
 
             //Clownfisch
             clownfish: {
-                file: 'assets/themes/water/traps/clownfish.png',
+                file: 'trap_clownfish.png',
                 position: 'air',
                 width: 150,
                 height: 82,
@@ -105,11 +105,6 @@ obacht.themes = {
                     {x: 116, y: 35, width: 32, height: 29}
 
                 ]
-            }
-        },
-        boni: {
-            kaktus: {
-                file: '../KaktusBonus.png' //sample value
             }
         }
     },
@@ -125,7 +120,7 @@ obacht.themes = {
         traps: {
             //Skorpion
             scorpion: {
-                file: 'assets/themes/desert/traps/scorpion.png',
+                file: 'trap_scorpion.png',
                 position: 'ground',
                 width: 150,
                 height: 119,
@@ -137,7 +132,7 @@ obacht.themes = {
 
             //Schädel
             skull: {
-                file: 'assets/themes/desert/traps/skull.png',
+                file: 'trap_skull.png',
                 position: 'ground',
                 width: 140,
                 height: 120,
@@ -150,7 +145,7 @@ obacht.themes = {
 
             //Geier
             vulture: {
-                file: 'assets/themes/desert/traps/vulture.png',
+                file: 'trap_vulture.png',
                 position: 'air',
                 width: 170,
                 height: 90,
@@ -163,7 +158,7 @@ obacht.themes = {
 
             //Kaktus
             cactus: {
-                file: 'assets/themes/desert/traps/cactus.png',
+                file: 'trap_cactus.png',
                 position: 'air',
                 width: 100,
                 height: 160,
@@ -175,7 +170,7 @@ obacht.themes = {
 
             //Schlange
             snake: {
-                file: 'assets/themes/desert/traps/snake.png',
+                file: 'trap_snake.png',
                 position: 'ground',
                 width: 98,
                 height: 100,
@@ -188,7 +183,7 @@ obacht.themes = {
 
             //Falke
             hawk: {
-                file: 'assets/themes/desert/traps/hawk.png',
+                file: 'trap_hawk.png',
                 position: 'air',
                 width: 110,
                 height: 104,
@@ -198,11 +193,6 @@ obacht.themes = {
                     {x: 34, y: 83, width: 13, height: 19}
 
                 ]
-            }
-        },
-        boni: {
-            kaktus: {
-                file: '../KaktusBonus.png' //sample value
             }
         }
     },
@@ -218,7 +208,7 @@ obacht.themes = {
         traps: {
             //Schmetterling
             butterfly: {
-                file: 'assets/themes/meadow/traps/butterfly.png',
+                file: 'trap_butterfly.png',
                 position: 'air',
                 width: 0,
                 height: 0,
@@ -230,7 +220,7 @@ obacht.themes = {
 
             //Biene
             bee: {
-                file: 'assets/themes/meadow/traps/bee.png',
+                file: 'trap_bee.png',
                 position: 'air',
                 width: 0,
                 height: 0,
@@ -243,7 +233,7 @@ obacht.themes = {
 
             //Schnecke
             snail: {
-                file: 'assets/themes/meadow/traps/snail.png',
+                file: 'trap_snail.png',
                 position: 'ground',
                 width: 140,
                 height: 113,
@@ -255,7 +245,7 @@ obacht.themes = {
 
             //Baumstumpf
             treestump: {
-                file: 'assets/themes/meadow/traps/treestump.png',
+                file: 'trap_treestump.png',
                 position: 'ground',
                 width: 120,
                 height: 129,
@@ -267,7 +257,7 @@ obacht.themes = {
 
             //Igel
             hedgehog: {
-                file: 'assets/themes/meadow/traps/hedgehog.png',
+                file: 'trap_hedgehog.png',
                 position: 'ground',
                 width: 150,
                 height: 87,
@@ -279,7 +269,7 @@ obacht.themes = {
 
             //Pilz
             mushroom: {
-                file: 'assets/themes/meadow/traps/mushroom.png',
+                file: 'trap_mushroom.png',
                 position: 'ground',
                 width: 130,
                 height: 146,
@@ -292,7 +282,7 @@ obacht.themes = {
 
             //Vogelscheuche
             scarecrow: {
-                file: 'assets/themes/meadow/traps/scarecrow.png',
+                file: 'trap_scarecrow.png',
                 position: 'ground',
                 width: 100,
                 height: 160,
@@ -303,10 +293,6 @@ obacht.themes = {
                 ]
             }
 
-        },
-        boni: {
-
         }
-
     }
 };
