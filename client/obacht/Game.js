@@ -69,7 +69,7 @@ obacht.Game = function() {
     this.trapManager = new obacht.TrapManager(this, this.ownWorld, this.ownPlayer);
 
 
-    console.log('PERFORMANCE: GAME - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
+    log.debug('PERFORMANCE: GAME - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
 
     //////////////////////////////
     // Game Events              //
@@ -79,7 +79,7 @@ obacht.Game = function() {
 
         self.bonusButton = new obacht.Bonus(self, type);
 
-        console.log('PERFORMANCE: GAME - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
+        log.debug('PERFORMANCE: GAME - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
     });
 
 

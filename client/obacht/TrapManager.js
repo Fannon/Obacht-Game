@@ -1,4 +1,4 @@
-/* global goog, lime, obacht */
+/* global goog, lime, obacht, log */
 /* jshint strict: false, devel:true */
 
 goog.provide('obacht.TrapManager');
@@ -141,13 +141,13 @@ obacht.TrapManager.prototype = {
                 if(trap.who==='own'){
                     if (position.x < 0 - width) {
                         this.layer.removeChild(trap.trap);
-                        console.log('Trap removed left side: '+traps[i].type);
+                        log.debug('Trap removed left side: '+traps[i].type);
                         delete traps[i];
                     }
                 }else if(trap.who==='enemy'){
                     if (position.x > obacht.options.graphics.VIEWPORT_WIDTH + width){
                         this.layer.removeChild(trap.trap);
-                        console.log('Trap removed right side:' +traps[i].type);
+                        log.debug('Trap removed right side:' +traps[i].type);
                         delete traps[i];
                     }
                 }
@@ -221,7 +221,7 @@ obacht.TrapManager.prototype = {
 
                     if(state===true){
                         this.layer.removeChild(trap.trap);
-                        console.log('Kollision! '+trap.type);
+                        log.debug('Kollision! '+trap.type);
                         delete traps[i];
                     }
                     y=y+1;

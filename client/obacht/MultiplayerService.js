@@ -1,4 +1,4 @@
-/* global goog, obacht, io, console */
+/* global goog, lime, obacht, log, io */
 /* jshint devel: true */
 
 goog.provide('obacht.MultiplayerService');
@@ -38,7 +38,7 @@ obacht.MultiplayerService = function(serverUrl) {
 
     var self = this;
 
-    console.log("Connecting to Multiplayer Server on " + serverUrl);
+    log.debug("Connecting to Multiplayer Server on " + serverUrl);
 
     /**
      * Event Publisher/Subscriber (http://closure-library.googlecode.com/svn/docs/class_goog_pubsub_PubSub.html)
@@ -57,10 +57,10 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.socket.on('connected', function (data) {
         if (!data.error) {
-            console.log('Successful Connected');
+            log.debug('Successful Connected');
             self.pid = data.pid;
         } else {
-            console.log(data.error);
+            log.debug(data.error);
         }
     });
 
@@ -73,7 +73,7 @@ obacht.MultiplayerService = function(serverUrl) {
         self.pin = data.pin;
         self.events.publish('room_detail', data);
 
-        //console.log('RoomDetails received:');
+        //log.debug('RoomDetails received:');
         console.dir(data);
     });
 
@@ -95,7 +95,7 @@ obacht.MultiplayerService = function(serverUrl) {
      * Print out Servermessages
      */
     this.socket.on('message', function(data) {
-        console.log('Incoming Message from Server:');
+        log.debug('Incoming Message from Server:');
         console.dir(data);
     });
 
@@ -106,19 +106,19 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.socket.on('room_invite', function (data) {
 
-        console.log('Room invite received: PIN: #' + data.pin);
+        log.debug('Room invite received: PIN: #' + data.pin);
 
         if (data.pin === 0) {
-            console.log('Create new random Room.');
+            log.debug('Create new random Room.');
 
             var theme = self.getRandomTheme();
-            console.log('Random Theme: ' + theme);
+            log.debug('Random Theme: ' + theme);
 
             self.newRoom(theme, data.options, false, false);
             self.events.publish('new_room', data);
 
         } else {
-            console.log('Joining Room ' + data.pin);
+            log.debug('Joining Room ' + data.pin);
             self.joinRoom(data.pin, data.closed);
             self.events.publish('join_room', data);
         }
@@ -129,7 +129,7 @@ obacht.MultiplayerService = function(serverUrl) {
      * Create a new room
      */
     this.socket.on('no_match_found', function () {
-        console.log('No Match found.');
+        log.debug('No Match found.');
         this.newRoom();
         self.events.publish('no_match_found');
     });
@@ -138,7 +138,7 @@ obacht.MultiplayerService = function(serverUrl) {
      * Game is ready
      */
     this.socket.on('game_ready', function () {
-        console.log('Game is ready!');
+        log.debug('Game is ready!');
 
         // Set Enemy PID
         if (self.roomDetail.creatingPlayerId === self.pid) {
@@ -163,7 +163,7 @@ obacht.MultiplayerService = function(serverUrl) {
      * Player took an action
      */
     this.socket.on('player_action', function (data) {
-        console.log('player_action: ' + data.action);
+        log.debug('player_action: ' + data.action);
         self.events.publish('player_action', data);
     });
 
@@ -171,7 +171,7 @@ obacht.MultiplayerService = function(serverUrl) {
      * Receives a bonus to show it within the reactionbox
      */
     this.socket.on('bonus', function (data) {
-        //console.log('bonus: ' + data.type);
+        //log.debug('bonus: ' + data.type);
         self.events.publish('bonus', data.type);
     });
 
@@ -180,10 +180,10 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.socket.on('receive_bonus', function (data) {
         if (data.winner_pid === self.pid) {
-            //console.log('You won Bonus: ' + data.type);
+            //log.debug('You won Bonus: ' + data.type);
             self.events.publish('receive_bonus', data.type, true);
         } else {
-            //console.log('You lost Bonus: ' + data.type);
+            //log.debug('You lost Bonus: ' + data.type);
             self.events.publish('receive_bonus', data.type, false);
         }
     });
@@ -192,12 +192,12 @@ obacht.MultiplayerService = function(serverUrl) {
      * Receives a trap
      */
     this.socket.on('trap', function (data) {
-        //console.log('Trap received: ' + data.type);
+        //log.debug('Trap received: ' + data.type);
         if (data.target === self.pid) {
-            console.log('Trap on bottom world.');
+            log.debug('Trap on bottom world.');
             self.events.publish('own_trap', data);
         } else {
-            console.log('Trap on top world.');
+            log.debug('Trap on top world.');
             self.events.publish('enemy_trap', data);
         }
     });
@@ -206,11 +206,11 @@ obacht.MultiplayerService = function(serverUrl) {
      * Shows that the game is over and who won the game
      */
     this.socket.on('game_over', function (data) {
-        console.log('Game over! -> ' + data.reason);
+        log.debug('Game over! -> ' + data.reason);
         if (data.pid === self.pid){
-            console.log('YOU LOSE!');
+            log.debug('YOU LOSE!');
         } else {
-            console.log('YOU WIN');
+            log.debug('YOU WIN');
         }
         self.events.publish('game_over', data);
     });
@@ -219,7 +219,7 @@ obacht.MultiplayerService = function(serverUrl) {
      * Get room data for debugging
      */
     this.socket.on('get_rooms', function (data) {
-        console.log('Getting Rooms Data (Debugging)');
+        log.debug('Getting Rooms Data (Debugging)');
         console.dir(data);
     });
 
@@ -242,7 +242,7 @@ obacht.MultiplayerService.prototype = {
      */
     newRoom: function (theme, options, closed, friend) {
         "use strict";
-        console.log('>> newRoom()');
+        log.debug('>> newRoom()');
 
         var roomDetails = {
             theme: theme,
@@ -267,7 +267,7 @@ obacht.MultiplayerService.prototype = {
      */
     joinRoom: function(pin, closed) {
         "use strict";
-        console.log('>> joinRoom(' + pin + ')');
+        log.debug('>> joinRoom(' + pin + ')');
         this.socket.emit('join_room', {
             pin: pin,
             closed: closed
@@ -279,7 +279,7 @@ obacht.MultiplayerService.prototype = {
      */
     findMatch: function () {
         "use strict";
-        console.log('>> findMatch()');
+        log.debug('>> findMatch()');
         this.socket.emit('find_match');
     },
 
@@ -288,7 +288,7 @@ obacht.MultiplayerService.prototype = {
      */
     inviteFriend: function (pid, roomDetail) {
         "use strict";
-        console.log('>> Inviting Friend for new Match');
+        log.debug('>> Inviting Friend for new Match');
         this.socket.emit('invite_player', pid, roomDetail);
     },
 
@@ -297,7 +297,7 @@ obacht.MultiplayerService.prototype = {
      */
     playerReady: function () {
         "use strict";
-        console.log('>> playerReady()');
+        log.debug('>> playerReady()');
         this.socket.emit('player_ready');
     },
 
@@ -374,7 +374,7 @@ obacht.MultiplayerService.prototype = {
      */
     leaveRoom: function() {
         "use strict";
-        console.log('>> leaveRoom()');
+        log.debug('>> leaveRoom()');
         this.pin = false;
         this.socket.emit('leave_room');
     },
@@ -384,7 +384,7 @@ obacht.MultiplayerService.prototype = {
      */
     getRooms: function() {
         "use strict";
-        console.log('>> getRooms()');
+        log.debug('>> getRooms()');
         this.socket.emit('get_rooms', '');
     },
 

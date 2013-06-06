@@ -21,7 +21,7 @@ goog.require('lime.Sprite');
  */
 obacht.Inventory = function(currentGame) {
 	"use strict";
-	console.log("new Inventory");
+	log.debug("new Inventory");
 
 	var self = this;
 
@@ -95,7 +95,7 @@ obacht.Inventory = function(currentGame) {
         self.checkTray(2);
     });
     obacht.mp.events.subscribe('receive_bonus', function(type, success) {
-        console.log('receive bonus: Type: ' + type + 'Success: ' + success);
+        log.debug('receive bonus: Type: ' + type + 'Success: ' + success);
         self.checkBoni(success, type);
     });
 
@@ -123,7 +123,7 @@ obacht.Inventory.prototype = {
     */
     throwTrap: function(type) {
         "use strict";
-        console.log('throwTrap: ' + type);
+        log.debug('throwTrap: ' + type);
         obacht.mp.throwTrap(type, obacht.mp.enemy);
     },
 
@@ -134,7 +134,7 @@ obacht.Inventory.prototype = {
      */
     checkBoni: function(success, type){
         "use strict";
-        console.log('checkBoni');
+        log.debug('checkBoni');
         if(success === true) {
             this.fillTray(type);
         } else {
@@ -148,7 +148,7 @@ obacht.Inventory.prototype = {
     */
     fillTray: function(type){
         "use strict";
-        console.log('fillTray');
+        log.debug('fillTray');
         for(var i = 0; i < this.trays.length; i++) {
             if(this.trays[i].active === false) {
                 this.resetTray(i, true, type);
@@ -173,7 +173,7 @@ obacht.Inventory.prototype = {
 
     setFail: function(){
         "use strict";
-        console.log('to late for Bonus');
+        log.debug('to late for Bonus');
     },
 
     /**

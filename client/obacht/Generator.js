@@ -79,8 +79,8 @@ obacht.Generator.prototype = {
      */
     destruct: function() {
         "use strict";
-        console.log('Cleaning up Generator');
-        console.log(this.trapInterval);
+        log.debug('Cleaning up Generator');
+        log.debug(this.trapInterval);
         clearInterval(this.trapInterval);
         clearInterval(this.bonusInterval);
     }

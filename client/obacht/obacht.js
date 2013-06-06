@@ -12,20 +12,26 @@ goog.require('lime.Renderer.CANVAS');
 // Obacht Requirements
 goog.require('obacht.options');
 goog.require('obacht.themes');
+goog.require('obacht.Logger');
 goog.require('obacht.MultiplayerService');
 goog.require('obacht.Menu');
 
-/**
- * Store for setInterval handler
- * @type {Object}
- */
+/** global log variable for Logging with the custom Logger */
+var log;
+
+/** Store for setInterval handler */
 obacht.intervals = {};
 
 
-// entrypoint
+/**
+ * Obacht Game EntryPoint
+ */
 obacht.start = function() {
 
-    console.log('PERFORMANCE: PRE-MENU - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
+
+    log = new obacht.Logger(obacht.options.logLevel);
+
+    log.debug('PERFORMANCE: PRE-MENU - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
 
     /** Multiplayer Service */
     obacht.mp = new obacht.MultiplayerService(obacht.options.server.url);

@@ -1,4 +1,4 @@
-/* global goog, lime, obacht */
+/* global goog, lime, obacht, log */
 /* jshint strict: false, devel:true */
 
 goog.provide('obacht.Trap');
@@ -12,7 +12,7 @@ goog.require('lime.Sprite');
  */
 obacht.Trap = function(currentGame, type) {
 
-    console.log('New Trap(): ' + type);
+    log.debug('New Trap(): ' + type);
 
     ////////////////
     // ATTRIBUTES //

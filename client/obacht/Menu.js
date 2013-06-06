@@ -1,4 +1,4 @@
-/* global goog, lime, obacht */
+/* global goog, lime, obacht, log */
 /* jshint devel:true */
 
 goog.provide('obacht.Menu');
@@ -41,9 +41,9 @@ obacht.Menu = function() {
     lime.Label.defaultFont = 'Cartwheel';
     lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
 
-    this.spritesheet = new lime.SpriteSheet('assets/spritesheets/menuSpritesheet.png', lime.ASSETS.menuSpritesheet.json, lime.parser.JSON);
+    this.spritesheet = new lime.SpriteSheet('assets/gfx/menuSpritesheet.png', lime.ASSETS.menuSpritesheet.json, lime.parser.JSON);
 
-    console.log('PERFORMANCE: MENU - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
+    log.debug('PERFORMANCE: MENU - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
 
 
     //////////////////////////////
@@ -1058,7 +1058,7 @@ obacht.Menu.prototype = {
 
                     if (obacht.mp.roomDetail.creatingPlayerId === obacht.mp.pid) {
                         // If player is the host, create new Game
-                        console.log('Creating New Custom Game with Friend from last Game');
+                        log.debug('Creating New Custom Game with Friend from last Game');
                         obacht.mp.newRoom(obacht.mp.getRandomTheme(), obacht.mp.roomDetail.options, true, obacht.mp.friend);
                         self.waitForPlayerScene();
                         if (alreadyJoined) {
@@ -1080,7 +1080,7 @@ obacht.Menu.prototype = {
                     }
                 } else {
                     // New Random Game
-                    console.log('New Random Game');
+                    log.debug('New Random Game');
                     obacht.mp.findMatch();
                     obacht.mp.events.subscribeOnce('join_room', function() {
                         obacht.mp.playerReady();

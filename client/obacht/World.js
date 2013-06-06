@@ -1,4 +1,4 @@
-/* global goog, lime, obacht */
+/* global goog, lime, obacht, log */
 /* jshint strict: false, devel:true */
 
 goog.provide('obacht.World');
