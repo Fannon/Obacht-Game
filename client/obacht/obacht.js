@@ -20,9 +20,6 @@ goog.require('obacht.Game');
 /** global log variable for Logging with the custom Logger */
 var log;
 
-/** Store for setInterval handler */
-obacht.intervals = {};
-
 
 /**
  * Obacht Game EntryPoint
@@ -78,7 +75,9 @@ obacht.start = function() {
 //                delete obacht.menu;
 //            }
 
+            // Create a new playerController Instance
             obacht.playerController = new obacht.PlayerController();
+            // Create a new Game Instance
             obacht.currentGame = new obacht.Game();
 
             gameScene.appendChild(obacht.currentGame.layer);
@@ -101,8 +100,6 @@ obacht.start = function() {
         }
 
     });
-
-    log.debug('PERFORMANCE: PRE-MENU - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
 
     /** Menu Instance */
     obacht.menu = new obacht.Menu();
@@ -166,11 +163,20 @@ obacht.setBackground = function(theme) {
 };
 
 /**
+ * Draws a PopUp / Alert Box over the current Scene (Game or Menu)
+ *
+ * @param {String} text Text to draw
+ */
+obacht.popUpHelper = function(text) {
+    "use strict";
+    // TODO: Generate a PopUp (Alert Style) which can be used everywhere in the Menu/Game
+};
+
+/**
  * Checks for different Devices and Capabilities
  * Adjusts Options and introduces some Fixes according to current Device
  */
 obacht.checkDevices = function() {
     "use strict";
-
     // TODO: Check for Devices
 };

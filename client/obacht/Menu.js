@@ -4,8 +4,6 @@ goog.provide('obacht.Menu');
 
 // Lime.js Requirements
 goog.require('lime.Layer');
-goog.require('lime.fill.Frame');
-goog.require('lime.Button');
 
 //Spritesheets Requirements
 goog.require('lime.parser.JSON');
@@ -20,8 +18,6 @@ goog.require('lime.SpriteSheet');
  * Uses the MultiplayerService to join/create Rooms
  * Creates a new Game as one of its Scenes
  *
- * TODO: Use Config
- *
  * @constructor
  */
 obacht.Menu = function() {
@@ -33,12 +29,10 @@ obacht.Menu = function() {
 
     var self = this;
 
-    lime.Label.defaultFont = 'Cartwheel';
-    lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
-
     this.spritesheet = new lime.SpriteSheet('assets/gfx/menuSpritesheet.png', lime.ASSETS.menuSpritesheet.json, lime.parser.JSON);
 
-    log.debug('PERFORMANCE: MENU - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
+    lime.Label.defaultFont = 'Cartwheel';
+    lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
 
     // If fastStart Option is set to true, immediatly start a random Game
     if (obacht.options.fastStart) {
@@ -55,6 +49,7 @@ obacht.Menu.prototype = {
 
     /**
      * Loading Scene
+     * TODO: Replace this with a loading GIF and use
      */
     loadingScene: function() {
         "use strict";
@@ -62,8 +57,8 @@ obacht.Menu.prototype = {
 
         var loadingScene = new lime.Scene();
 
-        var layerMenu = new lime.Layer();
-        loadingScene.appendChild(layerMenu);
+        var menuLayer = new lime.Layer();
+        loadingScene.appendChild(menuLayer);
 
         /** Big Logo with character */
         var logoBig = new lime.Sprite()
@@ -76,7 +71,6 @@ obacht.Menu.prototype = {
         });
 
         // Loading ... Label
-        // TODO: Loading GIF
         var loadingText = 'Loading ';
         var loadingStatus = '.';
         var loadingLabel = new lime.Label()
@@ -87,11 +81,11 @@ obacht.Menu.prototype = {
             .setSize(400, 40)
             .setAlign('left');
 
-        layerMenu.appendChild(logoBig);
-        layerMenu.appendChild(loadingLabel);
+        menuLayer.appendChild(logoBig);
+        menuLayer.appendChild(loadingLabel);
 
         setInterval(function() {
-            layerMenu.removeChild(loadingLabel);
+            menuLayer.removeChild(loadingLabel);
             loadingStatus += '.';
 
             loadingLabel = new lime.Label()
@@ -102,7 +96,7 @@ obacht.Menu.prototype = {
                 .setSize(400, 40)
                 .setAlign('left');
 
-            layerMenu.appendChild(loadingLabel);
+            menuLayer.appendChild(loadingLabel);
             if (loadingStatus === '.....') {
                 loadingStatus = '';
             }
@@ -115,7 +109,6 @@ obacht.Menu.prototype = {
 
     },
 
-
     /**
      * Main Menu Scene
      */
@@ -126,13 +119,14 @@ obacht.Menu.prototype = {
         // Reset Variables and Event Listeners
         obacht.cleanUp();
 
-        var sceneMenu = new lime.Scene();
+        var menuScene = new lime.Scene();
+        var menuLayer = new lime.Layer();
+        menuScene.appendChild(menuLayer);
 
-        // set current scene active
-        obacht.director.replaceScene(sceneMenu);
 
-        var layerMenu = new lime.Layer();
-        sceneMenu.appendChild(layerMenu);
+        ///////////////////////////////
+        // Layer Content             //
+        ///////////////////////////////
 
         /** Small Logo */
         var logoSmall = new lime.Sprite()
@@ -152,6 +146,7 @@ obacht.Menu.prototype = {
             .setPosition(640, 338)
             .setSize(368, 176);
 
+        /** Play Button Label */
         var playLabel = new lime.Label()
             .setText('PLAY')
             .setFontColor('#fff')
@@ -160,6 +155,7 @@ obacht.Menu.prototype = {
             .setSize(400, 90)
             .setAlign('center');
 
+        /** On Play Button -> New Game Scene @event */
         goog.events.listen(playButton, ['touchstart', 'mousedown'], function() {
             self.newGameScene();
         });
@@ -170,6 +166,7 @@ obacht.Menu.prototype = {
             .setPosition(322, 540)
             .setSize(174, 160);
 
+        /** Help Button Label */
         var helpLabel = new lime.Label()
             .setText('HELP')
             .setFontColor('#fff')
@@ -178,6 +175,7 @@ obacht.Menu.prototype = {
             .setSize(170, 45)
             .setAlign('center');
 
+        /** Help Button Event -> Help Scene @event */
         goog.events.listen(helpButton, ['touchstart', 'mousedown'], function() {
             self.helpScene();
         });
@@ -188,6 +186,7 @@ obacht.Menu.prototype = {
             .setPosition(534, 540)
             .setSize(174, 160);
 
+        /** Info Button Label */
         var infoLabel = new lime.Label()
             .setText('CREDITS')
             .setFontColor('#fff')
@@ -215,8 +214,8 @@ obacht.Menu.prototype = {
             .setAlign('center');
 
         goog.events.listen(soundButton, ['touchstart', 'mousedown'], function() {
-            //change Icon
-            //sound off
+            // TODO: change Icon
+            // TODO: sound off
         });
 
         /** Quit Button */
@@ -225,6 +224,7 @@ obacht.Menu.prototype = {
             .setPosition(958, 540)
             .setSize(174, 160);
 
+        /** Quit Button Text */
         var quitLabel = new lime.Label()
             .setText('QUIT')
             .setFontColor('#fff')
@@ -234,22 +234,29 @@ obacht.Menu.prototype = {
             .setAlign('center');
 
         goog.events.listen(quitButton, ['touchstart', 'mousedown'], function() {
-            //quit Game
+            // TODO: quit Game
         });
 
 
-        layerMenu.appendChild(logoSmall);
-        layerMenu.appendChild(character);
-        layerMenu.appendChild(playButton);
-        layerMenu.appendChild(playLabel);
-        layerMenu.appendChild(helpButton);
-        layerMenu.appendChild(helpLabel);
-        layerMenu.appendChild(infoButton);
-        layerMenu.appendChild(infoLabel);
-        layerMenu.appendChild(soundButton);
-        layerMenu.appendChild(soundLabel);
-        layerMenu.appendChild(quitButton);
-        layerMenu.appendChild(quitLabel);
+        ///////////////////////////////
+        // Draw Layer                //
+        ///////////////////////////////
+
+        menuLayer.appendChild(logoSmall);
+        menuLayer.appendChild(character);
+        menuLayer.appendChild(playButton);
+        menuLayer.appendChild(playLabel);
+        menuLayer.appendChild(helpButton);
+        menuLayer.appendChild(helpLabel);
+        menuLayer.appendChild(infoButton);
+        menuLayer.appendChild(infoLabel);
+        menuLayer.appendChild(soundButton);
+        menuLayer.appendChild(soundLabel);
+        menuLayer.appendChild(quitButton);
+        menuLayer.appendChild(quitLabel);
+
+        // set current scene active
+        obacht.director.replaceScene(menuScene);
     },
 
     /**
@@ -260,9 +267,9 @@ obacht.Menu.prototype = {
         "use strict";
         var self = this;
 
-        var sceneMenu = new lime.Scene();
-        var layerMenu = new lime.Layer();
-        sceneMenu.appendChild(layerMenu);
+        var menuScene = new lime.Scene();
+        var menuLayer = new lime.Layer();
+        menuScene.appendChild(menuLayer);
 
 
         ///////////////////////////////
@@ -382,21 +389,26 @@ obacht.Menu.prototype = {
             });
         });
 
-        layerMenu.appendChild(logoSmall);
-        layerMenu.appendChild(friendIcon);
-        layerMenu.appendChild(friendLabel);
-        layerMenu.appendChild(randomIcon);
-        layerMenu.appendChild(randomLabel);
-        layerMenu.appendChild(backButton);
-        layerMenu.appendChild(createButton);
-        layerMenu.appendChild(createLabel);
-        layerMenu.appendChild(joinButton);
-        layerMenu.appendChild(joinLabel);
-        layerMenu.appendChild(randomPlayButton);
-        layerMenu.appendChild(randomPlayLabel);
+
+        ///////////////////////////////
+        // Draw Scene                //
+        ///////////////////////////////
+
+        menuLayer.appendChild(logoSmall);
+        menuLayer.appendChild(friendIcon);
+        menuLayer.appendChild(friendLabel);
+        menuLayer.appendChild(randomIcon);
+        menuLayer.appendChild(randomLabel);
+        menuLayer.appendChild(backButton);
+        menuLayer.appendChild(createButton);
+        menuLayer.appendChild(createLabel);
+        menuLayer.appendChild(joinButton);
+        menuLayer.appendChild(joinLabel);
+        menuLayer.appendChild(randomPlayButton);
+        menuLayer.appendChild(randomPlayLabel);
 
         // set current scene active
-        obacht.director.replaceScene(sceneMenu);
+        obacht.director.replaceScene(menuScene);
 
     },
 
@@ -407,13 +419,14 @@ obacht.Menu.prototype = {
         "use strict";
         var self = this;
 
-        var sceneMenu = new lime.Scene();
+        var menuScene = new lime.Scene();
+        var menuLayer = new lime.Layer();
+        menuScene.appendChild(menuLayer);
 
-        // set current scene active
-        obacht.director.replaceScene(sceneMenu);
 
-        var layerMenu = new lime.Layer();
-        sceneMenu.appendChild(layerMenu);
+        ///////////////////////////////
+        // Scene Content             //
+        ///////////////////////////////
 
         /** Small Logo */
         var logoSmall = new lime.Sprite()
@@ -479,12 +492,20 @@ obacht.Menu.prototype = {
             });
         });
 
-        layerMenu.appendChild(logoSmall);
-        layerMenu.appendChild(backButton);
-        layerMenu.appendChild(selectWorldLabel);
-        layerMenu.appendChild(desert);
-        layerMenu.appendChild(water);
-        layerMenu.appendChild(meadow);
+
+        ///////////////////////////////
+        // Draw Scene                //
+        ///////////////////////////////
+
+        menuLayer.appendChild(logoSmall);
+        menuLayer.appendChild(backButton);
+        menuLayer.appendChild(selectWorldLabel);
+        menuLayer.appendChild(desert);
+        menuLayer.appendChild(water);
+        menuLayer.appendChild(meadow);
+
+        // set current scene active
+        obacht.director.replaceScene(menuScene);
 
     },
 
@@ -494,26 +515,30 @@ obacht.Menu.prototype = {
      * @param data
      */
     getCodeScene: function(data) {
-
         "use strict";
         var self = this;
+
+        var menuScene = new lime.Scene();
+        var menuLayer = new lime.Layer();
+        menuScene.appendChild(menuLayer);
+
+        var layerToolTip = new lime.Layer().setHidden(true);
+        menuScene.appendChild(layerToolTip);
+
+
+        ///////////////////////////////
+        // Data                      //
+        ///////////////////////////////
 
         // Pad the Pin with leading zeros, add spaces between Numbers
         var pin = this.padPin(data.pin, 4, 0);
         var pinArray = pin.split("");
         var pinFormatted = pinArray.join(' ');
 
-        var sceneMenu = new lime.Scene();
 
-        // set current scene active
-        obacht.director.replaceScene(sceneMenu);
-
-        var layerToolTip = new lime.Layer().setHidden(true);
-        sceneMenu.appendChild(layerToolTip);
-
-        var layerMenu = new lime.Layer();
-        sceneMenu.appendChild(layerMenu);
-
+        ///////////////////////////////
+        // Scene Content             //
+        ///////////////////////////////
 
         /** Small Logo */
         var logoSmall = new lime.Sprite()
@@ -568,8 +593,8 @@ obacht.Menu.prototype = {
             .setPosition(800, 267)
             .setSize(80, 76);
 
+        /** Show Pop-up @event */
         goog.events.listen(infoButton, ['touchstart', 'mousedown'], function() {
-            /** Show Pop-up display */
             layerToolTip.setHidden(false);
         });
 
@@ -587,23 +612,31 @@ obacht.Menu.prototype = {
             .setSize(280, 150)
             .setAlign('center');
 
+        /** Hide Pop-up @event */
         goog.events.listen(popupButton, ['touchstart', 'mousedown'], function() {
-            /** Hide Pop-up display */
             layerToolTip.setHidden(true);
         });
 
+        // Set Creating Player Ready
         obacht.mp.playerReady();
 
-        layerMenu.appendChild(logoSmall);
-        layerMenu.appendChild(character);
-        layerMenu.appendChild(backButton);
-        layerMenu.appendChild(codeLabel);
-        layerMenu.appendChild(field);
-        layerMenu.appendChild(code);
-        layerMenu.appendChild(infoButton);
+
+        ///////////////////////////////
+        // Draw Scene                //
+        ///////////////////////////////
+
+        menuLayer.appendChild(logoSmall);
+        menuLayer.appendChild(character);
+        menuLayer.appendChild(backButton);
+        menuLayer.appendChild(codeLabel);
+        menuLayer.appendChild(field);
+        menuLayer.appendChild(code);
+        menuLayer.appendChild(infoButton);
         layerToolTip.appendChild(popupButton);
         layerToolTip.appendChild(popupLabel);
 
+        // set current scene active
+        obacht.director.replaceScene(menuScene);
     },
 
     /**
@@ -620,8 +653,23 @@ obacht.Menu.prototype = {
 
         /** Array for PIN */
         var codeArray = ['_', '_', '_', '_'];
-
         var code_label = [4];
+
+        /** KeyboardButton Placement */
+        var startFrom = 90;
+        var spacing = 110;
+        var keys = [];
+        var key_labels = [10];
+
+        var menuScene = new lime.Scene();
+        var menuLayer = new lime.Layer();
+        menuScene.appendChild(menuLayer);
+
+
+        /////////////////////////////
+        // Scene Content           //
+        /////////////////////////////
+
         code_label[0] = new lime.Label()
             .setText(codeArray[0])
             .setFontColor('#fff')
@@ -650,94 +698,7 @@ obacht.Menu.prototype = {
             .setPosition(760, 425)
             .setSize(100, 130);
 
-
-        /** KeyboardButton Placement */
-        var startFrom = 90;
-        var spacing = 110;
-        var keys = [];
-        var key_labels = [10];
-
-
-        /////////////////////////////
-        // Helper Functions //
-        /////////////////////////////
-
-        /**
-         * Returns PIN
-         *
-         * @returns {*}
-         */
-        self.getPin = function() {
-            return codeArray[0] + '' + codeArray[1] + '' + codeArray[2] + '' + codeArray[3];
-        };
-
-        var draw_Code = function() {
-            code_label[0].setText(codeArray[0]);
-            code_label[1].setText(codeArray[1]);
-            code_label[2].setText(codeArray[2]);
-            code_label[3].setText(codeArray[3]);
-            layerMenu.appendChild(code_label[0]);
-            layerMenu.appendChild(code_label[1]);
-            layerMenu.appendChild(code_label[2]);
-            layerMenu.appendChild(code_label[3]);
-        };
-
-        /**
-         * Add Number to PIN
-         *
-         * @param {Number} insertNumber
-         */
-        var addNumber = function(insertNumber) {
-            for (i = 0; i <= 3; i++) {
-                if (codeArray[i] === '_') {
-                    codeArray[i] = insertNumber;
-                    code_label[i].setText(codeArray[i]);
-                    layerMenu.appendChild(code_label[i]);
-                    return;
-                }
-            }
-        };
-
-        /**
-         * Backspace PIN (Deletes last entered PIN)
-         */
-        var deleteNumber = function() {
-            for (i = 3; i >= 0; i--) {
-                if (codeArray[i] !== '_') {
-                    codeArray[i] = '_';
-                    code_label[i].setText(codeArray[i]);
-                    layerMenu.appendChild(code_label[i]);
-                    return;
-                }
-            }
-        };
-
-        self.startGame = function() {
-            if (codeArray[0] !== '_' && codeArray[1] !== '_' && codeArray[2] !== '_' && codeArray[3] !== '_') {
-
-                var pin = self.getPin();
-                obacht.mp.joinRoom(pin, true);
-                obacht.mp.events.subscribeOnce('room_detail', function() {
-                    obacht.mp.playerReady();
-                });
-            }
-        };
-
-
-        /////////////////////////////
-        // Scene Content           //
-        /////////////////////////////
-
-        var sceneMenu = new lime.Scene();
-
-        // set current scene active
-        obacht.director.replaceScene(sceneMenu);
-
-        var layerMenu = new lime.Layer();
-        sceneMenu.appendChild(layerMenu);
-
         var layerToolTip = new lime.Layer().setHidden(true);
-        sceneMenu.appendChild(layerToolTip);
 
         /** Small Logo */
         var logoSmall = new lime.Sprite()
@@ -798,21 +759,12 @@ obacht.Menu.prototype = {
             .setPosition(640, 405)
             .setSize(478, 154);
 
-        layerMenu.appendChild(logoSmall);
-        layerMenu.appendChild(backButton);
-        layerMenu.appendChild(infoButton);
-        layerToolTip.appendChild(popupButton);
-        layerToolTip.appendChild(popupLabel);
-        layerMenu.appendChild(codeLabel);
-        layerMenu.appendChild(field);
-
-        draw_Code();
 
         /////////////////////////////
-        // Create Buttons //
+        // Create Number Buttons   //
         /////////////////////////////
 
-        /** Create Number-Keys */
+        // Create Number-Keys
         var i;
 
         for (i = 1; i < 10; i++) {
@@ -837,7 +789,6 @@ obacht.Menu.prototype = {
             .setPosition(startFrom + spacing * 9, 535)
             .setSize(142, 132);
 
-
         key_labels[0] = new lime.Label()
             .setAlign('center')
             .setText(0)
@@ -845,7 +796,6 @@ obacht.Menu.prototype = {
             .setFontSize(70)
             .setSize(142, 70)
             .setPosition(startFrom + spacing * 9 + 3, 537);
-
 
         /** Create Delete-Key */
         var keyDelete = new lime.Sprite()
@@ -868,20 +818,9 @@ obacht.Menu.prototype = {
             .setSize(300, 50)
             .setPosition(640, 652);
 
-        for (i = 1; i < 10; i++) {
-            layerMenu.appendChild(keys[i]);
-            layerMenu.appendChild(key_labels[i]);
-        }
-
-        layerMenu.appendChild(keys[0]);
-        layerMenu.appendChild(key_labels[0]);
-        layerMenu.appendChild(keyDelete);
-        layerMenu.appendChild(playButton);
-        layerMenu.appendChild(playLabel);
-
 
         /////////////////////////////
-        // Register EventListeners //
+        // Event Listeners //
         /////////////////////////////
 
         goog.events.listen(key_labels[1], ['touchstart', 'mousedown'], function() {
@@ -918,9 +857,112 @@ obacht.Menu.prototype = {
             deleteNumber();
         });
         goog.events.listen(playButton, ['touchstart', 'mousedown'], function() {
-            self.startGame();
+            startGame();
         });
 
+
+        /////////////////////////////
+        // Draw Scene              //
+        /////////////////////////////
+
+        menuScene.appendChild(layerToolTip);
+        menuLayer.appendChild(logoSmall);
+        menuLayer.appendChild(backButton);
+        menuLayer.appendChild(infoButton);
+        layerToolTip.appendChild(popupButton);
+        layerToolTip.appendChild(popupLabel);
+        menuLayer.appendChild(codeLabel);
+        menuLayer.appendChild(field);
+
+        for (i = 1; i < 10; i++) {
+            menuLayer.appendChild(keys[i]);
+            menuLayer.appendChild(key_labels[i]);
+        }
+
+        menuLayer.appendChild(keys[0]);
+        menuLayer.appendChild(key_labels[0]);
+        menuLayer.appendChild(keyDelete);
+        menuLayer.appendChild(playButton);
+        menuLayer.appendChild(playLabel);
+
+        drawCode();
+
+        // set current scene active
+        obacht.director.replaceScene(menuScene);
+
+
+        /////////////////////////////
+        // Helper Functions        //
+        /////////////////////////////
+
+        /**
+         * Returns PIN
+         *
+         * @returns {*}
+         */
+        function getPin() {
+            return codeArray[0] + '' + codeArray[1] + '' + codeArray[2] + '' + codeArray[3];
+        }
+
+        /**
+         * Draws current CodeArray into the Code Labels
+         */
+        function drawCode() {
+            code_label[0].setText(codeArray[0]);
+            code_label[1].setText(codeArray[1]);
+            code_label[2].setText(codeArray[2]);
+            code_label[3].setText(codeArray[3]);
+            menuLayer.appendChild(code_label[0]);
+            menuLayer.appendChild(code_label[1]);
+            menuLayer.appendChild(code_label[2]);
+            menuLayer.appendChild(code_label[3]);
+        }
+
+        /**
+         * Add Number to PIN
+         *
+         * @param {Number} insertNumber
+         */
+        function addNumber(insertNumber) {
+            for (i = 0; i <= 3; i++) {
+                if (codeArray[i] === '_') {
+                    codeArray[i] = insertNumber;
+                    code_label[i].setText(codeArray[i]);
+                    menuLayer.appendChild(code_label[i]);
+                    break;
+                }
+            }
+        }
+
+        /**
+         * Backspace PIN (Deletes last entered PIN)
+         */
+        function deleteNumber() {
+            for (i = 3; i >= 0; i--) {
+                if (codeArray[i] !== '_') {
+                    codeArray[i] = '_';
+                    code_label[i].setText(codeArray[i]);
+                    menuLayer.appendChild(code_label[i]);
+                    break;
+                }
+            }
+        }
+
+        /**
+         * Check if PIN is valid and start Game if it is
+         */
+        function startGame() {
+            if (codeArray[3] !== '_') {
+                var pin = getPin();
+                obacht.mp.joinRoom(pin, true);
+                obacht.mp.events.subscribeOnce('room_detail', function() {
+                    obacht.mp.playerReady();
+                });
+            } else {
+                // TODO: Info Popup
+                log.warn('PIN not valid');
+            }
+        }
     },
 
     /**
@@ -935,8 +977,8 @@ obacht.Menu.prototype = {
         var alreadyJoined = false;
 
         var gameoverScene = new lime.Scene();
-        var layerMenu = new lime.Layer();
-        gameoverScene.appendChild(layerMenu);
+        var menuLayer = new lime.Layer();
+        gameoverScene.appendChild(menuLayer);
 
         obacht.mp.events.subscribeOnce('join_room', function() {
             alreadyJoined = true;
@@ -989,7 +1031,9 @@ obacht.Menu.prototype = {
 
         /**
          * Play Again Event
-         * If playing a Random
+         * If playing a Random Random Game this will open a new Random Game Request
+         * If connected to a custom Game via PIN, it will try to create a new Private Game with the same Player
+         * @event
          */
         goog.events.listen(playAgainButton, ['touchstart', 'mousedown'], function() {
 
@@ -1062,11 +1106,11 @@ obacht.Menu.prototype = {
         // Draw the Scene            //
         ///////////////////////////////
 
-        layerMenu.appendChild(gameoverLabel);
-        layerMenu.appendChild(playAgainButton);
-        layerMenu.appendChild(playAgainLabel);
-        layerMenu.appendChild(quitButton);
-        layerMenu.appendChild(quitLabel);
+        menuLayer.appendChild(gameoverLabel);
+        menuLayer.appendChild(playAgainButton);
+        menuLayer.appendChild(playAgainLabel);
+        menuLayer.appendChild(quitButton);
+        menuLayer.appendChild(quitLabel);
 
         obacht.director.replaceScene(gameoverScene);
 
@@ -1081,9 +1125,13 @@ obacht.Menu.prototype = {
         var self = this;
 
         var loadingScene = new lime.Scene();
+        var menuLayer = new lime.Layer();
+        loadingScene.appendChild(menuLayer);
 
-        var layerMenu = new lime.Layer();
-        loadingScene.appendChild(layerMenu);
+
+        ///////////////////////////////
+        // Scene Content             //
+        ///////////////////////////////
 
         /** Big Logo with character */
         var logoBig = new lime.Sprite()
@@ -1112,10 +1160,10 @@ obacht.Menu.prototype = {
             .setSize(500, 40)
             .setAlign('left');
 
-        layerMenu.appendChild(loadingLabel);
+        menuLayer.appendChild(loadingLabel);
 
         setInterval(function() {
-            layerMenu.removeChild(loadingLabel);
+            menuLayer.removeChild(loadingLabel);
             loadingStatus += '.';
 
             loadingLabel = new lime.Label()
@@ -1126,15 +1174,19 @@ obacht.Menu.prototype = {
                 .setSize(500, 40)
                 .setAlign('left');
 
-            layerMenu.appendChild(loadingLabel);
+            menuLayer.appendChild(loadingLabel);
             if (loadingStatus === '.....') {
                 loadingStatus = '';
             }
 
         }, 950);
 
-        layerMenu.appendChild(logoBig);
-        layerMenu.appendChild(backButton);
+        ///////////////////////////////
+        // Draw the Scene            //
+        ///////////////////////////////
+
+        menuLayer.appendChild(logoBig);
+        menuLayer.appendChild(backButton);
 
         // set current scene active
         obacht.director.replaceScene(loadingScene);
@@ -1158,6 +1210,7 @@ obacht.Menu.prototype = {
         "use strict";
 
     },
+
 
     /////////////////////////////
     // Helper Functions        //
