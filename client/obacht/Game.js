@@ -84,7 +84,7 @@ obacht.Game = function() {
 
 
     // Decrement SpeedFactor (lower is faster)
-    obacht.intervals.speedFactorInterval = setInterval(function() {
+    self.speedFactorInterval = setInterval(function() {
         self.speedFactor -= obacht.options.gameplay.decrementSpeedFactor;
     }, obacht.options.gameplay.decrementSpeedFactorTime);
 
@@ -124,8 +124,13 @@ obacht.Game.prototype = {
             this.generator.destruct();
         }
 
+        // Clean Intervals
+        clearInterval(this.speedFactorInterval);
+
+        // Clear Event Listeners
         obacht.mp.events.clear('bonus');
 
+        // Remove Layers
         this.layer.removeChild(this.enemyWorld.layer);
         this.layer.removeChild(this.ownWorld.layer);
         this.layer.removeChild(this.enemyPlayer.layer);

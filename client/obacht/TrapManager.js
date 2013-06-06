@@ -17,7 +17,6 @@ obacht.TrapManager = function(currentGame, world, player) {
     "use strict";
 
     var self = this;
-    this.currentGame = currentGame;
     this.world = world;
     this.player = player;
     this.layer = currentGame.layer;
@@ -32,7 +31,7 @@ obacht.TrapManager = function(currentGame, world, player) {
         var factor;
         var angle;
 
-        var trap = new obacht.Trap(currentGame, data.type);
+        var trap = new obacht.Trap(obacht.currentGame, data.type);
         self.traps[self.traps.length] = trap;
         self.layer.appendChild(trap.trap);
         trap.who='enemy';
@@ -77,7 +76,7 @@ obacht.TrapManager = function(currentGame, world, player) {
         var factor;
         var angle;
 
-        var trap = new obacht.Trap(currentGame, data.type);
+        var trap = new obacht.Trap(obacht.currentGame, data.type);
         self.traps[self.traps.length] = trap;
         self.layer.appendChild(trap.trap);
         trap.who='own';
@@ -113,7 +112,7 @@ obacht.TrapManager = function(currentGame, world, player) {
         }, trap,millesecondsmove);
     });
 
-    obacht.intervals.cleanUpTraps = setInterval(function() {
+    this.cleanUpTrapsInterval = setInterval(function() {
         self.cleanUpTraps(self.traps);
     }, 500);
 
@@ -157,8 +156,13 @@ obacht.TrapManager.prototype = {
     checkColl: function(layer,player,traps) {
         "use strict";
 
+        if (!obacht.playerController) {
+            return false;
+        }
+
         for (var i = 0; i < traps.length; i++) {
-            if(typeof traps[i] !== 'undefined' && traps[i].who==='own'){
+            if(typeof traps[i] !== 'undefined' && traps[i].who==='own' &&  traps[i].type !== 'undefined'){
+
                 var trap = traps[i];
 
                 //Collision detection
@@ -235,7 +239,9 @@ obacht.TrapManager.prototype = {
      * Destructor - Cleans up all Lime Elements and DataStructures
      */
     destruct: function() {
+          "use strict";
 
-    }
+          clearInterval(this.cleanUpTrapsInterval);
+      }
 };
 

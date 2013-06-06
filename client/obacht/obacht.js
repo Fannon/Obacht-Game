@@ -65,7 +65,6 @@ obacht.start = function() {
         if (obacht.menu) {
 
             var gameScene = new lime.Scene();
-            obacht.director.replaceScene(gameScene);
 
 
             /////////////////////////////
@@ -75,9 +74,9 @@ obacht.start = function() {
             if (obacht.currentGame) {
                 obacht.cleanUp();
             }
-            if (obacht.menu) {
-                delete obacht.menu;
-            }
+//            if (obacht.menu) {
+//                delete obacht.menu;
+//            }
 
             obacht.playerController = new obacht.PlayerController();
             obacht.currentGame = new obacht.Game();
@@ -91,13 +90,16 @@ obacht.start = function() {
              */
             obacht.mp.events.subscribeOnce('game_over', function(data) {
 
-                if (!obacht.menu) {
-                    obacht.menu = new obacht.Menu();
-                }
+//                if (!obacht.menu) {
+//                    obacht.menu = new obacht.Menu();
+//                }
                 obacht.menu.gameoverScene(data);
                 obacht.cleanUp();
             });
+
+            obacht.director.replaceScene(gameScene);
         }
+
     });
 
     log.debug('PERFORMANCE: PRE-MENU - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
@@ -131,10 +133,6 @@ obacht.cleanUp = function() {
 
     // Remove CSS Gradients from Theme and show Menu Background again
     obacht.setBackground(false);
-
-    // Clear running Intervals
-    clearInterval(obacht.intervals.speedFactorInterval);
-    clearInterval(obacht.intervals.cleanUpTraps);
 
     // Clear Event Subscriptions
     obacht.mp.events.clear('room_detail');

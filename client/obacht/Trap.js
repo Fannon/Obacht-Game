@@ -21,8 +21,6 @@ obacht.Trap = function(currentGame, type) {
     this.type = type;
     this.who = 'undefined';
 
-    this.spritesheet = currentGame.spritesheet;
-
     var trapDetail = obacht.themes[obacht.mp.roomDetail.theme].traps[type];
 
     ////////////////////
@@ -31,7 +29,7 @@ obacht.Trap = function(currentGame, type) {
 
     this.trap = new lime.Sprite()
         .setSize(trapDetail.width, trapDetail.height)
-        .setFill(this.spritesheet.getFrame(trapDetail.file));
+        .setFill(currentGame.spritesheet.getFrame(trapDetail.file));
 //        .setFill('assets/themes/' + obacht.mp.roomDetail.theme + '/traps/' + this.type + '.png');
 
 };

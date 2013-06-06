@@ -51,6 +51,7 @@ obacht.Logger.prototype.setLogLevel = function(loglevel) {
 
     } else {
         obacht.Logger.prototype.debug = function(msg) {};
+        obacht.Logger.prototype.dir = function(object) {};
     }
 
     if (loglevel <= 1) {
