@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Menu</title>
+    <title>JSDoc: Class: Logger</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Class: Menu</h1>
+    <h1 class="page-title">Class: Logger</h1>
     
     
 
@@ -27,7 +27,7 @@
     
 <header>
     <h2>
-    Menu
+    Logger
     </h2>
     
 </header>  
@@ -39,7 +39,7 @@
     
         
 <dt>
-    <h4 class="name" id="Menu"><span class="type-signature"></span>new Menu<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Logger"><span class="type-signature"></span>new Logger<span class="signature">(loglevel)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -47,7 +47,7 @@
     
     
     <div class="description">
-        Game MenuInits the Menu and handles the different MenuScenesUses the MultiplayerService to join/create RoomsCreates a new Game as one of its ScenesTODO: Use Config
+        Custom Logger with Color- and Loglevel SupportSaves performance by changing the functions on/off while runtimeUses passed through Socket Connection to emit Message to the client that caused the Message
     </div>
     
 
@@ -55,6 +55,54 @@
     
     
     
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>loglevel</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">From 0 (Everything) to 5 (Nothing)</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
     
     
     
@@ -70,6 +118,13 @@
     
     
     
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Simon Heimler</li>
+        </ul>
+    </dd>
+    
     
     
     
@@ -80,7 +135,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        Menu.js, line 27
+        Logger.js, line 18
     </li></ul></dd>
     
     
@@ -126,7 +181,7 @@
         <dl>
             
 <dt>
-    <h4 class="name" id="creditsScene"><span class="type-signature"></span>creditsScene<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="debug"><span class="type-signature"></span>debug<span class="signature">(msg)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -134,214 +189,7 @@
     
     
     <div class="description">
-        Credits SceneTODO: todo
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        Menu.js, line 1157
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="destruct"><span class="type-signature"></span>destruct<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Menu Destructor
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        Menu.js, line 1184
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="gameoverScene"><span class="type-signature"></span>gameoverScene<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Game Over SceneTODO: Not implemented yet
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        Menu.js, line 930
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="getCodeScene"><span class="type-signature"></span>getCodeScene<span class="signature">(data)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Get Code (PIN) Scene
+        Create Debug Message
     </div>
     
 
@@ -375,10 +223,15 @@
 	
         <tr>
             
-                <td class="name"><code>data</code></td>
+                <td class="name"><code>msg</code></td>
             
             
             <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
             
             </td>
             
@@ -386,7 +239,7 @@
             
             
             
-            <td class="description last"></td>
+            <td class="description last">Log Message</td>
         </tr>
 	
 	
@@ -417,7 +270,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        Menu.js, line 496
+        Logger.js, line 40
     </li></ul></dd>
     
     
@@ -445,7 +298,7 @@
         
             
 <dt>
-    <h4 class="name" id="helpScene"><span class="type-signature"></span>helpScene<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="dir"><span class="type-signature"></span>dir<span class="signature">(object)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -453,352 +306,7 @@
     
     
     <div class="description">
-        Help / Tutorial SceneTODO: todo
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        Menu.js, line 1148
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="joinGameScene"><span class="type-signature"></span>joinGameScene<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Join Custom Game Scene
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        Menu.js, line 612
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="loadingScene"><span class="type-signature"></span>loadingScene<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Loading Scene
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        Menu.js, line 59
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="mainMenuScene"><span class="type-signature"></span>mainMenuScene<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Main Menu Scene
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        Menu.js, line 122
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="newGameScene"><span class="type-signature"></span>newGameScene<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        New Game SceneJoin Random Game or Create/Join a custom one
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        Menu.js, line 259
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="padPin"><span class="type-signature"></span>padPin<span class="signature">(n, width, z)</span><span class="type-signature"> &rarr; {string}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Adds (left) Padding to the PIN Number
+        Debug Object
     </div>
     
 
@@ -832,10 +340,15 @@
 	
         <tr>
             
-                <td class="name"><code>n</code></td>
+                <td class="name"><code>object</code></td>
             
             
             <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
             
             </td>
             
@@ -843,43 +356,7 @@
             
             
             
-            <td class="description last"></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>width</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>z</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
+            <td class="description last">JavaScript Object</td>
         </tr>
 	
 	
@@ -910,7 +387,193 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        Menu.js, line 1174
+        Logger.js, line 48
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="error"><span class="type-signature"></span>error<span class="signature">(msg)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Create Error  Message, emit it via current Socket if given
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>msg</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Log Message</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        Logger.js, line 86
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="getLogLevel"><span class="type-signature"></span>getLogLevel<span class="signature">()</span><span class="type-signature"> &rarr; {Number}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Gets the Loglevel (while runtime)
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        Logger.js, line 99
     </li></ul></dd>
     
     
@@ -934,6 +597,10 @@
     <h5>Returns:</h5>
     
             
+<div class="param-desc">
+    Current Loglevel
+</div>
+
 
 
 <dl>
@@ -942,7 +609,7 @@
 	</dt>
 	<dd>
 		
-<span class="param-type">string</span>
+<span class="param-type">Number</span>
 
 
 	</dd>
@@ -956,7 +623,7 @@
         
             
 <dt>
-    <h4 class="name" id="selectThemeScene"><span class="type-signature"></span>selectThemeScene<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="info"><span class="type-signature"></span>info<span class="signature">(msg)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -964,7 +631,7 @@
     
     
     <div class="description">
-        Select Theme Scene
+        Create Info Message
     </div>
     
 
@@ -972,6 +639,54 @@
     
     
     
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>msg</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Log Message</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
     
     
     
@@ -997,7 +712,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        Menu.js, line 406
+        Logger.js, line 61
     </li></ul></dd>
     
     
@@ -1025,7 +740,7 @@
         
             
 <dt>
-    <h4 class="name" id="waitForPlayerScene"><span class="type-signature"></span>waitForPlayerScene<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setLogLevel"><span class="type-signature"></span>setLogLevel<span class="signature">(loglevel)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -1033,7 +748,7 @@
     
     
     <div class="description">
-        Wait for the other Player SceneTODO: Not done yet!
+        Changes the Loglevel (while runtime)
     </div>
     
 
@@ -1041,6 +756,54 @@
     
     
     
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>loglevel</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">loglevel From 0 (Everything) to 5 (Nothing)</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
     
     
     
@@ -1066,7 +829,124 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        Menu.js, line 1079
+        Logger.js, line 28
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="warn"><span class="type-signature"></span>warn<span class="signature">(msg)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Create Warning Message, emit it via current Socket if given
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>msg</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Log Message</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        Logger.js, line 73
     </li></ul></dd>
     
     
