@@ -174,6 +174,14 @@ obacht.Player.prototype = {
     },
 
     /**
+     * Lets the player die -> Game Over
+     * Just for debugging purposes
+     */
+    die: function() {
+        obacht.mp.playerStatus(obacht.mp.pid, 0);
+    },
+
+    /**
      * Destructor - Cleans up all Lime Elements and DataStructures
      */
     destruct: function() {

@@ -1,5 +1,4 @@
-/* global goog, lime, obacht */
-/* jshint devel:true */
+/* global goog, lime, obacht, log */
 
 goog.provide('obacht.Bonus');
 goog.require('lime.RoundedRect');
@@ -47,7 +46,7 @@ obacht.Bonus = function(currentGame, type) {
     // SUBSCRIBE TO EVENTS //
     /////////////////////////
 
-    goog.events.listen(this.bonusButton, ['touchstart', 'mousedown'], function(e) {
+    goog.events.listen(this.bonusButton, ['touchstart', 'mousedown'], function() {
         self.checkReactiontime();
         self.deleteBonus();
     });

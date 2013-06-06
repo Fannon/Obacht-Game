@@ -1,18 +1,12 @@
 /* global goog, lime, obacht, log */
-/* jshint devel: true */
 
 goog.provide('obacht.PlayerController');
-
-// Obacht Requirements
-goog.require('obacht.options');
 
 // Closure Library Requirements
 goog.require('goog.pubsub.PubSub');
 
 //LimeJS Requirements
 goog.require('lime.RoundedRect');
-
-
 
 /**
  * Its a Player Controller
@@ -38,10 +32,8 @@ obacht.PlayerController = function() {
     this.layer.appendChild(this.tapAreaBottom);
     this.layer.appendChild(this.tapAreaPuffer);
 
-
     // Event Publisher/Subscriber
     this.events = new goog.pubsub.PubSub();
-
 
 
     ////////////////////

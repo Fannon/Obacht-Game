@@ -1,5 +1,4 @@
 /* global goog, lime, obacht, log */
-/* jshint strict: false, devel:true */
 
 goog.provide('obacht.World');
 goog.require('obacht.options');
@@ -19,6 +18,7 @@ goog.require('lime.animation.RotateBy');
  * @constructor
  */
 obacht.World = function(currentGame, type) {
+    "use strict";
 
     this.theme = currentGame.theme;
     this.gameLayer = currentGame.layer;
@@ -133,6 +133,7 @@ obacht.World.prototype = {
      * Spin the World
      */
     spin: function() {
+        "use strict";
         this.createAnimation1(this.ground1, this.rotation3, this.rotation4, obacht.options.world.spinDuration.front, 0);
         this.createAnimation2(this.ground2, this.rotation4, this.rotation3, 0, obacht.options.world.spinDuration.front);
         this.createAnimation1(this.landscape1, this.rotation3, this.rotation4, obacht.options.world.spinDuration.middle, 0);
@@ -142,6 +143,7 @@ obacht.World.prototype = {
     },
 
     createAnimation1: function(object, rotation1, rotation2, duration1, duration2) {
+        "use strict";
         object.runAction(new lime.animation.Loop(
             new lime.animation.Sequence(
                 new lime.animation
@@ -164,6 +166,7 @@ obacht.World.prototype = {
     },
 
     createAnimation2: function(object, rotation1, rotation2, duration1, duration2) {
+        "use strict";
         object.runAction(new lime.animation.Loop(
             new lime.animation.Sequence(
                 new lime.animation
@@ -189,6 +192,6 @@ obacht.World.prototype = {
      * Destructor - Cleans up all Lime Elements and DataStructures
      */
     destruct: function() {
-
+        "use strict";
     }
 };

@@ -1,5 +1,4 @@
 /* global goog, lime, obacht */
-/* jshint strict: false, devel:true */
 
 // Obacht Main Namespace
 goog.provide('obacht');
@@ -14,7 +13,9 @@ goog.require('obacht.options');
 goog.require('obacht.themes');
 goog.require('obacht.Logger');
 goog.require('obacht.MultiplayerService');
+goog.require('obacht.PlayerController');
 goog.require('obacht.Menu');
+goog.require('obacht.Game');
 
 /** global log variable for Logging with the custom Logger */
 var log;
@@ -27,15 +28,20 @@ obacht.intervals = {};
  * Obacht Game EntryPoint
  */
 obacht.start = function() {
-
+    "use strict";
 
     log = new obacht.Logger(obacht.options.logLevel);
+    obacht.checkDevices();
 
-    log.debug('PERFORMANCE: PRE-MENU - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
 
-    /** Multiplayer Service */
+    //////////////////////////////
+    // Model                    //
+    //////////////////////////////
+
+    /** Multiplayer Service Instance */
     obacht.mp = new obacht.MultiplayerService(obacht.options.server.url);
 
+    /** LimeJs Director Instance */
     obacht.director = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     obacht.director.makeMobileWebAppCapable();
     obacht.director.setDisplayFPS(obacht.options.displayFps);
@@ -46,8 +52,59 @@ obacht.start = function() {
         obacht.renderer = lime.Renderer.CANVAS;
     }
 
-    //Start with Menu
+    //////////////////////////////
+    // Events                   //
+    //////////////////////////////
+
+    /**
+     * Subscribe Game Ready Event -> Start Game
+     * @event
+     */
+    obacht.mp.events.subscribe('game_ready', function() {
+
+        if (obacht.menu) {
+
+            var gameScene = new lime.Scene();
+            obacht.director.replaceScene(gameScene);
+
+
+            /////////////////////////////
+            // Start new Game          //
+            /////////////////////////////
+
+            if (obacht.currentGame) {
+                obacht.cleanUp();
+            }
+            if (obacht.menu) {
+                delete obacht.menu;
+            }
+
+            obacht.playerController = new obacht.PlayerController();
+            obacht.currentGame = new obacht.Game();
+
+            gameScene.appendChild(obacht.currentGame.layer);
+            gameScene.appendChild(obacht.playerController.layer);
+
+            /**
+             * Subscribe (once) Game Over Event
+             * @event
+             */
+            obacht.mp.events.subscribeOnce('game_over', function(data) {
+
+                if (!obacht.menu) {
+                    obacht.menu = new obacht.Menu();
+                }
+                obacht.menu.gameoverScene(data);
+                obacht.cleanUp();
+            });
+        }
+    });
+
+    log.debug('PERFORMANCE: PRE-MENU - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
+
+    /** Menu Instance */
     obacht.menu = new obacht.Menu();
+    obacht.menu.loadingScene();
 
 };
 
@@ -59,7 +116,7 @@ obacht.start = function() {
 obacht.cleanUp = function() {
     "use strict";
 
-    console.log('Cleaning up...!');
+    log.debug('Cleaning up...!');
 
     // Clean up Game if one still running
     if (obacht.currentGame) {
@@ -101,11 +158,21 @@ obacht.cleanUp = function() {
  * @param {*} theme Themename or false to reset
  */
 obacht.setBackground = function(theme) {
-    console.log('Set Background to .' + theme);
+    "use strict";
     var limeDirectorElement = document.getElementsByClassName('lime-director')[0];
     if (theme) {
         limeDirectorElement.setAttribute("class", 'lime-director ' + theme);
     } else {
         limeDirectorElement.setAttribute("class", 'lime-director');
     }
+};
+
+/**
+ * Checks for different Devices and Capabilities
+ * Adjusts Options and introduces some Fixes according to current Device
+ */
+obacht.checkDevices = function() {
+    "use strict";
+
+    // TODO: Check for Devices
 };

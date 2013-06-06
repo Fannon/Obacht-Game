@@ -1,5 +1,4 @@
 /* global goog, lime, obacht, log */
-/* jshint strict: false, devel:true */
 
 goog.provide('obacht.Trap');
 
@@ -11,6 +10,7 @@ goog.require('lime.Sprite');
  * @constructor
  */
 obacht.Trap = function(currentGame, type) {
+    "use strict";
 
     log.debug('New Trap(): ' + type);
 

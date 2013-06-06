@@ -1,5 +1,4 @@
 /* global goog, lime, obacht, log */
-/* jshint strict: false, devel:true */
 
 goog.provide('obacht.TrapManager');
 

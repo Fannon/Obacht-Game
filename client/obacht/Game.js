@@ -1,5 +1,4 @@
-/* global goog, lime, obacht */
-/* jshint strict: false, devel:true */
+/* global goog, lime, obacht, log */
 
 goog.provide('obacht.Game');
 
@@ -29,6 +28,7 @@ goog.require('lime.ASSETS.meadowSpritesheet.json');
  * @extends lime.Scene
  */
 obacht.Game = function() {
+    "use strict";
 
 
     //////////////////////////////
@@ -51,7 +51,7 @@ obacht.Game = function() {
     } else if (obacht.mp.roomDetail.theme === 'water') {
         this.spritesheet = new lime.SpriteSheet(this.theme.spritesheet, lime.ASSETS.waterSpritesheet.json, lime.parser.JSON);
     } else {
-        console.warn('Error loading Theme Spritesheet');
+        log.warn('Error loading Theme Spritesheet');
     }
 
     this.speedFactor = obacht.options.gameplay.initialSpeedFactor;
@@ -107,6 +107,7 @@ obacht.Game.prototype = {
      * Destructor - Cleans up all Lime Elements and DataStructures
      */
     destruct: function() {
+        "use strict";
 
         // Call Destructors of created Instances
         this.ownWorld.destruct();

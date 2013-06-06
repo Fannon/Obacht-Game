@@ -1,5 +1,4 @@
-/* global goog, lime, obacht */
-/* jshint devel:true */
+/* global goog, lime, obacht, log */
 
 goog.provide('obacht.Generator');
 

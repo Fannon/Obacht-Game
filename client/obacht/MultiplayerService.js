@@ -1,5 +1,4 @@
 /* global goog, lime, obacht, log, io */
-/* jshint devel: true */
 
 goog.provide('obacht.MultiplayerService');
 
@@ -74,7 +73,7 @@ obacht.MultiplayerService = function(serverUrl) {
         self.events.publish('room_detail', data);
 
         //log.debug('RoomDetails received:');
-        console.dir(data);
+        log.dir(data);
     });
 
     /**
@@ -82,12 +81,12 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.socket.on('error', function(data) {
         if (data.type === 'warning') {
-            console.warn(data.msg);
+            log.warn(data.msg);
         } else {
-            console.error(data.msg);
+            log.error(data.msg);
         }
         if (data.trace) {
-            console.dir(data.trace);
+            log.dir(data.trace);
         }
     });
 
@@ -96,7 +95,7 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.socket.on('message', function(data) {
         log.debug('Incoming Message from Server:');
-        console.dir(data);
+        log.dir(data);
     });
 
     /**
@@ -220,7 +219,7 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.socket.on('get_rooms', function (data) {
         log.debug('Getting Rooms Data (Debugging)');
-        console.dir(data);
+        log.dir(data);
     });
 
 };

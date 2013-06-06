@@ -1,5 +1,4 @@
 /* global goog, lime, obacht, log */
-/* jshint devel:true */
 
 goog.provide('obacht.Menu');
 
@@ -7,10 +6,6 @@ goog.provide('obacht.Menu');
 goog.require('lime.Layer');
 goog.require('lime.fill.Frame');
 goog.require('lime.Button');
-
-// Obacht Requirements
-goog.require('obacht.PlayerController');
-goog.require('obacht.Game');
 
 //Spritesheets Requirements
 goog.require('lime.parser.JSON');
@@ -44,32 +39,6 @@ obacht.Menu = function() {
     this.spritesheet = new lime.SpriteSheet('assets/gfx/menuSpritesheet.png', lime.ASSETS.menuSpritesheet.json, lime.parser.JSON);
 
     log.debug('PERFORMANCE: MENU - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
-
-
-    //////////////////////////////
-    // Events                   //
-    //////////////////////////////
-
-    /**
-     * Subscribe Game Ready Event -> Start Game
-     * @event
-     */
-    obacht.mp.events.subscribe('game_ready', function() {
-
-        self.loadGameScene();
-
-        /**
-         * Subscribe (once) Game Over Event
-         * @event
-         */
-        obacht.mp.events.subscribeOnce('game_over', function(data) {
-            self.gameoverScene(data);
-            obacht.cleanUp();
-        });
-    });
-
-    // Start first Scene
-    this.loadingScene();
 
     // If fastStart Option is set to true, immediatly start a random Game
     if (obacht.options.fastStart) {
@@ -637,33 +606,6 @@ obacht.Menu.prototype = {
 
     },
 
-
-    /**
-     * Game Loading Scene
-     * Starts the Game and everything self needs to be ready for self.
-     */
-    loadGameScene: function() {
-        "use strict";
-
-        var gameScene = new lime.Scene();
-        obacht.director.replaceScene(gameScene);
-
-
-        /////////////////////////////
-        // Start new Game          //
-        /////////////////////////////
-
-        if (obacht.currentGame) {
-            obacht.cleanUp();
-        }
-
-        obacht.playerController = new obacht.PlayerController();
-        obacht.currentGame = new obacht.Game();
-
-        gameScene.appendChild(obacht.currentGame.layer);
-        gameScene.appendChild(obacht.playerController.layer);
-    },
-
     /**
      * Join Custom Game Scene
      */
@@ -1217,7 +1159,6 @@ obacht.Menu.prototype = {
 
     },
 
-
     /////////////////////////////
     // Helper Functions        //
     /////////////////////////////
@@ -1235,6 +1176,14 @@ obacht.Menu.prototype = {
         z = z || '0';
         n = n + '';
         return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    },
+
+    /**
+     * Menu Destructor
+     */
+    destruct: function() {
+        "use strict";
+        // TODO: Menu Destructor?
     }
 
 };

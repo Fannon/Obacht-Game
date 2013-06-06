@@ -32,6 +32,7 @@ obacht.Logger.prototype.setLogLevel = function(loglevel) {
     console.log('Logger activated: Loglevel: ' + loglevel);
 
     if (loglevel <= 0) {
+
         /**
          * Create Debug Message
          * @param {String} msg Log Message
@@ -39,6 +40,15 @@ obacht.Logger.prototype.setLogLevel = function(loglevel) {
         obacht.Logger.prototype.debug = function(msg) {
             console.log(msg);
         };
+
+        /**
+         * Debug Object
+         * @param {Object} object JavaScript Object
+         */
+        obacht.Logger.prototype.dir = function(object) {
+            console.dir(object);
+        };
+
     } else {
         obacht.Logger.prototype.debug = function(msg) {};
     }
