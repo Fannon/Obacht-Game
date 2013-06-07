@@ -37,6 +37,14 @@ obacht.Game = function() {
 
     var self = this;
 
+    var timer;
+
+    /**
+     * Current Distance the world has rotated since the game started. (in Grad)
+     * @type {number}
+     */
+    this.distance = 0;
+
     this.layer = new lime.Layer();
     /** Game Spritesheet (changes with current theme) */
     this.spritesheet = false;
@@ -98,6 +106,20 @@ obacht.Game = function() {
         this.generator.startThrowTrap();
         this.generator.startThrowBonus();
     }
+
+    /** Time the game started, used for calculation current Distance */
+    timer = new Date();
+
+    /**
+     * Calculates the current distance the world has traveled so far (in grad)
+     */
+    lime.scheduleManager.scheduleWithDelay(function(){
+
+        var currentDate = new Date();
+        var diff = (currentDate.getTime() - timer.getTime()) / 1000 ;
+        self.distance = Math.floor(diff * 90 / obacht.options.world.spinDuration.front);
+
+    }, timer, 150);
 
 };
 
