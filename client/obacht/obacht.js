@@ -162,11 +162,32 @@ obacht.setBackground = function(theme) {
 /**
  * Draws a PopUp / Alert Box over the current Scene (Game or Menu)
  *
- * @param {String} text Text to draw
+ * @param {String} type Type of the message
+ * @param {String} msg Text of the message
  */
-obacht.popUpHelper = function(text) {
+obacht.showPopup = function(type, msg) {
     "use strict";
-    // TODO: Generate a PopUp (Alert Style) which can be used everywhere in the Menu/Game
+
+    var scene = obacht.director.getCurrentScene();
+
+    var popup = new lime.Label()
+        .setText(msg)
+        .setFontColor('#fff')
+        .setFontSize(50)
+        .setPosition(170, 120)
+        .setSize(300, 130);
+
+    if (type === 'error') {
+        log.debug('Incoming error from server:' + msg);
+        popup.setFontColor('#f00');
+        scene.appendChild(popup);
+    } else if (type === 'warning') {
+        log.debug('Incoming warning from server:' + msg);
+        popup.setFontColor('#ff0');
+        scene.appendChild(popup);
+    } else {
+        log.error('Wrong message type!');
+    }
 };
 
 /**
