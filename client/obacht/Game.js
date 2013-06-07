@@ -108,22 +108,30 @@ obacht.Game = function() {
     }
 
     /** Time the game started, used for calculation current Distance */
-    timer = new Date();
+    this.timer = new Date();
 
     /**
      * Calculates the current distance the world has traveled so far (in grad)
      */
     lime.scheduleManager.scheduleWithDelay(function(){
-
-        var currentDate = new Date();
-        var diff = (currentDate.getTime() - timer.getTime()) / 1000 ;
-        self.distance = Math.floor(diff * 90 / obacht.options.world.spinDuration.front);
-
+        self.distance = self.getDistance();
     }, timer, 150);
 
 };
 
 obacht.Game.prototype = {
+
+    /**
+     * Calculates current World traveled Distance
+     *
+     * @returns {number} Distance in Grad
+     */
+    getDistance: function() {
+        "use strict";
+        var currentDate = new Date();
+        var diff = (currentDate.getTime() - this.timer.getTime()) / 1000 ;
+        return Math.round(diff * 90 / obacht.options.world.spinDuration.front);
+    },
 
     /**
      * Destructor - Cleans up all Lime Elements and DataStructures
