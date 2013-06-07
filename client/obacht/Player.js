@@ -100,35 +100,38 @@ obacht.Player = function(currentGame, location) {
     /* SUBSCRIBE TO EVENTS */
     /////////////////////////
 
-    // Sets up event subscription for own player.
-    if (this.location === 'bottom') {
-        obacht.playerController.events.subscribe('own_player_action', function(data) {
-            if (data.action === 'jump') {
-                self.jump();
-            }
-            if (data.action === 'crouch') {
-                self.crouch();
-            }
-            if (data.action === 'standUp') {
-                self.standUp();
-            }
-        });
+    try {
+        if (this.location === 'bottom') {
+            // Sets up event subscription for own player.
+            obacht.playerController.events.subscribe('own_player_action', function(data) {
+                if (data.action === 'jump') {
+                    self.jump();
+                }
+                if (data.action === 'crouch') {
+                    self.crouch();
+                }
+                if (data.action === 'standUp') {
+                    self.standUp();
+                }
+            });
+        } else {
+            // Sets up event subscription for enemy player.
+            obacht.mp.events.subscribe('player_action', function(data) {
+                if (data.action === 'jump') {
+                    self.jump();
+                }
+                if (data.action === 'crouch') {
+                    self.crouch();
+                }
+                if (data.action === 'standUp') {
+                    self.standUp();
+                }
+            });
+        }
+    } catch(e) {
+        obacht.eventError(e);
     }
 
-    // Sets up event subscription for enemy player.
-    if (this.location === 'top') {
-        obacht.mp.events.subscribe('player_action', function(data) {
-            if (data.action === 'jump') {
-                self.jump();
-            }
-            if (data.action === 'crouch') {
-                self.crouch();
-            }
-            if (data.action === 'standUp') {
-                self.standUp();
-            }
-        });
-    }
 };
 
 
@@ -185,6 +188,7 @@ obacht.Player.prototype = {
      * Destructor - Cleans up all Lime Elements and DataStructures
      */
     destruct: function() {
-
+        obacht.mp.events.clear('own_player_action');
+        obacht.mp.events.clear('player_action');
     }
 };

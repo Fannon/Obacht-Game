@@ -227,7 +227,10 @@ RoomManager.prototype.joinRoom = function(socket, pin, isClosed) {
     // Catch Error Cases
     if (!room) {
         log.warn('!!! Tried to join Room #' + pin + ' that doesnt exist', socket);
-        return {msg: 'Cannot join, room does not exist!'};
+        return {
+            type: 'warning',
+            msg: 'Cannot join, room does not exist!'
+        };
     } else if (room.attributes.closed !== isClosed) {
         log.warn('!!! Tried to join Room with different Privacy Setting', socket);
         return false;
@@ -251,7 +254,10 @@ RoomManager.prototype.joinRoom = function(socket, pin, isClosed) {
         return room.attributes;
     } else {
         log.warn('!!! Room Already full! #' + pin, socket);
-        return {msg: 'Cannot join, room is already full!'};
+        return {
+            type: 'warning',
+            msg: 'Cannot join, room is already full!'
+        };
     }
 
 };

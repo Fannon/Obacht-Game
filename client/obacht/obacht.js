@@ -30,6 +30,9 @@ obacht.start = function() {
     log = new obacht.Logger(obacht.options.debug.logLevel);
     obacht.checkDevices();
 
+    /** Menu Instance */
+    obacht.menu = new obacht.Menu();
+
 
     //////////////////////////////
     // Model                    //
@@ -82,24 +85,23 @@ obacht.start = function() {
             gameScene.appendChild(obacht.currentGame.layer);
             gameScene.appendChild(obacht.playerController.layer);
 
-            /**
-             * Subscribe (once) Game Over Event
-             * @event
-             */
-            obacht.mp.events.subscribeOnce('game_over', function(data) {
-                obacht.menu.gameoverScene(data);
-                obacht.cleanUp();
-            });
-
             obacht.director.replaceScene(gameScene);
 
             console.timeEnd("gameStart");
         }
-
     });
 
-    /** Menu Instance */
-    obacht.menu = new obacht.Menu();
+    /**
+     * Subscribe Game Over Event
+     * @event
+     */
+    obacht.mp.events.subscribe('game_over', function(data) {
+        if (obacht.currentGame) {
+            obacht.menu.gameoverScene(data);
+            obacht.cleanUp();
+        }
+    });
+
     obacht.menu.loadingScene();
 
 };
@@ -131,9 +133,7 @@ obacht.cleanUp = function() {
     // Clear Event Subscriptions
     obacht.mp.events.clear('room_detail');
     obacht.mp.events.clear('bonus');
-    obacht.mp.events.clear('trap');
     obacht.mp.events.clear('receive_bonus');
-    obacht.mp.events.clear('game_over');
 
     // Reset Friend, if player has one
     obacht.mp.friend = false;
@@ -197,4 +197,14 @@ obacht.showPopup = function(type, msg) {
 obacht.checkDevices = function() {
     "use strict";
     // TODO: Check for Devices
+};
+
+/**
+ * Is called when an Event Listener throws an Error
+ *
+ * @param {Object} e Error Object
+ */
+obacht.eventError = function(e) {
+    "use strict";
+    log.warn('Event Error: ' + e.message );
 };

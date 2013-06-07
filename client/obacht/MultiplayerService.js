@@ -93,7 +93,7 @@ obacht.MultiplayerService = function(serverUrl) {
     /**
      * Print out Servermessages
      */
-    this.socket.on('msg', function(data) {
+    this.socket.on('message', function(data) {
         log.debug('Incoming message:' + data.msg);
         self.msg(data.type, data.msg);
     });

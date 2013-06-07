@@ -240,7 +240,8 @@ obacht.TrapManager.prototype = {
      */
     destruct: function() {
           "use strict";
-
+          obacht.mp.events.clear('enemy_trap');
+          obacht.mp.events.clear('own_trap');
           clearInterval(this.cleanUpTrapsInterval);
       }
 };
