@@ -35,7 +35,7 @@ obacht.Menu = function() {
     lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
 
     // If fastStart Option is set to true, immediatly start a random Game
-    if (obacht.options.fastStart) {
+    if (obacht.options.debug.fastStart) {
         obacht.mp.findMatch();
         obacht.mp.events.subscribeOnce('room_detail', function() {
             obacht.mp.playerReady();
@@ -115,6 +115,9 @@ obacht.Menu.prototype = {
     mainMenuScene: function() {
         "use strict";
         var self = this;
+
+        console.time("mainMenu");
+
 
         // Reset Variables and Event Listeners
         obacht.cleanUp();
@@ -257,6 +260,8 @@ obacht.Menu.prototype = {
 
         // set current scene active
         obacht.director.replaceScene(menuScene);
+
+        console.timeEnd("mainMenu");
     },
 
     /**

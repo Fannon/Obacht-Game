@@ -35,6 +35,7 @@ Logger.prototype.setLogLevel = function(loglevel) {
     console.log('--- Loglevel: ' + loglevel);
 
     if (loglevel <= 0) {
+
         /**
          * Create Debug Message
          * @param {String} msg Log Message
@@ -47,8 +48,10 @@ Logger.prototype.setLogLevel = function(loglevel) {
     }
 
     if (loglevel <= 1) {
+
         /**
          * Create Info Message
+         *
          * @param {String} msg Log Message
          */
         Logger.prototype.info = function(msg) {
@@ -59,8 +62,10 @@ Logger.prototype.setLogLevel = function(loglevel) {
     }
 
     if (loglevel <= 2) {
+
         /**
          * Create Warning Message, emit it via current Socket if given
+         *
          * @param {String} msg Log Message
          * @param {object} socket Socket PassTrough
          */
@@ -75,6 +80,7 @@ Logger.prototype.setLogLevel = function(loglevel) {
     }
 
     if (loglevel <= 3) {
+
         /**
          * Create Error  Message, emit it via current Socket if given
          *

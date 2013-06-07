@@ -27,7 +27,7 @@ var log;
 obacht.start = function() {
     "use strict";
 
-    log = new obacht.Logger(obacht.options.logLevel);
+    log = new obacht.Logger(obacht.options.debug.logLevel);
     obacht.checkDevices();
 
 
@@ -41,7 +41,7 @@ obacht.start = function() {
     /** LimeJs Director Instance */
     obacht.director = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     obacht.director.makeMobileWebAppCapable();
-    obacht.director.setDisplayFPS(obacht.options.displayFps);
+    obacht.director.setDisplayFPS(obacht.options.debug.displayFps);
 
     if (obacht.options.graphics.DEFAULT_RENDERER === 'DOM') {
         obacht.renderer = lime.Renderer.DOM;
@@ -61,6 +61,8 @@ obacht.start = function() {
 
         if (obacht.menu) {
 
+            console.time("gameStart");
+
             var gameScene = new lime.Scene();
 
 
@@ -71,9 +73,6 @@ obacht.start = function() {
             if (obacht.currentGame) {
                 obacht.cleanUp();
             }
-//            if (obacht.menu) {
-//                delete obacht.menu;
-//            }
 
             // Create a new playerController Instance
             obacht.playerController = new obacht.PlayerController();
@@ -88,15 +87,13 @@ obacht.start = function() {
              * @event
              */
             obacht.mp.events.subscribeOnce('game_over', function(data) {
-
-//                if (!obacht.menu) {
-//                    obacht.menu = new obacht.Menu();
-//                }
                 obacht.menu.gameoverScene(data);
                 obacht.cleanUp();
             });
 
             obacht.director.replaceScene(gameScene);
+
+            console.timeEnd("gameStart");
         }
 
     });

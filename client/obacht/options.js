@@ -10,9 +10,11 @@ goog.provide('obacht.options');
  * @global
  */
 obacht.options = {
-    logLevel: 3,
-    fastStart: false,
-    displayFps: true,
+    debug: {
+        logLevel: 0,
+        fastStart: false,
+        displayFps: true
+    },
     graphics: {
         VIEWPORT_WIDTH: 1280,
         VIEWPORT_HEIGHT: 720,
