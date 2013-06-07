@@ -93,8 +93,9 @@ obacht.MultiplayerService = function(serverUrl) {
     /**
      * Print out Servermessages
      */
-    this.socket.on('message', function(data) {
+    this.socket.on('msg', function(data) {
         log.debug('Incoming message:' + data.msg);
+        self.msg(data.type, data.msg);
     });
 
     /**
@@ -236,7 +237,7 @@ obacht.MultiplayerService.prototype = {
      * @param {String} type Type of the message
      * @param {String} msg Text of the message
      */
-    message: function (type, msg) {
+    msg: function (type, msg) {
         "use strict";
         log.debug('>> showPopup()');
         obacht.showPopup(type,msg);
