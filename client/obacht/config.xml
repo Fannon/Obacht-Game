@@ -17,7 +17,7 @@
 
 
 	<!-- Icons -->
-	<icon src="assets/icon/icon_96.png" width="96" height="96" />
+	<icon src="assets/icon/icon.png" width="512" height="512" />
 
 	<icon src="assets/icon/ios/apple-touch-icon-57x57.png" width="57" height="57" />
 	<icon src="assets/icon/ios/apple-touch-icon-72x72.png" gap:platform="ios" width="72" height="72" />
