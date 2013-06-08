@@ -361,16 +361,16 @@ obacht.MultiplayerService.prototype = {
      *
      * @param {String} type Type of the Trap
      * @param {Object} target Indicates which player receives the Trap
-     * @param {Object} data Object for i.e. distance
      */
-    throwTrap: function(type, target, data) {
+    throwTrap: function(type, target) {
         "use strict";
         if (obacht.currentGame) {
-            data.distance = obacht.currentGame.getDistance();
             this.socket.emit('trap', {
                 type: type,
                 target: target,
-                data: data
+                data: {
+                    distance: obacht.currentGame.getDistance()
+                }
             });
         }
     },

@@ -107,7 +107,7 @@ obacht.start = function() {
         }
     });
 
-    obacht.menu.newGameScene();
+    obacht.menu.mainMenuScene();
 
 };
 
