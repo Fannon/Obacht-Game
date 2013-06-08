@@ -1067,8 +1067,8 @@ obacht.Menu.prototype = {
         /** Waiting Graphic */
         var waiting = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('wait.png'))
-            .setPosition(640, 330);
-//            .setSize(544, 114);
+            .setPosition(640, 360)
+            .setSize(556, 186);
 
         /** Back Button - Door */
         var backButton = new lime.Sprite()

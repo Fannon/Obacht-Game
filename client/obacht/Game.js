@@ -20,6 +20,7 @@ goog.require('lime.parser.JSON');
 goog.require('lime.ASSETS.waterSpritesheet.json');
 goog.require('lime.ASSETS.desertSpritesheet.json');
 goog.require('lime.ASSETS.meadowSpritesheet.json');
+goog.require('lime.ASSETS.globalSpritesheet.json');
 
 /**
  * Its a Game scene
@@ -207,8 +208,8 @@ obacht.Game.prototype = {
         /** Current Countdown Status */
         this.countdownStatus = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame(status + '.png'))
-            .setPosition(640, 330);
-//            .setSize(544, 114);
+            .setPosition(640, 360)
+            .setSize(obacht.spritesheet.getFrame(status + '.png').csize_.width *2, obacht.spritesheet.getFrame(status + '.png').csize_.height *2);
 
         this.countdownLayer.appendChild(this.countdownStatus);
     },
