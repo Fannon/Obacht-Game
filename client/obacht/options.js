@@ -32,6 +32,7 @@ obacht.options = {
         vibration: true
     },
     gameplay: {
+        countdownInterval: 1000,
         initialSpeedFactor: 1.0,
         decrementSpeedFactorTime: 5000,
         decrementSpeedFactor: 0.01,

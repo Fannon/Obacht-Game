@@ -64,10 +64,7 @@ obacht.start = function() {
 
         if (obacht.menu) {
 
-            console.time("gameStart");
-
-            var gameScene = new lime.Scene();
-
+            obacht.gameScene = new lime.Scene();
 
             /////////////////////////////
             // Start new Game          //
@@ -77,17 +74,17 @@ obacht.start = function() {
                 obacht.cleanUp();
             }
 
-            // Create a new playerController Instance
+            /** playerController Instance */
             obacht.playerController = new obacht.PlayerController();
-            // Create a new Game Instance
+
+            /** current Game Instance */
             obacht.currentGame = new obacht.Game();
 
-            gameScene.appendChild(obacht.currentGame.layer);
-            gameScene.appendChild(obacht.playerController.layer);
+            obacht.gameScene.appendChild(obacht.currentGame.layer);
+            obacht.gameScene.appendChild(obacht.playerController.layer);
+            obacht.gameScene.appendChild(obacht.currentGame.countdownLayer);
 
-            obacht.director.replaceScene(gameScene);
-
-            console.timeEnd("gameStart");
+            obacht.director.replaceScene(obacht.gameScene);
         }
     });
 

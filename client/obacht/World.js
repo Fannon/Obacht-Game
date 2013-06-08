@@ -118,7 +118,6 @@ obacht.World = function(currentGame, type) {
     this.gameLayer.appendChild(this.ground1);
     this.gameLayer.appendChild(this.ground2);
 
-    this.spin();
 };
 
 

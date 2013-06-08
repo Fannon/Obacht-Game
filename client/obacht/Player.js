@@ -20,7 +20,6 @@ goog.require('lime.animation.KeyframeAnimation');
 /**
  * Its a Player Object
  *
- * @param {Object} currentGame  Current Game Object
  * @param {String} location     Location
  * @constructor
  */
@@ -33,10 +32,8 @@ obacht.Player = function(currentGame, location) {
     /* PLAYER MODEL */
     //////////////////
 
-    this.gameLayer = currentGame.layer;
     this.spritesheet = currentGame.spritesheet;
     this.location = location;
-    this.playerstate = false;
     this.health = 3;
 
     if (this.location === 'bottom') {
@@ -62,7 +59,7 @@ obacht.Player = function(currentGame, location) {
 //        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.characterQuality);
 
-    this.gameLayer.appendChild(this.character);
+    currentGame.layer.appendChild(this.character);
 
 
 
@@ -86,23 +83,19 @@ obacht.Player = function(currentGame, location) {
 
 
 
-    //////////////////////////////////////
-    /* STOP-EVENT FOR OPTIMIZED JUMPING */
-    //////////////////////////////////////
-
-    goog.events.listen(this.jumpAnimation, 'stop', function() {
-        obacht.playerController.isJumping = false;
-    });
-
-
-
     /////////////////////////
     /* SUBSCRIBE TO EVENTS */
     /////////////////////////
 
     try {
+
+        /** STOP-EVENT FOR OPTIMIZED JUMPING @event */
+        goog.events.listen(this.jumpAnimation, 'stop', function() {
+            obacht.playerController.isJumping = false;
+        });
+
         if (this.location === 'bottom') {
-            // Sets up event subscription for own player.
+            /** Sets up event subscription for own player. @event */
             obacht.playerController.events.subscribe('own_player_action', function(data) {
                 if (data.action === 'jump') {
                     self.jump();
@@ -115,7 +108,7 @@ obacht.Player = function(currentGame, location) {
                 }
             });
         } else {
-            // Sets up event subscription for enemy player.
+            /** Sets up event subscription for enemy player. @event */
             obacht.mp.events.subscribe('player_action', function(data) {
                 if (data.action === 'jump') {
                     self.jump();
@@ -163,7 +156,6 @@ obacht.Player.prototype = {
      */
     crouch: function() {
         'use strict';
-        this.playerstate=true;
         this.character.runAction(this.crouchAnimation);
     },
 
@@ -172,7 +164,6 @@ obacht.Player.prototype = {
      */
     standUp: function() {
         'use strict';
-        this.playerstate=false;
         this.character.runAction(this.standUpAnimation);
     },
 

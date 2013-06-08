@@ -116,9 +116,6 @@ obacht.Menu.prototype = {
         "use strict";
         var self = this;
 
-        console.time("mainMenu");
-
-
         // Reset Variables and Event Listeners
         obacht.cleanUp();
 
@@ -260,8 +257,6 @@ obacht.Menu.prototype = {
 
         // set current scene active
         obacht.director.replaceScene(menuScene);
-
-        console.timeEnd("mainMenu");
     },
 
     /**
