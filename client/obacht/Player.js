@@ -20,6 +20,7 @@ goog.require('lime.animation.KeyframeAnimation');
 /**
  * Its a Player Object
  *
+ * @param {Object} currentGame  Current Game Object
  * @param {String} location     Location
  * @constructor
  */
@@ -109,15 +110,21 @@ obacht.Player = function(currentGame, location) {
             });
         } else {
             /** Sets up event subscription for enemy player. @event */
-            obacht.mp.events.subscribe('player_action', function(data) {
+            obacht.mp.events.subscribe('enemy_player_action', function(data) {
                 if (data.action === 'jump') {
-                    self.jump();
+                    setTimeout(function(){
+                        self.jump();
+                    },currentGame.getDistanceTimer(data.data.distance));
                 }
                 if (data.action === 'crouch') {
-                    self.crouch();
+                    setTimeout(function(){
+                        self.crouch();
+                    },currentGame.getDistanceTimer(data.data.distance));
                 }
                 if (data.action === 'standUp') {
-                    self.standUp();
+                    setTimeout(function(){
+                        self.standUp();
+                    },currentGame.getDistanceTimer(data.data.distance));
                 }
             });
         }

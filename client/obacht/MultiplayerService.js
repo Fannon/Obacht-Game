@@ -162,8 +162,8 @@ obacht.MultiplayerService = function(serverUrl) {
      * Player took an action
      */
     this.socket.on('player_action', function (data) {
-        log.debug('player_action: ' + data.action);
-        self.events.publish('player_action', data);
+        data.data.distance += obacht.options.gameplay.distanceOffset;
+        self.events.publish('enemy_player_action', data);
     });
 
     /**
@@ -197,6 +197,7 @@ obacht.MultiplayerService = function(serverUrl) {
             self.events.publish('own_trap', data);
         } else {
             log.debug('Trap on top world.');
+            data.data.distance += obacht.options.gameplay.distanceOffset;
             self.events.publish('enemy_trap', data);
         }
     });
@@ -320,10 +321,13 @@ obacht.MultiplayerService.prototype = {
      */
     playerAction: function(action, data) {
         "use strict";
-        this.socket.emit('player_action', {
-            action: action,
-            data: data
-        });
+        if (obacht.currentGame) {
+            data.distance = obacht.currentGame.getDistance;
+            this.socket.emit('player_action', {
+                action: action,
+                data: data
+            });
+        }
     },
 
     /**
@@ -357,13 +361,18 @@ obacht.MultiplayerService.prototype = {
      *
      * @param {String} type Type of the Trap
      * @param {Object} target Indicates which player receives the Trap
+     * @param {Object} data Object for i.e. distance
      */
-    throwTrap: function(type, target) {
+    throwTrap: function(type, target, data) {
         "use strict";
-        this.socket.emit('trap', {
-            type: type,
-            target: target
-        });
+        if (obacht.currentGame) {
+            data.distance = obacht.currentGame.getDistance;
+            this.socket.emit('trap', {
+                type: type,
+                target: target,
+                data: data
+            });
+        }
     },
 
     /**

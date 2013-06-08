@@ -39,7 +39,8 @@ obacht.options = {
         generateBoniMinInterval: 10000,
         generateBoniMaxInterval: 20000,
         generateTrapsMinInterval: 1000,
-        generateTrapsMaxInterval: 5000
+        generateTrapsMaxInterval: 5000,
+        distanceOffset: 0
     },
     world: {
         size: {

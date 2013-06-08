@@ -179,6 +179,21 @@ obacht.Game.prototype = {
         return Math.round(diff * 90 / obacht.options.world.spinDuration.front);
     },
 
+    getDistanceTimer: function(distance) {
+        "use strict";
+
+        var currentDistance = this.getDistance();
+
+        var diff = distance - currentDistance;
+
+        if (diff < 0) {
+            log.warn('negative distanceDiff: ' + diff);
+            diff = 0;
+        }
+
+        return(obacht.options.world.spinDuration.front / 90) * 1000 * diff;
+    },
+
     /**
      * Display
      */
