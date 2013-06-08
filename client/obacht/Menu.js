@@ -915,29 +915,6 @@ obacht.Menu.prototype = {
             alreadyJoined = true;
         });
 
-
-        ///////////////////////////////
-        // Game Over Text            //
-        ///////////////////////////////
-
-        if (data.reason === 'player_left') {
-            gameoverText = 'Player left the game!';
-        } else if (data.pid === obacht.mp.pid) {
-            gameoverText = 'YOU LOSE!';
-        } else {
-            gameoverText = 'YOU WIN';
-        }
-
-        /** Game over Text Label */
-        var gameoverLabel = new lime.Label()
-            .setAlign('center')
-            .setText(gameoverText)
-            .setFontColor('#fff')
-            .setFontSize(50)
-            .setSize(400, 50)
-            .setPosition(250, 250)
-            .setAlign('left');
-
         obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);
         obacht.cleanUp();
 
@@ -949,14 +926,14 @@ obacht.Menu.prototype = {
         /** Play Again Button */
         var playAgainButton = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('options.png'))
-            .setPosition(400, 480)
+            .setPosition(640, 600)
             .setSize(430, 138);
 
         var playAgainLabel = new lime.Label()
             .setText('Play Again')
             .setFontColor('#fff')
             .setFontSize(60)
-            .setPosition(400, 481)
+            .setPosition(640, 600)
             .setSize(400, 60)
             .setAlign('center');
 
@@ -1007,41 +984,52 @@ obacht.Menu.prototype = {
             }
         });
 
+        /** Back Button - Door */
+        var backButton = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('exit.png'))
+            .setPosition(65, 75)
+            .setSize(92, 112);
 
-        ///////////////////////////////
-        // Quit to Main Menu         //
-        ///////////////////////////////
-
-        /** Quit to Main Menu Button */
-        var quitButton = new lime.Sprite()
-            .setFill(obacht.spritesheet.getFrame('options.png'))
-            .setPosition(400, 280)
-            .setSize(430, 138);
-
-        /** Quit to Main Menu Label */
-        var quitLabel = new lime.Label()
-            .setText('Quit')
-            .setFontColor('#fff')
-            .setFontSize(60)
-            .setPosition(400, 281)
-            .setSize(400, 60)
-            .setAlign('center');
-
-        /** Quit Event Listener -> Back to Main Menu Scene @event */
-        goog.events.listen(quitButton, ['touchstart', 'mousedown'], function() {
+        goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
             self.mainMenuScene();
         });
+        
+        /** You Win */
+        var youWin = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('you_win.png'))
+            .setPosition(640, 360)
+            .setSize(942, 200);
+          
+        /** You Lose */
+        var youLose = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('you_lose.png'))
+            .setPosition(640, 360)
+            .setSize(1020, 198);
 
-
+        /** Error Message Character */
+        var errorCharacter = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('error.png'))
+            .setPosition(640, 371)
+            .setSize(904, 698);
+            
         ///////////////////////////////
-        // Draw the Scene            //
+        // Draw Scene              //
         ///////////////////////////////
 
-        menuLayer.appendChild(gameoverLabel);
-        menuLayer.appendChild(playAgainButton);
-        menuLayer.appendChild(playAgainLabel);
-        menuLayer.appendChild(quitButton);
-        menuLayer.appendChild(quitLabel);
+        if (data.reason === 'player_left') {
+            menuLayer.appendChild(errorCharacter);
+        } else if (data.pid === obacht.mp.pid) {
+            menuLayer.appendChild(youLose);
+            menuLayer.appendChild(playAgainButton);
+            menuLayer.appendChild(playAgainLabel);
+        } else {
+            menuLayer.appendChild(youWin);
+            menuLayer.appendChild(playAgainButton);
+            menuLayer.appendChild(playAgainLabel);
+        }
+        
+        menuLayer.appendChild(backButton);
+
 
         obacht.director.replaceScene(gameoverScene);
 
