@@ -1021,12 +1021,22 @@ obacht.Menu.prototype = {
             .setPosition(640, 371)
             .setSize(904, 698);
             
+        var errorLabel = new lime.Label()
+            .setAlign('left')
+            .setText('The other player left the game')
+            .setFontColor('#fff')
+            .setFontSize(72)
+            .setSize(430, 210)
+            .setPosition(525, 335)
+            .setRotation(17);
+            
         ///////////////////////////////
         // Draw Scene              //
         ///////////////////////////////
 
         if (data.reason === 'player_left') {
             menuLayer.appendChild(errorCharacter);
+            menuLayer.appendChild(errorLabel);
         } else if (data.pid === obacht.mp.pid) {
             menuLayer.appendChild(youLose);
             menuLayer.appendChild(playAgainButton);
