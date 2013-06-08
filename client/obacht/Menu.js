@@ -5,11 +5,6 @@ goog.provide('obacht.Menu');
 // Lime.js Requirements
 goog.require('lime.Layer');
 
-//Spritesheets Requirements
-goog.require('lime.parser.JSON');
-goog.require('lime.ASSETS.menuSpritesheet.json');
-goog.require('lime.SpriteSheet');
-
 
 /**
  * Game Menu
@@ -29,8 +24,6 @@ obacht.Menu = function() {
 
     var self = this;
 
-    this.spritesheet = new lime.SpriteSheet('assets/gfx/menuSpritesheet.png', lime.ASSETS.menuSpritesheet.json, lime.parser.JSON);
-
     lime.Label.defaultFont = 'Cartwheel';
     lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
 
@@ -46,68 +39,6 @@ obacht.Menu = function() {
 };
 
 obacht.Menu.prototype = {
-
-    /**
-     * Loading Scene
-     * TODO: Replace this with a loading GIF and use
-     */
-    loadingScene: function() {
-        "use strict";
-        var self = this;
-
-        var loadingScene = new lime.Scene();
-
-        var menuLayer = new lime.Layer();
-        loadingScene.appendChild(menuLayer);
-
-        /** Big Logo with character */
-        var logoBig = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('obacht_character.png'))
-            .setPosition(690, 310)
-            .setSize(1008, 496);
-
-        goog.events.listen(logoBig, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
-        });
-
-        // Loading ... Label
-        var loadingText = 'Loading ';
-        var loadingStatus = '.';
-        var loadingLabel = new lime.Label()
-            .setText(loadingText + loadingStatus)
-            .setFontColor('#fff')
-            .setFontSize(40)
-            .setPosition(420, 510)
-            .setSize(400, 40)
-            .setAlign('left');
-
-        menuLayer.appendChild(logoBig);
-        menuLayer.appendChild(loadingLabel);
-
-        setInterval(function() {
-            menuLayer.removeChild(loadingLabel);
-            loadingStatus += '.';
-
-            loadingLabel = new lime.Label()
-                .setText(loadingText + loadingStatus)
-                .setFontColor('#fff')
-                .setFontSize(40)
-                .setPosition(420, 510)
-                .setSize(400, 40)
-                .setAlign('left');
-
-            menuLayer.appendChild(loadingLabel);
-            if (loadingStatus === '.....') {
-                loadingStatus = '';
-            }
-
-        }, 950);
-
-        // set current scene active
-        obacht.director.replaceScene(loadingScene);
-
-
-    },
 
     /**
      * Main Menu Scene
@@ -130,19 +61,19 @@ obacht.Menu.prototype = {
 
         /** Small Logo */
         var logoSmall = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('obacht_small.png'))
+            .setFill(obacht.spritesheet.getFrame('obacht_small.png'))
             .setPosition(640, 130)
             .setSize(544, 114);
 
         /** Character */
         var character = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('character_right.png'))
+            .setFill(obacht.spritesheet.getFrame('character_right.png'))
             .setPosition(1055, 340)
             .setSize(450, 536);
 
         /** Play Button */
         var playButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('play.png'))
+            .setFill(obacht.spritesheet.getFrame('play.png'))
             .setPosition(640, 338)
             .setSize(368, 176);
 
@@ -162,7 +93,7 @@ obacht.Menu.prototype = {
 
         /** Help Button */
         var helpButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('button_help.png'))
+            .setFill(obacht.spritesheet.getFrame('button_help.png'))
             .setPosition(322, 540)
             .setSize(174, 160);
 
@@ -182,7 +113,7 @@ obacht.Menu.prototype = {
 
         /** Info Button */
         var infoButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('button_info.png'))
+            .setFill(obacht.spritesheet.getFrame('button_info.png'))
             .setPosition(534, 540)
             .setSize(174, 160);
 
@@ -201,7 +132,7 @@ obacht.Menu.prototype = {
 
         /** Sound Button */
         var soundButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('button_sound.png'))
+            .setFill(obacht.spritesheet.getFrame('button_sound.png'))
             .setPosition(746, 540)
             .setSize(174, 160);
 
@@ -220,7 +151,7 @@ obacht.Menu.prototype = {
 
         /** Quit Button */
         var quitButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('button_quit.png'))
+            .setFill(obacht.spritesheet.getFrame('button_quit.png'))
             .setPosition(958, 540)
             .setSize(174, 160);
 
@@ -278,13 +209,13 @@ obacht.Menu.prototype = {
 
         /** Small Logo */
         var logoSmall = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('obacht_small.png'))
+            .setFill(obacht.spritesheet.getFrame('obacht_small.png'))
             .setPosition(640, 130)
             .setSize(544, 114);
 
         /** Play with a friend Background */
         var friendIcon = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('friend.png'))
+            .setFill(obacht.spritesheet.getFrame('friend.png'))
             .setPosition(410, 310)
             .setSize(192, 220);
 
@@ -298,7 +229,7 @@ obacht.Menu.prototype = {
 
         /** Random Game Background */
         var randomIcon = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('random.png'))
+            .setFill(obacht.spritesheet.getFrame('random.png'))
             .setPosition(880, 310)
             .setSize(224, 224);
 
@@ -311,7 +242,7 @@ obacht.Menu.prototype = {
             .setAlign('center');
 
         /** Back Button */
-        var backButton = new lime.Sprite().setFill(this.spritesheet.getFrame('back.png')).setPosition(75, 75).setSize(80, 96);
+        var backButton = new lime.Sprite().setFill(obacht.spritesheet.getFrame('back.png')).setPosition(75, 75).setSize(80, 96);
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
             self.mainMenuScene();
         });
@@ -323,7 +254,7 @@ obacht.Menu.prototype = {
 
         /** Create Button */
         var createButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('options.png'))
+            .setFill(obacht.spritesheet.getFrame('options.png'))
             .setPosition(400, 480)
             .setSize(430, 138);
 
@@ -346,7 +277,7 @@ obacht.Menu.prototype = {
 
         /** Join Button */
         var joinButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('options.png'))
+            .setFill(obacht.spritesheet.getFrame('options.png'))
             .setPosition(400, 600)
             .setSize(430, 138);
 
@@ -369,7 +300,7 @@ obacht.Menu.prototype = {
 
         /** Random Play Button */
         var randomPlayButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('options.png'))
+            .setFill(obacht.spritesheet.getFrame('options.png'))
             .setPosition(880, 480)
             .setSize(430, 138);
 
@@ -430,13 +361,13 @@ obacht.Menu.prototype = {
 
         /** Small Logo */
         var logoSmall = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('obacht_small.png'))
+            .setFill(obacht.spritesheet.getFrame('obacht_small.png'))
             .setPosition(640, 130)
             .setSize(544, 114);
 
         /** Back Button - Door */
         var backButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('exit.png'))
+            .setFill(obacht.spritesheet.getFrame('exit.png'))
             .setPosition(65, 75)
             .setSize(92, 112);
 
@@ -455,7 +386,7 @@ obacht.Menu.prototype = {
 
         /** Desert Button */
         var desert = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('theme_desert.png'))
+            .setFill(obacht.spritesheet.getFrame('theme_desert.png'))
             .setPosition(340, 485)
             .setSize(298, 270);
 
@@ -468,7 +399,7 @@ obacht.Menu.prototype = {
 
         /** Water Button */
         var water = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('theme_water.png'))
+            .setFill(obacht.spritesheet.getFrame('theme_water.png'))
             .setPosition(640, 485)
             .setSize(298, 270);
 
@@ -481,7 +412,7 @@ obacht.Menu.prototype = {
 
         /** Meadow Button */
         var meadow = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('theme_meadow.png'))
+            .setFill(obacht.spritesheet.getFrame('theme_meadow.png'))
             .setPosition(940, 485)
             .setSize(298, 270);
 
@@ -542,19 +473,19 @@ obacht.Menu.prototype = {
 
         /** Small Logo */
         var logoSmall = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('obacht_small.png'))
+            .setFill(obacht.spritesheet.getFrame('obacht_small.png'))
             .setPosition(640, 130)
             .setSize(544, 114);
 
         /** Character */
         var character = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('character_top.png'))
+            .setFill(obacht.spritesheet.getFrame('character_top.png'))
             .setPosition(290, 360)
             .setSize(580, 720);
 
         /** Back Button */
         var backButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('back.png'))
+            .setFill(obacht.spritesheet.getFrame('back.png'))
             .setPosition(75, 75)
             .setSize(80, 96);
 
@@ -575,7 +506,7 @@ obacht.Menu.prototype = {
 
         /** Code Field */
         var field = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('code.png'))
+            .setFill(obacht.spritesheet.getFrame('code.png'))
             .setPosition(640, 405)
             .setSize(455, 154);
 
@@ -589,7 +520,7 @@ obacht.Menu.prototype = {
 
         /** small Infotext Icon */
         var infoButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('button_info_small.png'))
+            .setFill(obacht.spritesheet.getFrame('button_info_small.png'))
             .setPosition(800, 267)
             .setSize(80, 76);
 
@@ -600,7 +531,7 @@ obacht.Menu.prototype = {
 
         /** Pop-up-Infotext */
         var popupButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('code_info_small.png'))
+            .setFill(obacht.spritesheet.getFrame('code_info_small.png'))
             .setPosition(1000, 290)
             .setSize(338, 234);
 
@@ -702,13 +633,13 @@ obacht.Menu.prototype = {
 
         /** Small Logo */
         var logoSmall = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('obacht_small.png'))
+            .setFill(obacht.spritesheet.getFrame('obacht_small.png'))
             .setPosition(640, 130)
             .setSize(544, 114);
 
         /** Back Button */
         var backButton = new lime.Sprite()
-            .setFill(this.spritesheet
+            .setFill(obacht.spritesheet
             .getFrame('back.png'))
             .setPosition(75, 75)
             .setSize(80, 96);
@@ -719,7 +650,7 @@ obacht.Menu.prototype = {
 
         /** small Infotext Icon */
         var infoButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('button_info_small.png'))
+            .setFill(obacht.spritesheet.getFrame('button_info_small.png'))
             .setPosition(810, 267)
             .setSize(80, 76);
 
@@ -730,7 +661,7 @@ obacht.Menu.prototype = {
 
         /** Pop-up-Infotext */
         var popupButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('code_info_big.png'))
+            .setFill(obacht.spritesheet.getFrame('code_info_big.png'))
             .setPosition(1015, 318)
             .setSize(376, 326);
 
@@ -755,7 +686,7 @@ obacht.Menu.prototype = {
 
         /** Code Field */
         var field = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('code.png'))
+            .setFill(obacht.spritesheet.getFrame('code.png'))
             .setPosition(640, 405)
             .setSize(478, 154);
 
@@ -770,7 +701,7 @@ obacht.Menu.prototype = {
         for (i = 1; i < 10; i++) {
 
             keys[i] = new lime.Sprite()
-                .setFill(this.spritesheet.getFrame('key.png'))
+                .setFill(obacht.spritesheet.getFrame('key.png'))
                 .setPosition(startFrom + spacing * (i - 1), 535)
                 .setSize(142, 132);
 
@@ -785,7 +716,7 @@ obacht.Menu.prototype = {
 
         /** Create Zero-Key */
         keys[0] = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('key.png'))
+            .setFill(obacht.spritesheet.getFrame('key.png'))
             .setPosition(startFrom + spacing * 9, 535)
             .setSize(142, 132);
 
@@ -799,14 +730,14 @@ obacht.Menu.prototype = {
 
         /** Create Delete-Key */
         var keyDelete = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('key_back.png'))
+            .setFill(obacht.spritesheet.getFrame('key_back.png'))
             .setPosition(startFrom + spacing * 10 + 3, 535)
             .setSize(142, 137);
 
 
         /** Play-Button */
         var playButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('next2.png'))
+            .setFill(obacht.spritesheet.getFrame('next2.png'))
             .setPosition(640, 650)
             .setSize(300, 126);
 
@@ -1017,7 +948,7 @@ obacht.Menu.prototype = {
 
         /** Play Again Button */
         var playAgainButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('options.png'))
+            .setFill(obacht.spritesheet.getFrame('options.png'))
             .setPosition(400, 480)
             .setSize(430, 138);
 
@@ -1083,7 +1014,7 @@ obacht.Menu.prototype = {
 
         /** Quit to Main Menu Button */
         var quitButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('options.png'))
+            .setFill(obacht.spritesheet.getFrame('options.png'))
             .setPosition(400, 280)
             .setSize(430, 138);
 
@@ -1135,13 +1066,13 @@ obacht.Menu.prototype = {
 
         /** Big Logo with character */
         var logoBig = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('obacht_character.png'))
+            .setFill(obacht.spritesheet.getFrame('obacht_character.png'))
             .setPosition(690, 310)
             .setSize(1008, 496);
 
         /** Back Button - Door */
         var backButton = new lime.Sprite()
-            .setFill(this.spritesheet.getFrame('exit.png'))
+            .setFill(obacht.spritesheet.getFrame('exit.png'))
             .setPosition(65, 75)
             .setSize(92, 112);
 

@@ -191,7 +191,7 @@ obacht.Game.prototype = {
 
         /** Current Countdown Status */
         this.countdownStatus = new lime.Sprite()
-            .setFill(obacht.menu.spritesheet.getFrame(status + '.png'))
+            .setFill(obacht.spritesheet.getFrame(status + '.png'))
             .setPosition(640, 330);
 //            .setSize(544, 114);
 

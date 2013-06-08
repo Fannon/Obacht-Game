@@ -8,6 +8,11 @@ goog.require('lime.Director');
 goog.require('lime.Renderer.DOM');
 goog.require('lime.Renderer.CANVAS');
 
+//Spritesheets Requirements
+goog.require('lime.parser.JSON');
+goog.require('lime.ASSETS.globalSpritesheet.json');
+goog.require('lime.SpriteSheet');
+
 // Obacht Requirements
 goog.require('obacht.options');
 goog.require('obacht.themes');
@@ -29,6 +34,9 @@ obacht.start = function() {
 
     log = new obacht.Logger(obacht.options.debug.logLevel);
     obacht.checkDevices();
+
+    /** Global Spritesheet */
+    obacht.spritesheet = new lime.SpriteSheet('assets/gfx/globalSpritesheet.png', lime.ASSETS.globalSpritesheet.json, lime.parser.JSON);
 
     /** Menu Instance */
     obacht.menu = new obacht.Menu();
@@ -99,7 +107,7 @@ obacht.start = function() {
         }
     });
 
-    obacht.menu.loadingScene();
+    obacht.menu.newGameScene();
 
 };
 
