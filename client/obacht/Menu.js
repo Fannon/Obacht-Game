@@ -964,8 +964,8 @@ obacht.Menu.prototype = {
                     obacht.mp.playerReady();
                 });
             } else {
-                // TODO: Info Popup
                 log.warn('PIN not valid');
+                obacht.showPopup('error','PIN not valid');
             }
         }
     },
