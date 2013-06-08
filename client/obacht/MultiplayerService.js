@@ -366,7 +366,7 @@ obacht.MultiplayerService.prototype = {
     throwTrap: function(type, target, data) {
         "use strict";
         if (obacht.currentGame) {
-            data.distance = obacht.currentGame.getDistance;
+            data.distance = obacht.currentGame.getDistance();
             this.socket.emit('trap', {
                 type: type,
                 target: target,
