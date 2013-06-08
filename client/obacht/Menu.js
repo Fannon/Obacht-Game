@@ -46,6 +46,8 @@ obacht.Menu.prototype = {
     mainMenuScene: function() {
         "use strict";
         var self = this;
+        
+        var sound = "on";
 
         // Reset Variables and Event Listeners
         obacht.cleanUp();
@@ -145,7 +147,14 @@ obacht.Menu.prototype = {
             .setAlign('center');
 
         goog.events.listen(soundButton, ['touchstart', 'mousedown'], function() {
-            // TODO: change Icon
+            if (sound === "on"){
+                soundButton.setFill(obacht.spritesheet.getFrame('button_sound_off.png'));
+                sound = "off";
+            }else{
+                soundButton.setFill(obacht.spritesheet.getFrame('button_sound.png'));
+                sound = "on";
+            }
+                       
             // TODO: sound off
         });
 
