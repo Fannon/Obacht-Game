@@ -24,10 +24,10 @@
 	<icon src="assets/icon/ios/apple-touch-icon-114x114.png" width="114" height="114" />
     <icon src="assets/icon/ios/apple-touch-icon-144x144.png" width="144" height="144" />
 
-	<icon src="assets/icon/android/icon_36.png" gap:platform="android" gap:density="ldpi" width="36" height="36"/>
-	<icon src="assets/icon/android/icon_48.png" gap:platform="android" gap:density="mdpi" width="48" height="48"/>
-	<icon src="assets/icon/android/icon_72.png" gap:platform="android" gap:density="hdpi" width="72" height="72"/>
-	<icon src="assets/icon/android/icon_96.png" gap:platform="android" gap:density="xhdpi" width="96" height="96"/>
+	<icon src="assets/icon/icon_36.png" gap:platform="android" gap:density="ldpi" width="36" height="36"/>
+	<icon src="assets/icon/icon_48.png" gap:platform="android" gap:density="mdpi" width="48" height="48"/>
+	<icon src="assets/icon/icon_72.png" gap:platform="android" gap:density="hdpi" width="72" height="72"/>
+	<icon src="assets/icon/icon_96.png" gap:platform="android" gap:density="xhdpi" width="96" height="96"/>
 
 
 	<!-- Splash Screens -->
