@@ -99,8 +99,8 @@ obacht.Game = function() {
     // Construct TrapManger
     this.trapManager = new obacht.TrapManager(this, this.ownWorld, this.ownPlayer);
 
-    // Construct Life Status
-    this.drawHealthStatus();
+    // Draw initial Life Status
+    this.initHealthStatus();
 
     /// 2 ///
     setTimeout(function() {
@@ -152,6 +152,11 @@ obacht.Game = function() {
         log.debug('PERFORMANCE: GAME - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
     });
 
+    obacht.mp.events.subscribe('room_detail', function() {
+        log.debug('Refreshing Health Status');
+        self.updateHealthStatus();
+    });
+
 
     //////////////////////////////
     // Game Logic               //
@@ -178,10 +183,16 @@ obacht.Game.prototype = {
             return 0;
         }
         var currentDate = new Date();
-        var diff = (currentDate.getTime() - this.timer.getTime()) / 1000 ;
+        var diff = (currentDate.getTime() - this.timer.getTime()) / 1000;
         return Math.round(diff * 90 / obacht.options.world.spinDuration.front);
     },
 
+    /**
+     * Gets Time in ms when the distance will be reached
+     *
+     * @param {Number} distance Distance to calculate time from
+     * @returns {number} Time in ms when distance will be reached (or 0 if negative/past)
+     */
     getDistanceTimer: function(distance) {
         "use strict";
 
@@ -198,7 +209,7 @@ obacht.Game.prototype = {
     },
 
     /**
-     * Display
+     * Sets the Countdown Status (3,2,1,Obacht)
      */
     setCountdownStatus: function(status) {
         "use strict";
@@ -211,9 +222,54 @@ obacht.Game.prototype = {
         this.countdownStatus = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame(status + '.png'))
             .setPosition(640, 360)
-            .setSize(obacht.spritesheet.getFrame(status + '.png').csize_.width *2, obacht.spritesheet.getFrame(status + '.png').csize_.height *2);
+            .setSize(obacht.spritesheet.getFrame(status + '.png').csize_.width * 2, obacht.spritesheet.getFrame(status + '.png').csize_.height * 2);
 
         this.countdownLayer.appendChild(this.countdownStatus);
+    },
+
+    /**
+     * Initializes / draws Health Status Display
+     */
+    initHealthStatus: function() {
+        "use strict";
+
+        this.ownLifestatus = new lime.Sprite()
+            .setPosition(110, 672)
+            .setSize(160, 56);
+
+        this.colon = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('colon.png'))
+            .setPosition(200, 680)
+            .setSize(12, 30);
+
+        this.enemyLifestatus = new lime.Sprite()
+            .setPosition(290, 672)
+            .setSize(160, 56);
+
+        this.ownLifestatus.setFill(obacht.spritesheet.getFrame('ownLifestatus_3.png'));
+        this.enemyLifestatus.setFill(obacht.spritesheet.getFrame('enemyLifestatus_3.png'));
+
+        this.layer.appendChild(this.ownLifestatus);
+        this.layer.appendChild(this.colon);
+        this.layer.appendChild(this.enemyLifestatus);
+
+    },
+
+    /**
+     * Updates current Healthstatus for both Players
+     */
+    updateHealthStatus: function() {
+        "use strict";
+
+        if (obacht.mp.pid === obacht.mp.roomDetail.creatingPlayerId) {
+            this.ownLifestatus.setFill(obacht.spritesheet.getFrame('ownLifestatus_' + obacht.mp.roomDetail.creatingPlayerHealth + '.png'));
+            this.enemyLifestatus.setFill(obacht.spritesheet.getFrame('enemyLifestatus_' + obacht.mp.roomDetail.joiningPlayerHealth + '.png'));
+
+        } else {
+            this.ownLifestatus.setFill(obacht.spritesheet.getFrame('ownLifestatus_' + obacht.mp.roomDetail.joiningPlayerHealth + '.png'));
+            this.enemyLifestatus.setFill(obacht.spritesheet.getFrame('enemyLifestatus_' + obacht.mp.roomDetail.creatingPlayerHealth + '.png'));
+        }
+
     },
 
     /**
@@ -248,33 +304,5 @@ obacht.Game.prototype = {
         this.layer.removeChild(this.ownWorld.layer);
         this.layer.removeChild(this.enemyPlayer.layer);
         this.layer.removeChild(this.ownPlayer.layer);
-    },
-    
-    drawHealthStatus: function() {
-        this.ownLifestatus = new lime.Sprite()
-            .setPosition(110,672)
-            .setSize(160,56);
-            if (obacht.mp.pid === obacht.mp.roomDetail.creatingPlayerId){
-                this.ownLifestatus.setFill(obacht.spritesheet.getFrame('ownLifestatus_' + obacht.mp.roomDetail.creatingPlayerHealth + '.png'));
-            }else{
-                this.ownLifestatus.setFill(obacht.spritesheet.getFrame('ownLifestatus_' + obacht.mp.roomDetail.joiningPlayerHealth + '.png'));
-            }
-        this.layer.appendChild(this.ownLifestatus);
-    
-        this.colon = new lime.Sprite()
-            .setFill(obacht.spritesheet.getFrame('colon.png'))
-            .setPosition(200,680)
-            .setSize(12,30);
-        this.layer.appendChild(this.colon);
-    
-        this.enemyLifestatus = new lime.Sprite()
-            .setPosition(290,672)
-            .setSize(160,56);
-            if (obacht.mp.pid === obacht.mp.roomDetail.creatingPlayerId){
-                this.enemyLifestatus.setFill(obacht.spritesheet.getFrame('enemyLifestatus_' + obacht.mp.roomDetail.creatingPlayerHealth + '.png'));
-            }else{
-                this.enemyLifestatus.setFill(obacht.spritesheet.getFrame('enemyLifestatus_' + obacht.mp.roomDetail.joiningPlayerHealth + '.png'));
-            }
-        this.layer.appendChild(this.enemyLifestatus);
-    }    
+    }
 };
