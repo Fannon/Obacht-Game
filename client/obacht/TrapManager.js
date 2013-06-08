@@ -21,17 +21,23 @@ obacht.TrapManager = function(currentGame, world, player) {
     this.player = player;
     this.layer = currentGame.layer;
 
+    /** Trap Array */
     this.traps = [];
 
+    var anglespeed=obacht.options.trap.general.anglespeed;
+    var millesecondsmove=obacht.options.trap.general.millesecondsmove;
+    var factor;
+    var angle;
 
-    //TESTVAR 1
+
+    /**
+     * Enemy Trap Event Listener
+     * @event
+     */
     obacht.mp.events.subscribe('enemy_trap', function(data) {
-        var anglespeed=obacht.options.trap.general.anglespeed;
-        var millesecondsmove=obacht.options.trap.general.millesecondsmove;
-        var factor;
-        var angle;
 
         var trap = new obacht.Trap(obacht.currentGame, data.type);
+
         self.traps[self.traps.length] = trap;
         self.layer.appendChild(trap.trap);
         trap.who='enemy';
@@ -70,11 +76,11 @@ obacht.TrapManager = function(currentGame, world, player) {
     });
 
 
+    /**
+     * Own Traps Event Listener
+     * @event
+     */
     obacht.mp.events.subscribe('own_trap', function(data) {
-        var anglespeed=obacht.options.trap.general.anglespeed;
-        var millesecondsmove=obacht.options.trap.general.millesecondsmove;
-        var factor;
-        var angle;
 
         var trap = new obacht.Trap(obacht.currentGame, data.type);
         self.traps[self.traps.length] = trap;
