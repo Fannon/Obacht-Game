@@ -99,6 +99,8 @@ obacht.Game = function() {
     // Construct TrapManger
     this.trapManager = new obacht.TrapManager(this, this.ownWorld, this.ownPlayer);
 
+    // Construct Life Status
+    this.drawHealthStatus();
 
     /// 2 ///
     setTimeout(function() {
@@ -246,5 +248,33 @@ obacht.Game.prototype = {
         this.layer.removeChild(this.ownWorld.layer);
         this.layer.removeChild(this.enemyPlayer.layer);
         this.layer.removeChild(this.ownPlayer.layer);
-    }
+    },
+    
+    drawHealthStatus: function() {
+        this.ownLifestatus = new lime.Sprite()
+            .setPosition(110,672)
+            .setSize(160,56);
+            if (obacht.mp.pid === obacht.mp.roomDetail.creatingPlayerId){
+                this.ownLifestatus.setFill(obacht.spritesheet.getFrame('ownLifestatus_' + obacht.mp.roomDetail.creatingPlayerHealth + '.png'));
+            }else{
+                this.ownLifestatus.setFill(obacht.spritesheet.getFrame('ownLifestatus_' + obacht.mp.roomDetail.joiningPlayerHealth + '.png'));
+            }
+        this.layer.appendChild(this.ownLifestatus);
+    
+        this.colon = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('colon.png'))
+            .setPosition(200,680)
+            .setSize(12,30);
+        this.layer.appendChild(this.colon);
+    
+        this.enemyLifestatus = new lime.Sprite()
+            .setPosition(290,672)
+            .setSize(160,56);
+            if (obacht.mp.pid === obacht.mp.roomDetail.creatingPlayerId){
+                this.enemyLifestatus.setFill(obacht.spritesheet.getFrame('enemyLifestatus_' + obacht.mp.roomDetail.creatingPlayerHealth + '.png'));
+            }else{
+                this.enemyLifestatus.setFill(obacht.spritesheet.getFrame('enemyLifestatus_' + obacht.mp.roomDetail.joiningPlayerHealth + '.png'));
+            }
+        this.layer.appendChild(this.enemyLifestatus);
+    }    
 };
