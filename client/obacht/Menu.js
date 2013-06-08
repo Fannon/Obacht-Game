@@ -1055,20 +1055,20 @@ obacht.Menu.prototype = {
         "use strict";
         var self = this;
 
-        var loadingScene = new lime.Scene();
+        var waitForPlayerScene = new lime.Scene();
         var menuLayer = new lime.Layer();
-        loadingScene.appendChild(menuLayer);
+        waitForPlayerScene.appendChild(menuLayer);
 
 
         ///////////////////////////////
         // Scene Content             //
         ///////////////////////////////
 
-        /** Big Logo with character */
-        var logoBig = new lime.Sprite()
-            .setFill(obacht.spritesheet.getFrame('obacht_character.png'))
-            .setPosition(690, 310)
-            .setSize(1008, 496);
+        /** Waiting Graphic */
+        var waiting = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('wait.png'))
+            .setPosition(640, 330);
+//            .setSize(544, 114);
 
         /** Back Button - Door */
         var backButton = new lime.Sprite()
@@ -1081,46 +1081,16 @@ obacht.Menu.prototype = {
             self.mainMenuScene();
         });
 
-        var loadingText = 'Waiting for Player ';
-        var loadingStatus = '.';
-        var loadingLabel = new lime.Label()
-            .setText(loadingText + loadingStatus)
-            .setFontColor('#fff')
-            .setFontSize(40)
-            .setPosition(470, 510)
-            .setSize(500, 40)
-            .setAlign('left');
-
-        menuLayer.appendChild(loadingLabel);
-
-        setInterval(function() {
-            menuLayer.removeChild(loadingLabel);
-            loadingStatus += '.';
-
-            loadingLabel = new lime.Label()
-                .setText(loadingText + loadingStatus)
-                .setFontColor('#fff')
-                .setFontSize(40)
-                .setPosition(470, 510)
-                .setSize(500, 40)
-                .setAlign('left');
-
-            menuLayer.appendChild(loadingLabel);
-            if (loadingStatus === '.....') {
-                loadingStatus = '';
-            }
-
-        }, 950);
 
         ///////////////////////////////
         // Draw the Scene            //
         ///////////////////////////////
 
-        menuLayer.appendChild(logoBig);
+        menuLayer.appendChild(waiting);
         menuLayer.appendChild(backButton);
 
         // set current scene active
-        obacht.director.replaceScene(loadingScene);
+        obacht.director.replaceScene(waitForPlayerScene);
 
     },
 
