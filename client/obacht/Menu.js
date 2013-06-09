@@ -24,9 +24,8 @@ obacht.Menu = function() {
 
     var self = this;
 
-    lime.Label.defaultFont = 'Cartwheel';
     lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
-    lime.Label.installFont('OpenSans-Regular.otf', 'assets/fonts/OpenSans-Regular.otf');
+    lime.Label.defaultFont = 'Cartwheel';
    
 
     // If fastStart Option is set to true, immediatly start a random Game
