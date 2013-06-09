@@ -26,7 +26,7 @@ obacht.Menu = function() {
 
     lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
     lime.Label.defaultFont = 'Cartwheel';
-   
+    lime.Label.installFont('OpenSans', 'assets/fonts/OpenSans_Regular.otf');   
 
     // If fastStart Option is set to true, immediatly start a random Game
     if (obacht.options.debug.fastStart) {
@@ -225,7 +225,7 @@ obacht.Menu.prototype = {
 
         var textCredits = new lime.Label()
             .setText('The mobile multiplayer game OBACHT was developed by a project team at Augsburg University of Applied Sciences.')
-            .setFontFamily('OpenSans-Regular')
+            .setFontFamily('OpenSans')
             .setFontColor('#fff')
             .setFontSize(20)
             .setPosition(640, 360)
