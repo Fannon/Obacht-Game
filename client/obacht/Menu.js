@@ -26,6 +26,8 @@ obacht.Menu = function() {
 
     lime.Label.defaultFont = 'Cartwheel';
     lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
+    lime.Label.installFont('OpenSans-Regular.otf', 'assets/fonts/OpenSans-Regular.otf');
+    lime.Label.installFont('Novecentowide-Bold.otf', 'assets/fonts/Novecentowide-Bold.otf');
 
     // If fastStart Option is set to true, immediatly start a random Game
     if (obacht.options.debug.fastStart) {
@@ -197,6 +199,64 @@ obacht.Menu.prototype = {
 
         // set current scene active
         obacht.director.replaceScene(menuScene);
+    },
+
+    /**
+     * Credits Scene
+     *
+     */
+    creditsScene: function() {
+        "use strict";
+        var self = this;
+
+        var menuScene = new lime.Scene();
+        var menuLayer = new lime.Layer();
+        menuScene.appendChild(menuLayer);
+
+
+        ///////////////////////////////
+        // Layer Content             //
+        ///////////////////////////////
+
+        /** Headline Credits */
+        //var headlineCredits = new lime.Sprite()
+        //    .setFill(obacht.spritesheet.getFrame('headlineCredits.png'))
+        //   .setPosition(640, 130)
+        //    .setSize(544, 114);
+
+        var textCredits = new lime.Label()
+            .setText('The mobile multiplayer game OBACHT was developed by a project team at Augsburg University of Applied Sciences.')
+            .setFontFamily('OpenSans-Regular')
+            .setFontColor('#fff')
+            .setFontSize(20)
+            .setPosition(640, 360)
+            .setSize(500, 55)
+            .setAlign('center');
+
+
+
+
+
+
+
+        /** Back Button */
+        var backButton = new lime.Sprite().setFill(obacht.spritesheet.getFrame('back.png')).setPosition(75, 75).setSize(80, 96);
+        goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
+            self.mainMenuScene();
+        });
+
+
+        ///////////////////////////////
+        // Draw Scene                //
+        ///////////////////////////////
+
+        //menuLayer.appendChild(headlineCredits);
+        menuLayer.appendChild(backButton);
+        menuLayer.appendChild(textCredits);
+
+        // set current scene active
+        obacht.director.replaceScene(menuScene);
+
     },
 
     /**
@@ -1110,14 +1170,6 @@ obacht.Menu.prototype = {
 
     },
 
-    /**
-     * Credits Scene
-     * TODO: todo
-     */
-    creditsScene: function() {
-        "use strict";
-
-    },
 
 
     /////////////////////////////
