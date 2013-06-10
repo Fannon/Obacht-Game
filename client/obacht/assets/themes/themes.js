@@ -159,7 +159,7 @@ obacht.themes = {
             //Kaktus
             cactus: {
                 file: 'trap_cactus.png',
-                position: 'air',
+                position: 'ground',
                 width: 100,
                 height: 160,
                 boundingBoxes: [
