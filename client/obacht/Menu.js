@@ -201,6 +201,501 @@ obacht.Menu.prototype = {
     },
 
     /**
+     * Help / Manual Scene
+     *
+     */
+    helpScene: function() {
+        "use strict";
+        var self = this;
+
+        var menuScene = new lime.Scene();
+        var menuLayer = new lime.Layer();
+        menuScene.appendChild(menuLayer);
+
+
+        ///////////////////////////////
+        // Layer Content             //
+        ///////////////////////////////
+
+        /** Headline Manual */
+        var headlineManual = new lime.Sprite()
+           .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+           .setPosition(660, 130)
+           .setSize(510, 116);
+
+        var textManualGeneral1 = new lime.Label()
+            .setText('2 Players, 2 Worlds and a lot of fun.')
+            .setFontFamily('OpenSans')
+            .setFontColor('#fff')
+            .setFontSize(30)
+            .setPosition(800, 270)
+            .setSize(370, 55)
+            .setAlign('left');
+
+        var textManualGeneral2 = new lime.Label()
+            .setText('Take care of your "Hogi" and try to avoid running into obstacles.')
+            .setFontFamily('OpenSans')
+            .setFontColor('#fff')
+            .setFontSize(30)
+            .setPosition(830, 370)
+            .setSize(450, 55)
+            .setAlign('left');
+
+        var textManualGeneral3 = new lime.Label()
+            .setText('Even better, you can place obstacles in the way of your enemy`s "Hogi" to make life difficult for him.')
+            .setFontFamily('OpenSans')
+            .setFontColor('#fff')
+            .setFontSize(30)
+            .setPosition(830, 530)
+            .setSize(450, 55)
+            .setAlign('left');
+
+        /** Hogi */
+        var hogi = new lime.Sprite()
+            .setFill(obacht.spritesheet
+            .getFrame('hogi.png'))
+            .setPosition(350, 450).setSize(364, 396);
+
+        /** Back Button - Door */
+        var backButton = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('exit.png'))
+            .setPosition(65, 75)
+            .setSize(92, 112);
+
+        goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
+            self.mainMenuScene();
+        });
+
+        /** Arrow Next Scene */
+        var arrowNext = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowNext.png')).setPosition(1200, 360).setSize(196,182);
+        goog.events.listen(arrowNext, ['touchstart', 'mousedown'], function() {
+            self.manualJumpScene();
+        });
+
+
+
+        ///////////////////////////////
+        // Draw Scene                //
+        ///////////////////////////////
+
+        menuLayer.appendChild(headlineManual);
+        menuLayer.appendChild(backButton);
+        menuLayer.appendChild(arrowNext);
+        menuLayer.appendChild(hogi);
+        menuLayer.appendChild(textManualGeneral1);
+        menuLayer.appendChild(textManualGeneral2);
+        menuLayer.appendChild(textManualGeneral3);
+
+        // set current scene active
+        obacht.director.replaceScene(menuScene);
+
+    },
+
+
+    /**
+     * Manual Jump Scene
+     *
+     */
+    manualJumpScene: function() {
+        "use strict";
+        var self = this;
+
+        var menuScene = new lime.Scene();
+        var menuLayer = new lime.Layer();
+        menuScene.appendChild(menuLayer);
+
+
+        ///////////////////////////////
+        // Layer Content             //
+        ///////////////////////////////
+
+        /** Headline Manual */
+        var headlineManual = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            .setPosition(660, 130)
+            .setSize(510, 116);
+
+        var textJump = new lime.Label()
+            .setText('Jump')
+            .setFontFamily('Cartwheel')
+            .setFontColor('#fff')
+            .setFontSize(80)
+            .setPosition(640, 630)
+            .setSize(370, 55)
+            .setAlign('center');
+
+
+
+        /** Smartphone with Fingers */
+        var smartphone = new lime.Sprite()
+            .setFill(obacht.spritesheet
+                .getFrame('manualJump.png'))
+            .setPosition(640, 490).setSize(910, 466);
+
+        /** Back Button - Door */
+        var backButton = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('exit.png'))
+            .setPosition(65, 75)
+            .setSize(92, 112);
+
+        goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
+            self.mainMenuScene();
+        });
+
+        /** Arrow Previous Scene */
+        var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
+        goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
+            self.helpScene();
+        });
+
+        /** Arrow Next Scene */
+        var arrowNext = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowNext.png')).setPosition(1200, 360).setSize(196,182);
+        goog.events.listen(arrowNext, ['touchstart', 'mousedown'], function() {
+            self.manualCrouchScene();
+        });
+
+
+
+        ///////////////////////////////
+        // Draw Scene                //
+        ///////////////////////////////
+
+        menuLayer.appendChild(headlineManual);
+        menuLayer.appendChild(backButton);
+        menuLayer.appendChild(arrowNext);
+        menuLayer.appendChild(arrowPrevious);
+        menuLayer.appendChild(smartphone);
+        menuLayer.appendChild(textJump);
+
+
+        // set current scene active
+        obacht.director.replaceScene(menuScene);
+
+    },
+
+
+    /**
+     * Manual Crouch Scene
+     *
+     */
+    manualCrouchScene: function() {
+        "use strict";
+        var self = this;
+
+        var menuScene = new lime.Scene();
+        var menuLayer = new lime.Layer();
+        menuScene.appendChild(menuLayer);
+
+
+        ///////////////////////////////
+        // Layer Content             //
+        ///////////////////////////////
+
+        /** Headline Manual */
+        var headlineManual = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            .setPosition(660, 130)
+            .setSize(510, 116);
+
+        var textCrouch = new lime.Label()
+            .setText('Crouch')
+            .setFontFamily('Cartwheel')
+            .setFontColor('#fff')
+            .setFontSize(80)
+            .setPosition(640, 630)
+            .setSize(370, 55)
+            .setAlign('center');
+
+
+
+        /** Smartphone with Fingers */
+        var smartphone = new lime.Sprite()
+            .setFill(obacht.spritesheet
+                .getFrame('manualCrouch.png'))
+            .setPosition(640, 490).setSize(910, 466);
+
+        /** Back Button - Door */
+        var backButton = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('exit.png'))
+            .setPosition(65, 75)
+            .setSize(92, 112);
+
+        goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
+            self.mainMenuScene();
+        });
+
+        /** Arrow Previous Scene */
+        var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
+        goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
+            self.manualJumpScene();
+        });
+
+        /** Arrow Next Scene */
+            var arrowNext = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowNext.png')).setPosition(1200, 360).setSize(196,182);
+            goog.events.listen(arrowNext, ['touchstart', 'mousedown'], function() {
+                self.manualObstaclesScene();
+            });
+
+
+
+            ///////////////////////////////
+            // Draw Scene                //
+            ///////////////////////////////
+
+        menuLayer.appendChild(headlineManual);
+        menuLayer.appendChild(backButton);
+        menuLayer.appendChild(arrowNext);
+        menuLayer.appendChild(arrowPrevious);
+        menuLayer.appendChild(smartphone);
+        menuLayer.appendChild(textCrouch);
+
+
+        // set current scene active
+        obacht.director.replaceScene(menuScene);
+
+    },
+
+
+    /**
+     * Manual Obstacles Scene
+     *
+     */
+    manualObstaclesScene: function() {
+        "use strict";
+        var self = this;
+
+        var menuScene = new lime.Scene();
+        var menuLayer = new lime.Layer();
+        menuScene.appendChild(menuLayer);
+
+
+        ///////////////////////////////
+        // Layer Content             //
+        ///////////////////////////////
+
+        /** Headline Manual */
+        var headlineManual = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            .setPosition(660, 130)
+            .setSize(510, 116);
+
+        var textObstacles = new lime.Label()
+            .setText('AVOID COLLISIONS')
+            .setFontFamily('Cartwheel')
+            .setFontColor('#fff')
+            .setFontSize(60)
+            .setPosition(640, 650)
+            .setSize(500, 55)
+            .setAlign('center');
+
+
+
+        /** Smartphone with Fingers */
+        var smartphone = new lime.Sprite()
+            .setFill(obacht.spritesheet
+                .getFrame('manualObstacles.png'))
+            .setPosition(640, 490).setSize(910, 466);
+
+        /** Back Button - Door */
+        var backButton = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('exit.png'))
+            .setPosition(65, 75)
+            .setSize(92, 112);
+
+        goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
+            self.mainMenuScene();
+        });
+
+        /** Arrow Previous Scene */
+        var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
+        goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
+            self.manualCrouchScene();
+        });
+
+        /** Arrow Next Scene */
+           var arrowNext = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowNext.png')).setPosition(1200, 360).setSize(196,182);
+           goog.events.listen(arrowNext, ['touchstart', 'mousedown'], function() {
+                self.manualCollectBoniScene();
+            });
+
+
+
+            ///////////////////////////////
+            // Draw Scene                //
+            ///////////////////////////////
+
+        menuLayer.appendChild(headlineManual);
+        menuLayer.appendChild(backButton);
+        menuLayer.appendChild(arrowNext);
+        menuLayer.appendChild(arrowPrevious);
+        menuLayer.appendChild(smartphone);
+        menuLayer.appendChild(textObstacles);
+
+
+        // set current scene active
+        obacht.director.replaceScene(menuScene);
+
+    },
+
+    /**
+     * Manual Collect Boni Scene
+     *
+     */
+    manualCollectBoniScene: function() {
+        "use strict";
+        var self = this;
+
+        var menuScene = new lime.Scene();
+        var menuLayer = new lime.Layer();
+        menuScene.appendChild(menuLayer);
+
+
+        ///////////////////////////////
+        // Layer Content             //
+        ///////////////////////////////
+
+        /** Headline Manual */
+        var headlineManual = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            .setPosition(660, 130)
+            .setSize(510, 116);
+
+        var textCollectBoni = new lime.Label()
+            .setText('COLLECT OBSTACLES')
+            .setFontFamily('Cartwheel')
+            .setFontColor('#fff')
+            .setFontSize(55)
+            .setPosition(640, 650)
+            .setSize(550, 55)
+            .setAlign('center');
+
+
+
+        /** Smartphone with Fingers */
+        var smartphone = new lime.Sprite()
+            .setFill(obacht.spritesheet
+                .getFrame('manualCollectBoni.png'))
+            .setPosition(640, 490).setSize(910, 466);
+
+        /** Back Button - Door */
+        var backButton = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('exit.png'))
+            .setPosition(65, 75)
+            .setSize(92, 112);
+
+        goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
+            self.mainMenuScene();
+        });
+
+        /** Arrow Previous Scene */
+        var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
+        goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
+            self.manualObstaclesScene();
+        });
+
+        /** Arrow Next Scene */
+            var arrowNext = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowNext.png')).setPosition(1200, 360).setSize(196,182);
+            goog.events.listen(arrowNext, ['touchstart', 'mousedown'], function() {
+                self.manualThrowBoniScene();
+            });
+
+
+
+            ///////////////////////////////
+            // Draw Scene                //
+            ///////////////////////////////
+
+        menuLayer.appendChild(headlineManual);
+        menuLayer.appendChild(backButton);
+        menuLayer.appendChild(arrowNext);
+        menuLayer.appendChild(arrowPrevious);
+        menuLayer.appendChild(smartphone);
+        menuLayer.appendChild(textCollectBoni);
+
+
+        // set current scene active
+        obacht.director.replaceScene(menuScene);
+
+    },
+
+
+    /**
+     * Manual Throw Boni Scene
+     *
+     */
+    manualThrowBoniScene: function() {
+        "use strict";
+        var self = this;
+
+        var menuScene = new lime.Scene();
+        var menuLayer = new lime.Layer();
+        menuScene.appendChild(menuLayer);
+
+
+        ///////////////////////////////
+        // Layer Content             //
+        ///////////////////////////////
+
+        /** Headline Manual */
+        var headlineManual = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            .setPosition(660, 130)
+            .setSize(510, 116);
+
+        var textThrowBoni = new lime.Label()
+            .setText('THROW OBSTACLES')
+            .setFontFamily('Cartwheel')
+            .setFontColor('#fff')
+            .setFontSize(55)
+            .setPosition(640, 650)
+            .setSize(550, 55)
+            .setAlign('center');
+
+
+
+        /** Smartphone with Fingers */
+        var smartphone = new lime.Sprite()
+            .setFill(obacht.spritesheet
+                .getFrame('manualThrowBoni.png'))
+            .setPosition(640, 490).setSize(910, 466);
+
+        /** Back Button - Door */
+        var backButton = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('exit.png'))
+            .setPosition(65, 75)
+            .setSize(92, 112);
+
+        goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
+            self.mainMenuScene();
+        });
+
+        /** Arrow Previous Scene */
+        var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
+        goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
+            self.manualCollectBoniScene();
+        });
+
+
+        ///////////////////////////////
+        // Draw Scene                //
+        ///////////////////////////////
+
+        menuLayer.appendChild(headlineManual);
+        menuLayer.appendChild(backButton);
+        //menuLayer.appendChild(arrowNext);
+        menuLayer.appendChild(arrowPrevious);
+        menuLayer.appendChild(smartphone);
+        menuLayer.appendChild(textThrowBoni);
+
+
+        // set current scene active
+        obacht.director.replaceScene(menuScene);
+
+    },
+
+
+
+    /**
      * Credits Scene
      *
      */
@@ -218,24 +713,99 @@ obacht.Menu.prototype = {
         ///////////////////////////////
 
         /** Headline Credits */
-        //var headlineCredits = new lime.Sprite()
-        //    .setFill(obacht.spritesheet.getFrame('headlineCredits.png'))
-        //   .setPosition(640, 130)
-        //    .setSize(544, 114);
+        var headlineCredits = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('headlineCredits.png'))
+            .setPosition(660, 130)
+            .setSize(510, 116);
 
         var textCredits = new lime.Label()
             .setText('The mobile multiplayer game OBACHT was developed by a project team at Augsburg University of Applied Sciences.')
             .setFontFamily('OpenSans')
             .setFontColor('#fff')
-            .setFontSize(20)
-            .setPosition(640, 360)
-            .setSize(500, 55)
+            .setFontSize(24)
+            .setPosition(640, 250)
+            .setSize(830, 55)
             .setAlign('center');
 
 
+        var textFabian = new lime.Label()
+            .setText('Fabian Buehler')
+            .setFontFamily('OpenSans')
+            .setFontColor('#fff')
+            .setFontSize(24)
+            .setPosition(640, 330)
+            .setSize(710, 55)
+            .setAlign('center');
+
+        var textAlina = new lime.Label()
+            .setText('Alina Fink')
+            .setFontFamily('OpenSans')
+            .setFontColor('#fff')
+            .setFontSize(24)
+            .setPosition(640, 360)
+            .setSize(710, 55)
+            .setAlign('center');
+
+        var textSimon = new lime.Label()
+            .setText('Simone Heimler')
+            .setFontFamily('OpenSans')
+            .setFontColor('#fff')
+            .setFontSize(24)
+            .setPosition(640, 390)
+            .setSize(710, 55)
+            .setAlign('center');
+
+        var textEduard = new lime.Label()
+            .setText('Eduard Heitz')
+            .setFontFamily('OpenSans')
+            .setFontColor('#fff')
+            .setFontSize(24)
+            .setPosition(640, 420)
+            .setSize(710, 55)
+            .setAlign('center');
+
+        var textMartin = new lime.Label()
+            .setText('Martin Hofmann')
+            .setFontFamily('OpenSans')
+            .setFontColor('#fff')
+            .setFontSize(24)
+            .setPosition(640, 450)
+            .setSize(710, 55)
+            .setAlign('center');
+
+        var textSebastian = new lime.Label()
+            .setText('Sebastian Huber')
+            .setFontFamily('OpenSans')
+            .setFontColor('#fff')
+            .setFontSize(24)
+            .setPosition(640, 480)
+            .setSize(710, 55)
+            .setAlign('center');
+
+        var textLukas = new lime.Label()
+            .setText('Fabian Buehler')
+            .setFontFamily('OpenSans')
+            .setFontColor('#fff')
+            .setFontSize(24)
+            .setPosition(640, 510)
+            .setSize(710, 55)
+            .setAlign('center');
+
+        var textClaudia = new lime.Label()
+            .setText('Claudia Koelbl')
+            .setFontFamily('OpenSans')
+            .setFontColor('#fff')
+            .setFontSize(24)
+            .setPosition(640, 540)
+            .setSize(710, 55)
+            .setAlign('center');
 
 
-
+        /** Credits PNG */
+        var credits = new lime.Sprite()
+            .setFill(obacht.spritesheet
+                .getFrame('credits.png'))
+            .setPosition(640, 595).setSize(1280, 468);
 
 
         /** Back Button */
@@ -249,9 +819,18 @@ obacht.Menu.prototype = {
         // Draw Scene                //
         ///////////////////////////////
 
-        //menuLayer.appendChild(headlineCredits);
+        menuLayer.appendChild(headlineCredits);
         menuLayer.appendChild(backButton);
         menuLayer.appendChild(textCredits);
+        menuLayer.appendChild(textFabian);
+        menuLayer.appendChild(textAlina);
+        menuLayer.appendChild(textSimon);
+        menuLayer.appendChild(textSebastian);
+        menuLayer.appendChild(textLukas);
+        menuLayer.appendChild(textMartin);
+        menuLayer.appendChild(textClaudia);
+        menuLayer.appendChild(textEduard);
+        menuLayer.appendChild(credits);
 
         // set current scene active
         obacht.director.replaceScene(menuScene);
@@ -1159,16 +1738,6 @@ obacht.Menu.prototype = {
         obacht.director.replaceScene(waitForPlayerScene);
 
     },
-
-    /**
-     * Help / Tutorial Scene
-     * TODO: todo
-     */
-    helpScene: function() {
-        "use strict";
-
-    },
-
 
 
     /////////////////////////////
