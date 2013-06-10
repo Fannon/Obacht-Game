@@ -229,7 +229,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(30)
             .setPosition(800, 270)
-            .setSize(370, 55)
+            .setSize(370, 30)
             .setAlign('left');
 
         var textManualGeneral2 = new lime.Label()
@@ -238,7 +238,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(30)
             .setPosition(830, 370)
-            .setSize(450, 55)
+            .setSize(450, 30)
             .setAlign('left');
 
         var textManualGeneral3 = new lime.Label()
@@ -247,7 +247,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(30)
             .setPosition(830, 530)
-            .setSize(450, 55)
+            .setSize(450, 30)
             .setAlign('left');
 
         /** Hogi */
@@ -321,7 +321,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(80)
             .setPosition(640, 630)
-            .setSize(370, 55)
+            .setSize(370, 80)
             .setAlign('center');
 
 
@@ -403,7 +403,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(80)
             .setPosition(640, 630)
-            .setSize(370, 55)
+            .setSize(370, 80)
             .setAlign('center');
 
 
@@ -485,7 +485,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(60)
             .setPosition(640, 650)
-            .setSize(500, 55)
+            .setSize(500, 60)
             .setAlign('center');
 
 
@@ -724,7 +724,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 250)
-            .setSize(830, 55)
+            .setSize(830, 24)
             .setAlign('center');
 
 
@@ -734,7 +734,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 330)
-            .setSize(710, 55)
+            .setSize(710, 24)
             .setAlign('center');
 
         var textAlina = new lime.Label()
@@ -743,7 +743,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 360)
-            .setSize(710, 55)
+            .setSize(710, 24)
             .setAlign('center');
 
         var textSimon = new lime.Label()
@@ -752,7 +752,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 390)
-            .setSize(710, 55)
+            .setSize(710, 24)
             .setAlign('center');
 
         var textEduard = new lime.Label()
@@ -761,7 +761,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 420)
-            .setSize(710, 55)
+            .setSize(710, 24)
             .setAlign('center');
 
         var textMartin = new lime.Label()
@@ -770,7 +770,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 450)
-            .setSize(710, 55)
+            .setSize(710, 24)
             .setAlign('center');
 
         var textSebastian = new lime.Label()
@@ -779,7 +779,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 480)
-            .setSize(710, 55)
+            .setSize(710, 24)
             .setAlign('center');
 
         var textLukas = new lime.Label()
@@ -788,7 +788,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 510)
-            .setSize(710, 55)
+            .setSize(710, 24)
             .setAlign('center');
 
         var textClaudia = new lime.Label()
@@ -797,7 +797,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 540)
-            .setSize(710, 55)
+            .setSize(710, 24)
             .setAlign('center');
 
 
