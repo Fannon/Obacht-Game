@@ -26,7 +26,7 @@ obacht.Menu = function() {
 
     lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
     lime.Label.defaultFont = 'Cartwheel';
-    lime.Label.installFont('OpenSans', 'assets/fonts/OpenSans_Regular.otf');   
+    lime.Label.installFont('OpenSans', 'assets/fonts/OpenSans-Regular.ttf');   
 
     // If fastStart Option is set to true, immediatly start a random Game
     if (obacht.options.debug.fastStart) {
@@ -228,7 +228,8 @@ obacht.Menu.prototype = {
             .setFontFamily('OpenSans')
             .setFontColor('#fff')
             .setFontSize(30)
-            .setPosition(800, 270)
+            .setLineHeight(1.2)
+            .setPosition(793, 270)
             .setSize(370, 30)
             .setAlign('left');
 
@@ -237,6 +238,7 @@ obacht.Menu.prototype = {
             .setFontFamily('OpenSans')
             .setFontColor('#fff')
             .setFontSize(30)
+            .setLineHeight(1.2)
             .setPosition(830, 370)
             .setSize(450, 30)
             .setAlign('left');
@@ -246,7 +248,8 @@ obacht.Menu.prototype = {
             .setFontFamily('OpenSans')
             .setFontColor('#fff')
             .setFontSize(30)
-            .setPosition(830, 530)
+            .setLineHeight(1.2)
+            .setPosition(830, 510)
             .setSize(450, 30)
             .setAlign('left');
 
@@ -320,7 +323,7 @@ obacht.Menu.prototype = {
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
             .setFontSize(80)
-            .setPosition(640, 630)
+            .setPosition(640, 650)
             .setSize(370, 80)
             .setAlign('center');
 
@@ -329,7 +332,7 @@ obacht.Menu.prototype = {
         /** Smartphone with Fingers */
         var smartphone = new lime.Sprite()
             .setFill(obacht.spritesheet
-                .getFrame('manualJump.png'))
+            .getFrame('manualJump.png'))
             .setPosition(640, 490).setSize(910, 466);
 
         /** Back Button - Door */
@@ -402,7 +405,7 @@ obacht.Menu.prototype = {
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
             .setFontSize(80)
-            .setPosition(640, 630)
+            .setPosition(640, 650)
             .setSize(370, 80)
             .setAlign('center');
 
@@ -411,7 +414,7 @@ obacht.Menu.prototype = {
         /** Smartphone with Fingers */
         var smartphone = new lime.Sprite()
             .setFill(obacht.spritesheet
-                .getFrame('manualCrouch.png'))
+            .getFrame('manualCrouch.png'))
             .setPosition(640, 490).setSize(910, 466);
 
         /** Back Button - Door */
