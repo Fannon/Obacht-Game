@@ -792,7 +792,7 @@ obacht.Menu.prototype = {
             .setAlign('center');
 
         var textLukas = new lime.Label()
-            .setText('Fabian Buehler')
+            .setText('Lukas Jaborsky')
             .setFontFamily('OpenSans')
             .setFontColor('#fff')
             .setFontSize(24)
