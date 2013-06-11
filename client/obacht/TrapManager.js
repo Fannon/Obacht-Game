@@ -17,8 +17,6 @@ obacht.TrapManager = function(currentGame, world, player) {
     "use strict";
 
     var self = this;
-    this.world = world;
-    this.player = player;
     this.currentGame = currentGame;
 
     /** Trap Array on Top World */
@@ -104,7 +102,7 @@ obacht.TrapManager = function(currentGame, world, player) {
             var collision = self.checkColl(self.currentGame.layer, player, self.bottomTraps);
             if (collision) {
                 log.debug('Player Collision with Trap!');
-//                currentGame.ownPlayer.loseHealth();
+                currentGame.ownPlayer.loseHealth();
             }
         }, player, obacht.options.collisions.checkInterval);
 
@@ -138,14 +136,12 @@ obacht.TrapManager.prototype = {
         var trap = new obacht.Trap(obacht.currentGame, type);
         trap.location = location;
 
-        self.currentGame.layer.appendChild(trap.sprite);
-
-        /**
-         * Delete the Trap after a specific Timeout
-         */
+        /** Delete the Trap after a specific Timeout */
         setTimeout(function() {
             self.removeTrap(trap);
         }, obacht.options.trap.general.clearTimeout);
+
+        self.currentGame.layer.appendChild(trap.sprite);
 
         return trap;
     },
@@ -223,7 +219,7 @@ obacht.TrapManager.prototype = {
                 ///////////////////////////////////
 
                 // Dont calculate Traps which are not in the Player Region
-                if (trapX < 0 || trapX > 400) {break;}
+                if (trapX < 0 || trapX > 500) {break;}
 
 
                 ///////////////////////////////////
