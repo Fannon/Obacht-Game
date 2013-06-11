@@ -25,7 +25,7 @@ obacht.Bonus = function(currentGame, type) {
 	this.drawtime = 0;
 	this.clicktime = 0;
 
-    log.debug("New Bonus: " + this.fill);
+    log.debug("New Bonus: " + type);
 
 
 	////////////////////

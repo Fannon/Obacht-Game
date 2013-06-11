@@ -19,11 +19,13 @@ obacht.TrapManager = function(currentGame, world, player) {
     var self = this;
     this.world = world;
     this.player = player;
-    this.layer = currentGame.layer;
+    this.currentGame = currentGame;
 
-    /** Trap Array */
-    this.traps = [];
+    /** Trap Array on Top World */
+    this.topTraps = [];
 
+    /** Trap Array on Bottom World */
+    this.bottomTraps = [];
 
     /**
      * Enemy Trap Event Listener
@@ -36,11 +38,9 @@ obacht.TrapManager = function(currentGame, world, player) {
         var factor;
         var angle;
 
-        var trap = new obacht.Trap(obacht.currentGame, data.type);
-
-        self.traps[self.traps.length] = trap;
-        self.layer.appendChild(trap.sprite);
-        trap.location = 'top';
+        var trap = self.createTrap(data.type, 'top');
+        trap.i = self.topTraps.length;
+        self.topTraps[trap.i] = trap;
 
         trap.sprite.setPosition(obacht.options.trap.enemy.x, obacht.options.trap.enemy.y);
         trap.sprite.setAnchorPoint(obacht.options.trap.general.anchorx, obacht.options.trap.general.anchory);
@@ -81,10 +81,9 @@ obacht.TrapManager = function(currentGame, world, player) {
         var factor;
         var angle;
 
-        var trap = new obacht.Trap(obacht.currentGame, data.type);
-        self.traps[self.traps.length] = trap;
-        self.layer.appendChild(trap.sprite);
-        trap.location = 'bottom';
+        var trap = self.createTrap(data.type, 'bottom');
+        trap.i = self.bottomTraps.length;
+        self.bottomTraps[trap.i] = trap;
 
         trap.sprite.setPosition(obacht.options.trap.own.x, obacht.options.trap.own.y);
         trap.sprite.setAnchorPoint(obacht.options.trap.general.anchorx, obacht.options.trap.general.anchory);
@@ -102,7 +101,7 @@ obacht.TrapManager = function(currentGame, world, player) {
          * Collision Checking
          */
         lime.scheduleManager.scheduleWithDelay(function() {
-            var collision = self.checkColl(self.layer, player, self.traps);
+            var collision = self.checkColl(self.currentGame.layer, player, self.bottomTraps);
             if (collision) {
                 currentGame.ownPlayer.loseHealth();
             }
@@ -121,63 +120,41 @@ obacht.TrapManager = function(currentGame, world, player) {
             angle = angle + anglespeed;
         }, trap, millesecondsmove);
     });
-
-
-
 };
 
 obacht.TrapManager.prototype = {
 
     /**
      * Creates a new Trap and adds a Timer to remove it after a while
-     * @param type
+     *
+     * @param {String} type         Type of the Trap
+     * @param {String} location     Location of the Trap (bottom|top)
      */
-    createTrap: function(type) {
+    createTrap: function(type, location) {
         "use strict";
 
         var self = this;
-
         var trap = new obacht.Trap(obacht.currentGame, type);
+        trap.location = location;
 
-        self.traps[self.traps.length] = trap;
-        self.layer.appendChild(trap.sprite);
+        self.currentGame.layer.appendChild(trap.sprite);
 
-        this.cleanUpTrapsInterval = setInterval(function() {
-            self.layer.removeChild(trap.sprite);
-        }, obacht.options.trap.general.clearTimeout);
-    },
+        /**
+         * Delete the Trap after a specific Timeout
+         */
+        setTimeout(function() {
+            log.debug('Trap Removed.');
+            self.currentGame.layer.removeChild(trap.sprite);
 
-    /**
-     * Removes all Traps that are beyond the player
-     *
-     * @param {Object} traps Traps Array
-     */
-    cleanUpTraps: function(traps) {
-        "use strict";
-
-        for (var i = 0; i < traps.length; i++) {
-
-            var trap = traps[i];
-
-            if (trap) { // Removed Traps are 'undefined'
-                var position = trap.sprite.getPosition();
-                var width = trap.sprite.getSize().width;
-
-                if (trap.location === 'bottom') {
-                    if (position.x < 0 - width) {
-                        this.layer.removeChild(trap.sprite);
-                        log.debug('Trap removed left side: ' + traps[i].type);
-                        delete traps[i];
-                    }
-                } else if (trap.location === 'top') {
-                    if (position.x > obacht.options.graphics.VIEWPORT_WIDTH + width) {
-                        this.layer.removeChild(trap.sprite);
-                        log.debug('Trap removed right side:' + traps[i].type);
-                        delete traps[i];
-                    }
-                }
+            if (location === 'top') {
+                delete self.topTraps[trap.i];
+            } else if(location === 'bottom') {
+                delete self.bottomTraps[trap.i];
             }
-        }
+
+        }, obacht.options.trap.general.clearTimeout);
+
+        return trap;
     },
 
     /**
@@ -189,6 +166,8 @@ obacht.TrapManager.prototype = {
      */
     checkColl: function(layer, player, traps) {
         "use strict";
+
+        var self = this;
 
         if (!obacht.playerController) {
             return false;
@@ -257,7 +236,7 @@ obacht.TrapManager.prototype = {
                     }
 
                     if (state === true) {
-                        this.layer.removeChild(trap.sprite);
+                        self.currentGame.layer.removeChild(trap.sprite);
                         log.debug('Collision! ' + trap.type);
                         delete traps[i];
                         return true;
