@@ -814,7 +814,7 @@ obacht.Menu.prototype = {
         var credits = new lime.Sprite()
             .setFill(obacht.spritesheet
                 .getFrame('credits.png'))
-            .setPosition(640, 595).setSize(1280, 468);
+            .setPosition(640, 540).setSize(1280, 360);
 
 
         /** Back Button */
