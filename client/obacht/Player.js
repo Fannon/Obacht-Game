@@ -202,7 +202,7 @@ obacht.Player.prototype = {
      */
     loseHealth: function() {
         log.debug('Own Player loses Life');
-        //obacht.mp.playerStatus(obacht.mp.pid, this.health -1);
+        obacht.mp.playerStatus(obacht.mp.pid, this.health -1);
     },
 
     /**
