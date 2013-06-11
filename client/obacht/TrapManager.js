@@ -16,6 +16,10 @@ goog.require('obacht.Trap');
 obacht.TrapManager = function(currentGame, world, player) {
     "use strict";
 
+    ///////////////////////////////////
+    // Variables                     //
+    ///////////////////////////////////
+
     var self = this;
     this.currentGame = currentGame;
 
@@ -24,6 +28,27 @@ obacht.TrapManager = function(currentGame, world, player) {
 
     /** Trap Array on Bottom World */
     this.bottomTraps = [];
+
+
+    ///////////////////////////////////
+    // Collision Interval            //
+    ///////////////////////////////////
+
+    /**
+     * Collision Checking
+     */
+    lime.scheduleManager.scheduleWithDelay(function() {
+        var collision = self.checkColl(self.currentGame.layer, player, self.bottomTraps);
+        if (collision) {
+            log.debug('Player Collision with Trap!');
+            currentGame.ownPlayer.loseHealth();
+        }
+    }, player, obacht.options.collisions.checkInterval);
+
+
+    ///////////////////////////////////
+    // Event Listeners               //
+    ///////////////////////////////////
 
     /**
      * Enemy Trap Event Listener
@@ -94,17 +119,6 @@ obacht.TrapManager = function(currentGame, world, player) {
         } else if (positiontype === 'ground') {
             factor = obacht.options.trap.general.factorlow;
         }
-
-        /**
-         * Collision Checking
-         */
-        lime.scheduleManager.scheduleWithDelay(function() {
-            var collision = self.checkColl(self.currentGame.layer, player, self.bottomTraps);
-            if (collision) {
-                log.debug('Player Collision with Trap!');
-                currentGame.ownPlayer.loseHealth();
-            }
-        }, player, obacht.options.collisions.checkInterval);
 
         //Movement
         lime.scheduleManager.scheduleWithDelay(function(dt) {
@@ -205,8 +219,8 @@ obacht.TrapManager.prototype = {
                 var trapX = self.currentGame.layer.screenToLocal(trap.sprite.getPosition()).ceil().x;
                 var trapY = self.currentGame.layer.screenToLocal(trap.sprite.getPosition()).ceil().y;
 
-                //Set left top corner of box
-                //Attention => TOP: Y=0 Middle: X=0
+                // Set left top corner of box
+                // Attention => TOP: Y=0 Middle: X=0
                 playerX = playerX - (playerWidth) / 2;
                 playerY = playerY - (playerHeight) / 2;
 
@@ -231,7 +245,7 @@ obacht.TrapManager.prototype = {
 
 
                 ///////////////////////////////////
-                // Collision Calculation         //
+                // Collision Detection           //
                 ///////////////////////////////////
 
                 for (var y = 0; y < trapBoundingBoxes.length; y++) {
