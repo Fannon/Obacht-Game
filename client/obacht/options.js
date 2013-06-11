@@ -133,7 +133,8 @@ obacht.options = {
             anchorx: 0,
             anchory: 1,
             millesecondsmove: 25,
-            anglespeed: 0.015
+            anglespeed: 0.015,
+            clearTimeout: 7000
         },
         own: {
             x: 100,
@@ -145,6 +146,9 @@ obacht.options = {
             y: -750,
             angle: -45
         }
+    },
+    collisions: {
+        checkInterval: 100
     },
     bonus: {
         general: {

@@ -35,6 +35,8 @@ obacht.Player = function(currentGame, location) {
 
     this.spritesheet = currentGame.spritesheet;
     this.location = location;
+
+    /** Player Health */
     this.health = 3;
 
     if (this.location === 'bottom') {
@@ -180,6 +182,11 @@ obacht.Player.prototype = {
      */
     die: function() {
         obacht.mp.playerStatus(obacht.mp.pid, 0);
+    },
+
+    loseHealth: function() {
+        log.debug('Own Player loses Life');
+        obacht.mp.playerStatus(obacht.mp.pid, this.health -1);
     },
 
     /**

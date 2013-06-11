@@ -261,15 +261,21 @@ obacht.Game.prototype = {
     updateHealthStatus: function() {
         "use strict";
 
+        if (obacht.mp.roomDetail.creatingPlayerHealth === 0 || obacht.mp.roomDetail.joiningPlayerHealth === 0) {
+            return false;
+        }
+
         if (obacht.mp.pid === obacht.mp.roomDetail.creatingPlayerId) {
+            this.ownPlayer.health = obacht.mp.roomDetail.creatingPlayerHealth;
             this.ownLifestatus.setFill(obacht.spritesheet.getFrame('ownLifestatus_' + obacht.mp.roomDetail.creatingPlayerHealth + '.png'));
             this.enemyLifestatus.setFill(obacht.spritesheet.getFrame('enemyLifestatus_' + obacht.mp.roomDetail.joiningPlayerHealth + '.png'));
-
         } else {
+            this.ownPlayer.health = obacht.mp.roomDetail.joiningPlayerHealth;
             this.ownLifestatus.setFill(obacht.spritesheet.getFrame('ownLifestatus_' + obacht.mp.roomDetail.joiningPlayerHealth + '.png'));
             this.enemyLifestatus.setFill(obacht.spritesheet.getFrame('enemyLifestatus_' + obacht.mp.roomDetail.creatingPlayerHealth + '.png'));
         }
 
+        return true;
     },
 
     /**
