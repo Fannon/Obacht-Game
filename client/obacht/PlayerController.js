@@ -17,13 +17,18 @@ obacht.PlayerController = function() {
     "use strict";
     var self = this;
 
-    this.tapAreaTop = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 4, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
+    this.tapAreaTop = new lime.Node()
+        .setSize(obacht.options.graphics.VIEWPORT_WIDTH / 4, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
         .setPosition(0, 0)
         .setAnchorPoint(0, 0);
-    this.tapAreaBottom = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 4, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
+
+    this.tapAreaBottom = new lime.Node()
+        .setSize(obacht.options.graphics.VIEWPORT_WIDTH / 4, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
         .setPosition(0, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
         .setAnchorPoint(0, 0);
-    this.tapAreaPuffer = new lime.Node().setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT)
+
+    this.tapAreaPuffer = new lime.Node()
+        .setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT)
         .setPosition(0, 0)
         .setAnchorPoint(0, 0);
 

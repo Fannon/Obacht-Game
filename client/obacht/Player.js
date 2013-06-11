@@ -70,12 +70,18 @@ obacht.Player = function(currentGame, location) {
     /* ANIMATIONS */
     ////////////////
 
-    this.runAnimation = new lime.animation.KeyframeAnimation();
+    this.runSprites = new lime.animation.KeyframeAnimation();
     for (var i = 1; i <= 16; i++) {
-        this.runAnimation.addFrame(self.spritesheet.getFrame('character_' + goog.string.padNumber(i, 4) + '.png'));
+        this.runSprites.addFrame(self.spritesheet.getFrame('character_' + goog.string.padNumber(i, 4) + '.png'));
     }
-
     this.run();
+
+    this.jumpSprites = new lime.animation.KeyframeAnimation();
+    this.jumpSprites.looping = false;
+    this.jumpSprites.delay = (obacht.options.player.general.jumpUpDuration + obacht.options.player.general.jumpDownDuration) / 12;
+    for (var j = 1; j <= 13; j++) {
+        this.jumpSprites.addFrame(self.spritesheet.getFrame('character_jump_' + goog.string.padNumber(j, 4) + '.png'));
+    }
 
     this.jumpUp = new lime.animation.MoveBy(0, this.jumpHeight).setDuration(obacht.options.player.general.jumpUpDuration).setEasing(lime.animation.Easing.EASEOUT);
     this.jumpDown = this.jumpUp.reverse().setDuration(obacht.options.player.general.jumpDownDuration).setEasing(lime.animation.Easing.EASEIN);
@@ -96,6 +102,8 @@ obacht.Player = function(currentGame, location) {
         goog.events.listen(this.jumpAnimation, 'stop', function() {
             if(obacht.playerController) {
                 obacht.playerController.isJumping = false;
+                self.run();
+                self.jumpSprites.currentFrame_=-1; // work-around for lime.js-bug with keyframe animations.
             }
         });
 
@@ -151,15 +159,18 @@ obacht.Player.prototype = {
      */
     run: function() {
         'use strict';
-        this.character.runAction(this.runAnimation);
+        this.character.runAction(this.runSprites);
     },
 
     /**
      * Runs the jumping animation on the character.
+     * Stops the running animation.
      */
     jump: function() {
         'use strict';
         this.character.runAction(this.jumpAnimation);
+        this.runSprites.stop();
+        this.character.runAction(this.jumpSprites);
     },
 
     /**
@@ -186,9 +197,12 @@ obacht.Player.prototype = {
         obacht.mp.playerStatus(obacht.mp.pid, 0);
     },
 
+    /**
+     * Lets the player lose 1 health point.
+     */
     loseHealth: function() {
         log.debug('Own Player loses Life');
-        obacht.mp.playerStatus(obacht.mp.pid, this.health -1);
+        //obacht.mp.playerStatus(obacht.mp.pid, this.health -1);
     },
 
     /**
