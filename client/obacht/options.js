@@ -148,7 +148,7 @@ obacht.options = {
         }
     },
     collisions: {
-        checkInterval: 100
+        checkInterval: 50
     },
     bonus: {
         general: {

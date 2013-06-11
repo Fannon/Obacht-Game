@@ -26,7 +26,7 @@ obacht.Menu = function() {
 
     lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
     lime.Label.defaultFont = 'Cartwheel';
-    lime.Label.installFont('OpenSans', 'assets/fonts/OpenSans-Regular.ttf');   
+    lime.Label.installFont('OpenSans', 'assets/fonts/OpenSans-Regular.ttf');
 
     // If fastStart Option is set to true, immediatly start a random Game
     if (obacht.options.debug.fastStart) {
@@ -47,7 +47,7 @@ obacht.Menu.prototype = {
     mainMenuScene: function() {
         "use strict";
         var self = this;
-        
+
         var sound = "on";
 
         // Reset Variables and Event Listeners
@@ -155,7 +155,7 @@ obacht.Menu.prototype = {
                 soundButton.setFill(obacht.spritesheet.getFrame('button_sound.png'));
                 sound = "on";
             }
-                       
+
             // TODO: sound off
         });
 
@@ -1554,7 +1554,6 @@ obacht.Menu.prototype = {
         "use strict";
 
         var self = this;
-        var gameoverText = '';
         var alreadyJoined = false;
 
         var gameoverScene = new lime.Scene();
@@ -1643,13 +1642,13 @@ obacht.Menu.prototype = {
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
             self.mainMenuScene();
         });
-        
+
         /** You Win */
         var youWin = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('you_win.png'))
             .setPosition(640, 360)
             .setSize(942, 200);
-          
+
         /** You Lose */
         var youLose = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('you_lose.png'))
@@ -1661,7 +1660,7 @@ obacht.Menu.prototype = {
             .setFill(obacht.spritesheet.getFrame('error.png'))
             .setPosition(640, 371)
             .setSize(904, 698);
-            
+
         var errorLabel = new lime.Label()
             .setAlign('left')
             .setText('The other player left the game')
@@ -1670,7 +1669,7 @@ obacht.Menu.prototype = {
             .setSize(430, 210)
             .setPosition(525, 335)
             .setRotation(17);
-            
+
         ///////////////////////////////
         // Draw Scene              //
         ///////////////////////////////
@@ -1687,7 +1686,7 @@ obacht.Menu.prototype = {
             menuLayer.appendChild(playAgainButton);
             menuLayer.appendChild(playAgainLabel);
         }
-        
+
         menuLayer.appendChild(backButton);
 
 
