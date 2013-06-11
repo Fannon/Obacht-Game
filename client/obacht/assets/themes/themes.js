@@ -16,6 +16,7 @@ obacht.themes = {
             }
         },
         traps: {
+
             //Krebs
             crab: {
                 file: 'trap_crab.png',

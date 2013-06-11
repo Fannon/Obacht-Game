@@ -126,25 +126,15 @@ obacht.options = {
 
     trap: {
         general: {
-            width: 200*0.7,
-            height: 200*0.7,
-            factorlow: 895,
-            factorhigh: 1025,
-            anchorx: 0,
-            anchory: 1,
-            millesecondsmove: 25,
-            anglespeed: 0.015,
+            groundPosition: 1005,
+            airPosition: 1100,
             clearTimeout: 7000
         },
-        own: {
-            x: 100,
-            y: 1470,
-            angle: 45
+        bottom: {
+            rotation: -45
         },
-        enemy: {
-            x: 1180,
-            y: -750,
-            angle: -45
+        top: {
+            rotation: 135
         }
     },
     collisions: {
