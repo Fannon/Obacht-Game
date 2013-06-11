@@ -11,7 +11,7 @@ goog.provide('obacht.options');
  */
 obacht.options = {
     debug: {
-        logLevel: 0,
+        logLevel: 3,
         fastStart: false,
         displayFps: true
     },
@@ -65,18 +65,18 @@ obacht.options = {
             startRotation2: 225
         },
         spinDuration: {
-            front: 20 * 0.8,
-            middle: 35 * 0.8,
-            clouds: 75 * 0.8
+            front: 7,
+            middle: 15,
+            clouds: 40
         }
     },
     player: {
         general: {
             width: 235*0.7,
             height: 300*0.7,
-            jumpUpDuration: 0.45,
-            jumpDownDuration: 0.45,
-            jumpHeight: 320,
+            jumpUpDuration: 0.4,
+            jumpDownDuration: 0.6,
+            jumpHeight: 325,
             crouchDuration: 0.1,
             crouchWidth: 1.6,
             crouchHeight: 0.5,
@@ -90,19 +90,17 @@ obacht.options = {
         location: {
             bottom: {
                 x: 135,
-                y: 580
+                y: 560
             },
             top: {
                 x: 1145,
-                y: 140
+                y: 160
             }
         }
     },
-
     playerController: {
         tapToleranceArea: 70
     },
-
     inventory: {
         size: 120,
         y: 20,
@@ -123,28 +121,21 @@ obacht.options = {
             type: 'none'
         }
     },
-
     trap: {
         general: {
-            width: 200*0.7,
-            height: 200*0.7,
-            factorlow: 895,
-            factorhigh: 1025,
-            anchorx: 0,
-            anchory: 1,
-            millesecondsmove: 25,
-            anglespeed: 0.015
+            groundPosition: 1005,
+            airPosition: 1100,
+            clearTimeout: 5000
         },
-        own: {
-            x: 100,
-            y: 1470,
-            angle: 45
+        bottom: {
+            rotation: -45
         },
-        enemy: {
-            x: 1180,
-            y: -750,
-            angle: -45
+        top: {
+            rotation: 135
         }
+    },
+    collisions: {
+        checkInterval: 50
     },
     bonus: {
         general: {
@@ -153,7 +144,6 @@ obacht.options = {
             y: 260,
             type: '',
             state: 'new',
-            path: 'assets/boni/', //all files musst be a png file
             displayTime: 2000
         }
     },

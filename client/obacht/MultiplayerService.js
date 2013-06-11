@@ -198,11 +198,11 @@ obacht.MultiplayerService = function(serverUrl) {
         //log.debug('Trap received: ' + data.type);
         if (data.target === self.pid) {
             log.debug('Trap on bottom world.');
-            self.events.publish('own_trap', data);
+            self.events.publish('bottom_trap', data);
         } else {
             log.debug('Trap on top world.');
             data.data.distance += obacht.options.gameplay.distanceOffset;
-            self.events.publish('enemy_trap', data);
+            self.events.publish('top_trap', data);
         }
     });
 

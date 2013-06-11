@@ -35,6 +35,8 @@ obacht.Player = function(currentGame, location) {
 
     this.spritesheet = currentGame.spritesheet;
     this.location = location;
+
+    /** Player Health */
     this.health = 3;
 
     if (this.location === 'bottom') {
@@ -92,7 +94,9 @@ obacht.Player = function(currentGame, location) {
 
         /** STOP-EVENT FOR OPTIMIZED JUMPING @event */
         goog.events.listen(this.jumpAnimation, 'stop', function() {
-            obacht.playerController.isJumping = false;
+            if(obacht.playerController) {
+                obacht.playerController.isJumping = false;
+            }
         });
 
         if (this.location === 'bottom') {
@@ -180,6 +184,11 @@ obacht.Player.prototype = {
      */
     die: function() {
         obacht.mp.playerStatus(obacht.mp.pid, 0);
+    },
+
+    loseHealth: function() {
+        log.debug('Own Player loses Life');
+        obacht.mp.playerStatus(obacht.mp.pid, this.health -1);
     },
 
     /**
