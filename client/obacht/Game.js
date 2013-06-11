@@ -102,6 +102,9 @@ obacht.Game = function() {
     // Draw initial Life Status
     this.initHealthStatus();
 
+    // Draw Quit Game Button
+    this.quitGame();
+
     /// 2 ///
     setTimeout(function() {
         self.setCountdownStatus('two');
@@ -254,6 +257,25 @@ obacht.Game.prototype = {
         this.layer.appendChild(this.enemyLifestatus);
 
     },
+
+    /**
+     * Draw Quit Game Button
+     */
+    quitGame: function() {
+        "use strict";
+
+        this.quitGame = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('quitGame.png'))
+            .setPosition(1250, 690)
+            .setSize(52, 50);
+
+        this.layer.appendChild(this.quitGame);
+        goog.events.listen(this.quitGame, ['touchstart', 'mousedown'], function() {
+            obacht.menu.mainMenuScene();
+        });
+    },
+
+
 
     /**
      * Updates current Healthstatus for both Players
