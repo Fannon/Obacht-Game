@@ -415,7 +415,7 @@ obacht.Menu.prototype = {
         var smartphone = new lime.Sprite()
             .setFill(obacht.spritesheet
             .getFrame('manualCrouch.png'))
-            .setPosition(640, 490).setSize(910, 466);
+            .setPosition(641, 490).setSize(910, 466);
 
         /** Back Button - Door */
         var backButton = new lime.Sprite()
@@ -659,8 +659,9 @@ obacht.Menu.prototype = {
         /** Smartphone with Fingers */
         var smartphone = new lime.Sprite()
             .setFill(obacht.spritesheet
-                .getFrame('manualThrowBoni.png'))
-            .setPosition(640, 490).setSize(910, 466);
+            .getFrame('manualThrowBoni.png'))
+            .setPosition(640, 483).setSize(910, 480);
+
 
         /** Back Button - Door */
         var backButton = new lime.Sprite()
