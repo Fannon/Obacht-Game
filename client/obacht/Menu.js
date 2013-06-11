@@ -26,7 +26,7 @@ obacht.Menu = function() {
 
     lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
     lime.Label.defaultFont = 'Cartwheel';
-    lime.Label.installFont('OpenSans', 'assets/fonts/OpenSans-Regular.ttf');   
+    lime.Label.installFont('OpenSans', 'assets/fonts/OpenSans-Regular.ttf');
 
     // If fastStart Option is set to true, immediatly start a random Game
     if (obacht.options.debug.fastStart) {
@@ -47,7 +47,7 @@ obacht.Menu.prototype = {
     mainMenuScene: function() {
         "use strict";
         var self = this;
-        
+
         var sound = "on";
 
         // Reset Variables and Event Listeners
@@ -155,7 +155,7 @@ obacht.Menu.prototype = {
                 soundButton.setFill(obacht.spritesheet.getFrame('button_sound.png'));
                 sound = "on";
             }
-                       
+
             // TODO: sound off
         });
 
@@ -1541,7 +1541,7 @@ obacht.Menu.prototype = {
                 });
             } else {
                 log.warn('PIN not valid');
-                obacht.showPopup('error','PIN not valid');
+                obacht.showPopup('Pin not valid!');
             }
         }
     },
@@ -1643,42 +1643,25 @@ obacht.Menu.prototype = {
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
             self.mainMenuScene();
         });
-        
+
         /** You Win */
         var youWin = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('you_win.png'))
             .setPosition(640, 360)
             .setSize(942, 200);
-          
+
         /** You Lose */
         var youLose = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('you_lose.png'))
             .setPosition(640, 360)
             .setSize(1020, 198);
 
-        /** Error Message Character */
-        var errorCharacter = new lime.Sprite()
-            .setFill(obacht.spritesheet.getFrame('error.png'))
-            .setPosition(640, 371)
-            .setSize(904, 698);
-            
-        var errorLabel = new lime.Label()
-            .setAlign('left')
-            .setText('The other player left the game')
-            .setFontColor('#fff')
-            .setFontSize(72)
-            .setSize(430, 210)
-            .setPosition(525, 335)
-            .setRotation(17);
-            
+
         ///////////////////////////////
         // Draw Scene              //
         ///////////////////////////////
 
-        if (data.reason === 'player_left') {
-            menuLayer.appendChild(errorCharacter);
-            menuLayer.appendChild(errorLabel);
-        } else if (data.pid === obacht.mp.pid) {
+        if (data.pid === obacht.mp.pid) {
             menuLayer.appendChild(youLose);
             menuLayer.appendChild(playAgainButton);
             menuLayer.appendChild(playAgainLabel);
@@ -1687,11 +1670,14 @@ obacht.Menu.prototype = {
             menuLayer.appendChild(playAgainButton);
             menuLayer.appendChild(playAgainLabel);
         }
-        
+
         menuLayer.appendChild(backButton);
 
-
         obacht.director.replaceScene(gameoverScene);
+
+        if (data.reason === 'player_left') {
+            obacht.showPopup('Player left the game!');
+        }
 
     },
 

@@ -167,32 +167,31 @@ obacht.setBackground = function(theme) {
 /**
  * Draws a PopUp / Alert Box over the current Scene (Game or Menu)
  *
- * @param {String} type Type of the message
  * @param {String} msg Text of the message
  */
-obacht.showPopup = function(type, msg) {
+obacht.showPopup = function(msg) {
     "use strict";
 
     var scene = obacht.director.getCurrentScene();
 
-    var popup = new lime.Label()
+    var popupSprite = new lime.Sprite()
+        .setFill(obacht.spritesheet.getFrame('error.png'))
+        .setPosition(640, 371)
+        .setSize(904, 698);
+
+    var popupLabel = new lime.Label()
+        .setAlign('left')
         .setText(msg)
         .setFontColor('#fff')
-        .setFontSize(50)
-        .setPosition(170, 120)
-        .setSize(300, 130);
+        .setFontSize(72)
+        .setSize(430, 210)
+        .setPosition(525, 335)
+        .setRotation(17);
 
-    if (type === 'error') {
-        log.debug('Incoming error from server:' + msg);
-        popup.setFontColor('#f00');
-        scene.appendChild(popup);
-    } else if (type === 'warning') {
-        log.debug('Incoming warning from server:' + msg);
-        popup.setFontColor('#ff0');
-        scene.appendChild(popup);
-    } else {
-        log.error('Wrong message type!');
-    }
+    log.debug('Incoming error from server:' + msg);
+
+    scene.appendChild(popupSprite);
+    scene.appendChild(popupLabel);
 };
 
 /**

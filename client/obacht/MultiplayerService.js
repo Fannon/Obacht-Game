@@ -34,8 +34,9 @@ obacht.MultiplayerService = function(serverUrl) {
     this.enemy = false;
     /** Socket.io */
     this.socket = io.connect(this.serverUrl); // Set up Socket-Connection to Server
-    this.socket.on('error', function () {
-        obacht.showPopup('error', 'Failed to connect.');
+
+    this.socket.on('connect_failed', function () {
+        obacht.showPopup('Failed to connect to server.');
     });
 
     var self = this;
