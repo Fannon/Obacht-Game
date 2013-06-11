@@ -35,10 +35,6 @@ obacht.MultiplayerService = function(serverUrl) {
     /** Socket.io */
     this.socket = io.connect(this.serverUrl); // Set up Socket-Connection to Server
 
-    this.socket.on('connect_failed', function () {
-        obacht.showPopup('Failed to connect to server.');
-    });
-
     var self = this;
 
     log.debug("Connecting to Multiplayer Server on " + serverUrl);
@@ -239,7 +235,6 @@ obacht.MultiplayerService.prototype = {
     /**
      * Broadcast Message
      *
-     * @param {String} type Type of the message
      * @param {String} msg Text of the message
      */
     msg: function (msg) {

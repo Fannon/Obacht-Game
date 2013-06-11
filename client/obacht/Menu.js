@@ -91,7 +91,12 @@ obacht.Menu.prototype = {
 
         /** On Play Button -> New Game Scene @event */
         goog.events.listen(playButton, ['touchstart', 'mousedown'], function() {
-            self.newGameScene();
+            log.debug('connected?' + obacht.mp.socket.socket.connected);
+            if (!obacht.mp.socket.socket.connected) {
+                obacht.showPopup('Failed to connect to server.');
+            } else {
+                self.newGameScene();
+            }
         });
 
         /** Help Button */
