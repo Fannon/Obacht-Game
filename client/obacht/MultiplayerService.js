@@ -99,7 +99,7 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.socket.on('message', function(data) {
         log.debug('Incoming message:' + data.msg);
-        self.msg(data.type, data.msg);
+        self.msg(data.msg);
     });
 
     /**
@@ -242,10 +242,10 @@ obacht.MultiplayerService.prototype = {
      * @param {String} type Type of the message
      * @param {String} msg Text of the message
      */
-    msg: function (type, msg) {
+    msg: function (msg) {
         "use strict";
         log.debug('>> showPopup()');
-        obacht.showPopup(type,msg);
+        obacht.showPopup(msg);
     },
 
     /**
