@@ -20,8 +20,8 @@ obacht.themes = {
             crab: {
                 file: 'trap_crab.png',
                 position: 'ground',
-                width: 150,
-                height: 91,
+                width: 150*1.4,
+                height: 91*1.4,
                 boundingBoxes: [
                     {x: 1, y: 10, width: 26, height: 29},
                     {x: 21, y: 25, width: 117, height: 54}
@@ -32,8 +32,8 @@ obacht.themes = {
             anchor: {
                 file: 'trap_anchor.png',
                 position: 'ground',
-                width: 110,
-                height: 120,
+                width: 110*1.2,
+                height: 120*1.2,
                 boundingBoxes: [
                     {x: 0, y: 27, width: 29, height: 78},
                     {x: 49, y: 2, width: 51, height: 78}
@@ -68,24 +68,24 @@ obacht.themes = {
             },
 
             //Hai
-            shark: {
+            /*shark: {
                 file: 'trap_shark.png',
                 position: 'air',
-                width: 150,
-                height: 73,
+                width: 150*2,
+                height: 73*2,
                 boundingBoxes: [
                     {x: 2, y: 12, width: 37, height: 47},
                     {x: 0, y: 0, width: 0, height: 0}
 
                 ]
-            },
+            },*/
 
             //Schildkröte
             turtle: {
                 file: 'trap_turtle.png',
                 position: 'air',
-                width: 150,
-                height: 73,
+                width: 150*1.4,
+                height: 73*1.4,
                 boundingBoxes: [
                     {x: 2, y: 6, width: 102, height: 37},
                     {x: 104, y: 28, width: 44, height: 13},
@@ -98,8 +98,8 @@ obacht.themes = {
             clownfish: {
                 file: 'trap_clownfish.png',
                 position: 'air',
-                width: 150,
-                height: 82,
+                width: 150*1.3,
+                height: 82*1.3,
                 boundingBoxes: [
                     {x: 3, y: 3, width: 113, height: 76},
                     {x: 116, y: 35, width: 32, height: 29}
@@ -147,8 +147,8 @@ obacht.themes = {
             vulture: {
                 file: 'trap_vulture.png',
                 position: 'air',
-                width: 170,
-                height: 90,
+                width: 170*1.4,
+                height: 90*1.4,
                 boundingBoxes: [
                     {x: 1, y: 14, width: 64, height: 33},
                     {x: 65, y: 1, width: 76, height: 67},
@@ -160,8 +160,8 @@ obacht.themes = {
             cactus: {
                 file: 'trap_cactus.png',
                 position: 'ground',
-                width: 100,
-                height: 160,
+                width: 100*1.2,
+                height: 160*1.2,
                 boundingBoxes: [
                     {x: 4, y: 15, width: 57, height: 85},
                     {x: 26, y: 100, width: 31, height: 58}
@@ -172,8 +172,8 @@ obacht.themes = {
             snake: {
                 file: 'trap_snake.png',
                 position: 'ground',
-                width: 98,
-                height: 100,
+                width: 98*1.3,
+                height: 100*1.3,
                 boundingBoxes: [
                     {x: 36, y: 1, width: 32, height: 78},
                     {x: 2, y: 78, width: 94, height: 20},
@@ -185,8 +185,8 @@ obacht.themes = {
             hawk: {
                 file: 'trap_hawk.png',
                 position: 'air',
-                width: 110,
-                height: 104,
+                width: 110*1.5,
+                height: 104*1.5,
                 boundingBoxes: [
                     {x: 3, y: 4, width: 74, height: 79},
                     {x: 77, y: 77, width: 31, height: 13},
@@ -259,8 +259,8 @@ obacht.themes = {
             hedgehog: {
                 file: 'trap_hedgehog.png',
                 position: 'ground',
-                width: 150,
-                height: 87,
+                width: 150*1.2,
+                height: 87*1.2,
                 boundingBoxes: [
                     {x: 1, y: 46, width: 24, height: 19},
                     {x: 25, y: 3, width: 121, height: 75}
@@ -284,8 +284,8 @@ obacht.themes = {
             scarecrow: {
                 file: 'trap_scarecrow.png',
                 position: 'ground',
-                width: 100,
-                height: 160,
+                width: 100*1.2,
+                height: 160*1.2,
                 boundingBoxes: [
                     {x: 25, y: 2, width: 54, height: 72},
                     {x: 2, y: 74, width: 96, height: 14},
