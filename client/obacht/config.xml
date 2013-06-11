@@ -41,6 +41,7 @@
 
 
     <!-- Preferences -->
+    <preference name="phonegap-version" value="2.7.0" />
     <preference name="fullscreen" value="true" />
     <preference name="orientation" value="landscape" />
 	<preference name="autorotate" value="false" readonly="true"/>

@@ -51,7 +51,8 @@ var RoomManager = function(io) {
             joiningPlayerReactiontime: false,
             joiningPlayerReady: false,
             joiningPlayerHealth: 3,
-            playersCount: 0 // Just for convenience
+            playersCount: 0, // Just for convenience
+            created: Date.now()
         }
     });
 
@@ -72,6 +73,13 @@ var RoomManager = function(io) {
     this.rooms = new Backbone.Collection([], {
         model: this.RoomModel
     });
+
+    /**
+     * Cleaning Up Interval: Removes unused Rooms if they are not removed correctly.
+     */
+    setInterval(function() {
+        self.cleanUp();
+    }, options.roomPurgeInterval * 60 * 1000);
 
 };
 
@@ -339,17 +347,14 @@ RoomManager.prototype.checkReactiontime = function(socket, data) {
 
         // Set Reaction Time
         if (room.attributes.creatingPlayerId === pid) {
-            room.set({
-                creatingPlayerReactiontime: data.reaction_time
-            });
+            room.attributes.creatingPlayerReactiontime = data.reaction_time;
         } else if (room.attributes.joiningPlayerId === pid) {
-            room.set({
-                joiningPlayerReactiontime: data.reaction_time
-            });
+            room.attributes.joiningPlayerReactiontime = data.reaction_time;
         } else {
             log.warn('!!! Check Reaction Time : Player is not in Room! #' + pin, socket);
         }
 
+        // If both ReactionTimes are set: Compare them and declare the Winner
         if (room.attributes.creatingPlayerReactiontime && room.attributes.joiningPlayerReactiontime) {
 
             log.debug('--- Check Reactiontime: ' + room.attributes.creatingPlayerReactiontime + ' vs. ' + room.attributes.joiningPlayerReactiontime);
@@ -364,10 +369,9 @@ RoomManager.prototype.checkReactiontime = function(socket, data) {
             }
 
             // Reset Reaction Time for both Players
-            room.set({
-                creatingPlayerReactiontime: false,
-                joiningPlayerReactiontime: false
-            });
+            room.attributes.creatingPlayerReactiontime = false;
+            room.attributes.joiningPlayerReactiontime = false;
+
 
             return receiveBonus;
 
@@ -429,6 +433,30 @@ RoomManager.prototype.findMatch = function() {
         log.debug('--- No Match found, returning PIN 0');
         return 0;
     }
+};
+
+/**
+ * Cleans up Room Collection
+ * Looks for Rooms which are older than a specific time and removes them.
+ * Usually they are removed automatically, but sometimes they are not.
+ */
+RoomManager.prototype.cleanUp = function() {
+    "use strict";
+    var self = this;
+
+    var now = Date.now();
+    var timeOut = now - options.roomPurgeTimeout * 60 * 1000;
+    var roomsPurged = 0;
+
+    this.rooms.each(function(room) {
+        if (room.attributes.created < timeOut) {
+            log.warn('!!! Purging Room #' + room.attributes.pin);
+            self.removeRoom(room.attributes.pin);
+        }
+    });
+
+    log.info('--- CleanUp: Purged ' + roomsPurged + ' Rooms.');
+
 };
 
 module.exports = RoomManager;

@@ -8,7 +8,8 @@ var options = {
     maxPrivateRooms: 9999,
     maxPublicRooms: 12000,
     defaultPort: 8080, // If no console argument used
-    reactiontimeExpiration: 1200
+    roomPurgeTimeout: 30, // In Minutes
+    roomPurgeInterval: 60 // In Minutes
 };
 
 module.exports = options;

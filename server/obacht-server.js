@@ -11,7 +11,6 @@ var obacht = {};
  * Obacht Game Node.js Multiplayer Server
  *
  * TODO: Version checking -> Version can have gameplay relevance!
- * TODO: checkReactionTime();
  *
  * @author Simon Heimler
  */
@@ -23,12 +22,14 @@ obacht.server = {};
 
 /** Server Options (imported from options.js) */
 obacht.server.options = require('./options');
+
 /** Connection Port, using Console Arguments if available */
 obacht.server.port = (process.argv[2] ? process.argv[2] : obacht.server.options.defaultPort);
+
 /** Socket.io */
 obacht.server.io = require('socket.io').listen(obacht.server.port); // Start Socket.io
-obacht.Logger = require('./Logger');
 
+obacht.Logger = require('./Logger');
 var log = new obacht.Logger(obacht.server.options.loglevel);
 
 // Data Structures
