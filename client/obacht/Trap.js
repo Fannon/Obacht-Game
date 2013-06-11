@@ -1,6 +1,7 @@
 /* global goog, lime, obacht, log */
 
 goog.provide('obacht.Trap');
+
 goog.require('lime.Sprite');
 goog.require('lime.Circle');
 goog.require('lime.animation.Loop');
@@ -89,12 +90,13 @@ obacht.Trap = function(currentGame, type, location) {
 
     this.rotate = new lime.animation.Loop(
             new lime.animation.RotateBy(360)
-                .setDuration(obacht.options.world.spinDuration.front*3)
+                .setDuration(obacht.options.world.spinDuration.front * 3)
                 .setEasing(lime.animation.Easing.LINEAR)
     );
 
     this.circle.runAction(this.rotate);
 
+    return this;
 };
 
 obacht.Trap.prototype = {

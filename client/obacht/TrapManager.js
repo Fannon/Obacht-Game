@@ -55,41 +55,9 @@ obacht.TrapManager = function(currentGame, world, player) {
      * @event
      */
     obacht.mp.events.subscribe('top_trap', function(data) {
-
-        var anglespeed = obacht.options.trap.general.anglespeed;
-        var millesecondsmove = obacht.options.trap.general.millesecondsmove;
-        var factor;
-        var angle;
-
         var trap = self.createTrap(data.type, 'top');
         trap.i = self.topTraps.length;
         self.topTraps[trap.i] = trap;
-
-        trap.sprite.setPosition(obacht.options.trap.enemy.x, obacht.options.trap.enemy.y);
-        trap.sprite.setAnchorPoint(obacht.options.trap.general.anchorx, obacht.options.trap.general.anchory);
-        trap.sprite.setRotation(180);
-        angle = obacht.options.trap.enemy.angle;
-
-        //Do you fly low or high?
-        var positiontype = obacht.themes[obacht.mp.roomDetail.theme].traps[data.type].position;
-        if (positiontype === 'air') {
-            factor = obacht.options.trap.general.factorhigh;
-        } else if (positiontype === 'ground') {
-            factor = obacht.options.trap.general.factorlow;
-        }
-
-        //Movement
-        lime.scheduleManager.scheduleWithDelay(function(dt) {
-
-            var position = trap.sprite.getPosition();
-
-            position.x = Math.sin(angle) * factor + obacht.options.trap.enemy.x;
-            position.y = Math.cos(angle) * factor + obacht.options.trap.enemy.y;
-
-            trap.sprite.setPosition(position);
-
-            angle = angle + anglespeed;
-        }, trap, millesecondsmove);
     });
 
 
@@ -98,40 +66,9 @@ obacht.TrapManager = function(currentGame, world, player) {
      * @event
      */
     obacht.mp.events.subscribe('bottom_trap', function(data) {
-
-        var anglespeed = obacht.options.trap.general.anglespeed;
-        var millesecondsmove = obacht.options.trap.general.millesecondsmove;
-        var factor;
-        var angle;
-
         var trap = self.createTrap(data.type, 'bottom');
         trap.i = self.bottomTraps.length;
         self.bottomTraps[trap.i] = trap;
-
-        trap.sprite.setPosition(obacht.options.trap.own.x, obacht.options.trap.own.y);
-        trap.sprite.setAnchorPoint(obacht.options.trap.general.anchorx, obacht.options.trap.general.anchory);
-        angle = obacht.options.trap.own.angle;
-
-        //Do you fly low or high?
-        var positiontype = obacht.themes[obacht.mp.roomDetail.theme].traps[data.type].position;
-        if (positiontype === 'air') {
-            factor = obacht.options.trap.general.factorhigh;
-        } else if (positiontype === 'ground') {
-            factor = obacht.options.trap.general.factorlow;
-        }
-
-        //Movement
-        lime.scheduleManager.scheduleWithDelay(function(dt) {
-
-            var position = trap.sprite.getPosition();
-
-            position.x = Math.sin(angle) * factor + obacht.options.trap.own.x;
-            position.y = Math.cos(angle) * factor + obacht.options.trap.own.y;
-
-            trap.sprite.setPosition(position);
-
-            angle = angle + anglespeed;
-        }, trap, millesecondsmove);
     });
 };
 
@@ -147,15 +84,15 @@ obacht.TrapManager.prototype = {
         "use strict";
 
         var self = this;
-        var trap = new obacht.Trap(obacht.currentGame, type);
+
+        var trap = new obacht.Trap(self.currentGame, type, location);
         trap.location = location;
+        trap.type = type;
 
         /** Delete the Trap after a specific Timeout */
         setTimeout(function() {
             self.removeTrap(trap);
         }, obacht.options.trap.general.clearTimeout);
-
-        self.currentGame.layer.appendChild(trap.sprite);
 
         return trap;
     },
@@ -168,7 +105,7 @@ obacht.TrapManager.prototype = {
         "use strict";
 
         log.debug('Trap Removed.');
-        this.currentGame.layer.removeChild(trap.sprite);
+        this.currentGame.layer.removeChild(trap.circle);
 
         if (trap.location === 'top') {
             delete this.topTraps[trap.i];
@@ -213,27 +150,26 @@ obacht.TrapManager.prototype = {
                 // Player and Trap Position      //
                 ///////////////////////////////////
 
-                var playerX = self.currentGame.layer.screenToLocal(self.currentGame.ownPlayer.character.getPosition()).ceil().x;
-                var playerY = self.currentGame.layer.screenToLocal(self.currentGame.ownPlayer.character.getPosition()).ceil().y;
 
-                var trapX = self.currentGame.layer.screenToLocal(trap.sprite.getPosition()).ceil().x;
-                var trapY = self.currentGame.layer.screenToLocal(trap.sprite.getPosition()).ceil().y;
+                var playerPosition = obacht.director.localToNode(self.currentGame.ownPlayer.character.getPosition(), self.currentGame.layer);
+                var trapPosition = trap.circle.localToNode(trap.sprite.getPosition(), self.currentGame.layer);
 
                 // Set left top corner of box
                 // Attention => TOP: Y=0 Middle: X=0
-                playerX = playerX - (playerWidth) / 2;
-                playerY = playerY - (playerHeight) / 2;
+                var playerX = playerPosition.ceil().x - (playerWidth) / 2;
+                var playerY = playerPosition.ceil().y - (playerHeight) / 2;
 
-                trapX = trapX - (trapWidth) / 2;
-                trapY = trapY - (trapHeight) / 2;
+                var trapX = trapPosition.ceil().x - (trapWidth) / 2;
+                var trapY = trapPosition.ceil().y - (trapHeight) / 2;
 
+//                console.log('TrapX: ' + trapX + ' TrapY: ' +  trapY + ' || PlayerX: ' + playerX + ' PlayerY: ' +  playerY);
 
                 ///////////////////////////////////
                 // Trap PreSelection             //
                 ///////////////////////////////////
 
                 // Dont calculate Traps which are not in the Player Region
-                if (trapX < 0 || trapX > 500) {
+                if (trapX < 20 || trapX > 420) {
                     break;
                 }
 
