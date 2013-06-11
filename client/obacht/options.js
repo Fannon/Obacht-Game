@@ -138,7 +138,7 @@ obacht.options = {
         }
     },
     collisions: {
-        checkInterval: 100
+        checkInterval: 50
     },
     bonus: {
         general: {
@@ -147,7 +147,6 @@ obacht.options = {
             y: 260,
             type: '',
             state: 'new',
-            path: 'assets/boni/', //all files musst be a png file
             displayTime: 2000
         }
     },
