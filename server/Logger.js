@@ -72,7 +72,7 @@ Logger.prototype.setLogLevel = function(loglevel) {
         Logger.prototype.warn = function(msg, socket) {
             console.log(yellow + msg + reset);
             if (socket) {
-                socket.emit('error', {type: 'warning', msg: msg});
+                socket.emit({msg: msg});
             }
         };
     } else {
@@ -90,7 +90,7 @@ Logger.prototype.setLogLevel = function(loglevel) {
         Logger.prototype.error = function(msg, socket) {
             console.log(red + msg + reset);
             if (socket) {
-                socket.emit('error', {type: 'error', msg: msg});
+                socket.emit('error', {msg: msg});
             }
         };
     } else {
