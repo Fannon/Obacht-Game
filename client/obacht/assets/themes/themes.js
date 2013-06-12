@@ -216,7 +216,7 @@ obacht.themes = {
                 width: 150,
                 height: 101,
                 boundingBoxes: [
-                    {x: 1, y: 45, width: 47, height: 43},
+                    {x: 2, y: 44, width: 47, height: 43},
                     {x: 49, y: 1, width: 98, height: 97}
                 ]
             },
