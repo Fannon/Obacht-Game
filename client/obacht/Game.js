@@ -41,9 +41,6 @@ obacht.Game = function() {
     /** Current Distance the world has rotated since the game started. (in Grad) */
     this.distance = 0;
 
-    /** Current Speed Factor which decrements (gets faster!) over time. */
-    this.speedFactor = obacht.options.gameplay.initialSpeedFactor;
-
     /** Game Spritesheet (changes with current theme) */
     this.spritesheet = false;
 
@@ -130,7 +127,7 @@ obacht.Game = function() {
 
         // Just start the generator if player is the creating Player
         if (obacht.mp.pid === obacht.mp.roomDetail.creatingPlayerId) {
-            self.generator = new obacht.Generator(self.speedFactor);
+            self.generator = new obacht.Generator();
             self.generator.startThrowTrap();
             self.generator.startThrowBonus();
         }
@@ -161,15 +158,6 @@ obacht.Game = function() {
         self.updateHealthStatus();
     });
 
-
-    //////////////////////////////
-    // Game Logic               //
-    //////////////////////////////
-
-    // Decrement SpeedFactor (lower is faster)
-    self.speedFactorInterval = setInterval(function() {
-        self.speedFactor -= obacht.options.gameplay.decrementSpeedFactor;
-    }, obacht.options.gameplay.decrementSpeedFactorTime);
 
 };
 
@@ -276,8 +264,6 @@ obacht.Game.prototype = {
         });
     },
 
-
-
     /**
      * Updates current Healthstatus for both Players
      */
@@ -323,7 +309,6 @@ obacht.Game.prototype = {
         }
 
         // Clean Intervals
-        clearInterval(this.speedFactorInterval);
 
         // Clear Event Listeners
         obacht.mp.events.clear('bonus');

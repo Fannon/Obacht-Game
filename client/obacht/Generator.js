@@ -13,8 +13,18 @@ goog.require('obacht.Trap');
  */
 obacht.Generator = function(speedFactor) {
     "use strict";
-    this.speedFactor = speedFactor;
+
+    var self = this;
+
+    /** Current Speed Factor which decrements (gets faster!) over time. */
+    this.speedFactor = obacht.options.gameplay.initialSpeedFactor;
+
     this.thrownTrapsCounter = 0;
+
+    // Decrement SpeedFactor (lower is faster)
+    this.speedFactorInterval = setInterval(function() {
+        self.speedFactor -= obacht.options.gameplay.decrementSpeedFactor;
+    }, obacht.options.gameplay.decrementSpeedFactorTime);
 };
 
 obacht.Generator.prototype = {
@@ -78,9 +88,9 @@ obacht.Generator.prototype = {
      */
     destruct: function() {
         "use strict";
-        log.debug('Cleaning up Generator');
-        log.debug(this.trapInterval);
+
         clearInterval(this.trapInterval);
         clearInterval(this.bonusInterval);
+        clearInterval(this.speedFactorInterval);
     }
 };

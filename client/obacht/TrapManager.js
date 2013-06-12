@@ -178,7 +178,7 @@ obacht.TrapManager.prototype = {
                 ///////////////////////////////////
 
                 var playerBoundingBoxes = obacht.options.player.boundingBoxes;
-                var trapBoundingBoxes = obacht.themes[obacht.mp.roomDetail.theme].traps[trap.type].boundingBoxes;
+                var trapBoundingBoxes = trap.boundingBoxes;
 
 
                 ///////////////////////////////////
