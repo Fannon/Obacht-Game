@@ -11,7 +11,7 @@ goog.provide('obacht.options');
  */
 obacht.options = {
     debug: {
-        logLevel: 3,
+        logLevel: 1,
         fastStart: false,
         displayFps: true,
         showBoundingBoxes: true
@@ -73,20 +73,20 @@ obacht.options = {
     },
     player: {
         general: {
-            width: 235*0.7,
-            height: 300*0.7,
+            width: 205,
+            height: 240,
             jumpUpDuration: 0.4 * 2,
             jumpDownDuration: 0.6 * 2,
             jumpHeight: 325,
             crouchDuration: 0.1 * 2,
-            crouchWidth: 1.6 * 2,
+            crouchWidth: 1.6,
             crouchHeight: 0.5,
             maxHealth: 3,
             anchorx: 0,
             anchory: 1
         },
         boundingBoxes: [
-            {x: 5, y: 10, width: 200*0.7, height: 280*0.7}
+            {x: 0, y: 20, width: 120, height: 205}
         ],
         location: {
             bottom: {
