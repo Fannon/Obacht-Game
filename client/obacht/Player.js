@@ -62,7 +62,6 @@ obacht.Player = function(currentGame, location) {
         .setFill(this.spritesheet.getFrame('character_0001.png'))
         .setPosition(this.x, this.y)
         .setSize(obacht.options.player.general.width, obacht.options.player.general.height)
-//        .setSize(205,240)
         .setAnchorPoint(0.5, 1)
         .setRotation(this.rotation)
 //        .setRenderer(obacht.renderer)
@@ -94,11 +93,12 @@ obacht.Player = function(currentGame, location) {
         this.runSprites
             .addFrame(self.spritesheet.getFrame('character_' + goog.string.padNumber(i, 4) + '.png'));
     }
+
     this.run();
 
     this.jumpSprites = new lime.animation.KeyframeAnimation();
     this.jumpSprites.looping = false;
-    this.jumpSprites.delay = (obacht.options.player.general.jumpUpDuration + obacht.options.player.general.jumpDownDuration) / 12;
+    this.jumpSprites.delay = (obacht.options.player.general.jumpUpDuration + obacht.options.player.general.jumpDownDuration) / 9;
     for (var j = 1; j <= 13; j++) {
         this.jumpSprites
             .addFrame(self.spritesheet.getFrame('character_jump_' + goog.string.padNumber(j, 4) + '.png'));
@@ -117,6 +117,11 @@ obacht.Player = function(currentGame, location) {
     this.jumpAnimation = new lime.animation
         .Sequence(this.jumpUp, this.jumpDown);
 
+    this.jumpAnimation.addTarget(this.character);
+    this.jumpAnimation.addTarget(this.boundingBox);
+
+
+
     this.crouchAnimation = new lime.animation
         .ScaleTo(obacht.options.player.general.crouchWidth, obacht.options.player.general.crouchHeight)
         .setDuration(obacht.options.player.general.crouchDuration);
@@ -131,14 +136,20 @@ obacht.Player = function(currentGame, location) {
     /* SUBSCRIBE TO EVENTS */
     /////////////////////////
 
+    goog.events.listen(this.jumpSprites, 'stop', function() {
+        if(obacht.playerController) {
+            self.run();
+            self.jumpSprites.currentFrame_=-1; // work-around for lime.js-bug with keyframe animations.
+        }
+    });
+
+
     try {
 
         /** STOP-EVENT FOR OPTIMIZED JUMPING @event */
         goog.events.listen(this.jumpAnimation, 'stop', function() {
             if(obacht.playerController) {
                 obacht.playerController.isJumping = false;
-                self.run();
-                self.jumpSprites.currentFrame_=-1; // work-around for lime.js-bug with keyframe animations.
             }
         });
 
@@ -203,8 +214,14 @@ obacht.Player.prototype = {
      */
     jump: function() {
         'use strict';
-        this.character.runAction(this.jumpAnimation);
-        this.boundingBox.runAction(this.jumpAnimation);
+
+        var self = this;
+        // this.character.runAction(this.jumpAnimation);
+        // this.boundingBox.runAction(this.jumpAnimation);
+
+        setTimeout(function() {
+            self.jumpAnimation.play();
+        }, (obacht.options.player.general.jumpUpDuration + obacht.options.player.general.jumpDownDuration) / 13 * 4 * 1000);
 
         this.runSprites.stop();
         this.character.runAction(this.jumpSprites);
@@ -215,8 +232,6 @@ obacht.Player.prototype = {
      */
     crouch: function() {
         'use strict';
-//        this.jumpDownAnimation(this.character);
-//        this.jumpDownAnimation(this.boundingBox);
 
 //        this.character.runAction(this.crouchAnimation);
         this.boundingBox.runAction(this.crouchAnimation);
@@ -227,6 +242,7 @@ obacht.Player.prototype = {
      */
     standUp: function() {
         'use strict';
+
 //        this.character.runAction(this.standUpAnimation);
         this.boundingBox.runAction(this.standUpAnimation);
     },
