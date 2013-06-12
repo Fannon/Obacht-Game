@@ -124,29 +124,29 @@ obacht.TrapManager.prototype = {
 
         var self = this;
 
-        if (!obacht.currentGame || !obacht.playerController) {
+        if (!obacht.currentGame || !obacht.playerController || self.bottomTraps.length === 0) {
             return false;
         }
+
+        ///////////////////////////////////
+        // Player                       //
+        ///////////////////////////////////
+
+        var playerPosition = self.currentGame.ownPlayer.boundingBox.getPosition();
+        var playerScale = self.currentGame.ownPlayer.boundingBox.getScale();
+
+        var playerWidth = obacht.options.player.boundingBoxes[0].width * playerScale.x;
+        var playerHeight = obacht.options.player.boundingBoxes[0].height * playerScale.y;
+
+        var playerX = playerPosition.x - (playerWidth) / 2;
+        var playerY = playerPosition.y - playerHeight;
+
 
         for (var i = 0; i < self.bottomTraps.length; i++) {
 
             if (self.bottomTraps[i] && self.bottomTraps[i].location === 'bottom' && self.bottomTraps[i].type) {
 
                 var trap = self.bottomTraps[i];
-
-
-                ///////////////////////////////////
-                // Player                       //
-                ///////////////////////////////////
-
-                var playerPosition = obacht.director.localToNode(self.currentGame.ownPlayer.boundingBox.getPosition(), self.currentGame.layer);
-
-                var playerWidth = self.currentGame.ownPlayer.character.getSize().width;
-                var playerHeight = self.currentGame.ownPlayer.character.getSize().height;
-
-                var playerX = playerPosition.ceil().x - (playerWidth) / 2;
-                var playerY = playerPosition.ceil().y - (playerHeight) / 2;
-
 
                 ///////////////////////////////////
                 // Trap                          //
@@ -158,7 +158,7 @@ obacht.TrapManager.prototype = {
                 var trapHeight = trap.sprite.getSize().height;
 
                 var trapX = trapPosition.ceil().x - (trapWidth) / 2;
-                var trapY = trapPosition.ceil().y + trapHeight;
+                var trapY = trapPosition.ceil().y - trapHeight;
 
                 var trapBoundingBoxes = trap.boundingBoxes;
 
