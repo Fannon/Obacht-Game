@@ -76,17 +76,16 @@ obacht.Trap = function(currentGame, type, location) {
     this.sprite = new lime.Sprite()
         .setPosition(this.x, this.y)
         .setSize(this.trapDetail.width, this.trapDetail.height)
-        .setRotation(this.rotation)
         .setAnchorPoint(0.5, 1)
+        .setRotation(this.rotation)
         .setFill(currentGame.spritesheet.getFrame(this.trapDetail.file));
-
 
     this.circle = new lime.Circle()
         .setPosition(this.circleX, this.circleY)
         .setAnchorPoint(0.5, 0.5);
 
-    this.layer.appendChild(this.circle);
     this.circle.appendChild(this.sprite);
+    this.layer.appendChild(this.circle);
 
     /////////////////////
     /* BOUNDING BOXES  */
@@ -99,11 +98,11 @@ obacht.Trap = function(currentGame, type, location) {
 
         if (obacht.options.debug.showBoundingBoxes) {
             var redsquare = new lime.Sprite()
-                .setSize(bb.width, bb.height)
                 .setPosition(this.x + bb.x, this.y + bb.y)
-                .setFill(255,0,0,0.5)
+                .setSize(bb.width, bb.height)
+                .setAnchorPoint(0.5, 1)
                 .setRotation(this.rotation)
-                .setAnchorPoint(0.5, 1);
+                .setFill(255,0,0,0.5);
             self.circle.appendChild(redsquare);
         }
     }
