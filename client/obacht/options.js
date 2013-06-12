@@ -11,10 +11,11 @@ goog.provide('obacht.options');
  */
 obacht.options = {
     debug: {
-        logLevel: 1,
+        logLevel: 5,
         fastStart: false,
         displayFps: true,
-        showBoundingBoxes: true
+        showBoundingBoxes: false,
+        invincible: false
     },
     graphics: {
         VIEWPORT_WIDTH: 1280,
@@ -37,10 +38,12 @@ obacht.options = {
         initialSpeedFactor: 1.0,
         decrementSpeedFactorTime: 5000,
         decrementSpeedFactor: 0.01,
-        generateBoniMinInterval: 10000,
-        generateBoniMaxInterval: 20000,
+        generateBoniMinInterval: 4000,
+        generateBoniMaxInterval: 10000,
         generateTrapsMinInterval: 1000,
-        generateTrapsMaxInterval: 5000,
+        generateTrapsMaxInterval: 4000,
+        trapMinInterval: 700,
+        delayTrap: 700,
         distanceOffset: 0
     },
     world: {

@@ -124,6 +124,9 @@ obacht.Inventory.prototype = {
         "use strict";
         log.debug('throwTrap: ' + type);
         obacht.mp.throwTrap(type, obacht.mp.enemy);
+
+       // Last Trap on Enemy World
+       obacht.mp.lastTrap = new Date().getTime();
     },
 
     /**

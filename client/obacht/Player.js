@@ -233,7 +233,7 @@ obacht.Player.prototype = {
     crouch: function() {
         'use strict';
 
-//        this.character.runAction(this.crouchAnimation);
+        this.character.runAction(this.crouchAnimation);
         this.boundingBox.runAction(this.crouchAnimation);
     },
 
@@ -243,7 +243,8 @@ obacht.Player.prototype = {
     standUp: function() {
         'use strict';
 
-//        this.character.runAction(this.standUpAnimation);
+
+        this.character.runAction(this.standUpAnimation);
         this.boundingBox.runAction(this.standUpAnimation);
     },
 
