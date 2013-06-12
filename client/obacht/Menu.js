@@ -1113,6 +1113,7 @@ obacht.Menu.prototype = {
         var layerToolTip = new lime.Layer().setHidden(true);
         menuScene.appendChild(layerToolTip);
 
+        var popupActive = false;
 
         ///////////////////////////////
         // Data                      //
@@ -1181,11 +1182,6 @@ obacht.Menu.prototype = {
             .setPosition(800, 267)
             .setSize(80, 76);
 
-        /** Show Pop-up @event */
-        goog.events.listen(infoButton, ['touchstart', 'mousedown'], function() {
-            layerToolTip.setHidden(false);
-        });
-
         /** Pop-up-Infotext */
         var popupButton = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('code_info_small.png'))
@@ -1200,10 +1196,28 @@ obacht.Menu.prototype = {
             .setSize(280, 150)
             .setAlign('center');
 
+
         /** Hide Pop-up @event */
         goog.events.listen(popupButton, ['touchstart', 'mousedown'], function() {
             layerToolTip.setHidden(true);
+            popupActive = false;
         });
+
+        /** Show Pop-up @event */
+        goog.events.listen(infoButton, ['touchstart', 'mousedown'], function() {
+            if (popupActive === true)
+            {
+                layerToolTip.setHidden(true);
+                popupActive = false;
+            }
+            else
+            {
+                layerToolTip.setHidden(false);
+                popupActive = true;
+            }
+
+        });
+
 
         // Set Creating Player Ready
         obacht.mp.playerReady();
@@ -1252,6 +1266,8 @@ obacht.Menu.prototype = {
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+
+        var popupActive = false;
 
 
         /////////////////////////////
@@ -1311,11 +1327,6 @@ obacht.Menu.prototype = {
             .setPosition(810, 267)
             .setSize(80, 76);
 
-        goog.events.listen(infoButton, ['touchstart', 'mousedown'], function() {
-            /** Show Pop-up display */
-            layerToolTip.setHidden(false);
-        });
-
         /** Pop-up-Infotext */
         var popupButton = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('code_info_big.png'))
@@ -1327,9 +1338,25 @@ obacht.Menu.prototype = {
             .setFontSize(36)
             .setPosition(1036, 295).setSize(280, 150).setAlign('center');
 
+        /** Hide Pop-up @event */
         goog.events.listen(popupButton, ['touchstart', 'mousedown'], function() {
-            /** Hide Pop-up display */
             layerToolTip.setHidden(true);
+            popupActive = false;
+        });
+
+        /** Show Pop-up @event */
+        goog.events.listen(infoButton, ['touchstart', 'mousedown'], function() {
+            if (popupActive === true)
+            {
+                layerToolTip.setHidden(true);
+                popupActive = false;
+            }
+            else
+            {
+                layerToolTip.setHidden(false);
+                popupActive = true;
+            }
+
         });
 
         /** Enter Code Label */
