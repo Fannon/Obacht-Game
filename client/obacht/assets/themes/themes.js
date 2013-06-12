@@ -148,8 +148,8 @@ obacht.themes = {
             vulture: {
                 file: 'trap_vulture.png',
                 position: 'air',
-                width: 170*1.4,
-                height: 90*1.4,
+                width: 170,
+                height: 90,
                 boundingBoxes: [
                     {x: 1, y: 14, width: 64, height: 33},
                     {x: 65, y: 1, width: 76, height: 67},
@@ -161,8 +161,8 @@ obacht.themes = {
             cactus: {
                 file: 'trap_cactus.png',
                 position: 'ground',
-                width: 100*1.2,
-                height: 160*1.2,
+                width: 100,
+                height: 160,
                 boundingBoxes: [
                     {x: 4, y: 15, width: 57, height: 85},
                     {x: 26, y: 100, width: 31, height: 58}
@@ -173,8 +173,8 @@ obacht.themes = {
             snake: {
                 file: 'trap_snake.png',
                 position: 'ground',
-                width: 98*1.3,
-                height: 100*1.3,
+                width: 98,
+                height: 100,
                 boundingBoxes: [
                     {x: 36, y: 1, width: 32, height: 78},
                     {x: 2, y: 78, width: 94, height: 20},
@@ -186,9 +186,11 @@ obacht.themes = {
             hawk: {
                 file: 'trap_hawk.png',
                 position: 'air',
-                width: 110*1.5,
-                height: 104*1.5,
+                width: 110,
+                height: 104,
                 boundingBoxes: [
+//                    {x:0, y:0, width: 55, height: 52},
+//                    {x:55, y:52, width: 55, height: 52}
                     {x: 3, y: 4, width: 74, height: 79},
                     {x: 77, y: 77, width: 31, height: 13},
                     {x: 34, y: 83, width: 13, height: 19}

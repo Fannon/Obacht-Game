@@ -75,11 +75,11 @@ obacht.options = {
         general: {
             width: 235*0.7,
             height: 300*0.7,
-            jumpUpDuration: 0.4,
-            jumpDownDuration: 0.6,
+            jumpUpDuration: 0.4 * 2,
+            jumpDownDuration: 0.6 * 2,
             jumpHeight: 325,
-            crouchDuration: 0.1,
-            crouchWidth: 1.6,
+            crouchDuration: 0.1 * 2,
+            crouchWidth: 1.6 * 2,
             crouchHeight: 0.5,
             maxHealth: 3,
             anchorx: 0,
@@ -132,11 +132,11 @@ obacht.options = {
             rotation: -45
         },
         top: {
-            rotation: 135
+            rotation: -225
         }
     },
     collisions: {
-        checkInterval: 50
+        checkInterval: 10
     },
     bonus: {
         general: {
