@@ -177,7 +177,7 @@ obacht.TrapManager.prototype = {
                 // Player and Trap BoundingBoxes //
                 ///////////////////////////////////
 
-                var playerBoundingBoxes = obacht.options.player.boundingBoxes;
+                var playerBoundingBoxes = self.currentGame.ownPlayer.boundingBoxes;
                 var trapBoundingBoxes = trap.boundingBoxes;
 
 

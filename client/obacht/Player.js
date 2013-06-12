@@ -36,6 +36,8 @@ obacht.Player = function(currentGame, location) {
     this.spritesheet = currentGame.spritesheet;
     this.location = location;
 
+    this.boundingBoxes = obacht.options.player.boundingBoxes;
+
     /** Player Health */
     this.health = 3;
 
@@ -64,6 +66,17 @@ obacht.Player = function(currentGame, location) {
 
     currentGame.layer.appendChild(this.character);
 
+    var bb = this.boundingBoxes[0];
+
+    if (obacht.options.debug.showBoundingBoxes) {
+        var redsquare = new lime.Sprite()
+            .setPosition(this.x + bb.x, this.y + bb.y)
+            .setSize(bb.width, bb.height)
+            .setAnchorPoint(0.5, 1)
+            .setRotation(this.rotation)
+            .setFill(255,0,0,0.5);
+        currentGame.layer.appendChild(redsquare);
+    }
 
 
     ////////////////
