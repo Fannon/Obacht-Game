@@ -1108,10 +1108,8 @@ obacht.Menu.prototype = {
 
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
+        var toolTipLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
-
-        var layerToolTip = new lime.Layer().setHidden(true);
-        menuScene.appendChild(layerToolTip);
 
         var popupActive = false;
 
@@ -1198,22 +1196,26 @@ obacht.Menu.prototype = {
 
 
         /** Hide Pop-up @event */
-        goog.events.listen(popupButton, ['touchstart', 'mousedown'], function() {
-            layerToolTip.setHidden(true);
-            popupActive = false;
-        });
 
         /** Show Pop-up @event */
         goog.events.listen(infoButton, ['touchstart', 'mousedown'], function() {
             if (popupActive === true)
             {
-                layerToolTip.setHidden(true);
                 popupActive = false;
+                menuLayer.removeChild(toolTipLayer);
+                goog.events.listen(popupButton, ['touchstart', 'mousedown'], function() {
+                    menuLayer.removeChild(toolTipLayer);
+                });
+
+
             }
             else
             {
-                layerToolTip.setHidden(false);
                 popupActive = true;
+                menuLayer.appendChild(toolTipLayer);
+                toolTipLayer.appendChild(popupButton);
+                toolTipLayer.appendChild(popupLabel);
+
             }
 
         });
@@ -1227,6 +1229,7 @@ obacht.Menu.prototype = {
         // Draw Scene                //
         ///////////////////////////////
 
+
         menuLayer.appendChild(logoSmall);
         menuLayer.appendChild(character);
         menuLayer.appendChild(backButton);
@@ -1234,8 +1237,7 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(field);
         menuLayer.appendChild(code);
         menuLayer.appendChild(infoButton);
-        layerToolTip.appendChild(popupButton);
-        layerToolTip.appendChild(popupLabel);
+
 
         // set current scene active
         obacht.director.replaceScene(menuScene);
@@ -1265,6 +1267,7 @@ obacht.Menu.prototype = {
 
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
+        var toolTipLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
 
         var popupActive = false;
@@ -1302,7 +1305,6 @@ obacht.Menu.prototype = {
             .setPosition(760, 425)
             .setSize(100, 130);
 
-        var layerToolTip = new lime.Layer().setHidden(true);
 
         /** Small Logo */
         var logoSmall = new lime.Sprite()
@@ -1340,7 +1342,7 @@ obacht.Menu.prototype = {
 
         /** Hide Pop-up @event */
         goog.events.listen(popupButton, ['touchstart', 'mousedown'], function() {
-            layerToolTip.setHidden(true);
+            menuLayer.removeChild(toolTipLayer);
             popupActive = false;
         });
 
@@ -1348,12 +1350,14 @@ obacht.Menu.prototype = {
         goog.events.listen(infoButton, ['touchstart', 'mousedown'], function() {
             if (popupActive === true)
             {
-                layerToolTip.setHidden(true);
+                menuLayer.removeChild(toolTipLayer);
                 popupActive = false;
             }
             else
             {
-                layerToolTip.setHidden(false);
+                menuLayer.appendChild(toolTipLayer);
+                toolTipLayer.appendChild(popupButton);
+                toolTipLayer.appendChild(popupLabel);
                 popupActive = true;
             }
 
@@ -1480,12 +1484,9 @@ obacht.Menu.prototype = {
         // Draw Scene              //
         /////////////////////////////
 
-        menuScene.appendChild(layerToolTip);
         menuLayer.appendChild(logoSmall);
         menuLayer.appendChild(backButton);
         menuLayer.appendChild(infoButton);
-        layerToolTip.appendChild(popupButton);
-        layerToolTip.appendChild(popupLabel);
         menuLayer.appendChild(codeLabel);
         menuLayer.appendChild(field);
 
