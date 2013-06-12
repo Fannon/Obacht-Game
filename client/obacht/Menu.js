@@ -734,11 +734,12 @@ obacht.Menu.prototype = {
             .setFontSize(24)
             .setPosition(640, 250)
             .setSize(830, 24)
-            .setAlign('center');
+            .setAlign('center')
+            .setLineHeight(1.2);
 
 
         var textFabian = new lime.Label()
-            .setText('Fabian Buehler')
+            .setText('Fabian B\u00fchler')
             .setFontFamily('OpenSans')
             .setFontColor('#fff')
             .setFontSize(24)
@@ -756,7 +757,7 @@ obacht.Menu.prototype = {
             .setAlign('center');
 
         var textSimon = new lime.Label()
-            .setText('Simone Heimler')
+            .setText('Simon Heimler')
             .setFontFamily('OpenSans')
             .setFontColor('#fff')
             .setFontSize(24)
@@ -801,7 +802,7 @@ obacht.Menu.prototype = {
             .setAlign('center');
 
         var textClaudia = new lime.Label()
-            .setText('Claudia Koelbl')
+            .setText('Claudia K\u00f6lbl')
             .setFontFamily('OpenSans')
             .setFontColor('#fff')
             .setFontSize(24)
