@@ -86,7 +86,7 @@ obacht.options = {
             anchory: 1
         },
         boundingBoxes: [
-            {x: 0, y: 20, width: 120, height: 205}
+            {x: 0, y: 30, width: 110, height: 180}
         ],
         location: {
             bottom: {
@@ -136,7 +136,7 @@ obacht.options = {
         }
     },
     collisions: {
-        checkInterval: 10
+        checkInterval: 50
     },
     bonus: {
         general: {

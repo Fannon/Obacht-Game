@@ -128,8 +128,9 @@ obacht.TrapManager.prototype = {
             return false;
         }
 
+
         ///////////////////////////////////
-        // Player                       //
+        // Player Position and Size      //
         ///////////////////////////////////
 
         var playerPosition = self.currentGame.ownPlayer.boundingBox.getPosition();
@@ -141,16 +142,16 @@ obacht.TrapManager.prototype = {
         var playerX = playerPosition.x - (playerWidth) / 2;
         var playerY = playerPosition.y - playerHeight;
 
-
         for (var i = 0; i < self.bottomTraps.length; i++) {
 
             if (self.bottomTraps[i] && self.bottomTraps[i].location === 'bottom' && self.bottomTraps[i].type) {
 
-                var trap = self.bottomTraps[i];
 
                 ///////////////////////////////////
-                // Trap                          //
+                // Trap Position and Size        //
                 ///////////////////////////////////
+
+                var trap = self.bottomTraps[i];
 
                 var trapPosition = trap.circle.localToNode(trap.sprite.getPosition(), self.currentGame.layer);
 
@@ -161,8 +162,6 @@ obacht.TrapManager.prototype = {
                 var trapY = trapPosition.ceil().y - trapHeight;
 
                 var trapBoundingBoxes = trap.boundingBoxes;
-
-//                console.log('TrapX: ' + trapX + ' TrapY: ' +  trapY + ' || PlayerX: ' + playerX + ' PlayerY: ' +  playerY);
 
 
                 ///////////////////////////////////
