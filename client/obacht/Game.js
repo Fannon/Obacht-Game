@@ -140,9 +140,8 @@ obacht.Game = function() {
 
         setTimeout(function() {
             // Remove CountDown Layer from Game Sene
-            if(obacht.currentGame.countdownLayer) {
-                obacht.gameScene.removeChild(obacht.currentGame.countdownLayer);
-            }
+            obacht.gameScene.removeChild(self.countdownLayer);
+
         }, obacht.options.gameplay.countdownInterval);
 
     }, obacht.options.gameplay.countdownInterval * 3);
