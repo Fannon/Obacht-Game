@@ -193,8 +193,7 @@ obacht.TrapManager.prototype = {
                         playerY < trapY + trapHeight &&
                         trapY < playerY + playerHeight === true) {
 
-//                        self.removeTrap(trap);
-                        trap.setFill(0,255,0,0.5);
+                        self.removeTrap(trap);
                         return true;
                     }
                 }

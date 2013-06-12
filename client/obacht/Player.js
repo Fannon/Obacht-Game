@@ -36,7 +36,10 @@ obacht.Player = function(currentGame, location) {
     this.spritesheet = currentGame.spritesheet;
     this.location = location;
 
+    /** Player BoundingBoxes Array */
     this.boundingBoxes = obacht.options.player.boundingBoxes;
+    var bb = this.boundingBoxes[0];
+
 
     /** Player Health */
     this.health = 3;
@@ -66,18 +69,17 @@ obacht.Player = function(currentGame, location) {
 
     currentGame.layer.appendChild(this.character);
 
-    var bb = this.boundingBoxes[0];
+    /** Character Bounding Box (Square) */
+    this.boundingBox = new lime.Sprite()
+        .setPosition(this.x + bb.x, this.y + bb.y)
+        .setSize(bb.width, bb.height)
+        .setAnchorPoint(0.5, 1)
+        .setRotation(this.rotation);
 
     if (obacht.options.debug.showBoundingBoxes) {
-        var redsquare = new lime.Sprite()
-            .setPosition(this.x + bb.x, this.y + bb.y)
-            .setSize(bb.width, bb.height)
-            .setAnchorPoint(0.5, 1)
-            .setRotation(this.rotation)
-            .setFill(255,0,0,0.5);
-        currentGame.layer.appendChild(redsquare);
+        this.boundingBox.setFill(255,0,0,0.5);
+        currentGame.layer.appendChild(this.boundingBox);
     }
-
 
     ////////////////
     /* ANIMATIONS */
@@ -85,7 +87,8 @@ obacht.Player = function(currentGame, location) {
 
     this.runSprites = new lime.animation.KeyframeAnimation();
     for (var i = 1; i <= 16; i++) {
-        this.runSprites.addFrame(self.spritesheet.getFrame('character_' + goog.string.padNumber(i, 4) + '.png'));
+        this.runSprites
+            .addFrame(self.spritesheet.getFrame('character_' + goog.string.padNumber(i, 4) + '.png'));
     }
     this.run();
 
@@ -93,15 +96,51 @@ obacht.Player = function(currentGame, location) {
     this.jumpSprites.looping = false;
     this.jumpSprites.delay = (obacht.options.player.general.jumpUpDuration + obacht.options.player.general.jumpDownDuration) / 12;
     for (var j = 1; j <= 13; j++) {
-        this.jumpSprites.addFrame(self.spritesheet.getFrame('character_jump_' + goog.string.padNumber(j, 4) + '.png'));
+        this.jumpSprites
+            .addFrame(self.spritesheet.getFrame('character_jump_' + goog.string.padNumber(j, 4) + '.png'));
     }
 
-    this.jumpUp = new lime.animation.MoveBy(0, this.jumpHeight).setDuration(obacht.options.player.general.jumpUpDuration).setEasing(lime.animation.Easing.EASEOUT);
-    this.jumpDown = this.jumpUp.reverse().setDuration(obacht.options.player.general.jumpDownDuration).setEasing(lime.animation.Easing.EASEIN);
-    this.jumpAnimation = new lime.animation.Sequence(this.jumpUp, this.jumpDown);
+    this.jumpUpAnimation = function(object) {
+        var jumpUp = new lime.animation
+            .MoveBy(0, this.jumpHeight)
+            .setDuration(obacht.options.player.general.jumpUpDuration)
+            .setEasing(lime.animation.Easing.EASEOUT);
+        object.runAction(jumpUp);
+    };
 
-    this.crouchAnimation = new lime.animation.ScaleTo(obacht.options.player.general.crouchWidth, obacht.options.player.general.crouchHeight).setDuration(obacht.options.player.general.crouchDuration);
-    this.standUpAnimation = new lime.animation.ScaleTo(1, 1).setDuration(obacht.options.player.general.crouchDuration);
+
+    this.jumpUp = new lime.animation
+        .MoveBy(0, this.jumpHeight)
+        .setDuration(obacht.options.player.general.jumpUpDuration)
+        .setEasing(lime.animation.Easing.EASEOUT);
+
+    this.jumpDownAnimation = function(object) {
+        var jumpUp = new lime.animation
+            .MoveBy(0, this.jumpHeight)
+            .setDuration(obacht.options.player.general.jumpUpDuration)
+            .setEasing(lime.animation.Easing.EASEOUT);
+        var jumpDown = jumpUp
+            .reverse()
+            .setDuration(obacht.options.player.general.jumpDownDuration)
+            .setEasing(lime.animation.Easing.EASEIN);
+        object.runAction(jumpDown);
+    };
+
+    this.jumpDown = this.jumpUp
+        .reverse()
+        .setDuration(obacht.options.player.general.jumpDownDuration)
+        .setEasing(lime.animation.Easing.EASEIN);
+
+    this.jumpAnimation = new lime.animation
+        .Sequence(this.jumpUp, this.jumpDown);
+
+    this.crouchAnimation = new lime.animation
+        .ScaleTo(obacht.options.player.general.crouchWidth, obacht.options.player.general.crouchHeight)
+        .setDuration(obacht.options.player.general.crouchDuration);
+
+    this.standUpAnimation = new lime.animation
+        .ScaleTo(1, 1)
+        .setDuration(obacht.options.player.general.crouchDuration);
 
 
 
@@ -182,6 +221,11 @@ obacht.Player.prototype = {
     jump: function() {
         'use strict';
         this.character.runAction(this.jumpAnimation);
+        this.boundingBox.runAction(this.jumpAnimation);
+//        this.jumpUpAnimation(this.character);
+//        this.jumpUpAnimation(this.boundingBox);
+
+
         this.runSprites.stop();
         this.character.runAction(this.jumpSprites);
     },
@@ -191,7 +235,11 @@ obacht.Player.prototype = {
      */
     crouch: function() {
         'use strict';
+//        this.jumpDownAnimation(this.character);
+//        this.jumpDownAnimation(this.boundingBox);
+
         this.character.runAction(this.crouchAnimation);
+        this.boundingBox.runAction(this.crouchAnimation);
     },
 
     /**
@@ -200,6 +248,7 @@ obacht.Player.prototype = {
     standUp: function() {
         'use strict';
         this.character.runAction(this.standUpAnimation);
+        this.boundingBox.runAction(this.standUpAnimation);
     },
 
     /**
