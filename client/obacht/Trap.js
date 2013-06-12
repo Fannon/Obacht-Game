@@ -102,7 +102,8 @@ obacht.Trap = function(currentGame, type, location) {
                 .setSize(bb.width, bb.height)
                 .setPosition(this.x + bb.x, this.y + bb.y)
                 .setFill(255,0,0,0.5)
-                .setAnchorPoint(0,0);
+                .setRotation(this.rotation)
+                .setAnchorPoint(0.5, 1);
             self.circle.appendChild(redsquare);
         }
     }
