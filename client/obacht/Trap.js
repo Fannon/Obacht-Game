@@ -88,11 +88,9 @@ obacht.Trap = function(currentGame, type, location) {
     /* ANIMATIONS */
     ////////////////
 
-    this.rotate = new lime.animation.Loop(
-            new lime.animation.RotateBy(360)
-                .setDuration(obacht.options.world.spinDuration.front * 3)
-                .setEasing(lime.animation.Easing.LINEAR)
-    );
+    this.rotate = new lime.animation.RotateBy(90)
+        .setDuration(obacht.options.world.spinDuration.front * 0.8)
+        .setEasing(lime.animation.Easing.LINEAR);
 
     this.circle.runAction(this.rotate);
 

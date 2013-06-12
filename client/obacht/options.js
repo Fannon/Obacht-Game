@@ -124,7 +124,7 @@ obacht.options = {
     trap: {
         general: {
             groundPosition: 1005,
-            airPosition: 1100,
+            airPosition: 1110,
             clearTimeout: 5000
         },
         bottom: {
