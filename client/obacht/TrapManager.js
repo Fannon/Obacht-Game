@@ -59,6 +59,10 @@ obacht.TrapManager = function(currentGame, world, player) {
         var trap = self.createTrap(data.type, 'top');
         trap.i = self.topTraps.length;
         self.topTraps[trap.i] = trap;
+
+        // Last Trap on Enemy World
+        obacht.mp.lastTrap = new Date().getTime();
+
     });
 
     /**

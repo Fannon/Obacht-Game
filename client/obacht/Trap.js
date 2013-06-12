@@ -18,8 +18,6 @@ obacht.Trap = function(currentGame, type, location) {
     log.debug('New Trap(): ' + type);
 
 
-
-
     ////////////////
     /* ATTRIBUTES */
     ////////////////
