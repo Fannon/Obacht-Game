@@ -23,10 +23,10 @@ obacht.TrapManager = function(currentGame, world, player) {
     var self = this;
     this.currentGame = currentGame;
 
-    /** Trap Array on Top World */
+    /** Trap Array for top World */
     this.topTraps = [];
 
-    /** Trap Array on Bottom World */
+    /** Trap Array for bottom World */
     this.bottomTraps = [];
 
 
@@ -60,9 +60,8 @@ obacht.TrapManager = function(currentGame, world, player) {
         self.topTraps[trap.i] = trap;
     });
 
-
     /**
-     * bottom Traps Event Listener
+     * Bottom Traps Event Listener
      * @event
      */
     obacht.mp.events.subscribe('bottom_trap', function(data) {
@@ -226,9 +225,13 @@ obacht.TrapManager.prototype = {
      */
     destruct: function() {
         "use strict";
+
+        this.topTraps = [];
+        this.bottomTraps = [];
+
         obacht.mp.events.clear('top_trap');
         obacht.mp.events.clear('bottom_trap');
-        clearInterval(this.cleanUpTrapsInterval);
+
     }
 };
 

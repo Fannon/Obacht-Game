@@ -20,14 +20,21 @@ obacht.Trap = function(currentGame, type, location) {
 
 
 
+
     ////////////////
     /* ATTRIBUTES */
     ////////////////
 
+    var self = this;
     this.type = type;
     this.location = location;
     this.layer = currentGame.layer;
+
+    /** Trap Data from themes.js */
     this.trapDetail = obacht.themes[obacht.mp.roomDetail.theme].traps[type];
+
+    /** Trap BoundingBoxes */
+    this.boundingBoxes = obacht.themes[obacht.mp.roomDetail.theme].traps[type].boundingBoxes;
 
 
     if (this.location === 'bottom') {
@@ -82,6 +89,24 @@ obacht.Trap = function(currentGame, type, location) {
     this.layer.appendChild(this.circle);
     this.circle.appendChild(this.sprite);
 
+    /////////////////////
+    /* BOUNDING BOXES  */
+    /////////////////////
+
+    // Debugging: Bounding Boxes:
+    for (var j = 0; j < this.boundingBoxes.length; j++) {
+
+        var bb = this.boundingBoxes[j];
+
+        if (obacht.options.debug.showBoundingBoxes) {
+            var redsquare = new lime.Sprite()
+                .setSize(bb.width, bb.height)
+                .setPosition(this.x + bb.x, this.y + bb.y)
+                .setFill(255,0,0,0.5)
+                .setAnchorPoint(0,0);
+            self.circle.appendChild(redsquare);
+        }
+    }
 
 
     ////////////////

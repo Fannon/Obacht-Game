@@ -13,7 +13,8 @@ obacht.options = {
     debug: {
         logLevel: 3,
         fastStart: false,
-        displayFps: true
+        displayFps: true,
+        showBoundingBoxes: true
     },
     graphics: {
         VIEWPORT_WIDTH: 1280,
