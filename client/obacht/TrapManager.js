@@ -41,7 +41,9 @@ obacht.TrapManager = function(currentGame, world, player) {
         var collision = self.checkColl(self.currentGame.layer, player, self.bottomTraps);
         if (collision) {
             log.debug('Player Collision with Trap!');
-//            currentGame.ownPlayer.loseHealth();
+            if (!obacht.options.debug.invincible) {
+                currentGame.ownPlayer.loseHealth();
+            }
             log.info('Kollusiom!');
         }
     }, player, obacht.options.collisions.checkInterval);

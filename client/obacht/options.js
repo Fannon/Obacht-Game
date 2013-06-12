@@ -11,10 +11,11 @@ goog.provide('obacht.options');
  */
 obacht.options = {
     debug: {
-        logLevel: 1,
+        logLevel: 5,
         fastStart: false,
         displayFps: true,
-        showBoundingBoxes: true
+        showBoundingBoxes: false,
+        invincible: false
     },
     graphics: {
         VIEWPORT_WIDTH: 1280,

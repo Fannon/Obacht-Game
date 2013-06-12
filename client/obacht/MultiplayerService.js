@@ -371,13 +371,13 @@ obacht.MultiplayerService.prototype = {
         var now = new Date().getTime();
         var diff = now - this.lastTrap;
 
-        log.info('Time between Enemy Traps: ' + diff);
+        log.debug('Time between Enemy Traps: ' + diff);
 
         var timeout = 0;
 
         if (diff < obacht.options.gameplay.trapMinInterval) {
             timeout = obacht.options.gameplay.delayTrap;
-            log.info('Broadcasting Delayed Trap!');
+            log.debug('Broadcasting Delayed Trap!');
         }
 
         setTimeout(function() {
