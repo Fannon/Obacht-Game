@@ -4,7 +4,6 @@ goog.provide('obacht.Trap');
 
 goog.require('lime.Sprite');
 goog.require('lime.Circle');
-goog.require('lime.animation.Loop');
 goog.require('lime.animation.RotateBy');
 
 
