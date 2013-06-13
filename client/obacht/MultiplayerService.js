@@ -66,6 +66,7 @@ obacht.MultiplayerService = function(serverUrl, serverPort, timeout) {
     setTimeout(function() {
         if (!self.connected) {
             log.error('NO CONNECTION TO SERVER!');
+            obacht.showPopup('Failed to connect to server.');
         }
     }, timeout);
 
@@ -252,6 +253,7 @@ obacht.MultiplayerService = function(serverUrl, serverPort, timeout) {
      */
     this.socket.on('disconnect', function() {
         log.warn('DISCONNECTED');
+        obacht.showPopup('Disconnected from server.');
     });
 
 };
@@ -286,19 +288,24 @@ obacht.MultiplayerService.prototype = {
         "use strict";
         log.debug('>> newRoom()');
 
-        var roomDetails = {
-            theme: theme,
-            options: options,
-            closed: closed,
-            creatingPlayerHealth: obacht.options.player.general.maxHealth,
-            joiningPlayerHealth: obacht.options.player.general.maxHealth
-        };
+        if (!this.connected) {
+            log.error('newRoom(): Not connected to a server!');
+            obacht.showPopup('Not connected to a server!');
+        } else {
+            var roomDetails = {
+                theme: theme,
+                options: options,
+                closed: closed,
+                creatingPlayerHealth: obacht.options.player.general.maxHealth,
+                joiningPlayerHealth: obacht.options.player.general.maxHealth
+            };
 
-        if (friend) {
-            roomDetails.friend = friend;
+            if (friend) {
+                roomDetails.friend = friend;
+            }
+
+            this.socket.emit('new_room', roomDetails);
         }
-
-        this.socket.emit('new_room', roomDetails);
     },
 
     /**
@@ -309,11 +316,17 @@ obacht.MultiplayerService.prototype = {
      */
     joinRoom: function(pin, closed) {
         "use strict";
-        log.debug('>> joinRoom(' + pin + ')');
-        this.socket.emit('join_room', {
-            pin: pin,
-            closed: closed
-        });
+
+        if (!this.connected) {
+            log.error('joinRoom(): Not connected to a server!');
+            obacht.showPopup('Not connected to a server!');
+        } else {
+            log.debug('>> joinRoom(' + pin + ')');
+            this.socket.emit('join_room', {
+                pin: pin,
+                closed: closed
+            });
+        }
     },
 
     /**
@@ -321,8 +334,15 @@ obacht.MultiplayerService.prototype = {
      */
     findMatch: function () {
         "use strict";
-        log.debug('>> findMatch()');
-        this.socket.emit('find_match');
+
+        if (!this.connected) {
+            log.error('findMatch(): Not connected to a server!');
+            obacht.showPopup('Not connected to a server!');
+        } else {
+            log.debug('>> findMatch()');
+            this.socket.emit('find_match');
+        }
+
     },
 
     /**
