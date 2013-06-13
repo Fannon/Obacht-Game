@@ -142,7 +142,7 @@ obacht.World.prototype = {
     },
 
     /**
-     * Sequences 3 rotation animations.
+     * Loops a sequence of 3 rotation animations.
      * @param  {object} object      Is a Lime.js sprite on which the animation is run.
      * @param  {integer} rotation1  Indicates by which degree the sprite is rotated in the 1st and 3rd animation.
      * @param  {integer} rotation2  Indicates by which degree the sprite is rotated in the 2nd animation.
@@ -153,16 +153,19 @@ obacht.World.prototype = {
         "use strict";
         object.runAction(new lime.animation.Loop(
             new lime.animation.Sequence(
+
                 new lime.animation
                     .RotateBy(rotation1)
                     .setDuration(duration1)
                     .setEasing(lime.animation.Easing.LINEAR)
                     .enableOptimizations(),
+
                 new lime.animation
                     .RotateBy(rotation2)
                     .setDuration(duration2)
                     .setEasing(lime.animation.Easing.LINEAR)
                     .enableOptimizations(),
+
                 new lime.animation
                     .RotateBy(rotation1)
                     .setDuration(duration1)
@@ -173,7 +176,7 @@ obacht.World.prototype = {
     },
 
     /**
-     * Sequences 3 rotation animations.
+     * Loops a sequences of 3 rotation animations.
      * @param  {object} object      Is a Lime.js sprite on which the animation is run.
      * @param  {integer} rotation1  Indicates by which degree the sprite is rotated in the 1st animation.
      * @param  {integer} rotation2  Indicates by which degree the sprite is rotated in the 2nd and 3rd animation.
@@ -184,16 +187,19 @@ obacht.World.prototype = {
         "use strict";
         object.runAction(new lime.animation.Loop(
             new lime.animation.Sequence(
+
                 new lime.animation
                     .RotateBy(rotation1)
                     .setDuration(duration1)
                     .setEasing(lime.animation.Easing.LINEAR)
                     .enableOptimizations(),
+
                 new lime.animation
                     .RotateBy(rotation2)
                     .setDuration(duration2)
                     .setEasing(lime.animation.Easing.LINEAR)
                     .enableOptimizations(),
+
                 new lime.animation
                     .RotateBy(rotation2)
                     .setDuration(duration2)
