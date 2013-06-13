@@ -76,11 +76,15 @@ obacht.Player = function(currentGame, location) {
     currentGame.layer.appendChild(this.character);
 
     /** Character Bounding Box (Square) */
-    this.boundingBox = new lime.Sprite()
-        .setPosition(this.x + bb.x, this.y - bb.y)
-        .setSize(bb.width, bb.height)
-        .setAnchorPoint(0.5, 1)
-        .setRotation(this.rotation);
+    if (this.location === 'bottom') {
+
+        this.boundingBox = new lime.Sprite()
+            .setPosition(this.x + bb.x, this.y - bb.y)
+            .setSize(bb.width, bb.height)
+            .setAnchorPoint(0.5, 1)
+            .setRotation(this.rotation);
+    }
+
 
     // Set fill if showBoundingBoxes is set true in debug mode.
     if (obacht.options.debug.showBoundingBoxes && location === 'bottom') {
@@ -131,7 +135,10 @@ obacht.Player = function(currentGame, location) {
 
     // Adds targets to jump sequence. Has to be done like this when using multiple targets.
     this.jumpAnimation.addTarget(this.character);
-    this.jumpAnimation.addTarget(this.boundingBox);
+
+    if (this.location === 'bottom') {
+        this.jumpAnimation.addTarget(this.boundingBox);
+    }
 
     /** Crouch animation for bounding box */
     this.crouchAnimation = new lime.animation
@@ -234,7 +241,10 @@ obacht.Player.prototype = {
         'use strict';
 
         this.character.runAction(this.crouchAnimation);
-        this.boundingBox.runAction(this.crouchAnimation);
+
+        if (this.location === 'bottom') {
+            this.boundingBox.runAction(this.crouchAnimation);
+        }
     },
 
     /**
@@ -243,9 +253,11 @@ obacht.Player.prototype = {
     standUp: function() {
         'use strict';
 
-
         this.character.runAction(this.standUpAnimation);
-        this.boundingBox.runAction(this.standUpAnimation);
+
+        if (this.location === 'bottom') {
+            this.boundingBox.runAction(this.standUpAnimation);
+        }
     },
 
     /**
