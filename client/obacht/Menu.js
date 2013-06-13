@@ -44,7 +44,7 @@ obacht.Menu.prototype = {
     /**
      * Main Menu Scene
      */
-    mainMenuScene: function() {
+    mainMenuScene: function(reset) {
         "use strict";
         var self = this;
 
@@ -53,6 +53,10 @@ obacht.Menu.prototype = {
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+
+        if (reset) {
+            obacht.cleanUp();
+        }
 
 
         ///////////////////////////////
@@ -1865,8 +1869,7 @@ obacht.Menu.prototype = {
     resetMenu: function() {
         "use strict";
         // Reset Variables and Event Listeners
-        obacht.cleanUp();
-        this.mainMenuScene();
+        this.mainMenuScene(true);
     },
 
     /**

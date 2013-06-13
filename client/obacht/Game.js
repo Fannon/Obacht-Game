@@ -110,6 +110,10 @@ obacht.Game = function() {
     /// 1 ///
     setTimeout(function() {
         self.setCountdownStatus('one');
+    }, obacht.options.gameplay.countdownInterval * 2);
+
+    /// Obacht! ///
+    setTimeout(function() {
 
         /** Time the game started, used for calculation current Distance */
         self.timer = new Date();
@@ -117,11 +121,6 @@ obacht.Game = function() {
         // Start spinning the worlds
         self.ownWorld.spin();
         self.enemyWorld.spin();
-
-    }, obacht.options.gameplay.countdownInterval * 2);
-
-    /// Obacht! ///
-    setTimeout(function() {
 
         self.setCountdownStatus('obacht_start');
 
@@ -259,7 +258,9 @@ obacht.Game.prototype = {
 
         this.layer.appendChild(this.quitGame);
         goog.events.listen(this.quitGame, ['touchstart', 'mousedown'], function() {
-            obacht.menu.resetMenu();
+            obacht.mp.leaveRoom();
+            obacht.cleanUp();
+            obacht.menu.mainMenuScene();
         });
     },
 
