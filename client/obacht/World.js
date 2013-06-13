@@ -21,8 +21,8 @@ obacht.World = function(currentGame, type) {
     "use strict";
 
     this.theme = currentGame.theme;
-    this.gameLayer = currentGame.layer;
     this.spritesheet = currentGame.spritesheet;
+    this.gameLayer = currentGame.layer;
 
 
     /////////////////////////////////////////
@@ -47,9 +47,9 @@ obacht.World = function(currentGame, type) {
 
 
 
-    ///////////////////////
-    // LIME.JS - OBJECTS //
-    ///////////////////////
+    /////////////
+    /* SPRITES */
+    /////////////
 
     this.clouds1 = new lime.Sprite()
         .setSize(obacht.options.world.size.clouds, obacht.options.world.size.clouds)
@@ -117,7 +117,6 @@ obacht.World = function(currentGame, type) {
     this.gameLayer.appendChild(this.landscape2);
     this.gameLayer.appendChild(this.ground1);
     this.gameLayer.appendChild(this.ground2);
-
 };
 
 
@@ -129,7 +128,8 @@ obacht.World = function(currentGame, type) {
 obacht.World.prototype = {
 
     /**
-     * Spin the World
+     * Spin the World.
+     * Calls createAnimation1 or createAnimation2 for every sprite.
      */
     spin: function() {
         "use strict";
@@ -141,20 +141,31 @@ obacht.World.prototype = {
         this.createAnimation2(this.clouds2, this.rotation4, this.rotation3, 0, obacht.options.world.spinDuration.clouds);
     },
 
+    /**
+     * Loops a sequence of 3 rotation animations.
+     * @param  {object} object      Is a Lime.js sprite on which the animation is run.
+     * @param  {integer} rotation1  Indicates by which degree the sprite is rotated in the 1st and 3rd animation.
+     * @param  {integer} rotation2  Indicates by which degree the sprite is rotated in the 2nd animation.
+     * @param  {integer} duration1  Indicates the duration of the 1st and 3rd animation.
+     * @param  {integer} duration2  Indicates the duration of the 2nd animation.
+     */
     createAnimation1: function(object, rotation1, rotation2, duration1, duration2) {
         "use strict";
         object.runAction(new lime.animation.Loop(
             new lime.animation.Sequence(
+
                 new lime.animation
                     .RotateBy(rotation1)
                     .setDuration(duration1)
                     .setEasing(lime.animation.Easing.LINEAR)
                     .enableOptimizations(),
+
                 new lime.animation
                     .RotateBy(rotation2)
                     .setDuration(duration2)
                     .setEasing(lime.animation.Easing.LINEAR)
                     .enableOptimizations(),
+
                 new lime.animation
                     .RotateBy(rotation1)
                     .setDuration(duration1)
@@ -164,20 +175,31 @@ obacht.World.prototype = {
         ));
     },
 
+    /**
+     * Loops a sequences of 3 rotation animations.
+     * @param  {object} object      Is a Lime.js sprite on which the animation is run.
+     * @param  {integer} rotation1  Indicates by which degree the sprite is rotated in the 1st animation.
+     * @param  {integer} rotation2  Indicates by which degree the sprite is rotated in the 2nd and 3rd animation.
+     * @param  {integer} duration1  Indicates the duration of the 1st animation.
+     * @param  {integer} duration2  Indicates the duration of the 2nd and 3rd animation.
+     */
     createAnimation2: function(object, rotation1, rotation2, duration1, duration2) {
         "use strict";
         object.runAction(new lime.animation.Loop(
             new lime.animation.Sequence(
+
                 new lime.animation
                     .RotateBy(rotation1)
                     .setDuration(duration1)
                     .setEasing(lime.animation.Easing.LINEAR)
                     .enableOptimizations(),
+
                 new lime.animation
                     .RotateBy(rotation2)
                     .setDuration(duration2)
                     .setEasing(lime.animation.Easing.LINEAR)
                     .enableOptimizations(),
+
                 new lime.animation
                     .RotateBy(rotation2)
                     .setDuration(duration2)
