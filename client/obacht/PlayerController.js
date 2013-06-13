@@ -51,6 +51,7 @@ obacht.PlayerController = function() {
     /** Indicates if the player is currently jumping */
     this.isJumping = false;
 
+    /** Sets up event subscription for jumping. @event */
     goog.events.listen(this.tapAreaTop, ['touchstart', 'mousedown'], function(e) {
         if (self.isJumping === true) {
             return false;
@@ -69,6 +70,7 @@ obacht.PlayerController = function() {
     /** Indicates if the player is currently crouching */
     this.isCrouching = false;
 
+    /** Sets up event subscription for crouching. @event */
     goog.events.listen(this.tapAreaBottom, ['touchstart', 'mousedown'], function(e) {
         if (self.isCrouching === false) {
             self.crouch();
@@ -78,6 +80,7 @@ obacht.PlayerController = function() {
         }
     });
 
+    /** Sets up event subscription for standing up. @event */
     goog.events.listen(this.tapAreaPuffer, ['touchend', 'touchcancel', 'mouseup'], function(e) {
         if (self.isCrouching === true) {
             self.standUp();
@@ -90,6 +93,7 @@ obacht.PlayerController = function() {
     /** Safety are for touch events that leave the screen and don't cause a touchend or touchcancel event */
     this.tapToleranceArea = obacht.options.playerController.tapToleranceArea;
 
+    /** Sets up event subscription on safety area for standing up. @event */
     goog.events.listen(this.tapAreaBottom, ['touchmove', 'mousemove'], function(e) {
         self.tapPositionX = Math.round(e.position.x);
         self.tapPositionY = Math.round(e.position.y);

@@ -57,6 +57,11 @@ obacht.Player = function(currentGame, location) {
     }
 
 
+
+    /////////////
+    /* SPRITES */
+    /////////////
+
     /** Character Graphic */
     this.character = new lime.Sprite()
         .setFill(this.spritesheet.getFrame('character_0001.png'))
@@ -70,7 +75,6 @@ obacht.Player = function(currentGame, location) {
     // Appends character sprite to game layer.
     currentGame.layer.appendChild(this.character);
 
-
     /** Character Bounding Box (Square) */
     this.boundingBox = new lime.Sprite()
         .setPosition(this.x + bb.x, this.y - bb.y)
@@ -78,7 +82,7 @@ obacht.Player = function(currentGame, location) {
         .setAnchorPoint(0.5, 1)
         .setRotation(this.rotation);
 
-
+    // Set fill if showBoundingBoxes is set true in debug mode.
     if (obacht.options.debug.showBoundingBoxes && location === 'bottom') {
         this.boundingBox.setFill(0,0,255,0.5);
         currentGame.layer.appendChild(this.boundingBox);
