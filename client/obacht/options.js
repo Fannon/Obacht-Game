@@ -11,11 +11,11 @@ goog.provide('obacht.options');
  */
 obacht.options = {
     debug: {
-        logLevel: 5,
+        logLevel: 0,
         fastStart: false,
         displayFps: true,
-        showBoundingBoxes: false,
-        invincible: false
+        showBoundingBoxes: true,
+        invincible: true
     },
     graphics: {
         VIEWPORT_WIDTH: 1280,
@@ -35,15 +35,20 @@ obacht.options = {
     },
     gameplay: {
         countdownInterval: 1000,
+
         initialSpeedFactor: 1.0,
         decrementSpeedFactorTime: 5000,
         decrementSpeedFactor: 0.01,
+
         generateBoniMinInterval: 4000,
         generateBoniMaxInterval: 10000,
+
         generateTrapsMinInterval: 1000,
-        generateTrapsMaxInterval: 4000,
+        generateTrapsMaxInterval: 5000,
+
         trapMinInterval: 700,
         delayTrap: 700,
+
         distanceOffset: 0
     },
     world: {
@@ -109,21 +114,24 @@ obacht.options = {
         size: 120,
         y: 20,
 
-        left: {
-            x: 880,
-            active: false,
-            type: 'none'
-        },
-        center: {
-            x: 1010,
-            active: false,
-            type: 'none'
-        },
-        right: {
-            x: 1140,
-            active: false,
-            type: 'none'
-        }
+        startAtX: 1140,
+        decrementX: 130
+//
+//        left: {
+//            x: 880,
+//            active: false,
+//            type: 'none'
+//        },
+//        center: {
+//            x: 1010,
+//            active: false,
+//            type: 'none'
+//        },
+//        right: {
+//            x: 1140,
+//            active: false,
+//            type: 'none'
+//        }
     },
     trap: {
         general: {

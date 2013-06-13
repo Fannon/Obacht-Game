@@ -40,11 +40,10 @@ obacht.TrapManager = function(currentGame, world, player) {
     lime.scheduleManager.scheduleWithDelay(function() {
         var collision = self.checkColl(self.currentGame.layer, player, self.bottomTraps);
         if (collision) {
-            log.debug('Player Collision with Trap!');
             if (!obacht.options.debug.invincible) {
                 currentGame.ownPlayer.loseHealth();
             }
-            log.info('Kollusiom!');
+            log.debug('Kollusiom!');
         }
     }, player, obacht.options.collisions.checkInterval);
 
@@ -110,7 +109,6 @@ obacht.TrapManager.prototype = {
     removeTrap: function(trap) {
         "use strict";
 
-        log.debug('Trap Removed.');
         this.currentGame.layer.removeChild(trap.circle);
 
         if (trap.location === 'top') {

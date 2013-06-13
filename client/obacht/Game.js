@@ -150,7 +150,6 @@ obacht.Game = function() {
 
     obacht.mp.events.subscribe('bonus', function(type) {
         self.bonusButton = new obacht.Bonus(self, type);
-        log.debug('PERFORMANCE: GAME - CURRENT DOM ELEMENTS: ' + document.getElementsByTagName('*').length);
     });
 
     obacht.mp.events.subscribe('room_detail', function() {

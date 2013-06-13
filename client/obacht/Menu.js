@@ -271,7 +271,7 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
         /** Arrow Next Scene */
@@ -354,7 +354,7 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
         /** Arrow Previous Scene */
@@ -435,7 +435,7 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
         /** Arrow Previous Scene */
@@ -517,7 +517,7 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
         /** Arrow Previous Scene */
@@ -599,7 +599,7 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
         /** Arrow Previous Scene */
@@ -680,7 +680,7 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
         /** Arrow Previous Scene */
@@ -763,7 +763,7 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
         /** Arrow Previous Scene */
@@ -909,7 +909,7 @@ obacht.Menu.prototype = {
         /** Back Button */
         var backButton = new lime.Sprite().setFill(obacht.spritesheet.getFrame('back.png')).setPosition(75, 75).setSize(80, 96);
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
 
@@ -989,7 +989,7 @@ obacht.Menu.prototype = {
         /** Back Button */
         var backButton = new lime.Sprite().setFill(obacht.spritesheet.getFrame('back.png')).setPosition(75, 75).setSize(80, 96);
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
 
@@ -1117,7 +1117,7 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
         /** Select a World Label */
@@ -1769,7 +1769,7 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
         /** You Win */
@@ -1840,7 +1840,7 @@ obacht.Menu.prototype = {
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
             obacht.mp.events.clear('room_detail');
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
 
@@ -1860,6 +1860,17 @@ obacht.Menu.prototype = {
     /////////////////////////////
     // Helper Functions        //
     /////////////////////////////
+
+    /**
+     * Back to Main Menu
+     * Helper Function to clean up before going back to MainMenu     *
+     */
+    resetMenu: function() {
+        "use strict";
+        // Reset Variables and Event Listeners
+        obacht.cleanUp();
+        this.mainMenuScene();
+    },
 
     /**
      * Adds (left) Padding to the PIN Number

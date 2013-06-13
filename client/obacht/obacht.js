@@ -148,7 +148,7 @@ obacht.cleanUp = function() {
         obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);
     }
 
-    for (var i = 1; i < 9999; i++) {
+    for (var i = 1; i < 99999; i++) {
         window.clearInterval(i);
     }
 };

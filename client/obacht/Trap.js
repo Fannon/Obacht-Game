@@ -15,9 +15,6 @@ goog.require('lime.animation.RotateBy');
 obacht.Trap = function(currentGame, type, location) {
     "use strict";
 
-    log.debug('New Trap(): ' + type);
-
-
     ////////////////
     /* ATTRIBUTES */
     ////////////////
@@ -47,9 +44,8 @@ obacht.Trap = function(currentGame, type, location) {
             this.x = obacht.options.trap.general.groundPosition;
             this.y = -obacht.options.trap.general.groundPosition;
         }
-    }
 
-    if (this.location === 'top') {
+    } else {
 
         this.rotation = obacht.options.trap.top.rotation;
         this.circleX = obacht.options.world.top.x;
@@ -64,7 +60,6 @@ obacht.Trap = function(currentGame, type, location) {
         }
 
     }
-
 
 
     /////////////////////
@@ -85,17 +80,12 @@ obacht.Trap = function(currentGame, type, location) {
     this.circle.appendChild(this.sprite);
     this.layer.appendChild(this.circle);
 
+
     /////////////////////
     /* BOUNDING BOXES  */
     /////////////////////
 
-
     if (this.location === 'bottom') {
-
-        var x = this.x - (this.trapDetail.width / 2);
-        var y = this.y;
-
-
 
         // Debugging: Bounding Boxes:
         for (var j = 0; j < this.boundingBoxes.length; j++) {

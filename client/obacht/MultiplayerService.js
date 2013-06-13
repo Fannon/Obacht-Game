@@ -182,10 +182,10 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.socket.on('receive_bonus', function (data) {
         if (data.winner_pid === self.pid) {
-            //log.debug('You won Bonus: ' + data.type);
+            log.debug('You won Bonus: ' + data.type);
             self.events.publish('receive_bonus', data.type, true);
         } else {
-            //log.debug('You lost Bonus: ' + data.type);
+            log.debug('You lost Bonus: ' + data.type);
             self.events.publish('receive_bonus', data.type, false);
         }
     });
@@ -196,10 +196,10 @@ obacht.MultiplayerService = function(serverUrl) {
     this.socket.on('trap', function (data) {
         //log.debug('Trap received: ' + data.type);
         if (data.target === self.pid) {
-            log.debug('Trap on bottom world.');
+//            log.debug('Trap on bottom world: ' + data.type);
             self.events.publish('bottom_trap', data);
         } else {
-            log.debug('Trap on top world.');
+//            log.debug('Trap on top world: ' + data.type);
             data.data.distance += obacht.options.gameplay.distanceOffset;
             self.events.publish('top_trap', data);
         }
