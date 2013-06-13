@@ -259,7 +259,7 @@ obacht.Game.prototype = {
 
         this.layer.appendChild(this.quitGame);
         goog.events.listen(this.quitGame, ['touchstart', 'mousedown'], function() {
-            obacht.menu.mainMenuScene();
+            obacht.menu.resetMenu();
         });
     },
 
