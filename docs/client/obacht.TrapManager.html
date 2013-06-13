@@ -218,14 +218,14 @@
         <dl>
             
 <dt>
-    <h4 class="name" id="traps"><span class="type-signature"></span>traps<span class="type-signature"></span></h4>
+    <h4 class="name" id="bottomTraps"><span class="type-signature"></span>bottomTraps<span class="type-signature"></span></h4>
     
     
 </dt>
 <dd>
     
     <div class="description">
-        Trap Array
+        Trap Array for bottom World
     </div>
     
     
@@ -254,7 +254,61 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        TrapManager.js, line 25
+        TrapManager.js, line 30
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="topTraps"><span class="type-signature"></span>topTraps<span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Trap Array for top World
+    </div>
+    
+    
+    
+
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        TrapManager.js, line 27
     </li></ul></dd>
     
     
@@ -278,7 +332,7 @@
         <dl>
             
 <dt>
-    <h4 class="name" id="cleanUpTraps"><span class="type-signature"></span>cleanUpTraps<span class="signature">(traps)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="checkColl"><span class="type-signature"></span>checkColl<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
     
     
 </dt>
@@ -286,7 +340,98 @@
     
     
     <div class="description">
-        Removes all Traps that are beyond the player
+        Checks for Collisions between bottom Player and bottom Traps
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        TrapManager.js, line 126
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    True if Collision, false
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">boolean</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="createTrap"><span class="type-signature"></span>createTrap<span class="signature">(type, location)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Creates a new Trap and adds a Timer to remove it after a while
     </div>
     
 
@@ -320,13 +465,13 @@
 	
         <tr>
             
-                <td class="name"><code>traps</code></td>
+                <td class="name"><code>type</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">String</span>
 
 
             
@@ -336,7 +481,30 @@
             
             
             
-            <td class="description last">Traps Array</td>
+            <td class="description last">Type of the Trap</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>location</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Location of the Trap (bottom|top)</td>
         </tr>
 	
 	
@@ -367,7 +535,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        TrapManager.js, line 139
+        TrapManager.js, line 88
     </li></ul></dd>
     
     
@@ -436,7 +604,124 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        TrapManager.js, line 252
+        TrapManager.js, line 214
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="removeTrap"><span class="type-signature"></span>removeTrap<span class="signature">(trap)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Removes the Trap from the Layer and the DataStructures
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>trap</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Trap Object</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        TrapManager.js, line 109
     </li></ul></dd>
     
     
@@ -483,7 +768,7 @@
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Tue Jun 11 2013 08:34:23 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Thu Jun 13 2013 10:02:20 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

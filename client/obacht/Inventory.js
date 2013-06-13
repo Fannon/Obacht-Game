@@ -22,8 +22,6 @@ obacht.Inventory = function(currentGame) {
     "use strict";
 
     var self = this;
-
-    this.gameLayer = currentGame.layer;
     this.spritesheet = currentGame.spritesheet;
 
 
@@ -58,7 +56,7 @@ obacht.Inventory = function(currentGame) {
             .setRadius(15);
 
         // TODO: Use PlayerController Layer (?)
-        currentGame.layer.appendChild(this.trays[i].button);
+        obacht.playerController.layer.appendChild(this.trays[i].button);
 
     }
 
@@ -84,8 +82,6 @@ obacht.Inventory = function(currentGame) {
         log.debug('receive bonus: Type: ' + type + ' with Success: ' + success);
         if (success) {
             self.fillTray(type);
-        } else {
-            log.debug('To late for Bonus!');
         }
     });
 

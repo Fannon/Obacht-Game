@@ -182,10 +182,10 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.socket.on('receive_bonus', function (data) {
         if (data.winner_pid === self.pid) {
-            log.debug('You won Bonus: ' + data.type);
+//            log.debug('You won Bonus: ' + data.type);
             self.events.publish('receive_bonus', data.type, true);
         } else {
-            log.debug('You lost Bonus: ' + data.type);
+//            log.debug('You lost Bonus: ' + data.type);
             self.events.publish('receive_bonus', data.type, false);
         }
     });
@@ -370,8 +370,6 @@ obacht.MultiplayerService.prototype = {
         var self = this;
         var now = new Date().getTime();
         var diff = now - this.lastTrap;
-
-        log.debug('Time between Enemy Traps: ' + diff);
 
         var timeout = 0;
 

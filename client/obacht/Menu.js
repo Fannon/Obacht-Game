@@ -50,9 +50,6 @@ obacht.Menu.prototype = {
 
         var sound = "on";
 
-        // Reset Variables and Event Listeners
-        obacht.cleanUp();
-
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
