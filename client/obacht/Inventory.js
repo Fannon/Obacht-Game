@@ -103,9 +103,6 @@ obacht.Inventory.prototype = {
             log.debug('Trowing Trap from Inventory at ' + tray + ': ' + type);
             obacht.mp.throwTrap(type, obacht.mp.enemy);
             this.setTray(tray, 'none');
-
-            // Last Trap on Enemy World
-            obacht.mp.lastTrap = new Date().getTime();
         } else {
             log.debug('Cannot Throw Trap at ' + tray + ': Tray empty.');
         }

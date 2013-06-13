@@ -46,9 +46,6 @@ obacht.options = {
         generateTrapsMinInterval: 1000,
         generateTrapsMaxInterval: 5000,
 
-        trapMinInterval: 700,
-        delayTrap: 700,
-
         distanceOffset: 0
     },
     world: {
@@ -113,25 +110,8 @@ obacht.options = {
     inventory: {
         size: 120,
         y: 20,
-
         startAtX: 1140,
         decrementX: 130
-//
-//        left: {
-//            x: 880,
-//            active: false,
-//            type: 'none'
-//        },
-//        center: {
-//            x: 1010,
-//            active: false,
-//            type: 'none'
-//        },
-//        right: {
-//            x: 1140,
-//            active: false,
-//            type: 'none'
-//        }
     },
     trap: {
         general: {
@@ -160,7 +140,7 @@ obacht.options = {
         }
     },
     "server": {
-        "url": "http://obacht.informatik.hs-augsburg.de:8080"
-//      "url": "http://192.168.2.100:8080/"
+//        "url": "http://obacht.informatik.hs-augsburg.de:8080"
+      "url": "http://192.168.2.100:8080/"
     }
 };

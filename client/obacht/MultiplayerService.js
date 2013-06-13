@@ -35,8 +35,7 @@ obacht.MultiplayerService = function(serverUrl) {
     /** Socket.io */
     this.socket = io.connect(this.serverUrl); // Set up Socket-Connection to Server
 
-    /** Delay Trap by some time if this is set to true */
-    this.lastTrap = new Date().getTime();
+
 
     var self = this;
 
@@ -368,27 +367,16 @@ obacht.MultiplayerService.prototype = {
         "use strict";
 
         var self = this;
-        var now = new Date().getTime();
-        var diff = now - this.lastTrap;
 
-        var timeout = 0;
-
-        if (diff < obacht.options.gameplay.trapMinInterval) {
-            timeout = obacht.options.gameplay.delayTrap;
-            log.debug('Broadcasting Delayed Trap!');
+        if (obacht.currentGame) {
+            self.socket.emit('trap', {
+                type: type,
+                target: target,
+                data: {
+                    distance: obacht.currentGame.getDistance()
+                }
+            });
         }
-
-        setTimeout(function() {
-            if (obacht.currentGame) {
-                self.socket.emit('trap', {
-                    type: type,
-                    target: target,
-                    data: {
-                        distance: obacht.currentGame.getDistance()
-                    }
-                });
-            }
-        }, timeout);
 
     },
 
