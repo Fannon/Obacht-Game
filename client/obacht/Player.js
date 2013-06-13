@@ -84,48 +84,56 @@ obacht.Player = function(currentGame, location) {
     }
 
 
+
     ////////////////
     /* ANIMATIONS */
     ////////////////
 
+    /** Sprite animation for running */
     this.runSprites = new lime.animation.KeyframeAnimation();
     for (var i = 1; i <= 16; i++) {
         this.runSprites
             .addFrame(self.spritesheet.getFrame('character_' + goog.string.padNumber(i, 4) + '.png'));
     }
 
+    // Runs running animation initially
     this.run();
 
+    /** Sprite animation for jumping */
     this.jumpSprites = new lime.animation.KeyframeAnimation();
     this.jumpSprites.looping = false;
-    this.jumpSprites.delay = (obacht.options.player.general.jumpUpDuration + obacht.options.player.general.jumpDownDuration) / 9;
-    for (var j = 1; j <= 13; j++) {
+    this.jumpSprites.delay = (obacht.options.player.general.jumpUpDuration + obacht.options.player.general.jumpDownDuration) / 8;
+    for (var j = 3; j <= 11; j++) {
         this.jumpSprites
             .addFrame(self.spritesheet.getFrame('character_jump_' + goog.string.padNumber(j, 4) + '.png'));
     }
 
+    /** Jump up animation */
     this.jumpUp = new lime.animation
         .MoveBy(0, this.jumpHeight)
         .setDuration(obacht.options.player.general.jumpUpDuration)
         .setEasing(lime.animation.Easing.EASEOUT);
 
+    /** Jump down animation */
     this.jumpDown = this.jumpUp
         .reverse()
         .setDuration(obacht.options.player.general.jumpDownDuration)
         .setEasing(lime.animation.Easing.EASEIN);
 
+    /** Sequences jump up and jump down animation */
     this.jumpAnimation = new lime.animation
         .Sequence(this.jumpUp, this.jumpDown);
 
+    // Adds targets to jump sequence. Has to be done like this when using multiple targets.
     this.jumpAnimation.addTarget(this.character);
     this.jumpAnimation.addTarget(this.boundingBox);
 
-
-
+    /** Crouch animation for bounding box */
     this.crouchAnimation = new lime.animation
         .ScaleTo(obacht.options.player.general.crouchWidth, obacht.options.player.general.crouchHeight)
         .setDuration(obacht.options.player.general.crouchDuration);
 
+    /** Stand up animation for bounding box */
     this.standUpAnimation = new lime.animation
         .ScaleTo(1, 1)
         .setDuration(obacht.options.player.general.crouchDuration);
@@ -136,20 +144,14 @@ obacht.Player = function(currentGame, location) {
     /* SUBSCRIBE TO EVENTS */
     /////////////////////////
 
-    goog.events.listen(this.jumpSprites, 'stop', function() {
-        if(obacht.playerController) {
-            self.run();
-            self.jumpSprites.currentFrame_=-1; // work-around for lime.js-bug with keyframe animations.
-        }
-    });
-
-
     try {
 
         /** STOP-EVENT FOR OPTIMIZED JUMPING @event */
         goog.events.listen(this.jumpAnimation, 'stop', function() {
             if(obacht.playerController) {
                 obacht.playerController.isJumping = false;
+                self.run();
+                self.jumpSprites.currentFrame_=-1; // work-around for lime.js-bug with keyframe animations.
             }
         });
 
@@ -194,9 +196,9 @@ obacht.Player = function(currentGame, location) {
 
 
 
-//////////////////////////////
-// Player Actions (Logic)   //
-//////////////////////////////
+////////////////////////////
+/* PLAYER ACTIONS (LOGIC) */
+////////////////////////////
 
 obacht.Player.prototype = {
 
@@ -209,26 +211,19 @@ obacht.Player.prototype = {
     },
 
     /**
-     * Runs the jumping animation on the character.
+     * Runs the jumping animation on the character and the bounding box.
      * Stops the running animation.
      */
     jump: function() {
         'use strict';
 
-        var self = this;
-        // this.character.runAction(this.jumpAnimation);
-        // this.boundingBox.runAction(this.jumpAnimation);
-
-        setTimeout(function() {
-            self.jumpAnimation.play();
-        }, (obacht.options.player.general.jumpUpDuration + obacht.options.player.general.jumpDownDuration) / 13 * 4 * 1000);
-
+        this.jumpAnimation.play();
         this.runSprites.stop();
         this.character.runAction(this.jumpSprites);
     },
 
     /**
-     * Runs the crouching animation on the character.
+     * Runs the crouching animation on the character and the bounding box.
      */
     crouch: function() {
         'use strict';
@@ -238,7 +233,7 @@ obacht.Player.prototype = {
     },
 
     /**
-     * Runs the standUp animation on the character.
+     * Runs the standUp animation on the character and the bounding box.
      */
     standUp: function() {
         'use strict';
