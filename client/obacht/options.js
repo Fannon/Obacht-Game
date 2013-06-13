@@ -14,7 +14,7 @@ obacht.options = {
         logLevel: 0,
         fastStart: false,
         displayFps: true,
-        showBoundingBoxes: false,
+        showBoundingBoxes: true,
         invincible: true
     },
     graphics: {
@@ -91,7 +91,7 @@ obacht.options = {
             anchory: 1
         },
         boundingBoxes: [
-            {x: 0, y: 30, width: 110, height: 180}
+            {x: 0, y: 20, width: 110, height: 190}
         ],
         location: {
             bottom: {
@@ -127,7 +127,7 @@ obacht.options = {
         }
     },
     collisions: {
-        checkInterval: 50
+        checkInterval: 10
     },
     bonus: {
         general: {
