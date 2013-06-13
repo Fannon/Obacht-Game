@@ -14,32 +14,38 @@ goog.require('goog.pubsub.PubSub');
  * @author Simon Heimler
  * @constructor
  */
-obacht.MultiplayerService = function(serverUrl) {
+obacht.MultiplayerService = function(serverUrl, serverPort) {
     "use strict";
 
     //////////////////////////////
     // Model                    //
     //////////////////////////////
 
-    this.serverUrl = serverUrl;
-    /** Room PIN */
-    this.pin = false;
-    /** Player ID */
-    this.pid = false;
-    /** RoomDetail Object */
-    this.roomDetail = {};
-    /** Friend Player, if connected to one */
-    this.friend = false;
-    /** Enemy Player, if game running */
-    this.enemy = false;
-    /** Socket.io */
-    this.socket = io.connect(this.serverUrl); // Set up Socket-Connection to Server
-
-
-
     var self = this;
 
-    log.debug("Connecting to Multiplayer Server on " + serverUrl);
+    /** Room PIN */
+    this.pin = false;
+
+    /** Player ID */
+    this.pid = false;
+
+    /** RoomDetail Object */
+    this.roomDetail = {};
+
+    /** Friend Player, if connected to one */
+    this.friend = false;
+
+    /** Enemy Player, if game running */
+    this.enemy = false;
+
+    /** Socket.io */
+    this.socket = io.connect(serverUrl, {
+        port: serverPort,
+        'connect timeout': 1
+    });
+
+    log.debug("Connecting to Multiplayer Server on " + serverUrl + " on Port " + serverPort);
+
 
     /**
      * Event Publisher/Subscriber (http://closure-library.googlecode.com/svn/docs/class_goog_pubsub_PubSub.html)
@@ -223,6 +229,13 @@ obacht.MultiplayerService = function(serverUrl) {
     this.socket.on('get_rooms', function (data) {
         log.debug('Getting Rooms Data (Debugging)');
         log.dir(data);
+    });
+
+    /**
+     * Socket.io Disconnect Event
+     */
+    this.socket.on('disconnect', function() {
+        log.warn('DISCONNECTED');
     });
 
 };

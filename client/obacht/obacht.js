@@ -47,7 +47,7 @@ obacht.start = function() {
     //////////////////////////////
 
     /** Multiplayer Service Instance */
-    obacht.mp = new obacht.MultiplayerService(obacht.options.server.url);
+    obacht.mp = new obacht.MultiplayerService(obacht.options.server.url, obacht.options.server.port);
 
     /** LimeJs Director Instance */
     obacht.director = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
@@ -108,6 +108,7 @@ obacht.start = function() {
     });
 
     obacht.menu.mainMenuScene();
+
 
 };
 
