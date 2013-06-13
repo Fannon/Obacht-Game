@@ -328,7 +328,7 @@ obacht.Menu.prototype = {
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
             .setFontSize(40)
-            .setPosition(500, 650)
+            .setPosition(550, 680)
             .setSize(370, 80)
             .setAlign('center');
 
@@ -337,15 +337,15 @@ obacht.Menu.prototype = {
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
             .setFontSize(40)
-            .setPosition(780, 250)
-            .setSize(370, 80)
+            .setPosition(710, 240)
+            .setSize(400, 80)
             .setAlign('center');
 
-//        /** Smartphone with Fingers */
-//        var smartphone = new lime.Sprite()
-//            .setFill(obacht.spritesheet
-//                .getFrame('manualJump.png'))
-//            .setPosition(640, 490).setSize(910, 466);
+        /** Smartphone **/
+        var smartphone = new lime.Sprite()
+            .setFill(obacht.spritesheet
+            .getFrame('manualWorlds.png'))
+            .setPosition(640, 440).setSize(710.6, 525.8);
 
         /** Back Button - Door */
         var backButton = new lime.Sprite()
@@ -379,7 +379,7 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(backButton);
         menuLayer.appendChild(arrowPrevious);
         menuLayer.appendChild(arrowNext);
-        //menuLayer.appendChild(smartphone);
+        menuLayer.appendChild(smartphone);
         menuLayer.appendChild(textWorlds1);
         menuLayer.appendChild(textWorlds2);
 
