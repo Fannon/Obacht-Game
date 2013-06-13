@@ -142,6 +142,7 @@ obacht.options = {
     "server": {
         "url": "http://obacht.informatik.hs-augsburg.de",
 //      "url": "http://192.168.2.100/",
-        port: 8080
+        port: 8080,
+        connectionTimeout: 3000
     }
 };

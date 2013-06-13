@@ -14,7 +14,7 @@ goog.require('goog.pubsub.PubSub');
  * @author Simon Heimler
  * @constructor
  */
-obacht.MultiplayerService = function(serverUrl, serverPort) {
+obacht.MultiplayerService = function(serverUrl, serverPort, timeout) {
     "use strict";
 
     //////////////////////////////
@@ -22,6 +22,9 @@ obacht.MultiplayerService = function(serverUrl, serverPort) {
     //////////////////////////////
 
     var self = this;
+
+    /** Connected to Server */
+    this.connected = false;
 
     /** Room PIN */
     this.pin = false;
@@ -41,11 +44,8 @@ obacht.MultiplayerService = function(serverUrl, serverPort) {
     /** Socket.io */
     this.socket = io.connect(serverUrl, {
         port: serverPort,
-        'connect timeout': 1
+        'connect timeout': timeout
     });
-
-    log.debug("Connecting to Multiplayer Server on " + serverUrl + " on Port " + serverPort);
-
 
     /**
      * Event Publisher/Subscriber (http://closure-library.googlecode.com/svn/docs/class_goog_pubsub_PubSub.html)
@@ -55,6 +55,21 @@ obacht.MultiplayerService = function(serverUrl, serverPort) {
      */
     this.events = new goog.pubsub.PubSub();
 
+
+    //////////////////////////////
+    // Connection Handling      //
+    //////////////////////////////
+
+    log.debug("Connecting to Multiplayer Server on " + serverUrl + " on Port " + serverPort);
+
+    /** Checks if Connection to Server could be made within Timeout Interval */
+    setTimeout(function() {
+        if (!self.connected) {
+            log.error('NO CONNECTION TO SERVER!');
+        }
+    }, timeout);
+
+
     //////////////////////////////
     // Communication Events     //
     //////////////////////////////
@@ -63,11 +78,12 @@ obacht.MultiplayerService = function(serverUrl, serverPort) {
      * Player is connected, else print out the error
      */
     this.socket.on('connected', function (data) {
+        self.connected = true;
         if (!data.error) {
             log.debug('Successful Connected');
             self.pid = data.pid;
         } else {
-            log.debug('Error: ' + data.error);
+            log.error('Connection Error: ' + data.error);
         }
     });
 
