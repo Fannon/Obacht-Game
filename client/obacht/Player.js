@@ -67,6 +67,7 @@ obacht.Player = function(currentGame, location) {
 //        .setRenderer(obacht.renderer)
         .setQuality(obacht.options.graphics.characterQuality);
 
+    // Appends character sprite to game layer.
     currentGame.layer.appendChild(this.character);
 
 
