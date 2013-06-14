@@ -3,6 +3,8 @@
 // Obacht Main Namespace
 goog.provide('obacht');
 
+goog.require('goog.userAgent');
+
 // Lime.js Requirements
 goog.require('lime.Director');
 goog.require('lime.Renderer.DOM');
@@ -33,7 +35,10 @@ obacht.start = function() {
     "use strict";
 
     log = new obacht.Logger(obacht.options.debug.logLevel);
-    obacht.checkDevices();
+
+    //////////////////////////////
+    // Model                    //
+    //////////////////////////////
 
     /** Global Spritesheet */
     obacht.spritesheet = new lime.SpriteSheet('assets/gfx/globalSpritesheet.png', lime.ASSETS.globalSpritesheet.json, lime.parser.JSON);
@@ -41,10 +46,7 @@ obacht.start = function() {
     /** Menu Instance */
     obacht.menu = new obacht.Menu();
 
-
-    //////////////////////////////
-    // Model                    //
-    //////////////////////////////
+    obacht.device = undefined;
 
     /** Multiplayer Service Instance */
     obacht.mp = new obacht.MultiplayerService(obacht.options.server.url, obacht.options.server.connectionTimeout);
@@ -106,6 +108,12 @@ obacht.start = function() {
             obacht.cleanUp();
         }
     });
+
+    //////////////////////////////
+    // INITIALIZING             //
+    //////////////////////////////
+
+    obacht.checkDevices();
 
     obacht.menu.mainMenuScene();
 
@@ -231,10 +239,23 @@ obacht.showPopup = function(sceneName, msg) {
 /**
  * Checks for different Devices and Capabilities
  * Adjusts Options and introduces some Fixes according to current Device
+ *
+ * Uses http://docs.closure-library.googlecode.com/git/closure_goog_useragent_useragent.js.html
  */
 obacht.checkDevices = function() {
     "use strict";
-    // TODO: Check for Devices
+
+    obacht.device = goog.userAgent;
+
+    log.info('Running on OS: ' + obacht.device.PLATFORM);
+
+    if (obacht.device.MOBILE) {
+        log.info('Mobile Browser detected');
+    } else {
+        log.info('Desktop Browser detected');
+    }
+
+
 };
 
 /**
