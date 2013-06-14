@@ -62,6 +62,7 @@ obacht.MultiplayerService = function(serverUrl, timeout) {
 
     log.debug("Connecting to Multiplayer Server on " + serverUrl);
 
+
     /** Checks if Connection to Server could be made within Timeout Interval */
     if (timeout) {
         setTimeout(function() {
