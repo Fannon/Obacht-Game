@@ -182,16 +182,16 @@ obacht.TrapManager.prototype = {
 
                     var bb = trapBoundingBoxes[y];
 
-                    trapX = trapX + bb.x;
-                    trapY = trapY + bb.y;
+                    var trapTempX = trapX + bb.x;
+                    var trapTempY = trapY + bb.y;
 
                     trapWidth = bb.width;
                     trapHeight = bb.height;
 
-                    if (playerX < trapX + trapWidth &&
-                        trapX < playerX + playerWidth &&
-                        playerY < trapY + trapHeight &&
-                        trapY < playerY + playerHeight === true) {
+                    if (playerX < trapTempX + trapWidth &&
+                        trapTempX < playerX + playerWidth &&
+                        playerY < trapTempY + trapHeight &&
+                        trapTempY < playerY + playerHeight === true) {
 
                         self.removeTrap(trap);
                         return true;
