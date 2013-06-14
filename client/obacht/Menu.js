@@ -93,7 +93,7 @@ obacht.Menu.prototype = {
         goog.events.listen(playButton, ['touchstart', 'mousedown'], function() {
             log.debug('connected?' + obacht.mp.socket.socket.connected);
             if (!obacht.mp.socket.socket.connected) {
-                obacht.showPopup('Failed to connect to server.');
+                obacht.showPopup('mainMenuScene', 'Failed to connect to server.');
             } else {
                 self.newGameScene();
             }
@@ -1576,7 +1576,7 @@ obacht.Menu.prototype = {
                 });
             } else {
                 log.warn('PIN not valid');
-                obacht.showPopup('Pin not valid!');
+                obacht.showPopup('joinGameScene', 'Pin not valid!');
             }
         }
     },

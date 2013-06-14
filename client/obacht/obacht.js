@@ -170,12 +170,28 @@ obacht.setBackground = function(theme) {
 /**
  * Draws a PopUp / Alert Box over the current Scene (Game or Menu)
  *
+ * @param {Object} scene Object of the last Scene
  * @param {String} msg Text of the message
  */
-obacht.showPopup = function(msg) {
+obacht.showPopup = function(sceneName, msg) {
     "use strict";
 
-    var scene = obacht.director.getCurrentScene();
+    var self = this;
+
+    if (sceneName) {
+        this.sceneName = sceneName;
+    } else {
+        this.sceneName = 'mainMenuScene';
+    }
+
+    var popupScene = new lime.Scene();
+    var popupLayer = new lime.Layer();
+    popupScene.appendChild(popupLayer);
+
+    var popupBackground = new lime.Sprite()
+        .setFill('assets/gfx/bg_clean.jpg')
+        .setPosition(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
+        .setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
 
     var popupSprite = new lime.Sprite()
         .setFill(obacht.spritesheet.getFrame('error.png'))
@@ -191,10 +207,24 @@ obacht.showPopup = function(msg) {
         .setPosition(525, 335)
         .setRotation(17);
 
+    var popupButton = new lime.Sprite()
+        .setFill(obacht.spritesheet.getFrame('button_okay.png'))
+        .setPosition(534, 540)
+        .setSize(174, 160);
+
     log.debug('Incoming error from server:' + msg);
 
-    scene.appendChild(popupSprite);
-    scene.appendChild(popupLabel);
+    popupLayer.appendChild(popupBackground);
+    popupLayer.appendChild(popupSprite);
+    popupLayer.appendChild(popupLabel);
+    popupLayer.appendChild(popupButton);
+
+    obacht.director.replaceScene(popupScene);
+
+    /** Hide Pop-up @event */
+    goog.events.listen(popupButton, ['touchstart', 'mousedown'], function() {
+        obacht.menu[self.sceneName]();
+    });
 };
 
 /**
