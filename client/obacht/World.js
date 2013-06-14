@@ -53,7 +53,6 @@ obacht.World = function(currentGame, type) {
 
     this.clouds1 = new lime.Sprite()
         .setSize(obacht.options.world.size.clouds, obacht.options.world.size.clouds)
-//        .setFill(this.spritesheet.getFrame('clouds.png'))
         .setFill(this.theme.world.files.clouds)
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
@@ -63,7 +62,6 @@ obacht.World = function(currentGame, type) {
 
     this.clouds2 = new lime.Sprite()
         .setSize(obacht.options.world.size.clouds, obacht.options.world.size.clouds)
-//        .setFill(this.spritesheet.getFrame('clouds.png'))
         .setFill(this.theme.world.files.clouds)
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
@@ -73,7 +71,6 @@ obacht.World = function(currentGame, type) {
 
     this.landscape1 = new lime.Sprite()
         .setSize(obacht.options.world.size.landscape, obacht.options.world.size.landscape)
-//        .setFill(this.spritesheet.getFrame('landscapeB.png'))
         .setFill(this.theme.world.files.landscape)
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
@@ -83,7 +80,6 @@ obacht.World = function(currentGame, type) {
 
     this.landscape2 = new lime.Sprite()
         .setSize(obacht.options.world.size.landscape, obacht.options.world.size.landscape)
-//        .setFill(this.spritesheet.getFrame('landscapeB.png'))
         .setFill(this.theme.world.files.landscape)
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
@@ -93,7 +89,6 @@ obacht.World = function(currentGame, type) {
 
     this.ground1 = new lime.Sprite()
         .setSize(obacht.options.world.size.ground, obacht.options.world.size.ground)
-//        .setFill(this.spritesheet.getFrame('ground.png'))
         .setFill(this.theme.world.files.ground)
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
@@ -103,7 +98,6 @@ obacht.World = function(currentGame, type) {
 
     this.ground2 = new lime.Sprite()
         .setSize(obacht.options.world.size.ground, obacht.options.world.size.ground)
-//        .setFill(this.spritesheet.getFrame('ground.png'))
         .setFill(this.theme.world.files.ground)
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
@@ -143,11 +137,12 @@ obacht.World.prototype = {
 
     /**
      * Loops a sequence of 3 rotation animations.
+     *
      * @param  {object} object      Is a Lime.js sprite on which the animation is run.
-     * @param  {integer} rotation1  Indicates by which degree the sprite is rotated in the 1st and 3rd animation.
-     * @param  {integer} rotation2  Indicates by which degree the sprite is rotated in the 2nd animation.
-     * @param  {integer} duration1  Indicates the duration of the 1st and 3rd animation.
-     * @param  {integer} duration2  Indicates the duration of the 2nd animation.
+     * @param  {Number} rotation1  Indicates by which degree the sprite is rotated in the 1st and 3rd animation.
+     * @param  {Number} rotation2  Indicates by which degree the sprite is rotated in the 2nd animation.
+     * @param  {Number} duration1  Indicates the duration of the 1st and 3rd animation.
+     * @param  {Number} duration2  Indicates the duration of the 2nd animation.
      */
     createAnimation1: function(object, rotation1, rotation2, duration1, duration2) {
         "use strict";
@@ -177,11 +172,12 @@ obacht.World.prototype = {
 
     /**
      * Loops a sequences of 3 rotation animations.
+     *
      * @param  {object} object      Is a Lime.js sprite on which the animation is run.
-     * @param  {integer} rotation1  Indicates by which degree the sprite is rotated in the 1st animation.
-     * @param  {integer} rotation2  Indicates by which degree the sprite is rotated in the 2nd and 3rd animation.
-     * @param  {integer} duration1  Indicates the duration of the 1st animation.
-     * @param  {integer} duration2  Indicates the duration of the 2nd and 3rd animation.
+     * @param  {Number} rotation1  Indicates by which degree the sprite is rotated in the 1st animation.
+     * @param  {Number} rotation2  Indicates by which degree the sprite is rotated in the 2nd and 3rd animation.
+     * @param  {Number} duration1  Indicates the duration of the 1st animation.
+     * @param  {Number} duration2  Indicates the duration of the 2nd and 3rd animation.
      */
     createAnimation2: function(object, rotation1, rotation2, duration1, duration2) {
         "use strict";
