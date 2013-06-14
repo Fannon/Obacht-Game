@@ -11,11 +11,11 @@ goog.provide('obacht.options');
  */
 obacht.options = {
     debug: {
-        logLevel: 5,
+        logLevel: 0,
         fastStart: false,
         displayFps: true,
-        showBoundingBoxes: false,
-        invincible: false
+        showBoundingBoxes: true,
+        invincible: true
     },
     graphics: {
         VIEWPORT_WIDTH: 1280,
@@ -35,15 +35,17 @@ obacht.options = {
     },
     gameplay: {
         countdownInterval: 1000,
+
         initialSpeedFactor: 1.0,
         decrementSpeedFactorTime: 5000,
         decrementSpeedFactor: 0.01,
+
         generateBoniMinInterval: 4000,
         generateBoniMaxInterval: 10000,
+
         generateTrapsMinInterval: 1000,
-        generateTrapsMaxInterval: 4000,
-        trapMinInterval: 700,
-        delayTrap: 700,
+        generateTrapsMaxInterval: 5000,
+
         distanceOffset: 0
     },
     world: {
@@ -78,10 +80,10 @@ obacht.options = {
         general: {
             width: 205,
             height: 240,
-            jumpUpDuration: 0.4 * 2,
-            jumpDownDuration: 0.6 * 2,
+            jumpUpDuration: 0.4,
+            jumpDownDuration: 0.6,
             jumpHeight: 325,
-            crouchDuration: 0.1 * 2,
+            crouchDuration: 0.1,
             crouchWidth: 1.6,
             crouchHeight: 0.5,
             maxHealth: 3,
@@ -89,7 +91,7 @@ obacht.options = {
             anchory: 1
         },
         boundingBoxes: [
-            {x: 0, y: 30, width: 110, height: 180}
+            {x: 0, y: 20, width: 110, height: 190}
         ],
         location: {
             bottom: {
@@ -108,22 +110,8 @@ obacht.options = {
     inventory: {
         size: 120,
         y: 20,
-
-        left: {
-            x: 880,
-            active: false,
-            type: 'none'
-        },
-        center: {
-            x: 1010,
-            active: false,
-            type: 'none'
-        },
-        right: {
-            x: 1140,
-            active: false,
-            type: 'none'
-        }
+        startAtX: 1140,
+        decrementX: 130
     },
     trap: {
         general: {
@@ -139,7 +127,7 @@ obacht.options = {
         }
     },
     collisions: {
-        checkInterval: 50
+        checkInterval: 10
     },
     bonus: {
         general: {
@@ -152,7 +140,9 @@ obacht.options = {
         }
     },
     "server": {
-        "url": "http://obacht.informatik.hs-augsburg.de:8080"
-//      "url": "http://192.168.2.100:8080/"
+        "url": "http://obacht.informatik.hs-augsburg.de",
+//      "url": "http://192.168.2.100/",
+        port: 8080,
+        connectionTimeout: 3000
     }
 };

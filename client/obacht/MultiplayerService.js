@@ -14,33 +14,38 @@ goog.require('goog.pubsub.PubSub');
  * @author Simon Heimler
  * @constructor
  */
-obacht.MultiplayerService = function(serverUrl) {
+obacht.MultiplayerService = function(serverUrl, serverPort, timeout) {
     "use strict";
 
     //////////////////////////////
     // Model                    //
     //////////////////////////////
 
-    this.serverUrl = serverUrl;
-    /** Room PIN */
-    this.pin = false;
-    /** Player ID */
-    this.pid = false;
-    /** RoomDetail Object */
-    this.roomDetail = {};
-    /** Friend Player, if connected to one */
-    this.friend = false;
-    /** Enemy Player, if game running */
-    this.enemy = false;
-    /** Socket.io */
-    this.socket = io.connect(this.serverUrl); // Set up Socket-Connection to Server
-
-    /** Delay Trap by some time if this is set to true */
-    this.lastTrap = new Date().getTime();
-
     var self = this;
 
-    log.debug("Connecting to Multiplayer Server on " + serverUrl);
+    /** Connected to Server */
+    this.connected = false;
+
+    /** Room PIN */
+    this.pin = false;
+
+    /** Player ID */
+    this.pid = false;
+
+    /** RoomDetail Object */
+    this.roomDetail = {};
+
+    /** Friend Player, if connected to one */
+    this.friend = false;
+
+    /** Enemy Player, if game running */
+    this.enemy = false;
+
+    /** Socket.io */
+    this.socket = io.connect(serverUrl, {
+        port: serverPort,
+        'connect timeout': timeout
+    });
 
     /**
      * Event Publisher/Subscriber (http://closure-library.googlecode.com/svn/docs/class_goog_pubsub_PubSub.html)
@@ -50,6 +55,22 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.events = new goog.pubsub.PubSub();
 
+
+    //////////////////////////////
+    // Connection Handling      //
+    //////////////////////////////
+
+    log.debug("Connecting to Multiplayer Server on " + serverUrl + " on Port " + serverPort);
+
+    /** Checks if Connection to Server could be made within Timeout Interval */
+    setTimeout(function() {
+        if (!self.connected) {
+            log.error('NO CONNECTION TO SERVER!');
+            obacht.showPopup('Failed to connect to server.');
+        }
+    }, timeout);
+
+
     //////////////////////////////
     // Communication Events     //
     //////////////////////////////
@@ -58,11 +79,12 @@ obacht.MultiplayerService = function(serverUrl) {
      * Player is connected, else print out the error
      */
     this.socket.on('connected', function (data) {
+        self.connected = true;
         if (!data.error) {
             log.debug('Successful Connected');
             self.pid = data.pid;
         } else {
-            log.debug('Error: ' + data.error);
+            log.error('Connection Error: ' + data.error);
         }
     });
 
@@ -182,10 +204,10 @@ obacht.MultiplayerService = function(serverUrl) {
      */
     this.socket.on('receive_bonus', function (data) {
         if (data.winner_pid === self.pid) {
-            //log.debug('You won Bonus: ' + data.type);
+//            log.debug('You won Bonus: ' + data.type);
             self.events.publish('receive_bonus', data.type, true);
         } else {
-            //log.debug('You lost Bonus: ' + data.type);
+//            log.debug('You lost Bonus: ' + data.type);
             self.events.publish('receive_bonus', data.type, false);
         }
     });
@@ -196,10 +218,10 @@ obacht.MultiplayerService = function(serverUrl) {
     this.socket.on('trap', function (data) {
         //log.debug('Trap received: ' + data.type);
         if (data.target === self.pid) {
-            log.debug('Trap on bottom world.');
+//            log.debug('Trap on bottom world: ' + data.type);
             self.events.publish('bottom_trap', data);
         } else {
-            log.debug('Trap on top world.');
+//            log.debug('Trap on top world: ' + data.type);
             data.data.distance += obacht.options.gameplay.distanceOffset;
             self.events.publish('top_trap', data);
         }
@@ -224,6 +246,14 @@ obacht.MultiplayerService = function(serverUrl) {
     this.socket.on('get_rooms', function (data) {
         log.debug('Getting Rooms Data (Debugging)');
         log.dir(data);
+    });
+
+    /**
+     * Socket.io Disconnect Event
+     */
+    this.socket.on('disconnect', function() {
+        log.warn('DISCONNECTED');
+        obacht.showPopup('Disconnected from server.');
     });
 
 };
@@ -258,19 +288,24 @@ obacht.MultiplayerService.prototype = {
         "use strict";
         log.debug('>> newRoom()');
 
-        var roomDetails = {
-            theme: theme,
-            options: options,
-            closed: closed,
-            creatingPlayerHealth: obacht.options.player.general.maxHealth,
-            joiningPlayerHealth: obacht.options.player.general.maxHealth
-        };
+        if (!this.connected) {
+            log.error('newRoom(): Not connected to a server!');
+            obacht.showPopup('Not connected to a server!');
+        } else {
+            var roomDetails = {
+                theme: theme,
+                options: options,
+                closed: closed,
+                creatingPlayerHealth: obacht.options.player.general.maxHealth,
+                joiningPlayerHealth: obacht.options.player.general.maxHealth
+            };
 
-        if (friend) {
-            roomDetails.friend = friend;
+            if (friend) {
+                roomDetails.friend = friend;
+            }
+
+            this.socket.emit('new_room', roomDetails);
         }
-
-        this.socket.emit('new_room', roomDetails);
     },
 
     /**
@@ -281,11 +316,17 @@ obacht.MultiplayerService.prototype = {
      */
     joinRoom: function(pin, closed) {
         "use strict";
-        log.debug('>> joinRoom(' + pin + ')');
-        this.socket.emit('join_room', {
-            pin: pin,
-            closed: closed
-        });
+
+        if (!this.connected) {
+            log.error('joinRoom(): Not connected to a server!');
+            obacht.showPopup('Not connected to a server!');
+        } else {
+            log.debug('>> joinRoom(' + pin + ')');
+            this.socket.emit('join_room', {
+                pin: pin,
+                closed: closed
+            });
+        }
     },
 
     /**
@@ -293,8 +334,15 @@ obacht.MultiplayerService.prototype = {
      */
     findMatch: function () {
         "use strict";
-        log.debug('>> findMatch()');
-        this.socket.emit('find_match');
+
+        if (!this.connected) {
+            log.error('findMatch(): Not connected to a server!');
+            obacht.showPopup('Not connected to a server!');
+        } else {
+            log.debug('>> findMatch()');
+            this.socket.emit('find_match');
+        }
+
     },
 
     /**
@@ -368,29 +416,16 @@ obacht.MultiplayerService.prototype = {
         "use strict";
 
         var self = this;
-        var now = new Date().getTime();
-        var diff = now - this.lastTrap;
 
-        log.debug('Time between Enemy Traps: ' + diff);
-
-        var timeout = 0;
-
-        if (diff < obacht.options.gameplay.trapMinInterval) {
-            timeout = obacht.options.gameplay.delayTrap;
-            log.debug('Broadcasting Delayed Trap!');
+        if (obacht.currentGame) {
+            self.socket.emit('trap', {
+                type: type,
+                target: target,
+                data: {
+                    distance: obacht.currentGame.getDistance()
+                }
+            });
         }
-
-        setTimeout(function() {
-            if (obacht.currentGame) {
-                self.socket.emit('trap', {
-                    type: type,
-                    target: target,
-                    data: {
-                        distance: obacht.currentGame.getDistance()
-                    }
-                });
-            }
-        }, timeout);
 
     },
 

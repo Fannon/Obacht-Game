@@ -5,8 +5,7 @@ goog.provide('obacht.PlayerController');
 // Closure Library Requirements
 goog.require('goog.pubsub.PubSub');
 
-//LimeJS Requirements
-goog.require('lime.RoundedRect');
+
 
 /**
  * Its a Player Controller
@@ -17,16 +16,19 @@ obacht.PlayerController = function() {
     "use strict";
     var self = this;
 
+    /** Tap area for jump events */
     this.tapAreaTop = new lime.Node()
         .setSize(obacht.options.graphics.VIEWPORT_WIDTH / 4, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
         .setPosition(0, 0)
         .setAnchorPoint(0, 0);
 
+    /** Tap area for crouch events */
     this.tapAreaBottom = new lime.Node()
         .setSize(obacht.options.graphics.VIEWPORT_WIDTH / 4, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
         .setPosition(0, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
         .setAnchorPoint(0, 0);
 
+    /** Sets up a bigger area for touchend events, so when the user swipes his finger while crouching the end of the action can be caught. */
     this.tapAreaPuffer = new lime.Node()
         .setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT)
         .setPosition(0, 0)
@@ -41,14 +43,15 @@ obacht.PlayerController = function() {
     this.events = new goog.pubsub.PubSub();
 
 
-    ////////////////////
-    /* EVENT HANDLING */
-    ////////////////////
 
-    // JUMP
+    ////////////////////////////////
+    /* EVENT HANDLING FOR JUMPING */
+    ////////////////////////////////
 
+    /** Indicates if the player is currently jumping */
     this.isJumping = false;
 
+    /** Sets up event subscription for jumping. @event */
     goog.events.listen(this.tapAreaTop, ['touchstart', 'mousedown'], function(e) {
         if (self.isJumping === true) {
             return false;
@@ -58,10 +61,16 @@ obacht.PlayerController = function() {
         }
     });
 
-    // CROUCH
 
+
+    //////////////////////////////////
+    /* EVENT HANDLING FOR CROUCHING */
+    //////////////////////////////////
+
+    /** Indicates if the player is currently crouching */
     this.isCrouching = false;
 
+    /** Sets up event subscription for crouching. @event */
     goog.events.listen(this.tapAreaBottom, ['touchstart', 'mousedown'], function(e) {
         if (self.isCrouching === false) {
             self.crouch();
@@ -71,6 +80,7 @@ obacht.PlayerController = function() {
         }
     });
 
+    /** Sets up event subscription for standing up. @event */
     goog.events.listen(this.tapAreaPuffer, ['touchend', 'touchcancel', 'mouseup'], function(e) {
         if (self.isCrouching === true) {
             self.standUp();
@@ -80,8 +90,10 @@ obacht.PlayerController = function() {
         }
     });
 
+    /** Safety are for touch events that leave the screen and don't cause a touchend or touchcancel event */
     this.tapToleranceArea = obacht.options.playerController.tapToleranceArea;
 
+    /** Sets up event subscription on safety area for standing up. @event */
     goog.events.listen(this.tapAreaBottom, ['touchmove', 'mousemove'], function(e) {
         self.tapPositionX = Math.round(e.position.x);
         self.tapPositionY = Math.round(e.position.y);
@@ -97,8 +109,13 @@ obacht.PlayerController = function() {
             }
         }
     });
-
 };
+
+
+
+///////////////////////////
+/* PROTOTYPE - FUNCTIONS */
+///////////////////////////
 
 obacht.PlayerController.prototype = {
 

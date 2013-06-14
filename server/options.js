@@ -9,7 +9,13 @@ var options = {
     maxPublicRooms: 12000,
     defaultPort: 8080, // If no console argument used
     roomPurgeTimeout: 30, // In Minutes
-    roomPurgeInterval: 60 // In Minutes
+    roomPurgeInterval: 60, // In Minutes
+
+    gameplay: {
+        trapMinInterval: 700,
+        delayTrap: 700
+    }
+
 };
 
 module.exports = options;

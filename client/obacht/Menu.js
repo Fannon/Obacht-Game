@@ -44,18 +44,19 @@ obacht.Menu.prototype = {
     /**
      * Main Menu Scene
      */
-    mainMenuScene: function() {
+    mainMenuScene: function(reset) {
         "use strict";
         var self = this;
 
         var sound = "on";
 
-        // Reset Variables and Event Listeners
-        obacht.cleanUp();
-
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+
+        if (reset) {
+            obacht.cleanUp();
+        }
 
 
         ///////////////////////////////
@@ -271,7 +272,96 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
+        });
+
+        /** Arrow Next Scene */
+        var arrowNext = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowNext.png')).setPosition(1200, 360).setSize(196,182);
+        goog.events.listen(arrowNext, ['touchstart', 'mousedown'], function() {
+            self.manualWorldsScene();
+        });
+
+
+
+        ///////////////////////////////
+        // Draw Scene                //
+        ///////////////////////////////
+
+        menuLayer.appendChild(headlineManual);
+        menuLayer.appendChild(backButton);
+        menuLayer.appendChild(arrowNext);
+        menuLayer.appendChild(hogi);
+        menuLayer.appendChild(textManualGeneral1);
+        menuLayer.appendChild(textManualGeneral2);
+        menuLayer.appendChild(textManualGeneral3);
+
+        // set current scene active
+        obacht.director.replaceScene(menuScene);
+
+    },
+
+
+    /**
+     * Help / Manual Scene
+     *
+     */
+    manualWorldsScene: function() {
+        "use strict";
+        var self = this;
+
+        var menuScene = new lime.Scene();
+        var menuLayer = new lime.Layer();
+        menuScene.appendChild(menuLayer);
+
+
+        ///////////////////////////////
+        // Layer Content             //
+        ///////////////////////////////
+
+        /** Headline Manual */
+        var headlineManual = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            .setPosition(660, 130)
+            .setSize(510, 116);
+
+        var textWorlds1 = new lime.Label()
+            .setText('Your Hogi')
+            .setFontFamily('Cartwheel')
+            .setFontColor('#fff')
+            .setFontSize(40)
+            .setPosition(550, 680)
+            .setSize(370, 80)
+            .setAlign('center');
+
+        var textWorlds2 = new lime.Label()
+            .setText('ENEMY`s Hogi')
+            .setFontFamily('Cartwheel')
+            .setFontColor('#fff')
+            .setFontSize(40)
+            .setPosition(710, 240)
+            .setSize(400, 80)
+            .setAlign('center');
+
+        /** Smartphone **/
+        var smartphone = new lime.Sprite()
+            .setFill(obacht.spritesheet
+            .getFrame('manualWorlds.png'))
+            .setPosition(640, 440).setSize(710.6, 525.8);
+
+        /** Back Button - Door */
+        var backButton = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('exit.png'))
+            .setPosition(65, 75)
+            .setSize(92, 112);
+
+        goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
+            self.resetMenu();
+        });
+
+        /** Arrow Previous Scene */
+        var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
+        goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
+            self.helpScene();
         });
 
         /** Arrow Next Scene */
@@ -288,11 +378,12 @@ obacht.Menu.prototype = {
 
         menuLayer.appendChild(headlineManual);
         menuLayer.appendChild(backButton);
+        menuLayer.appendChild(arrowPrevious);
         menuLayer.appendChild(arrowNext);
-        menuLayer.appendChild(hogi);
-        menuLayer.appendChild(textManualGeneral1);
-        menuLayer.appendChild(textManualGeneral2);
-        menuLayer.appendChild(textManualGeneral3);
+        menuLayer.appendChild(smartphone);
+        menuLayer.appendChild(textWorlds1);
+        menuLayer.appendChild(textWorlds2);
+
 
         // set current scene active
         obacht.director.replaceScene(menuScene);
@@ -332,8 +423,6 @@ obacht.Menu.prototype = {
             .setSize(370, 80)
             .setAlign('center');
 
-
-
         /** Smartphone with Fingers */
         var smartphone = new lime.Sprite()
             .setFill(obacht.spritesheet
@@ -347,13 +436,13 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
         /** Arrow Previous Scene */
         var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
         goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
-            self.helpScene();
+            self.manualWorldsScene();
         });
 
         /** Arrow Next Scene */
@@ -429,7 +518,7 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
         /** Arrow Previous Scene */
@@ -511,7 +600,7 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
         /** Arrow Previous Scene */
@@ -592,7 +681,7 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
         /** Arrow Previous Scene */
@@ -675,7 +764,7 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
         /** Arrow Previous Scene */
@@ -821,7 +910,7 @@ obacht.Menu.prototype = {
         /** Back Button */
         var backButton = new lime.Sprite().setFill(obacht.spritesheet.getFrame('back.png')).setPosition(75, 75).setSize(80, 96);
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
 
@@ -901,7 +990,7 @@ obacht.Menu.prototype = {
         /** Back Button */
         var backButton = new lime.Sprite().setFill(obacht.spritesheet.getFrame('back.png')).setPosition(75, 75).setSize(80, 96);
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
 
@@ -1029,7 +1118,7 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
         /** Select a World Label */
@@ -1108,7 +1197,6 @@ obacht.Menu.prototype = {
 
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
-        var toolTipLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
 
         var popupActive = false;
@@ -1180,11 +1268,13 @@ obacht.Menu.prototype = {
             .setPosition(800, 267)
             .setSize(80, 76);
 
+
         /** Pop-up-Infotext */
         var popupButton = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('code_info_small.png'))
             .setPosition(1000, 290)
-            .setSize(338, 234);
+            .setSize(338, 234)
+            .setHidden(true);
 
         var popupLabel = new lime.Label()
             .setText('PLEASE GIVE THIS CODE TO YOUR FRIEND')
@@ -1192,29 +1282,39 @@ obacht.Menu.prototype = {
             .setFontSize(36)
             .setPosition(1018, 304)
             .setSize(280, 150)
-            .setAlign('center');
+            .setAlign('center')
+            .setHidden(true);
 
 
-        /** Hide Pop-up @event */
 
-        /** Show Pop-up @event */
+        menuLayer.appendChild(logoSmall);
+        menuLayer.appendChild(character);
+        menuLayer.appendChild(backButton);
+        menuLayer.appendChild(codeLabel);
+        menuLayer.appendChild(field);
+        menuLayer.appendChild(code);
+        menuLayer.appendChild(infoButton);
+        menuLayer.appendChild(popupButton);
+        menuLayer.appendChild(popupLabel);
+
+
+        /** Show/Hide Pop-up @event */
+        goog.events.listen(popupButton, ['touchstart', 'mousedown'], function() {
+            popupButton.setHidden(true);
+            popupLabel.setHidden(true);
+        });
+
         goog.events.listen(infoButton, ['touchstart', 'mousedown'], function() {
             if (popupActive === true)
             {
                 popupActive = false;
-                menuLayer.removeChild(toolTipLayer);
-                goog.events.listen(popupButton, ['touchstart', 'mousedown'], function() {
-                    menuLayer.removeChild(toolTipLayer);
-                });
+                popupButton.setHidden(true);
+                popupLabel.setHidden(true);
 
-
-            }
-            else
-            {
+            }else{
                 popupActive = true;
-                menuLayer.appendChild(toolTipLayer);
-                toolTipLayer.appendChild(popupButton);
-                toolTipLayer.appendChild(popupLabel);
+                popupButton.setHidden(false);
+                popupLabel.setHidden(false);
 
             }
 
@@ -1229,14 +1329,6 @@ obacht.Menu.prototype = {
         // Draw Scene                //
         ///////////////////////////////
 
-
-        menuLayer.appendChild(logoSmall);
-        menuLayer.appendChild(character);
-        menuLayer.appendChild(backButton);
-        menuLayer.appendChild(codeLabel);
-        menuLayer.appendChild(field);
-        menuLayer.appendChild(code);
-        menuLayer.appendChild(infoButton);
 
 
         // set current scene active
@@ -1267,7 +1359,6 @@ obacht.Menu.prototype = {
 
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
-        var toolTipLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
 
         var popupActive = false;
@@ -1333,32 +1424,33 @@ obacht.Menu.prototype = {
         var popupButton = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('code_info_big.png'))
             .setPosition(1015, 318)
-            .setSize(376, 326);
+            .setSize(376, 326)
+            .setHidden(true);
 
         var popupLabel = new lime.Label().setText('ENTER THE FOUR DIGIT CODE YOU GOT FROM YOUR FRIEND')
             .setFontColor('#fff')
             .setFontSize(36)
-            .setPosition(1036, 295).setSize(280, 150).setAlign('center');
+            .setPosition(1036, 295).setSize(280, 150).setAlign('center')
+            .setHidden(true);
 
-        /** Hide Pop-up @event */
+        /** Show/Hide Pop-up @event */
         goog.events.listen(popupButton, ['touchstart', 'mousedown'], function() {
-            menuLayer.removeChild(toolTipLayer);
-            popupActive = false;
+            popupButton.setHidden(true);
+            popupLabel.setHidden(true);
         });
 
-        /** Show Pop-up @event */
         goog.events.listen(infoButton, ['touchstart', 'mousedown'], function() {
             if (popupActive === true)
             {
-                menuLayer.removeChild(toolTipLayer);
                 popupActive = false;
-            }
-            else
-            {
-                menuLayer.appendChild(toolTipLayer);
-                toolTipLayer.appendChild(popupButton);
-                toolTipLayer.appendChild(popupLabel);
+                popupButton.setHidden(true);
+                popupLabel.setHidden(true);
+
+            }else{
                 popupActive = true;
+                popupButton.setHidden(false);
+                popupLabel.setHidden(false);
+
             }
 
         });
@@ -1487,6 +1579,8 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(logoSmall);
         menuLayer.appendChild(backButton);
         menuLayer.appendChild(infoButton);
+        menuLayer.appendChild(popupButton);
+        menuLayer.appendChild(popupLabel);
         menuLayer.appendChild(codeLabel);
         menuLayer.appendChild(field);
 
@@ -1676,7 +1770,7 @@ obacht.Menu.prototype = {
             .setSize(92, 112);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
         /** You Win */
@@ -1747,7 +1841,7 @@ obacht.Menu.prototype = {
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
             obacht.mp.events.clear('room_detail');
-            self.mainMenuScene();
+            self.resetMenu();
         });
 
 
@@ -1767,6 +1861,16 @@ obacht.Menu.prototype = {
     /////////////////////////////
     // Helper Functions        //
     /////////////////////////////
+
+    /**
+     * Back to Main Menu
+     * Helper Function to clean up before going back to MainMenu     *
+     */
+    resetMenu: function() {
+        "use strict";
+        // Reset Variables and Event Listeners
+        this.mainMenuScene(true);
+    },
 
     /**
      * Adds (left) Padding to the PIN Number

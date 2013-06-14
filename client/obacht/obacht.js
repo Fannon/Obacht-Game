@@ -47,7 +47,7 @@ obacht.start = function() {
     //////////////////////////////
 
     /** Multiplayer Service Instance */
-    obacht.mp = new obacht.MultiplayerService(obacht.options.server.url);
+    obacht.mp = new obacht.MultiplayerService(obacht.options.server.url, obacht.options.server.port, obacht.options.server.connectionTimeout);
 
     /** LimeJs Director Instance */
     obacht.director = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
@@ -109,6 +109,7 @@ obacht.start = function() {
 
     obacht.menu.mainMenuScene();
 
+
 };
 
 /**
@@ -148,7 +149,7 @@ obacht.cleanUp = function() {
         obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);
     }
 
-    for (var i = 1; i < 9999; i++) {
+    for (var i = 1; i < 99999; i++) {
         window.clearInterval(i);
     }
 };

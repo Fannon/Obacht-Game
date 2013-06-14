@@ -65,6 +65,9 @@ obacht.server.io.sockets.on('connection', function(socket) {
     /** Current Sockets Room PIN */
     socket.pin = false;
 
+    /** lastTrap the Player has received. Used to delay Traps */
+    this.lastTrap = new Date().getTime();
+
     /**
      * New Player connects to Server
      * Sends ID back so that the client knows it's successful connected
@@ -79,7 +82,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
      * Connection Failed
      * @event
      */
-    socket.on('connect_failed', function(){
+    socket.on('connect_failed', function() {
         socket.emit('connected', {
             pid: socket.id,
             error: 'Connection to Server failed!'
@@ -199,7 +202,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
      * If a player dies (0 Lifes) it will send a game_over Event
      * @event
      */
-    socket.on('player_status', function(player_status){
+    socket.on('player_status', function(player_status) {
         if (socket.pin) {
             obacht.server.rooms.playerStatus(socket, player_status);
             if (player_status.health < 1) {
@@ -238,15 +241,11 @@ obacht.server.io.sockets.on('connection', function(socket) {
 
     /**
      * Broadcast thrown Trap to other Players
+     * Delays the Trap if Player has just received one in a specific TimeInterval
      * @event
      */
     socket.on('trap', function(data) {
-        if (socket.pin) {
-            log.debug('<-> Broadcasting Trap "' + data.type + '" in Room #' + socket.pin);
-            obacht.server.io.sockets['in'](socket.pin).emit('trap', data);
-        } else {
-            log.warn('!!! Cannot broadcast Trap while not connected to a Game!', socket);
-        }
+        obacht.server.throwTrapHelper(socket, data);
     });
 
     /**
@@ -317,6 +316,40 @@ obacht.server.leaveRoomHelper = function(socket) {
         socket.pin = false;
     } else {
         log.warn('!!! Tried to leave Room, but player was not in a room', socket);
+    }
+};
+
+/**
+ * Helper Function to throw Traps to Players
+ * Delays its Executrion if time between Traps is to short for a specific player
+ *
+ * @param {Object} socket   Socket PassThrough
+ * @param {Object} data     TrapData
+ */
+obacht.server.throwTrapHelper = function(socket, data) {
+    "use strict";
+    if (socket.pin) {
+
+        var now = new Date().getTime();
+        var diff = now - obacht.server.io.sockets.socket(data.target).lastTrap;
+
+        log.info('Last Trap DIFF: ' + diff);
+
+        if (!isNaN(diff) && diff < obacht.server.options.gameplay.trapMinInterval) {
+            // Trap is coming to soon: Delay it:
+            setTimeout(function() {
+                obacht.server.throwTrapHelper(socket, data);
+            }, obacht.server.options.gameplay.delayTrap);
+            log.info('Delaying Trap!');
+        } else {
+            // Trap is OK, broadcast it:
+            log.debug('<-> Broadcasting Trap "' + data.type + '" in Room #' + socket.pin);
+            obacht.server.io.sockets['in'](socket.pin).emit('trap', data);
+            obacht.server.io.sockets.socket(data.target).lastTrap = now;
+        }
+
+    } else {
+        log.warn('!!! Cannot broadcast Trap while not connected to a Game!', socket);
     }
 };
 
