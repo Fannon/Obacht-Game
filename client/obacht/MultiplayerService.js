@@ -10,11 +10,14 @@ goog.require('goog.pubsub.PubSub');
  * It includes the communication protocol and registers functions and events
  * Uses Socket.io and connects to a Node.js Server
  *
+ * @param {String} serverUrl    URL to NodeJS GameServer
+ * @param {Number} timeout      Timeout for connecting to Server
+ *
  * @author Sebastian Huber
  * @author Simon Heimler
  * @constructor
  */
-obacht.MultiplayerService = function(serverUrl, serverPort, timeout) {
+obacht.MultiplayerService = function(serverUrl, timeout) {
     "use strict";
 
     //////////////////////////////
@@ -42,10 +45,7 @@ obacht.MultiplayerService = function(serverUrl, serverPort, timeout) {
     this.enemy = false;
 
     /** Socket.io */
-    this.socket = io.connect(serverUrl, {
-        port: serverPort,
-        'connect timeout': timeout
-    });
+    this.socket = io.connect(serverUrl);
 
     /**
      * Event Publisher/Subscriber (http://closure-library.googlecode.com/svn/docs/class_goog_pubsub_PubSub.html)
@@ -60,15 +60,17 @@ obacht.MultiplayerService = function(serverUrl, serverPort, timeout) {
     // Connection Handling      //
     //////////////////////////////
 
-    log.debug("Connecting to Multiplayer Server on " + serverUrl + " on Port " + serverPort);
+    log.debug("Connecting to Multiplayer Server on " + serverUrl);
 
     /** Checks if Connection to Server could be made within Timeout Interval */
-    setTimeout(function() {
-        if (!self.connected) {
-            log.error('NO CONNECTION TO SERVER!');
-            obacht.showPopup('Failed to connect to server.');
-        }
-    }, timeout);
+    if (timeout) {
+        setTimeout(function() {
+            if (!self.connected) {
+                log.error('NO CONNECTION TO SERVER!');
+                obacht.showPopup('mainMenuScene', 'Failed to connect to server.');
+            }
+        }, timeout);
+    }
 
 
     //////////////////////////////
@@ -233,9 +235,9 @@ obacht.MultiplayerService = function(serverUrl, serverPort, timeout) {
     this.socket.on('game_over', function (data) {
         log.debug('Game over! -> ' + data.reason);
         if (data.pid === self.pid){
-            log.debug('YOU LOSE!');
+            log.debug('Game Over! YOU LOSE!');
         } else {
-            log.debug('YOU WIN');
+            log.debug('Game Over! YOU WIN');
         }
         self.events.publish('game_over', data);
     });
@@ -252,8 +254,9 @@ obacht.MultiplayerService = function(serverUrl, serverPort, timeout) {
      * Socket.io Disconnect Event
      */
     this.socket.on('disconnect', function() {
+        self.connected = false;
         log.warn('DISCONNECTED');
-        obacht.showPopup('Disconnected from server.');
+        obacht.showPopup('mainMenuScene', 'Disconnected from server.');
     });
 
 };
@@ -273,7 +276,7 @@ obacht.MultiplayerService.prototype = {
     msg: function (msg) {
         "use strict";
         log.debug('>> showPopup()');
-        obacht.showPopup(msg);
+        obacht.showPopup('mainMenuScene', msg);
     },
 
     /**
@@ -290,7 +293,7 @@ obacht.MultiplayerService.prototype = {
 
         if (!this.connected) {
             log.error('newRoom(): Not connected to a server!');
-            obacht.showPopup('Not connected to a server!');
+            obacht.showPopup('mainMenuScene', 'Not connected to a server!');
         } else {
             var roomDetails = {
                 theme: theme,
@@ -319,7 +322,7 @@ obacht.MultiplayerService.prototype = {
 
         if (!this.connected) {
             log.error('joinRoom(): Not connected to a server!');
-            obacht.showPopup('Not connected to a server!');
+            obacht.showPopup('mainMenuScene', 'Not connected to a server!');
         } else {
             log.debug('>> joinRoom(' + pin + ')');
             this.socket.emit('join_room', {
@@ -337,7 +340,7 @@ obacht.MultiplayerService.prototype = {
 
         if (!this.connected) {
             log.error('findMatch(): Not connected to a server!');
-            obacht.showPopup('Not connected to a server!');
+            obacht.showPopup('mainMenuScene', 'Not connected to a server!');
         } else {
             log.debug('>> findMatch()');
             this.socket.emit('find_match');

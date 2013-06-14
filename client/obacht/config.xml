@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns		= "http://www.w3.org/ns/widgets"
-	xmlns:gap	= "http://phonegap.com/ns/1.0"
-	id		= "com.obacht.game"
-	version 	= "0.1.0">
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:gap="http://phonegap.com/ns/1.0"
+        id="com.obacht.game"
+        version="0.1.0">
+    <preference name="phonegap-version" value="2.7.0"/>
 
-	<name>Obacht Game</name>
+    <name>Obacht Game</name>
 
-	<description>
-		Obacht is a Cross Platform Multiplayer Game
-	</description>
+    <description>
+        Obacht is a Cross Platform Multiplayer Game
+    </description>
 
-	<author href="http://obacht-game.com/"
-		email="info@obacht-game.com/">
-		Obacht Team
-	</author>
-
-
-	<!-- Icons -->
-	<icon src="assets/icon/icon.png" width="512" height="512" />
-
-	<icon src="assets/icon/ios/apple-touch-icon-57x57.png" width="57" height="57" />
-	<icon src="assets/icon/ios/apple-touch-icon-72x72.png" gap:platform="ios" width="72" height="72" />
-	<icon src="assets/icon/ios/apple-touch-icon-114x114.png" width="114" height="114" />
-    <icon src="assets/icon/ios/apple-touch-icon-144x144.png" width="144" height="144" />
-
-	<icon src="assets/icon/icon_36.png" gap:platform="android" gap:density="ldpi" width="36" height="36"/>
-	<icon src="assets/icon/icon_48.png" gap:platform="android" gap:density="mdpi" width="48" height="48"/>
-	<icon src="assets/icon/icon_72.png" gap:platform="android" gap:density="hdpi" width="72" height="72"/>
-	<icon src="assets/icon/icon_96.png" gap:platform="android" gap:density="xhdpi" width="96" height="96"/>
+    <author href="http://obacht-game.com/"
+            email="info@obacht-game.com/">
+        Obacht Team
+    </author>
 
 
-	<!-- Splash Screens -->
-	<gap:splash src="assets/splash/splash.jpg" />
+    <!-- Icons -->
+    <icon src="assets/icon/icon.png" width="512" height="512"/>
+
+    <icon src="assets/icon/ios/apple-touch-icon-57x57.png" width="57" height="57"/>
+    <icon src="assets/icon/ios/apple-touch-icon-72x72.png" gap:platform="ios" width="72" height="72"/>
+    <icon src="assets/icon/ios/apple-touch-icon-114x114.png" width="114" height="114"/>
+    <icon src="assets/icon/ios/apple-touch-icon-144x144.png" width="144" height="144"/>
+
+    <icon src="assets/icon/icon_36.png" gap:platform="android" gap:density="ldpi" width="36" height="36"/>
+    <icon src="assets/icon/icon_48.png" gap:platform="android" gap:density="mdpi" width="48" height="48"/>
+    <icon src="assets/icon/icon_72.png" gap:platform="android" gap:density="hdpi" width="72" height="72"/>
+    <icon src="assets/icon/icon_96.png" gap:platform="android" gap:density="xhdpi" width="96" height="96"/>
+
+
+    <!-- Splash Screens -->
+    <gap:splash src="assets/splash/splash.jpg"/>
 
 
     <!-- Permissions -->
-	<feature name="http://api.phonegap.com/1.0/file"/>
-	<feature name="http://api.phonegap.com/1.0/network"/>
-	<access origin="http://obacht-game.com" subdomains="true" />
+    <feature name="http://api.phonegap.com/1.0/file"/>
+    <feature name="http://api.phonegap.com/1.0/network"/>
+    <access uri="*" subdomains="true" />
 
 
     <!-- Preferences -->
-    <preference name="phonegap-version" value="2.7.0" />
-    <preference name="fullscreen" value="true" />
-    <preference name="orientation" value="landscape" />
-	<preference name="autorotate" value="false" readonly="true"/>
-    <preference name="exit-on-suspend" value="true" />
+    <preference name="fullscreen" value="true"/>
+    <preference name="orientation" value="landscape"/>
+    <preference name="autorotate" value="false" readonly="true"/>
+    <preference name="exit-on-suspend" value="true"/>
 
 </widget>

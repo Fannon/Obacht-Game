@@ -92,8 +92,7 @@ obacht.Menu.prototype = {
 
         /** On Play Button -> New Game Scene @event */
         goog.events.listen(playButton, ['touchstart', 'mousedown'], function() {
-            log.debug('connected?' + obacht.mp.socket.socket.connected);
-            if (!obacht.mp.socket.socket.connected) {
+            if (!obacht.mp.connected) {
                 obacht.showPopup('mainMenuScene', 'Failed to connect to server.');
             } else {
                 self.newGameScene();
@@ -1695,6 +1694,7 @@ obacht.Menu.prototype = {
         });
 
         obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);
+
         obacht.cleanUp();
 
 
@@ -1805,7 +1805,7 @@ obacht.Menu.prototype = {
         obacht.director.replaceScene(gameoverScene);
 
         if (data.reason === 'player_left') {
-            obacht.showPopup('Player left the game!');
+            obacht.showPopup('mainMenuScene', 'Player left the game!');
         }
 
     },

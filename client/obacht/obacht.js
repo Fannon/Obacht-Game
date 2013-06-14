@@ -47,7 +47,7 @@ obacht.start = function() {
     //////////////////////////////
 
     /** Multiplayer Service Instance */
-    obacht.mp = new obacht.MultiplayerService(obacht.options.server.url, obacht.options.server.port, obacht.options.server.connectionTimeout);
+    obacht.mp = new obacht.MultiplayerService(obacht.options.server.url, obacht.options.server.connectionTimeout);
 
     /** LimeJs Director Instance */
     obacht.director = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
@@ -171,7 +171,7 @@ obacht.setBackground = function(theme) {
 /**
  * Draws a PopUp / Alert Box over the current Scene (Game or Menu)
  *
- * @param {Object} scene Object of the last Scene
+ * @param {Object} sceneName Object of the last Scene
  * @param {String} msg Text of the message
  */
 obacht.showPopup = function(sceneName, msg) {
