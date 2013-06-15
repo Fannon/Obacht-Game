@@ -152,20 +152,20 @@ obacht.World.prototype = {
                 new lime.animation
                     .RotateBy(rotation1)
                     .setDuration(duration1)
+                    .enableOptimizations()
                     .setEasing(lime.animation.Easing.LINEAR),
-//                    .enableOptimizations(),
 
                 new lime.animation
                     .RotateBy(rotation2)
                     .setDuration(duration2)
+                    .enableOptimizations()
                     .setEasing(lime.animation.Easing.LINEAR),
-//                    .enableOptimizations(),
 
                 new lime.animation
                     .RotateBy(rotation1)
                     .setDuration(duration1)
+                    .enableOptimizations()
                     .setEasing(lime.animation.Easing.LINEAR)
-//                    .enableOptimizations()
             )
         ));
     },
@@ -187,20 +187,20 @@ obacht.World.prototype = {
                 new lime.animation
                     .RotateBy(rotation1)
                     .setDuration(duration1)
+                    .enableOptimizations()
                     .setEasing(lime.animation.Easing.LINEAR),
-//                    .enableOptimizations(),
 
                 new lime.animation
                     .RotateBy(rotation2)
                     .setDuration(duration2)
+                    .enableOptimizations()
                     .setEasing(lime.animation.Easing.LINEAR),
-//                    .enableOptimizations(),
 
                 new lime.animation
                     .RotateBy(rotation2)
                     .setDuration(duration2)
+                    .enableOptimizations()
                     .setEasing(lime.animation.Easing.LINEAR)
-//                    .enableOptimizations()
             )
         ));
     },

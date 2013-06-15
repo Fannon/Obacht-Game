@@ -169,7 +169,7 @@ obacht.TrapManager.prototype = {
                 ///////////////////////////////////
 
                 // Dont calculate Traps which are not in the Player Region
-                if (trapX < 20 || trapX > 420) {
+                if (trapX < 0 || trapX > 420) {
                     break;
                 }
 
