@@ -15,7 +15,7 @@ obacht.options = {
         fastStart: false,
         displayFps: true,
         showBoundingBoxes: false,
-        invincible: false
+        invincible: true
     },
     graphics: {
         VIEWPORT_WIDTH: 1280,
@@ -24,9 +24,9 @@ obacht.options = {
         worldQualityA: 0.3,
         worldQualityB: 0.3,
         worldQualityC: 0.2,
-        characterQuality: 1.0,
-        trapQuality: 1.0,
-        bonusQuality: 1.0
+        characterQuality: 0.5,
+        trapQuality: 0.5,
+        bonusQuality: 0.5
     },
     sound: {
         music: true,
@@ -38,7 +38,7 @@ obacht.options = {
 
         initialSpeedFactor: 1.0,
         decrementSpeedFactorTime: 5000,
-        decrementSpeedFactor: 0.01,
+        decrementSpeedFactor: 0.05,
 
         generateBoniMinInterval: 4000,
         generateBoniMaxInterval: 10000,
@@ -71,17 +71,17 @@ obacht.options = {
             startRotation2: 225
         },
         spinDuration: {
-            front: 7,
-            middle: 15,
-            clouds: 40
+            front: 6,
+            middle: 13,
+            clouds: 35
         }
     },
     player: {
         general: {
             width: 205,
             height: 240,
-            jumpUpDuration: 0.4,
-            jumpDownDuration: 0.6,
+            jumpUpDuration: 0.3,
+            jumpDownDuration: 0.5,
             jumpHeight: 325,
             crouchDuration: 0.1,
             crouchWidth: 1.6,

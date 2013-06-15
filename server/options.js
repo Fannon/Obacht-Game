@@ -12,8 +12,8 @@ var options = {
     roomPurgeInterval: 60, // In Minutes
 
     gameplay: {
-        trapMinInterval: 700,
-        delayTrap: 700
+        trapMinInterval: 650,
+        delayTrap: 650
     }
 
 };
