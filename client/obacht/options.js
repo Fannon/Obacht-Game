@@ -15,7 +15,8 @@ obacht.options = {
         fastStart: false,
         displayFps: true,
         showBoundingBoxes: false,
-        invincible: false
+        invincible: false,
+        avgFramerate: true
     },
     graphics: {
         VIEWPORT_WIDTH: 1280,

@@ -67,6 +67,21 @@ obacht.Game = function() {
         log.warn('Error loading Theme Spritesheet');
     }
 
+    if (obacht.options.debug.avgFramerate) {
+        obacht.frameRateArray = [];
+        lime.scheduleManager.schedule(function(){
+            obacht.frameRateArray.push(obacht.director.fps);
+        });
+        obacht.interval(function() {
+            var sum = 0;
+            for(var i = 0; i < obacht.frameRateArray.length; i++) {
+                sum += parseInt(obacht.frameRateArray[i], 10);
+            }
+            var avg = sum/obacht.frameRateArray.length;
+            log.info('DEBUG > AVERAGE FRAMERATE: ' + avg);
+        }, 3000);
+    }
+
 
     //////////////////////////////
     // Draw & construct Game    //
