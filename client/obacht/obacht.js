@@ -45,6 +45,9 @@ obacht.start = function() {
     /** Array with all used Timeout Handlers */
     obacht.timeoutArray = [];
 
+    /** Sound on/off TODO: Web Storage */
+    obacht.sound = true;
+
     /** Global Spritesheet */
     obacht.spritesheet = new lime.SpriteSheet('assets/gfx/globalSpritesheet.png', lime.ASSETS.globalSpritesheet.json, lime.parser.JSON);
 

@@ -11,7 +11,7 @@ goog.provide('obacht.options');
  */
 obacht.options = {
     debug: {
-        logLevel: 1,
+        logLevel: 0,
         fastStart: false,
         displayFps: true,
         showBoundingBoxes: false,
@@ -42,7 +42,7 @@ obacht.options = {
         countdownInterval: 1000,
 
         initialSpeedFactor: 1.0,
-        decrementSpeedFactorTime: 5000,
+        decrementSpeedFactorTime: 3000,
         decrementSpeedFactor: 0.05,
 
         generateBoniMinInterval: 4000,
