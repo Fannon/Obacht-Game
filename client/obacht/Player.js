@@ -153,15 +153,6 @@ obacht.Player = function(currentGame, location) {
         .setDuration(obacht.options.player.general.crouchDuration);
 
 
-    /////////////////////////
-    /* INTERVALS           */
-    /////////////////////////
-
-    obacht.interval(function() {
-        if (!self.crouching) {
-            self.standUp();
-        }
-    }, 500);
 
     /////////////////////////
     /* SUBSCRIBE TO EVENTS */
