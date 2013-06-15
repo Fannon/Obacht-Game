@@ -252,12 +252,14 @@ obacht.deviceDetection = function() {
 
     obacht.device = goog.userAgent;
 
-    log.info('Running on OS: ' + obacht.device.PLATFORM);
+    // TODO: Adjust Options
+
+    log.debug('Running on OS: ' + obacht.device.PLATFORM);
 
     if (obacht.device.MOBILE) {
-        log.info('Mobile Browser detected');
+        log.debug('Mobile Browser detected');
     } else {
-        log.info('Desktop Browser detected');
+        log.debug('Desktop Browser detected');
     }
 
 };

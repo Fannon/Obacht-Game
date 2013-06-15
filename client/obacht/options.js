@@ -11,7 +11,7 @@ goog.provide('obacht.options');
  */
 obacht.options = {
     debug: {
-        logLevel: 0,
+        logLevel: 1,
         fastStart: false,
         displayFps: true,
         showBoundingBoxes: false,
@@ -25,9 +25,9 @@ obacht.options = {
         worldQualityA: 0.3,
         worldQualityB: 0.3,
         worldQualityC: 0.2,
-        characterQuality: 1.0,
-        trapQuality: 1.0,
-        bonusQuality: 1.0
+        characterQuality: 0.5,
+        trapQuality: 0.5,
+        bonusQuality: 0.5
     },
     sound: {
         music: true,
@@ -39,13 +39,13 @@ obacht.options = {
 
         initialSpeedFactor: 1.0,
         decrementSpeedFactorTime: 5000,
-        decrementSpeedFactor: 0.01,
+        decrementSpeedFactor: 0.03,
 
         generateBoniMinInterval: 4000,
         generateBoniMaxInterval: 10000,
 
         generateTrapsMinInterval: 1000,
-        generateTrapsMaxInterval: 5000,
+        generateTrapsMaxInterval: 4000,
 
         distanceOffset: 0
     },
