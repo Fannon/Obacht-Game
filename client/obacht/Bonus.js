@@ -37,6 +37,7 @@ obacht.Bonus = function(currentGame, type) {
         .setPosition(obacht.options.bonus.general.x, obacht.options.bonus.general.y)
         .setFill(this.spritesheet.getFrame('boni_' + this.type + '.png'))
         .setAnchorPoint(0, 0)
+        .setQuality(obacht.options.graphics.bonusQuality)
         .setRadius(15);
 
     self.drawBonus();
