@@ -157,8 +157,6 @@ obacht.Menu.prototype = {
                 soundButton.setFill(obacht.spritesheet.getFrame('button_sound.png'));
                 obacht.sound = true;
             }
-
-            // TODO: sound off
         });
 
         /** Quit Button */
@@ -177,7 +175,11 @@ obacht.Menu.prototype = {
             .setAlign('center');
 
         goog.events.listen(quitButton, ['touchstart', 'mousedown'], function() {
-            // TODO: quit Game
+            if (navigator.app) {
+                navigator.app.exitApp();
+            } else if(navigator.device) {
+                navigator.device.exitApp();
+            }
         });
 
 
