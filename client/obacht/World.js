@@ -187,20 +187,20 @@ obacht.World.prototype = {
                 new lime.animation
                     .RotateBy(rotation1)
                     .setDuration(duration1)
-                    .setEasing(lime.animation.Easing.LINEAR)
-                    .enableOptimizations(),
+                    .setEasing(lime.animation.Easing.LINEAR),
+//                    .enableOptimizations(),
+
+                new lime.animation
+                    .RotateBy(rotation2)
+                    .setDuration(duration2)
+                    .setEasing(lime.animation.Easing.LINEAR),
+//                    .enableOptimizations(),
 
                 new lime.animation
                     .RotateBy(rotation2)
                     .setDuration(duration2)
                     .setEasing(lime.animation.Easing.LINEAR)
-                    .enableOptimizations(),
-
-                new lime.animation
-                    .RotateBy(rotation2)
-                    .setDuration(duration2)
-                    .setEasing(lime.animation.Easing.LINEAR)
-                    .enableOptimizations()
+//                    .enableOptimizations()
             )
         ));
     },

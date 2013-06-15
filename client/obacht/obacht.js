@@ -49,7 +49,7 @@ obacht.start = function() {
     obacht.device = undefined;
 
     /** Multiplayer Service Instance */
-    obacht.mp = new obacht.MultiplayerService(obacht.options.server.url, obacht.options.server.connectionTimeout);
+    obacht.mp = new obacht.MultiplayerService(obacht.options.server.url);
 
     /** LimeJs Director Instance */
     obacht.director = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
@@ -256,11 +256,11 @@ obacht.checkDevices = function() {
         log.info('Desktop Browser detected');
     }
 
-
 };
 
 /**
  * Is called when an Event Listener throws an Error
+ * TODO: Refactor this
  *
  * @param {Object} e Error Object
  */

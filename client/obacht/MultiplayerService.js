@@ -11,13 +11,12 @@ goog.require('goog.pubsub.PubSub');
  * Uses Socket.io and connects to a Node.js Server
  *
  * @param {String} serverUrl    URL to NodeJS GameServer
- * @param {Number} timeout      Timeout for connecting to Server
  *
  * @author Sebastian Huber
  * @author Simon Heimler
  * @constructor
  */
-obacht.MultiplayerService = function(serverUrl, timeout) {
+obacht.MultiplayerService = function(serverUrl) {
     "use strict";
 
     //////////////////////////////
@@ -45,7 +44,13 @@ obacht.MultiplayerService = function(serverUrl, timeout) {
     this.enemy = false;
 
     /** Socket.io */
-    this.socket = io.connect(serverUrl);
+    this.socket = io.connect(serverUrl, {
+        'connect timeout': obacht.options.server.connectionTimeout,
+        'reconnection delay': 500,
+        'max reconnection attempts': 50
+    });
+
+    log.debug("Connecting to Multiplayer Server on " + serverUrl);
 
     /**
      * Event Publisher/Subscriber (http://closure-library.googlecode.com/svn/docs/class_goog_pubsub_PubSub.html)
@@ -54,24 +59,6 @@ obacht.MultiplayerService = function(serverUrl, timeout) {
      * @type {goog.pubsub.PubSub}
      */
     this.events = new goog.pubsub.PubSub();
-
-
-    //////////////////////////////
-    // Connection Handling      //
-    //////////////////////////////
-
-    log.debug("Connecting to Multiplayer Server on " + serverUrl);
-
-
-    /** Checks if Connection to Server could be made within Timeout Interval */
-    if (timeout) {
-        setTimeout(function() {
-            if (!self.connected) {
-                log.error('NO CONNECTION TO SERVER!');
-                obacht.showPopup('mainMenuScene', 'Failed to connect to server.');
-            }
-        }, timeout);
-    }
 
 
     //////////////////////////////
@@ -258,6 +245,9 @@ obacht.MultiplayerService = function(serverUrl, timeout) {
         self.connected = false;
         log.warn('DISCONNECTED');
         obacht.showPopup('mainMenuScene', 'Disconnected from server.');
+
+        // Try to connect again:
+        obacht.mp.socket.socket.connect();
     });
 
 };
@@ -489,6 +479,15 @@ obacht.MultiplayerService.prototype = {
     resetEvents: function() {
         "use strict";
         this.events = new goog.pubsub.PubSub();
+    },
+
+    /**
+     * Destructor
+     */
+    destruct: function() {
+        "use strict";
+
+        this.socket.disconnect();
     }
 };
 
