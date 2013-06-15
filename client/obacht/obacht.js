@@ -39,6 +39,12 @@ obacht.start = function() {
     // Model                    //
     //////////////////////////////
 
+    /** Array with all used Interval Handlers */
+    obacht.intervalArray = [];
+
+    /** Array with all used Timeout Handlers */
+    obacht.timeoutArray = [];
+
     /** Global Spritesheet */
     obacht.spritesheet = new lime.SpriteSheet('assets/gfx/globalSpritesheet.png', lime.ASSETS.globalSpritesheet.json, lime.parser.JSON);
 
@@ -272,12 +278,6 @@ obacht.eventError = function(e) {
     log.warn('Event Error: ' + e.message );
 };
 
-/** Array with all used Interval Handlers */
-obacht.intervalArray = [];
-
-/** Array with all used Timeout Handlers */
-obacht.timeoutArray = [];
-
 /**
  * Create new Interval and saves the handler in an Array for easy Clearing
  *
@@ -289,7 +289,6 @@ obacht.interval = function(callback, time) {
     var handler = setInterval(callback, time);
     obacht.intervalArray.push(handler);
 };
-
 
 /**
  * Create new Timeout and saves the handler in an Array for easy Clearing
@@ -303,6 +302,9 @@ obacht.timeout = function(callback, time) {
     obacht.timeoutArray.push(handler);
 };
 
+/**
+ * Clears all Intervals created with obacht.interval()
+ */
 obacht.clearIntervals = function() {
     "use strict";
     for (var i = 0; i < obacht.intervalArray.length; i++) {
@@ -310,7 +312,9 @@ obacht.clearIntervals = function() {
         clearInterval(handler);
     }
 };
-
+/**
+ * Clears all Timeouts created with obacht.timeout()
+ */
 obacht.clearTimeouts = function() {
     "use strict";
     for (var i = 0; i < obacht.timeoutArray.length; i++) {
