@@ -57,7 +57,7 @@ obacht.World = function(currentGame, type) {
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation1)
-        .setRenderer(obacht.renderer)
+        .setRenderer(obacht.renderer.world)
         .setQuality(obacht.options.graphics.worldQualityC);
 
     this.clouds2 = new lime.Sprite()
@@ -66,7 +66,7 @@ obacht.World = function(currentGame, type) {
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation2)
-        .setRenderer(obacht.renderer)
+        .setRenderer(obacht.renderer.world)
         .setQuality(obacht.options.graphics.worldQualityC);
 
     this.landscape1 = new lime.Sprite()
@@ -75,7 +75,7 @@ obacht.World = function(currentGame, type) {
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation1)
-        .setRenderer(obacht.renderer)
+        .setRenderer(obacht.renderer.world)
         .setQuality(obacht.options.graphics.worldQualityB);
 
     this.landscape2 = new lime.Sprite()
@@ -84,7 +84,7 @@ obacht.World = function(currentGame, type) {
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation2)
-        .setRenderer(obacht.renderer)
+        .setRenderer(obacht.renderer.world)
         .setQuality(obacht.options.graphics.worldQualityB);
 
     this.ground1 = new lime.Sprite()
@@ -93,7 +93,7 @@ obacht.World = function(currentGame, type) {
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation1)
-        .setRenderer(obacht.renderer)
+        .setRenderer(obacht.renderer.world)
         .setQuality(obacht.options.graphics.worldQualityA);
 
     this.ground2 = new lime.Sprite()
@@ -102,7 +102,7 @@ obacht.World = function(currentGame, type) {
         .setPosition(this.x, this.y)
         .setAnchorPoint(0, 1)
         .setRotation(this.rotation2)
-        .setRenderer(obacht.renderer)
+        .setRenderer(obacht.renderer.world)
         .setQuality(obacht.options.graphics.worldQualityA);
 
     this.gameLayer.appendChild(this.clouds2);

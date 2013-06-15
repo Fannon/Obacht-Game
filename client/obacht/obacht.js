@@ -59,10 +59,42 @@ obacht.start = function() {
     obacht.director.makeMobileWebAppCapable();
     obacht.director.setDisplayFPS(obacht.options.debug.displayFps);
 
-    if (obacht.options.graphics.DEFAULT_RENDERER === 'DOM') {
-        obacht.renderer = lime.Renderer.DOM;
+    /** Obacht Renderer */
+    obacht.renderer = {};
+
+    // world
+    if (obacht.options.graphics.worldRenderer === 'DOM') {
+        obacht.renderer.world = lime.Renderer.DOM;
     } else {
-        obacht.renderer = lime.Renderer.CANVAS;
+        obacht.renderer.world = lime.Renderer.CANVAS;
+    }
+
+    // player
+    if (obacht.options.graphics.playerRenderer === 'DOM') {
+        obacht.renderer.player = lime.Renderer.DOM;
+    } else {
+        obacht.renderer.player = lime.Renderer.CANVAS;
+    }
+
+    // trap
+    if (obacht.options.graphics.trapRenderer === 'DOM') {
+        obacht.renderer.trap = lime.Renderer.DOM;
+    } else {
+        obacht.renderer.trap = lime.Renderer.CANVAS;
+    }
+
+    // bonus
+    if (obacht.options.graphics.bonusRenderer === 'DOM') {
+        obacht.renderer.bonus = lime.Renderer.DOM;
+    } else {
+        obacht.renderer.bonus = lime.Renderer.CANVAS;
+    }
+
+    // inventory
+    if (obacht.options.graphics.inventoryRenderer === 'DOM') {
+        obacht.renderer.inventory = lime.Renderer.DOM;
+    } else {
+        obacht.renderer.inventory = lime.Renderer.CANVAS;
     }
 
     //////////////////////////////

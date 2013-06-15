@@ -72,7 +72,8 @@ obacht.Trap = function(currentGame, type, location) {
         .setAnchorPoint(0.5, 1)
         .setRotation(this.rotation)
         .setQuality(obacht.options.graphics.trapQuality)
-        .setFill(currentGame.spritesheet.getFrame(this.trapDetail.file));
+        .setFill(currentGame.spritesheet.getFrame(this.trapDetail.file))
+        .setRenderer(obacht.renderer.trap);
 
     this.circle = new lime.Circle()
         .setPosition(this.circleX, this.circleY)

@@ -21,7 +21,11 @@ obacht.options = {
     graphics: {
         VIEWPORT_WIDTH: 1280,
         VIEWPORT_HEIGHT: 720,
-        DEFAULT_RENDERER: 'CANVAS',
+        playerRenderer: 'DOM',
+        trapRenderer: 'DOM',
+        worldRenderer: 'CANVAS',
+        bonusRenderer: 'DOM',
+        inventoryRenderer: 'DOM',
         worldQualityA: 0.3,
         worldQualityB: 0.3,
         worldQualityC: 0.2,

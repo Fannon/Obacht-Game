@@ -69,7 +69,7 @@ obacht.Player = function(currentGame, location) {
         .setSize(obacht.options.player.general.width, obacht.options.player.general.height)
         .setAnchorPoint(0.5, 1)
         .setRotation(this.rotation)
-//        .setRenderer(obacht.renderer)
+        .setRenderer(obacht.renderer.player)
         .setQuality(obacht.options.graphics.characterQuality);
 
     // Appends character sprite to game layer.
