@@ -91,7 +91,7 @@ obacht.TrapManager.prototype = {
         trap.type = type;
 
         /** Delete the Trap after a specific Timeout */
-        setTimeout(function() {
+        obacht.timeout(function() {
             self.removeTrap(trap);
         }, obacht.options.trap.general.clearTimeout);
 

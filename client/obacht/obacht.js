@@ -27,7 +27,6 @@ goog.require('obacht.Game');
 /** global log variable for Logging with the custom Logger */
 var log;
 
-
 /**
  * Obacht Game EntryPoint
  */
@@ -45,8 +44,6 @@ obacht.start = function() {
 
     /** Menu Instance */
     obacht.menu = new obacht.Menu();
-
-    obacht.device = undefined;
 
     /** Multiplayer Service Instance */
     obacht.mp = new obacht.MultiplayerService(obacht.options.server.url);
@@ -113,10 +110,11 @@ obacht.start = function() {
     // INITIALIZING             //
     //////////////////////////////
 
-    obacht.checkDevices();
+    // Detect Devices and Browsers
+    obacht.deviceDetection();
 
+    // Start with Main Menu
     obacht.menu.mainMenuScene();
-
 
 };
 
@@ -128,39 +126,39 @@ obacht.start = function() {
 obacht.cleanUp = function() {
     "use strict";
 
-    log.debug('Cleaning up...!');
-
-    // Clean up Game if one still running
     if (obacht.currentGame) {
+
+        log.debug('Cleaning up...!');
+
+        // Remove CSS Gradients from Theme and show Menu Background again
+        obacht.setBackground(false);
+
+        // Clear all Timeouts and Intervals
+        obacht.clearIntervals();
+        obacht.clearTimeouts();
+
+        // Destruct and remove Game Objects
         obacht.currentGame.destruct();
         delete obacht.currentGame;
-    }
-
-    if (obacht.playerController) {
         obacht.playerController.destruct();
         delete obacht.playerController;
+
+        // Clear Event Subscriptions
+        obacht.mp.events.clear('room_detail');
+        obacht.mp.events.clear('bonus');
+        obacht.mp.events.clear('receive_bonus');
+
+        // Reset Friend, if player has one
+        obacht.mp.friend = false;
+
+        // Leave Room if still connected to one
+        if (obacht.mp.roomDetail.pin) {
+            obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);
+        }
+
+    } else {
+        log.debug('cleanUp(): No current Game to clean up!');
     }
-
-    // Remove CSS Gradients from Theme and show Menu Background again
-    obacht.setBackground(false);
-
-    // Clear Event Subscriptions
-    obacht.mp.events.clear('room_detail');
-    obacht.mp.events.clear('bonus');
-    obacht.mp.events.clear('receive_bonus');
-
-    // Reset Friend, if player has one
-    obacht.mp.friend = false;
-
-    // Leave Room if still connected to one
-    if (obacht.mp.roomDetail.pin) {
-        obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);
-    }
-
-    // Warning: This crashes the android browser:
-//    for (var i = 1; i < 99999; i++) {
-//        window.clearInterval(i);
-//    }
 };
 
 /**
@@ -243,7 +241,7 @@ obacht.showPopup = function(sceneName, msg) {
  *
  * Uses http://docs.closure-library.googlecode.com/git/closure_goog_useragent_useragent.js.html
  */
-obacht.checkDevices = function() {
+obacht.deviceDetection = function() {
     "use strict";
 
     obacht.device = goog.userAgent;
@@ -258,6 +256,11 @@ obacht.checkDevices = function() {
 
 };
 
+
+///////////////////////////////
+// HELPER FUNCTIONS          //
+///////////////////////////////
+
 /**
  * Is called when an Event Listener throws an Error
  * TODO: Refactor this
@@ -267,4 +270,51 @@ obacht.checkDevices = function() {
 obacht.eventError = function(e) {
     "use strict";
     log.warn('Event Error: ' + e.message );
+};
+
+/** Array with all used Interval Handlers */
+obacht.intervalArray = [];
+
+/** Array with all used Timeout Handlers */
+obacht.timeoutArray = [];
+
+/**
+ * Create new Interval and saves the handler in an Array for easy Clearing
+ *
+ * @param {Function}    callback   Callback Function
+ * @param {Number}      time       Interval Time
+ */
+obacht.interval = function(callback, time) {
+    "use strict";
+    var handler = setInterval(callback, time);
+    obacht.intervalArray.push(handler);
+};
+
+
+/**
+ * Create new Timeout and saves the handler in an Array for easy Clearing
+ *
+ * @param {Function}    callback   Callback Function
+ * @param {Number}      time       Timeout Time
+ */
+obacht.timeout = function(callback, time) {
+    "use strict";
+    var handler = setTimeout(callback, time);
+    obacht.timeoutArray.push(handler);
+};
+
+obacht.clearIntervals = function() {
+    "use strict";
+    for (var i = 0; i < obacht.intervalArray.length; i++) {
+        var handler = obacht.intervalArray[i];
+        clearInterval(handler);
+    }
+};
+
+obacht.clearTimeouts = function() {
+    "use strict";
+    for (var i = 0; i < obacht.timeoutArray.length; i++) {
+        var handler = obacht.timeoutArray[i];
+        clearTimeout(handler);
+    }
 };

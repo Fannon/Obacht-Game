@@ -71,7 +71,7 @@ obacht.Bonus.prototype = {
     bonusTimer: function() {
         "use strict";
         var self = this;
-        setTimeout(function(){
+        obacht.timeout(function(){
             if(!self.clicked) {
                 self.noReaction();
             }

@@ -103,17 +103,17 @@ obacht.Game = function() {
     this.quitGame();
 
     /// 2 ///
-    setTimeout(function() {
+    obacht.timeout(function() {
         self.setCountdownStatus('two');
     }, obacht.options.gameplay.countdownInterval);
 
     /// 1 ///
-    setTimeout(function() {
+    obacht.timeout(function() {
         self.setCountdownStatus('one');
     }, obacht.options.gameplay.countdownInterval * 2);
 
     /// Obacht! ///
-    setTimeout(function() {
+    obacht.timeout(function() {
 
         /** Time the game started, used for calculation current Distance */
         self.timer = new Date();
@@ -134,7 +134,7 @@ obacht.Game = function() {
         // Remove Background
         self.countdownLayer.removeChild(countDownLayerBackground);
 
-        setTimeout(function() {
+        obacht.timeout(function() {
             // Remove CountDown Layer from Game Sene
             obacht.gameScene.removeChild(self.countdownLayer);
 
