@@ -1489,7 +1489,7 @@ obacht.Menu.prototype = {
                 .setText(i)
                 .setFontColor('#fff')
                 .setFontSize(70)
-                .setSize(142, 70)
+                .setSize(80, 70)
                 .setPosition(startFrom + spacing * (i - 1) + 3, 537);
         }
 
@@ -1504,7 +1504,7 @@ obacht.Menu.prototype = {
             .setText(0)
             .setFontColor('#fff')
             .setFontSize(70)
-            .setSize(142, 70)
+            .setSize(80, 70)
             .setPosition(startFrom + spacing * 9 + 3, 537);
 
         /** Create Delete-Key */
