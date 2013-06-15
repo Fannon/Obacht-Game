@@ -14,8 +14,8 @@ obacht.options = {
         logLevel: 0,
         fastStart: false,
         displayFps: true,
-        showBoundingBoxes: false,
-        invincible: false,
+        showBoundingBoxes: true,
+        invincible: true,
         avgFramerate: true
     },
     graphics: {

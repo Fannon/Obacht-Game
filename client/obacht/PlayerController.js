@@ -16,6 +16,12 @@ obacht.PlayerController = function() {
     "use strict";
     var self = this;
 
+    /** Indicates if the player is currently jumping */
+    this.isJumping = false;
+
+    /** Indicates if the player is currently crouching */
+    this.isCrouching = false;
+
     /** Tap area for jump events */
     this.tapAreaTop = new lime.Node()
         .setSize(obacht.options.graphics.VIEWPORT_WIDTH / 4, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
@@ -48,16 +54,13 @@ obacht.PlayerController = function() {
     /* EVENT HANDLING FOR JUMPING */
     ////////////////////////////////
 
-    /** Indicates if the player is currently jumping */
-    this.isJumping = false;
-
     /** Sets up event subscription for jumping. @event */
-    goog.events.listen(this.tapAreaTop, ['touchstart', 'mousedown'], function(e) {
-        if (self.isJumping === true) {
-            return false;
-        } else {
+    goog.events.listen(this.tapAreaTop, ['touchstart', 'mousedown'], function() {
+        if (self.isJumping === false && self.isCrouching === false) {
             self.jump();
             self.isJumping = true;
+        } else {
+            return;
         }
     });
 
@@ -67,26 +70,23 @@ obacht.PlayerController = function() {
     /* EVENT HANDLING FOR CROUCHING */
     //////////////////////////////////
 
-    /** Indicates if the player is currently crouching */
-    this.isCrouching = false;
-
     /** Sets up event subscription for crouching. @event */
-    goog.events.listen(this.tapAreaBottom, ['touchstart', 'mousedown'], function(e) {
-        if (self.isCrouching === false) {
+    goog.events.listen(this.tapAreaBottom, ['touchstart', 'mousedown'], function() {
+        if (self.isCrouching === false && self.isJumping === false) {
             self.crouch();
             self.isCrouching = true;
         } else {
-            return false;
+            return;
         }
     });
 
     /** Sets up event subscription for standing up. @event */
-    goog.events.listen(this.tapAreaPuffer, ['touchend', 'touchcancel', 'mouseup'], function(e) {
+    goog.events.listen(this.tapAreaPuffer, ['touchend', 'touchcancel', 'mouseup'], function() {
         if (self.isCrouching === true) {
             self.standUp();
             self.isCrouching = false;
         } else {
-            return false;
+            return;
         }
     });
 
