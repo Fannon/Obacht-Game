@@ -22,7 +22,7 @@ obacht.Generator = function(speedFactor) {
     this.thrownTrapsCounter = 0;
 
     // Decrement SpeedFactor (lower is faster)
-    this.speedFactorInterval = setInterval(function() {
+    obacht.interval(function() {
         self.speedFactor -= obacht.options.gameplay.decrementSpeedFactor;
     }, obacht.options.gameplay.decrementSpeedFactorTime);
 };
@@ -60,7 +60,7 @@ obacht.Generator.prototype = {
     startThrowTrap: function(){
        "use strict";
         var self = this;
-        this.trapInterval = setInterval(function() {
+        obacht.interval(function() {
 
             if (self.thrownTrapsCounter % 2) {
                 obacht.mp.throwTrap(self.getRandomTrap(), obacht.mp.pid);
@@ -78,7 +78,7 @@ obacht.Generator.prototype = {
     startThrowBonus: function(){
        "use strict";
         var self = this;
-        this.bonusInterval = setInterval(function() {
+        obacht.interval(function() {
             obacht.mp.throwBonus(self.getRandomTrap());
         }, self.getRandomTime(obacht.options.gameplay.generateBoniMinInterval, obacht.options.gameplay.generateBoniMaxInterval));
     },
@@ -88,9 +88,5 @@ obacht.Generator.prototype = {
      */
     destruct: function() {
         "use strict";
-
-        clearInterval(this.trapInterval);
-        clearInterval(this.bonusInterval);
-        clearInterval(this.speedFactorInterval);
     }
 };

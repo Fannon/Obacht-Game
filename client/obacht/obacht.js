@@ -27,7 +27,6 @@ goog.require('obacht.Game');
 /** global log variable for Logging with the custom Logger */
 var log;
 
-
 /**
  * Obacht Game EntryPoint
  */
@@ -40,13 +39,17 @@ obacht.start = function() {
     // Model                    //
     //////////////////////////////
 
+    /** Array with all used Interval Handlers */
+    obacht.intervalArray = [];
+
+    /** Array with all used Timeout Handlers */
+    obacht.timeoutArray = [];
+
     /** Global Spritesheet */
     obacht.spritesheet = new lime.SpriteSheet('assets/gfx/globalSpritesheet.png', lime.ASSETS.globalSpritesheet.json, lime.parser.JSON);
 
     /** Menu Instance */
     obacht.menu = new obacht.Menu();
-
-    obacht.device = undefined;
 
     /** Multiplayer Service Instance */
     obacht.mp = new obacht.MultiplayerService(obacht.options.server.url);
@@ -56,10 +59,42 @@ obacht.start = function() {
     obacht.director.makeMobileWebAppCapable();
     obacht.director.setDisplayFPS(obacht.options.debug.displayFps);
 
-    if (obacht.options.graphics.DEFAULT_RENDERER === 'DOM') {
-        obacht.renderer = lime.Renderer.DOM;
+    /** Obacht Renderer */
+    obacht.renderer = {};
+
+    // world
+    if (obacht.options.graphics.worldRenderer === 'DOM') {
+        obacht.renderer.world = lime.Renderer.DOM;
     } else {
-        obacht.renderer = lime.Renderer.CANVAS;
+        obacht.renderer.world = lime.Renderer.CANVAS;
+    }
+
+    // player
+    if (obacht.options.graphics.playerRenderer === 'DOM') {
+        obacht.renderer.player = lime.Renderer.DOM;
+    } else {
+        obacht.renderer.player = lime.Renderer.CANVAS;
+    }
+
+    // trap
+    if (obacht.options.graphics.trapRenderer === 'DOM') {
+        obacht.renderer.trap = lime.Renderer.DOM;
+    } else {
+        obacht.renderer.trap = lime.Renderer.CANVAS;
+    }
+
+    // bonus
+    if (obacht.options.graphics.bonusRenderer === 'DOM') {
+        obacht.renderer.bonus = lime.Renderer.DOM;
+    } else {
+        obacht.renderer.bonus = lime.Renderer.CANVAS;
+    }
+
+    // inventory
+    if (obacht.options.graphics.inventoryRenderer === 'DOM') {
+        obacht.renderer.inventory = lime.Renderer.DOM;
+    } else {
+        obacht.renderer.inventory = lime.Renderer.CANVAS;
     }
 
     //////////////////////////////
@@ -113,10 +148,11 @@ obacht.start = function() {
     // INITIALIZING             //
     //////////////////////////////
 
-    obacht.checkDevices();
+    // Detect Devices and Browsers
+    obacht.deviceDetection();
 
+    // Start with Main Menu
     obacht.menu.mainMenuScene();
-
 
 };
 
@@ -128,39 +164,39 @@ obacht.start = function() {
 obacht.cleanUp = function() {
     "use strict";
 
-    log.debug('Cleaning up...!');
-
-    // Clean up Game if one still running
     if (obacht.currentGame) {
+
+        log.debug('Cleaning up...!');
+
+        // Remove CSS Gradients from Theme and show Menu Background again
+        obacht.setBackground(false);
+
+        // Clear all Timeouts and Intervals
+        obacht.clearIntervals();
+        obacht.clearTimeouts();
+
+        // Destruct and remove Game Objects
         obacht.currentGame.destruct();
         delete obacht.currentGame;
-    }
-
-    if (obacht.playerController) {
         obacht.playerController.destruct();
         delete obacht.playerController;
+
+        // Clear Event Subscriptions
+        obacht.mp.events.clear('room_detail');
+        obacht.mp.events.clear('bonus');
+        obacht.mp.events.clear('receive_bonus');
+
+        // Reset Friend, if player has one
+        obacht.mp.friend = false;
+
+        // Leave Room if still connected to one
+        if (obacht.mp.roomDetail.pin) {
+            obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);
+        }
+
+    } else {
+        log.debug('cleanUp(): No current Game to clean up!');
     }
-
-    // Remove CSS Gradients from Theme and show Menu Background again
-    obacht.setBackground(false);
-
-    // Clear Event Subscriptions
-    obacht.mp.events.clear('room_detail');
-    obacht.mp.events.clear('bonus');
-    obacht.mp.events.clear('receive_bonus');
-
-    // Reset Friend, if player has one
-    obacht.mp.friend = false;
-
-    // Leave Room if still connected to one
-    if (obacht.mp.roomDetail.pin) {
-        obacht.mp.leaveRoom(obacht.mp.roomDetail.pin);
-    }
-
-    // Warning: This crashes the android browser:
-//    for (var i = 1; i < 99999; i++) {
-//        window.clearInterval(i);
-//    }
 };
 
 /**
@@ -243,20 +279,27 @@ obacht.showPopup = function(sceneName, msg) {
  *
  * Uses http://docs.closure-library.googlecode.com/git/closure_goog_useragent_useragent.js.html
  */
-obacht.checkDevices = function() {
+obacht.deviceDetection = function() {
     "use strict";
 
     obacht.device = goog.userAgent;
 
-    log.info('Running on OS: ' + obacht.device.PLATFORM);
+    // TODO: Adjust Options
+
+    log.debug('Running on OS: ' + obacht.device.PLATFORM);
 
     if (obacht.device.MOBILE) {
-        log.info('Mobile Browser detected');
+        log.debug('Mobile Browser detected');
     } else {
-        log.info('Desktop Browser detected');
+        log.debug('Desktop Browser detected');
     }
 
 };
+
+
+///////////////////////////////
+// HELPER FUNCTIONS          //
+///////////////////////////////
 
 /**
  * Is called when an Event Listener throws an Error
@@ -267,4 +310,49 @@ obacht.checkDevices = function() {
 obacht.eventError = function(e) {
     "use strict";
     log.warn('Event Error: ' + e.message );
+};
+
+/**
+ * Create new Interval and saves the handler in an Array for easy Clearing
+ *
+ * @param {Function}    callback   Callback Function
+ * @param {Number}      time       Interval Time
+ */
+obacht.interval = function(callback, time) {
+    "use strict";
+    var handler = setInterval(callback, time);
+    obacht.intervalArray.push(handler);
+};
+
+/**
+ * Create new Timeout and saves the handler in an Array for easy Clearing
+ *
+ * @param {Function}    callback   Callback Function
+ * @param {Number}      time       Timeout Time
+ */
+obacht.timeout = function(callback, time) {
+    "use strict";
+    var handler = setTimeout(callback, time);
+    obacht.timeoutArray.push(handler);
+};
+
+/**
+ * Clears all Intervals created with obacht.interval()
+ */
+obacht.clearIntervals = function() {
+    "use strict";
+    for (var i = 0; i < obacht.intervalArray.length; i++) {
+        var handler = obacht.intervalArray[i];
+        clearInterval(handler);
+    }
+};
+/**
+ * Clears all Timeouts created with obacht.timeout()
+ */
+obacht.clearTimeouts = function() {
+    "use strict";
+    for (var i = 0; i < obacht.timeoutArray.length; i++) {
+        var handler = obacht.timeoutArray[i];
+        clearTimeout(handler);
+    }
 };

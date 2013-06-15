@@ -3,7 +3,7 @@
 goog.provide('obacht.Inventory');
 
 goog.require('lime.RoundedRect');
-goog.require('lime.Sprite');
+
 
 /**
  * Inventory Object.
@@ -53,7 +53,8 @@ obacht.Inventory = function(currentGame) {
             .setFill(this.spritesheet.getFrame('boni_none.png'))
             .setOpacity(0.5)
             .setAnchorPoint(0, 0)
-            .setRadius(15);
+            .setRadius(15)
+            .setRenderer(obacht.renderer.inventory);
 
         // TODO: Use PlayerController Layer (?)
         obacht.playerController.layer.appendChild(this.trays[i].button);

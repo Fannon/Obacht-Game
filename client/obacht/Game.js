@@ -67,6 +67,21 @@ obacht.Game = function() {
         log.warn('Error loading Theme Spritesheet');
     }
 
+    if (obacht.options.debug.avgFramerate) {
+        obacht.frameRateArray = [];
+        lime.scheduleManager.schedule(function(){
+            obacht.frameRateArray.push(obacht.director.fps);
+        });
+        obacht.interval(function() {
+            var sum = 0;
+            for(var i = 0; i < obacht.frameRateArray.length; i++) {
+                sum += parseInt(obacht.frameRateArray[i], 10);
+            }
+            var avg = sum/obacht.frameRateArray.length;
+            log.info('DEBUG > AVERAGE FRAMERATE: ' + avg);
+        }, 3000);
+    }
+
 
     //////////////////////////////
     // Draw & construct Game    //
@@ -103,17 +118,17 @@ obacht.Game = function() {
     this.quitGame();
 
     /// 2 ///
-    setTimeout(function() {
+    obacht.timeout(function() {
         self.setCountdownStatus('two');
     }, obacht.options.gameplay.countdownInterval);
 
     /// 1 ///
-    setTimeout(function() {
+    obacht.timeout(function() {
         self.setCountdownStatus('one');
     }, obacht.options.gameplay.countdownInterval * 2);
 
     /// Obacht! ///
-    setTimeout(function() {
+    obacht.timeout(function() {
 
         /** Time the game started, used for calculation current Distance */
         self.timer = new Date();
@@ -134,7 +149,7 @@ obacht.Game = function() {
         // Remove Background
         self.countdownLayer.removeChild(countDownLayerBackground);
 
-        setTimeout(function() {
+        obacht.timeout(function() {
             // Remove CountDown Layer from Game Sene
             obacht.gameScene.removeChild(self.countdownLayer);
 

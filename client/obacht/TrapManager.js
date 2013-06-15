@@ -91,7 +91,7 @@ obacht.TrapManager.prototype = {
         trap.type = type;
 
         /** Delete the Trap after a specific Timeout */
-        setTimeout(function() {
+        obacht.timeout(function() {
             self.removeTrap(trap);
         }, obacht.options.trap.general.clearTimeout);
 
@@ -134,17 +134,18 @@ obacht.TrapManager.prototype = {
         ///////////////////////////////////
 
         var playerPosition = self.currentGame.ownPlayer.boundingBox.getPosition();
+        var playerSize = self.currentGame.ownPlayer.boundingBox.getSize();
         var playerScale = self.currentGame.ownPlayer.boundingBox.getScale();
 
-        var playerWidth = obacht.options.player.boundingBoxes[0].width * playerScale.x;
-        var playerHeight = obacht.options.player.boundingBoxes[0].height * playerScale.y;
+        var playerWidth = playerSize.width * playerScale.x;
+        var playerHeight = playerSize.height * playerScale.y;
 
         var playerX = playerPosition.x - (playerWidth) / 2;
         var playerY = playerPosition.y - playerHeight;
 
         for (var i = 0; i < self.bottomTraps.length; i++) {
 
-            if (self.bottomTraps[i] && self.bottomTraps[i].location === 'bottom' && self.bottomTraps[i].type) {
+            if (self.bottomTraps[i]) {
 
 
                 ///////////////////////////////////
@@ -169,10 +170,9 @@ obacht.TrapManager.prototype = {
                 ///////////////////////////////////
 
                 // Dont calculate Traps which are not in the Player Region
-                if (trapX < 0 || trapX > 420) {
-                    break;
+                if (trapX < -20 || trapX > 300) {
+                    continue;
                 }
-
 
                 ///////////////////////////////////
                 // Collision Detection           //

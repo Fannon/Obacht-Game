@@ -69,7 +69,7 @@ obacht.Player = function(currentGame, location) {
         .setSize(obacht.options.player.general.width, obacht.options.player.general.height)
         .setAnchorPoint(0.5, 1)
         .setRotation(this.rotation)
-//        .setRenderer(obacht.renderer)
+        .setRenderer(obacht.renderer.player)
         .setQuality(obacht.options.graphics.characterQuality);
 
     // Appends character sprite to game layer.
@@ -184,17 +184,17 @@ obacht.Player = function(currentGame, location) {
             /** Sets up event subscription for enemy player. @event */
             obacht.mp.events.subscribe('enemy_player_action', function(data) {
                 if (data.action === 'jump') {
-                    setTimeout(function(){
+                    obacht.timeout(function(){
                         self.jump();
                     },currentGame.getDistanceTimer(data.data.distance));
                 }
                 if (data.action === 'crouch') {
-                    setTimeout(function(){
+                    obacht.timeout(function(){
                         self.crouch();
                     },currentGame.getDistanceTimer(data.data.distance));
                 }
                 if (data.action === 'standUp') {
-                    setTimeout(function(){
+                    obacht.timeout(function(){
                         self.standUp();
                     },currentGame.getDistanceTimer(data.data.distance));
                 }

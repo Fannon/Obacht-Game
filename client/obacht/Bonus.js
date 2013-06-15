@@ -37,7 +37,9 @@ obacht.Bonus = function(currentGame, type) {
         .setPosition(obacht.options.bonus.general.x, obacht.options.bonus.general.y)
         .setFill(this.spritesheet.getFrame('boni_' + this.type + '.png'))
         .setAnchorPoint(0, 0)
-        .setRadius(15);
+        .setQuality(obacht.options.graphics.bonusQuality)
+        .setRadius(15)
+        .setRenderer(obacht.renderer.bonus);
 
     self.drawBonus();
 
@@ -70,7 +72,7 @@ obacht.Bonus.prototype = {
     bonusTimer: function() {
         "use strict";
         var self = this;
-        setTimeout(function(){
+        obacht.timeout(function(){
             if(!self.clicked) {
                 self.noReaction();
             }

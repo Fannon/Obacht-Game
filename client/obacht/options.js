@@ -11,16 +11,21 @@ goog.provide('obacht.options');
  */
 obacht.options = {
     debug: {
-        logLevel: 0,
+        logLevel: 1,
         fastStart: false,
         displayFps: true,
         showBoundingBoxes: false,
-        invincible: true
+        invincible: false,
+        avgFramerate: true
     },
     graphics: {
         VIEWPORT_WIDTH: 1280,
         VIEWPORT_HEIGHT: 720,
-        DEFAULT_RENDERER: 'CANVAS',
+        playerRenderer: 'DOM',
+        trapRenderer: 'DOM',
+        worldRenderer: 'CANVAS',
+        bonusRenderer: 'DOM',
+        inventoryRenderer: 'DOM',
         worldQualityA: 0.3,
         worldQualityB: 0.3,
         worldQualityC: 0.2,
@@ -44,7 +49,7 @@ obacht.options = {
         generateBoniMaxInterval: 10000,
 
         generateTrapsMinInterval: 1000,
-        generateTrapsMaxInterval: 5000,
+        generateTrapsMaxInterval: 4000,
 
         distanceOffset: 0
     },
