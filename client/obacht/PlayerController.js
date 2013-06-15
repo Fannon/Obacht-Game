@@ -59,8 +59,6 @@ obacht.PlayerController = function() {
         if (self.isJumping === false && self.isCrouching === false) {
             self.jump();
             self.isJumping = true;
-        } else {
-            return;
         }
     });
 
@@ -75,8 +73,6 @@ obacht.PlayerController = function() {
         if (self.isCrouching === false && self.isJumping === false) {
             self.crouch();
             self.isCrouching = true;
-        } else {
-            return;
         }
     });
 
@@ -85,8 +81,6 @@ obacht.PlayerController = function() {
         if (self.isCrouching === true) {
             self.standUp();
             self.isCrouching = false;
-        } else {
-            return;
         }
     });
 

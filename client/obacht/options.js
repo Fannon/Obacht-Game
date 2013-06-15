@@ -11,21 +11,23 @@ goog.provide('obacht.options');
  */
 obacht.options = {
     debug: {
-        logLevel: 0,
+        logLevel: 1,
         fastStart: false,
         displayFps: true,
-        showBoundingBoxes: true,
-        invincible: true,
+        showBoundingBoxes: false,
+        invincible: false,
         avgFramerate: true
     },
     graphics: {
         VIEWPORT_WIDTH: 1280,
         VIEWPORT_HEIGHT: 720,
+
         playerRenderer: 'DOM',
         trapRenderer: 'DOM',
         worldRenderer: 'CANVAS',
         bonusRenderer: 'DOM',
         inventoryRenderer: 'DOM',
+
         worldQualityA: 0.3,
         worldQualityB: 0.3,
         worldQualityC: 0.2,
@@ -85,7 +87,7 @@ obacht.options = {
         general: {
             width: 205,
             height: 240,
-            jumpUpDuration: 0.3,
+            jumpUpDuration: 0.4,
             jumpDownDuration: 0.5,
             jumpHeight: 325,
             crouchDuration: 0.1,
