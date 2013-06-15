@@ -40,9 +40,11 @@ obacht.Player = function(currentGame, location) {
     this.boundingBoxes = obacht.options.player.boundingBoxes;
     var bb = this.boundingBoxes[0];
 
-
     /** Player Health */
     this.health = 3;
+
+    /** Player crouching */
+    this.crouching = false;
 
     if (this.location === 'bottom') {
         this.x = obacht.options.player.location.bottom.x;
@@ -151,6 +153,15 @@ obacht.Player = function(currentGame, location) {
         .setDuration(obacht.options.player.general.crouchDuration);
 
 
+    /////////////////////////
+    /* INTERVALS           */
+    /////////////////////////
+
+    obacht.interval(function() {
+        if (!self.crouching) {
+            self.standUp();
+        }
+    }, 500);
 
     /////////////////////////
     /* SUBSCRIBE TO EVENTS */
@@ -174,9 +185,11 @@ obacht.Player = function(currentGame, location) {
                     self.jump();
                 }
                 if (data.action === 'crouch') {
+                    self.crouching  = true;
                     self.crouch();
                 }
                 if (data.action === 'standUp') {
+                    self.crouching = false;
                     self.standUp();
                 }
             });
@@ -191,11 +204,13 @@ obacht.Player = function(currentGame, location) {
                 if (data.action === 'crouch') {
                     obacht.timeout(function(){
                         self.crouch();
+                        self.crouching  = true;
                     },currentGame.getDistanceTimer(data.data.distance));
                 }
                 if (data.action === 'standUp') {
                     obacht.timeout(function(){
                         self.standUp();
+                        self.crouching = false;
                     },currentGame.getDistanceTimer(data.data.distance));
                 }
             });
