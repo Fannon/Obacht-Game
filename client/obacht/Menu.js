@@ -4,7 +4,9 @@ goog.provide('obacht.Menu');
 
 // Lime.js Requirements
 goog.require('lime.Layer');
-
+goog.require('lime.animation.ScaleTo');
+goog.require('lime.animation.Loop');
+goog.require('lime.animation.Easing');
 
 /**
  * Game Menu
@@ -26,7 +28,8 @@ obacht.Menu = function() {
 
     lime.Label.installFont('Cartwheel', 'assets/fonts/Cartwheel.otf');
     lime.Label.defaultFont = 'Cartwheel';
-    lime.Label.installFont('OpenSans', 'assets/fonts/OpenSans-Regular.ttf');
+    lime.Label.installFont('OpenSansRegular', 'assets/fonts/OpenSans-Regular.ttf');
+    lime.Label.installFont('OpenSansBold', 'assets/fonts/OpenSans-Bold.ttf');
 
     // If fastStart Option is set to true, immediatly start a random Game
     if (obacht.options.debug.fastStart) {
@@ -104,7 +107,7 @@ obacht.Menu.prototype = {
 
         /** Help Button Label */
         var helpLabel = new lime.Label()
-            .setText('HELP')
+            .setText('How-to')
             .setFontColor('#fff')
             .setFontSize(45
             ).setPosition(322, 650)
@@ -223,45 +226,58 @@ obacht.Menu.prototype = {
 
         /** Headline Manual */
         var headlineManual = new lime.Sprite()
-           .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+           //.setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            .setFill('assets/gfx/placeholder/headlineManual.png')
            .setPosition(660, 130)
-           .setSize(510, 116);
+           .setSize(690, 94);
 
-        var textManualGeneral1 = new lime.Label()
-            .setText('2 Players, 2 Worlds and a lot of fun.')
-            .setFontFamily('OpenSans')
+        var textManualGeneral1a = new lime.Label()
+            .setText('Two Players on-screen and each running on his own planet.')
+            .setFontFamily('OpenSansBold')
             .setFontColor('#fff')
-            .setFontSize(30)
+            .setFontSize(33)
             .setLineHeight(1.2)
-            .setPosition(793, 270)
-            .setSize(370, 30)
+            .setPosition(870, 240)
+            .setSize(700, 33)
+            .setAlign('left');
+
+
+        var textManualGeneral1b = new lime.Label()
+            .setText('This is where the fun starts!')
+            .setFontFamily('OpenSansBold')
+            .setFontColor('#fff')
+            .setFontSize(33)
+            .setLineHeight(1.2)
+            .setPosition(870, 323)
+            .setSize(700, 33)
             .setAlign('left');
 
         var textManualGeneral2 = new lime.Label()
             .setText('Take care of your "Hogi" and try to avoid running into obstacles.')
-            .setFontFamily('OpenSans')
+            .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
-            .setFontSize(30)
+            .setFontSize(33)
             .setLineHeight(1.2)
-            .setPosition(830, 370)
-            .setSize(450, 30)
+            .setPosition(837, 400)
+            .setSize(630, 33)
             .setAlign('left');
 
         var textManualGeneral3 = new lime.Label()
             .setText('Even better, you can place obstacles in the way of your enemy`s "Hogi" to make life difficult for him.')
-            .setFontFamily('OpenSans')
+            .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
-            .setFontSize(30)
+            .setFontSize(33)
             .setLineHeight(1.2)
-            .setPosition(830, 510)
-            .setSize(450, 30)
+            .setPosition(855, 510)
+            .setSize(670, 33)
             .setAlign('left');
 
         /** Hogi */
         var hogi = new lime.Sprite()
-            .setFill(obacht.spritesheet
-            .getFrame('hogi.png'))
-            .setPosition(350, 450).setSize(364, 396);
+            //.setFill(obacht.spritesheet.getFrame('hogi.png'))
+            .setFill('assets/gfx/placeholder/hogi.png')
+            .setPosition(0, 100).setSize(510, 602)
+            .setAnchorPoint(0,0);
 
         /** Back Button - Door */
         var backButton = new lime.Sprite()
@@ -289,7 +305,8 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(backButton);
         menuLayer.appendChild(arrowNext);
         menuLayer.appendChild(hogi);
-        menuLayer.appendChild(textManualGeneral1);
+        menuLayer.appendChild(textManualGeneral1a);
+        menuLayer.appendChild(textManualGeneral1b);
         menuLayer.appendChild(textManualGeneral2);
         menuLayer.appendChild(textManualGeneral3);
 
@@ -318,33 +335,58 @@ obacht.Menu.prototype = {
 
         /** Headline Manual */
         var headlineManual = new lime.Sprite()
-            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            //.setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            .setFill('assets/gfx/placeholder/headlineManual.png')
             .setPosition(660, 130)
-            .setSize(510, 116);
+            .setSize(690, 94);
 
         var textWorlds1 = new lime.Label()
             .setText('Your Hogi')
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
-            .setFontSize(40)
-            .setPosition(550, 680)
-            .setSize(370, 80)
+            .setFontSize(55)
+            .setPosition(430, 680)
+            .setSize(390, 80)
             .setAlign('center');
 
         var textWorlds2 = new lime.Label()
-            .setText('ENEMY`s Hogi')
+            .setText('enemy Hogi')
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
-            .setFontSize(40)
-            .setPosition(710, 240)
-            .setSize(400, 80)
+            .setFontSize(55)
+            .setPosition(850, 240)
+            .setSize(450, 80)
             .setAlign('center');
+
+        /** Enemy Circle **/
+        var enemyCircle = new lime.Circle()
+            .setSize(150,150)
+            .setStroke(18,130,130,130,1)
+            .setPosition(860, 390);
+
+        /** Highlight Circle **/
+        var highlightCircle = new lime.Circle()
+            .setSize(140,140)
+            .setStroke(17,255,90,0,1)
+            .setPosition(425, 480);
+
+        /** Highlight Circle Animation **/
+        var fade = new lime.animation.Loop(new lime.animation.Sequence(
+            new lime.animation.ScaleTo(1.2).setDuration(1).setEasing(lime.animation.Easing.EASEOUT),
+            new lime.animation.ScaleTo(1).setDuration(1)
+            )
+        );
+
+        highlightCircle.runAction(fade);
+        textWorlds1.runAction(fade);
+
 
         /** Smartphone **/
         var smartphone = new lime.Sprite()
-            .setFill(obacht.spritesheet
-            .getFrame('manualWorlds.png'))
-            .setPosition(640, 440).setSize(710.6, 525.8);
+            //.setFill(obacht.spritesheet.getFrame('manualWorlds.png'))
+            .setFill('assets/gfx/placeholder/manualWorlds.png')
+            .setPosition(640, 440)
+            .setSize(710, 348.5);
 
         /** Back Button - Door */
         var backButton = new lime.Sprite()
@@ -381,6 +423,9 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(smartphone);
         menuLayer.appendChild(textWorlds1);
         menuLayer.appendChild(textWorlds2);
+        menuLayer.appendChild(highlightCircle);
+        menuLayer.appendChild(enemyCircle);
+
 
 
         // set current scene active
@@ -408,24 +453,40 @@ obacht.Menu.prototype = {
 
         /** Headline Manual */
         var headlineManual = new lime.Sprite()
-            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            //.setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            .setFill('assets/gfx/placeholder/headlineManual.png')
             .setPosition(660, 130)
-            .setSize(510, 116);
+            .setSize(690, 94);
 
         var textJump = new lime.Label()
-            .setText('Jump')
+            .setText('How to jump')
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
             .setFontSize(80)
             .setPosition(640, 650)
-            .setSize(370, 80)
+            .setSize(600, 80)
             .setAlign('center');
 
         /** Smartphone with Fingers */
         var smartphone = new lime.Sprite()
-            .setFill(obacht.spritesheet
-            .getFrame('manualJump.png'))
+            //.setFill(obacht.spritesheet.getFrame('manualJump.png'))
+            .setFill('assets/gfx/placeholder/manualJump.png')
             .setPosition(640, 490).setSize(910, 466);
+
+        /** Highlight Circle **/
+        var highlightCircle = new lime.Sprite()
+            .setSize(206.4,192)
+            .setFill('assets/gfx/placeholder/tapHere1.png')
+            .setPosition(320, 360);
+
+        /** Highlight Circle Animation **/
+        var fade = new lime.animation.Loop(new lime.animation.Sequence(
+            new lime.animation.ScaleTo(1.1).setDuration(1).setEasing(lime.animation.Easing.EASEOUT),
+            new lime.animation.ScaleTo(1).setDuration(1)
+            )
+        );
+
+        highlightCircle.runAction(fade);
 
         /** Back Button - Door */
         var backButton = new lime.Sprite()
@@ -461,6 +522,10 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(arrowPrevious);
         menuLayer.appendChild(smartphone);
         menuLayer.appendChild(textJump);
+        menuLayer.appendChild(highlightCircle);
+
+
+
 
 
         // set current scene active
@@ -488,25 +553,39 @@ obacht.Menu.prototype = {
 
         /** Headline Manual */
         var headlineManual = new lime.Sprite()
-            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            //.setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            .setFill('assets/gfx/placeholder/headlineManual.png')
             .setPosition(660, 130)
-            .setSize(510, 116);
+            .setSize(690, 94);
 
         var textCrouch = new lime.Label()
-            .setText('Crouch')
+            .setText('How to crouch')
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
-            .setFontSize(80)
+            .setFontSize(75)
             .setPosition(640, 650)
-            .setSize(370, 80)
+            .setSize(600, 80)
             .setAlign('center');
 
+        /** Highlight Circle **/
+        var highlightCircle = new lime.Sprite()
+            .setSize(206.4,192)
+            .setFill('assets/gfx/placeholder/tapHere1.png')
+            .setPosition(310, 460);
 
+        /** Highlight Circle Animation **/
+        var fade = new lime.animation.Loop(new lime.animation.Sequence(
+            new lime.animation.ScaleTo(1.1).setDuration(1).setEasing(lime.animation.Easing.EASEOUT),
+            new lime.animation.ScaleTo(1).setDuration(1)
+        )
+        );
+
+        highlightCircle.runAction(fade);
 
         /** Smartphone with Fingers */
         var smartphone = new lime.Sprite()
-            .setFill(obacht.spritesheet
-            .getFrame('manualCrouch.png'))
+            //.setFill(obacht.spritesheet.getFrame('manualCrouch.png'))
+            .setFill('assets/gfx/placeholder/manualCrouch.png')
             .setPosition(641, 490).setSize(910, 466);
 
         /** Back Button - Door */
@@ -543,6 +622,8 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(arrowPrevious);
         menuLayer.appendChild(smartphone);
         menuLayer.appendChild(textCrouch);
+        menuLayer.appendChild(highlightCircle);
+
 
 
         // set current scene active
@@ -570,25 +651,46 @@ obacht.Menu.prototype = {
 
         /** Headline Manual */
         var headlineManual = new lime.Sprite()
-            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            //.setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            .setFill('assets/gfx/placeholder/headlineManual.png')
             .setPosition(660, 130)
-            .setSize(510, 116);
+            .setSize(690, 94);
 
         var textObstacles = new lime.Label()
             .setText('AVOID COLLISIONS')
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
-            .setFontSize(60)
+            .setFontSize(65)
             .setPosition(640, 650)
-            .setSize(500, 60)
+            .setSize(600, 60)
             .setAlign('center');
 
+        /** Highlight Circles **/
+        var highlightCircle1 = new lime.Circle()
+            .setSize(100,100)
+            .setStroke(15,255,90,0,1)
+            .setPosition(585, 500);
+
+        var highlightCircle2 = new lime.Circle()
+            .setSize(100,100)
+            .setStroke(15,255,90,0,1)
+            .setPosition(710, 480);
+
+        /** Highlight Circle Animation **/
+        var fade = new lime.animation.Loop(new lime.animation.Sequence(
+            new lime.animation.ScaleTo(1.2).setDuration(1).setEasing(lime.animation.Easing.EASEOUT),
+            new lime.animation.ScaleTo(1).setDuration(1)
+        )
+        );
+
+        highlightCircle1.runAction(fade);
+        highlightCircle2.runAction(fade);
 
 
         /** Smartphone with Fingers */
         var smartphone = new lime.Sprite()
-            .setFill(obacht.spritesheet
-                .getFrame('manualObstacles.png'))
+            //.setFill(obacht.spritesheet.getFrame('manualObstacles.png'))
+            .setFill('assets/gfx/placeholder/manualObstacles.png')
             .setPosition(640, 490).setSize(910, 466);
 
         /** Back Button - Door */
@@ -625,7 +727,8 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(arrowPrevious);
         menuLayer.appendChild(smartphone);
         menuLayer.appendChild(textObstacles);
-
+        menuLayer.appendChild(highlightCircle1);
+        menuLayer.appendChild(highlightCircle2);
 
         // set current scene active
         obacht.director.replaceScene(menuScene);
@@ -651,25 +754,39 @@ obacht.Menu.prototype = {
 
         /** Headline Manual */
         var headlineManual = new lime.Sprite()
-            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            //.setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            .setFill('assets/gfx/placeholder/headlineManual.png')
             .setPosition(660, 130)
-            .setSize(510, 116);
+            .setSize(690, 94);
 
         var textCollectBoni = new lime.Label()
-            .setText('COLLECT OBSTACLES')
+            .setText('COLLECT OBSTACLES IN WHITE BOXES')
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
-            .setFontSize(55)
-            .setPosition(640, 650)
-            .setSize(550, 55)
+            .setFontSize(47)
+            .setPosition(625, 630)
+            .setSize(450, 45)
             .setAlign('center');
 
+        /** Highlight Circle **/
+        var highlightCircle = new lime.Sprite()
+            .setSize(241.6,220.8)
+            .setFill('assets/gfx/placeholder/collectObstaclesHighlight.png')
+            .setPosition(962, 520);
 
+        /** Highlight Circle Animation **/
+        var fade = new lime.animation.Loop(new lime.animation.Sequence(
+            new lime.animation.ScaleTo(1.1).setDuration(1).setEasing(lime.animation.Easing.EASEOUT),
+            new lime.animation.ScaleTo(1).setDuration(1)
+            )
+        );
+
+        highlightCircle.runAction(fade);
 
         /** Smartphone with Fingers */
         var smartphone = new lime.Sprite()
-            .setFill(obacht.spritesheet
-                .getFrame('manualCollectBoni.png'))
+            //.setFill(obacht.spritesheet.getFrame('manualCollectBoni.png'))
+            .setFill('assets/gfx/placeholder/manualCollectBoni.png')
             .setPosition(640, 490).setSize(910, 466);
 
         /** Back Button - Door */
@@ -706,6 +823,7 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(arrowPrevious);
         menuLayer.appendChild(smartphone);
         menuLayer.appendChild(textCollectBoni);
+        menuLayer.appendChild(highlightCircle);
 
 
         // set current scene active
@@ -733,25 +851,40 @@ obacht.Menu.prototype = {
 
         /** Headline Manual */
         var headlineManual = new lime.Sprite()
-            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            //.setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            .setFill('assets/gfx/placeholder/headlineManual.png')
             .setPosition(660, 130)
-            .setSize(510, 116);
+            .setSize(690, 94);
 
         var textThrowBoni = new lime.Label()
-            .setText('THROW OBSTACLES')
+            .setText('THROW  COLLECTED OBSTACLES')
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
             .setFontSize(55)
-            .setPosition(640, 650)
+            .setPosition(640, 620)
             .setSize(550, 55)
             .setAlign('center');
 
 
+        /** Highlight Circle **/
+        var highlightCircle = new lime.Sprite()
+            .setSize(206.4,192)
+            .setFill('assets/gfx/placeholder/tapHere1.png')
+            .setPosition(1020, 385);
+
+        /** Highlight Circle Animation **/
+        var fade = new lime.animation.Loop(new lime.animation.Sequence(
+            new lime.animation.ScaleTo(1.1).setDuration(1).setEasing(lime.animation.Easing.EASEOUT),
+            new lime.animation.ScaleTo(1).setDuration(1)
+        )
+        );
+
+        highlightCircle.runAction(fade);
 
         /** Smartphone with Fingers */
         var smartphone = new lime.Sprite()
-            .setFill(obacht.spritesheet
-            .getFrame('manualThrowBoni.png'))
+            //.setFill(obacht.spritesheet.getFrame('manualThrowBoni.png'))
+            .setFill('assets/gfx/placeholder/manualThrowBoni.png')
             .setPosition(640, 483).setSize(910, 480);
 
 
@@ -782,6 +915,7 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(arrowPrevious);
         menuLayer.appendChild(smartphone);
         menuLayer.appendChild(textThrowBoni);
+        menuLayer.appendChild(highlightCircle);
 
 
         // set current scene active
@@ -816,7 +950,7 @@ obacht.Menu.prototype = {
 
         var textCredits = new lime.Label()
             .setText('The mobile multiplayer game OBACHT was developed by a project team at Augsburg University of Applied Sciences.')
-            .setFontFamily('OpenSans')
+            .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 250)
@@ -827,7 +961,7 @@ obacht.Menu.prototype = {
 
         var textFabian = new lime.Label()
             .setText('Fabian B\u00fchler')
-            .setFontFamily('OpenSans')
+            .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 330)
@@ -836,7 +970,7 @@ obacht.Menu.prototype = {
 
         var textAlina = new lime.Label()
             .setText('Alina Fink')
-            .setFontFamily('OpenSans')
+            .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 360)
@@ -845,7 +979,7 @@ obacht.Menu.prototype = {
 
         var textSimon = new lime.Label()
             .setText('Simon Heimler')
-            .setFontFamily('OpenSans')
+            .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 390)
@@ -854,7 +988,7 @@ obacht.Menu.prototype = {
 
         var textEduard = new lime.Label()
             .setText('Eduard Heitz')
-            .setFontFamily('OpenSans')
+            .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 420)
@@ -863,7 +997,7 @@ obacht.Menu.prototype = {
 
         var textMartin = new lime.Label()
             .setText('Martin Hofmann')
-            .setFontFamily('OpenSans')
+            .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 450)
@@ -872,7 +1006,7 @@ obacht.Menu.prototype = {
 
         var textSebastian = new lime.Label()
             .setText('Sebastian Huber')
-            .setFontFamily('OpenSans')
+            .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 480)
@@ -881,7 +1015,7 @@ obacht.Menu.prototype = {
 
         var textLukas = new lime.Label()
             .setText('Lukas Jaborsky')
-            .setFontFamily('OpenSans')
+            .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 510)
@@ -890,7 +1024,7 @@ obacht.Menu.prototype = {
 
         var textClaudia = new lime.Label()
             .setText('Claudia K\u00f6lbl')
-            .setFontFamily('OpenSans')
+            .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(24)
             .setPosition(640, 540)
