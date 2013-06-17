@@ -282,7 +282,6 @@ obacht.server.io.sockets.on('connection', function(socket) {
         if(obacht.server.options.debugClient) {
             log[type]('CLIENT DEBUG: [' + socket.pid + '] ' + msg);
         }
-        log.debug('<-- DEBUG: Sent current Rooms Information');
     });
 
     /**
