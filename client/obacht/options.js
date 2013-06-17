@@ -11,7 +11,7 @@ goog.provide('obacht.options');
  */
 obacht.options = {
     debug: {
-        logLevel: 1,
+        logLevel: 0,
         remoteDebugging: true,
         fastStart: false,
         displayFps: true,
