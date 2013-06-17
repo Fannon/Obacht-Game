@@ -244,7 +244,7 @@ obacht.MultiplayerService = function(serverUrl) {
     this.socket.on('disconnect', function() {
         self.connected = false;
         log.warn('DISCONNECTED');
-        obacht.showPopup('mainMenuScene', 'Disconnected from server.');
+//        obacht.showPopup('mainMenuScene', 'Disconnected from server.');
 
         // Try to connect again:
         obacht.mp.socket.socket.connect();
