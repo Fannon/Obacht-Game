@@ -39,7 +39,9 @@ obacht.Logger.prototype.setLogLevel = function(loglevel) {
          */
         obacht.Logger.prototype.debug = function(msg) {
             console.log(msg);
-            obacht.mp.sendDebugMessage('debug', msg);
+            if (obacht.mp && obacht.options.debug.remoteDebugging) {
+                obacht.mp.sendDebugMessage('debug', msg);
+            }
         };
 
         /**
@@ -62,7 +64,9 @@ obacht.Logger.prototype.setLogLevel = function(loglevel) {
          */
         obacht.Logger.prototype.info = function(msg) {
             console.info(msg);
-            obacht.mp.sendDebugMessage('info', msg);
+            if (obacht.mp && obacht.options.debug.remoteDebugging) {
+                obacht.mp.sendDebugMessage('info', msg);
+            }
         };
     } else {
         obacht.Logger.prototype.info = function(msg) {};
@@ -75,7 +79,9 @@ obacht.Logger.prototype.setLogLevel = function(loglevel) {
          */
         obacht.Logger.prototype.warn = function(msg) {
             console.warn(msg);
-            obacht.mp.sendDebugMessage('warn', msg);
+            if (obacht.mp && obacht.options.debug.remoteDebugging) {
+                obacht.mp.sendDebugMessage('warn', msg);
+            }
         };
     } else {
         obacht.Logger.prototype.warn = function(msg, socket) {};
@@ -89,7 +95,9 @@ obacht.Logger.prototype.setLogLevel = function(loglevel) {
          */
         obacht.Logger.prototype.error = function(msg) {
             console.error(msg);
-            obacht.mp.sendDebugMessage('error', msg);
+            if (obacht.mp && obacht.options.debug.remoteDebugging) {
+                obacht.mp.sendDebugMessage('error', msg);
+            }
         };
     } else {
         obacht.Logger.prototype.error = function(msg, socket) {};
