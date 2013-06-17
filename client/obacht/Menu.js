@@ -760,7 +760,7 @@ obacht.Menu.prototype = {
         /** Highlight Circle **/
         var highlightCircle = new lime.Sprite()
             .setSize(241.6,220.8)
-            .setFill('assets/gfx/placeholder/collectObstaclesHighlight.png')
+            .setFill(obacht.spritesheet.getFrame('collectObstaclesHighlight.png'))
             .setPosition(962, 520);
 
         /** Highlight Circle Animation **/
@@ -856,7 +856,7 @@ obacht.Menu.prototype = {
         /** Highlight Circle **/
         var highlightCircle = new lime.Sprite()
             .setSize(206.4,192)
-            .setFill('assets/gfx/placeholder/tapHere1.png')
+            .setFill(obacht.spritesheet.getFrame('tapHere1.png'))
             .setPosition(1020, 385);
 
         /** Highlight Circle Animation **/
