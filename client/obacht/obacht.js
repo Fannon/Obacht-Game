@@ -35,6 +35,20 @@ obacht.start = function() {
 
     log = new obacht.Logger(obacht.options.debug.logLevel);
 
+    if (obacht.options.general.mainMenuOnBlur) {
+
+        window.addEventListener('pagehide', function() {
+            log.warn('Window lost Focus! Returning to MainMensu');
+            if (obacht.mp.pid) {
+                obacht.mp.leaveRoom();
+            }
+            if (obacht.currentGame) {
+                obacht.cleanUp();
+            }
+            obacht.menu.mainMenuScene();
+        });
+    }
+
     //////////////////////////////
     // Model                    //
     //////////////////////////////

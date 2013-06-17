@@ -19,6 +19,9 @@ obacht.options = {
         invincible: false,
         avgFramerate: true
     },
+    general: {
+        mainMenuOnBlur: true
+    },
     graphics: {
         VIEWPORT_WIDTH: 1280,
         VIEWPORT_HEIGHT: 720,

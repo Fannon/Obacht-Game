@@ -82,6 +82,7 @@ obacht.Game = function() {
             log.info('DEBUG > AVERAGE FRAMERATE: ' + avg);
 
             obacht.frameRateArray = [];
+
         }, 3000);
     }
 
