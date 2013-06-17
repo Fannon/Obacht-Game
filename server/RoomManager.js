@@ -412,7 +412,7 @@ RoomManager.prototype.findMatch = function() {
     "use strict";
 
     var availableRooms = this.rooms.where({
-        creatingPlayerId: true,
+        creatingPlayerReady: true,
         joiningPlayerId: false,
         closed: false
     });
