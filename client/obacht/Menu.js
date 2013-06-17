@@ -226,8 +226,7 @@ obacht.Menu.prototype = {
 
         /** Headline Manual */
         var headlineManual = new lime.Sprite()
-           //.setFill(obacht.spritesheet.getFrame('headlineManual.png'))
-            .setFill('assets/gfx/placeholder/headlineManual.png')
+           .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
            .setPosition(660, 130)
            .setSize(690, 94);
 
@@ -274,8 +273,7 @@ obacht.Menu.prototype = {
 
         /** Hogi */
         var hogi = new lime.Sprite()
-            //.setFill(obacht.spritesheet.getFrame('hogi.png'))
-            .setFill('assets/gfx/placeholder/hogi.png')
+            .setFill(obacht.spritesheet.getFrame('hogi.png'))
             .setPosition(0, 100).setSize(510, 602)
             .setAnchorPoint(0,0);
 
@@ -335,8 +333,7 @@ obacht.Menu.prototype = {
 
         /** Headline Manual */
         var headlineManual = new lime.Sprite()
-            //.setFill(obacht.spritesheet.getFrame('headlineManual.png'))
-            .setFill('assets/gfx/placeholder/headlineManual.png')
+            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
             .setPosition(660, 130)
             .setSize(690, 94);
 
@@ -383,8 +380,7 @@ obacht.Menu.prototype = {
 
         /** Smartphone **/
         var smartphone = new lime.Sprite()
-            //.setFill(obacht.spritesheet.getFrame('manualWorlds.png'))
-            .setFill('assets/gfx/placeholder/manualWorlds.png')
+            .setFill(obacht.spritesheet.getFrame('manualWorlds.png'))
             .setPosition(640, 440)
             .setSize(710, 348.5);
 
@@ -453,8 +449,7 @@ obacht.Menu.prototype = {
 
         /** Headline Manual */
         var headlineManual = new lime.Sprite()
-            //.setFill(obacht.spritesheet.getFrame('headlineManual.png'))
-            .setFill('assets/gfx/placeholder/headlineManual.png')
+            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
             .setPosition(660, 130)
             .setSize(690, 94);
 
@@ -469,14 +464,13 @@ obacht.Menu.prototype = {
 
         /** Smartphone with Fingers */
         var smartphone = new lime.Sprite()
-            //.setFill(obacht.spritesheet.getFrame('manualJump.png'))
-            .setFill('assets/gfx/placeholder/manualJump.png')
+            .setFill(obacht.spritesheet.getFrame('manualJump.png'))
             .setPosition(640, 490).setSize(910, 466);
 
         /** Highlight Circle **/
         var highlightCircle = new lime.Sprite()
             .setSize(206.4,192)
-            .setFill('assets/gfx/placeholder/tapHere1.png')
+            .setFill(obacht.spritesheet.getFrame('tapHere1.png'))
             .setPosition(320, 360);
 
         /** Highlight Circle Animation **/
@@ -553,8 +547,7 @@ obacht.Menu.prototype = {
 
         /** Headline Manual */
         var headlineManual = new lime.Sprite()
-            //.setFill(obacht.spritesheet.getFrame('headlineManual.png'))
-            .setFill('assets/gfx/placeholder/headlineManual.png')
+            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
             .setPosition(660, 130)
             .setSize(690, 94);
 
@@ -570,7 +563,7 @@ obacht.Menu.prototype = {
         /** Highlight Circle **/
         var highlightCircle = new lime.Sprite()
             .setSize(206.4,192)
-            .setFill('assets/gfx/placeholder/tapHere1.png')
+            .setFill(obacht.spritesheet.getFrame('tapHere1.png'))
             .setPosition(310, 460);
 
         /** Highlight Circle Animation **/
@@ -584,8 +577,7 @@ obacht.Menu.prototype = {
 
         /** Smartphone with Fingers */
         var smartphone = new lime.Sprite()
-            //.setFill(obacht.spritesheet.getFrame('manualCrouch.png'))
-            .setFill('assets/gfx/placeholder/manualCrouch.png')
+            .setFill(obacht.spritesheet.getFrame('manualCrouch.png'))
             .setPosition(641, 490).setSize(910, 466);
 
         /** Back Button - Door */
@@ -651,8 +643,7 @@ obacht.Menu.prototype = {
 
         /** Headline Manual */
         var headlineManual = new lime.Sprite()
-            //.setFill(obacht.spritesheet.getFrame('headlineManual.png'))
-            .setFill('assets/gfx/placeholder/headlineManual.png')
+            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
             .setPosition(660, 130)
             .setSize(690, 94);
 
@@ -689,8 +680,7 @@ obacht.Menu.prototype = {
 
         /** Smartphone with Fingers */
         var smartphone = new lime.Sprite()
-            //.setFill(obacht.spritesheet.getFrame('manualObstacles.png'))
-            .setFill('assets/gfx/placeholder/manualObstacles.png')
+            .setFill(obacht.spritesheet.getFrame('manualObstacles.png'))
             .setPosition(640, 490).setSize(910, 466);
 
         /** Back Button - Door */
@@ -754,8 +744,7 @@ obacht.Menu.prototype = {
 
         /** Headline Manual */
         var headlineManual = new lime.Sprite()
-            //.setFill(obacht.spritesheet.getFrame('headlineManual.png'))
-            .setFill('assets/gfx/placeholder/headlineManual.png')
+            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
             .setPosition(660, 130)
             .setSize(690, 94);
 
@@ -785,8 +774,7 @@ obacht.Menu.prototype = {
 
         /** Smartphone with Fingers */
         var smartphone = new lime.Sprite()
-            //.setFill(obacht.spritesheet.getFrame('manualCollectBoni.png'))
-            .setFill('assets/gfx/placeholder/manualCollectBoni.png')
+            .setFill(obacht.spritesheet.getFrame('manualCollectBoni.png'))
             .setPosition(640, 490).setSize(910, 466);
 
         /** Back Button - Door */
@@ -851,8 +839,7 @@ obacht.Menu.prototype = {
 
         /** Headline Manual */
         var headlineManual = new lime.Sprite()
-            //.setFill(obacht.spritesheet.getFrame('headlineManual.png'))
-            .setFill('assets/gfx/placeholder/headlineManual.png')
+            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
             .setPosition(660, 130)
             .setSize(690, 94);
 
@@ -883,8 +870,7 @@ obacht.Menu.prototype = {
 
         /** Smartphone with Fingers */
         var smartphone = new lime.Sprite()
-            //.setFill(obacht.spritesheet.getFrame('manualThrowBoni.png'))
-            .setFill('assets/gfx/placeholder/manualThrowBoni.png')
+            .setFill(obacht.spritesheet.getFrame('manualThrowBoni.png'))
             .setPosition(640, 483).setSize(910, 480);
 
 
