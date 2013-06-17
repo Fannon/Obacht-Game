@@ -5,6 +5,7 @@
  */
 var options = {
     loglevel: 0,
+    debugClient: true,
     maxPrivateRooms: 9999,
     maxPublicRooms: 12000,
     defaultPort: 8080, // If no console argument used

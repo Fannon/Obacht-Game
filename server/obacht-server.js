@@ -278,6 +278,13 @@ obacht.server.io.sockets.on('connection', function(socket) {
         log.debug('<-- DEBUG: Sent current Rooms Information');
     });
 
+    socket.on('debug_message', function(type, msg) {
+        if(obacht.server.options.debugClient) {
+            log[type]('CLIENT DEBUG: [' + socket.pid + '] ' + msg);
+        }
+        log.debug('<-- DEBUG: Sent current Rooms Information');
+    });
+
     /**
      * Player disconnect Event
      * @event

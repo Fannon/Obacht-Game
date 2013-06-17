@@ -456,6 +456,12 @@ obacht.MultiplayerService.prototype = {
         this.socket.emit('get_rooms', '');
     },
 
+    /** Send Debug Message from Client to Server for easy Debugging */
+    sendDebugMessage: function(type, msg) {
+        "use strict";
+        this.socket.emit('debug_message', type, msg);
+    },
+
     //////////////////////////////
     // Helper Functions         //
     //////////////////////////////
