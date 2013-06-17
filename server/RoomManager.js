@@ -6,7 +6,7 @@ var Backbone = require('backbone');
 var Logger = require('./Logger');
 var options = require('./options');
 
-var log = new Logger(options.loglevel); // Set Logging Level
+var log = new Logger(options.debug.loglevel); // Set Logging Level
 
 /**
  * Room DataStructure for the Server
@@ -51,7 +51,6 @@ var RoomManager = function(io) {
             joiningPlayerReactiontime: false,
             joiningPlayerReady: false,
             joiningPlayerHealth: 3,
-            playersCount: 0, // Just for convenience
             created: Date.now()
         }
     });
@@ -246,16 +245,14 @@ RoomManager.prototype.joinRoom = function(socket, pin, isClosed) {
     // Set Player
     if (!room.attributes.creatingPlayerId) {
         room.set({
-            creatingPlayerId: pid,
-            playersCount: room.attributes.playersCount + 1
+            creatingPlayerId: pid
         });
         log.debug('--> Creating Player joined Room #' + pin);
         return room.attributes;
 
     } else if (!room.attributes.joiningPlayerId) {
         room.set({
-            joiningPlayerId: pid,
-            playersCount: room.attributes.playersCount + 1
+            joiningPlayerId: pid
         });
         log.debug('--> Joining Player joined Room #' + pin);
         return room.attributes;
@@ -291,8 +288,7 @@ RoomManager.prototype.leaveRoom = function(socket) {
             room.set({
                 creatingPlayerId: false,
                 creatingPlayerReactiontime: false,
-                creatingPlayerReady: false,
-                playersCount: room.attributes.playersCount - 1
+                creatingPlayerReady: false
             });
             log.debug('--> Creating Player left Room #' + pin);
 
@@ -300,8 +296,7 @@ RoomManager.prototype.leaveRoom = function(socket) {
             room.set({
                 joiningPlayerId: false,
                 joiningPlayerReactiontime: false,
-                joiningPlayerReady: false,
-                playersCount: room.attributes.playersCount - 1
+                joiningPlayerReady: false
             });
             log.debug('--> Joining Player left Room #' + pin);
         } else {
@@ -370,7 +365,6 @@ RoomManager.prototype.checkReactiontime = function(socket, data) {
             room.attributes.creatingPlayerReactiontime = false;
             room.attributes.joiningPlayerReactiontime = false;
 
-
             return receiveBonus;
 
         } else {
@@ -418,7 +412,8 @@ RoomManager.prototype.findMatch = function() {
     "use strict";
 
     var availableRooms = this.rooms.where({
-        playersCount: 1,
+        creatingPlayerReady: true,
+        joiningPlayerId: false,
         closed: false
     });
 
