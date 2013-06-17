@@ -47,7 +47,13 @@ obacht.server.io.enable('browser client gzip'); // gzip the file
 obacht.server.io.set('log level', 1); // reduce logging
 obacht.server.io.set('heartbeat timeout', 15);
 obacht.server.io.set('heartbeat interval', 5);
-obacht.server.io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
+obacht.server.io.set('transports', [
+//    'websocket',
+//    'flashsocket',
+    'htmlfile',
+    'xhr-polling',
+    'jsonp-polling'
+]);
 
 
 //////////////////////////////
