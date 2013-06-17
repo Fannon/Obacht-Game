@@ -111,7 +111,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(45
             ).setPosition(322, 650)
-            .setSize(170, 45)
+            .setSize(180, 45)
             .setAlign('center');
 
         /** Help Button Event -> Help Scene @event */

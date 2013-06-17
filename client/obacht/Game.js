@@ -68,6 +68,7 @@ obacht.Game = function() {
     }
 
     if (obacht.options.debug.avgFramerate) {
+
         obacht.frameRateArray = [];
         lime.scheduleManager.schedule(function(){
             obacht.frameRateArray.push(obacht.director.fps);
@@ -79,6 +80,8 @@ obacht.Game = function() {
             }
             var avg = sum/obacht.frameRateArray.length;
             log.info('DEBUG > AVERAGE FRAMERATE: ' + avg);
+
+            obacht.frameRateArray = [];
         }, 3000);
     }
 

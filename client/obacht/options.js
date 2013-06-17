@@ -12,11 +12,11 @@ goog.provide('obacht.options');
 obacht.options = {
     debug: {
         logLevel: 0,
-        remoteDebugging: true,
+        remoteDebugging: false,
         fastStart: false,
         displayFps: true,
         showBoundingBoxes: false,
-        invincible: true,
+        invincible: false,
         avgFramerate: true
     },
     graphics: {
@@ -149,7 +149,8 @@ obacht.options = {
     },
     "server": {
         "url": "http://obacht.informatik.hs-augsburg.de:8080/",
-//      "url": "http://192.168.2.100/",
+//        "url": "http://141.82.173.220:8080",
+//      "url": "http://192.168.2.100:8080/",
         connectionTimeout: 7000
     }
 };
