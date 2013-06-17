@@ -36,7 +36,7 @@ obacht.PlayerController = function() {
 
     /** Sets up a bigger area for touchend events, so when the user swipes his finger while crouching the end of the action can be caught. */
     this.tapAreaPuffer = new lime.Node()
-        .setSize(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT)
+        .setSize(obacht.options.graphics.VIEWPORT_WIDTH / 3, obacht.options.graphics.VIEWPORT_HEIGHT)
         .setPosition(0, 0)
         .setAnchorPoint(0, 0);
 
