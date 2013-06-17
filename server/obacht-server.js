@@ -30,7 +30,7 @@ obacht.server.port = (process.argv[2] ? process.argv[2] : obacht.server.options.
 obacht.server.io = require('socket.io').listen(obacht.server.port); // Start Socket.io
 
 obacht.Logger = require('./Logger');
-var log = new obacht.Logger(obacht.server.options.loglevel);
+var log = new obacht.Logger(obacht.server.options.debug.loglevel);
 
 // Data Structures
 var RoomManager = require('./RoomManager');
@@ -46,7 +46,7 @@ obacht.server.io.enable('browser client etag'); // apply etag caching logic base
 obacht.server.io.enable('browser client gzip'); // gzip the file
 obacht.server.io.set('log level', 1); // reduce logging
 obacht.server.io.set('heartbeat timeout', 15);
-obacht.server.io.set('heartbeat interval', 5);
+obacht.server.io.set('heartbeat interval', 7);
 obacht.server.io.set('transports', [
     'websocket',
     'flashsocket',
@@ -284,8 +284,11 @@ obacht.server.io.sockets.on('connection', function(socket) {
         log.debug('<-- DEBUG: Sent current Rooms Information');
     });
 
+    /**
+     * Display incoming Debug Messages sent from Clients
+     */
     socket.on('debug_message', function(type, msg) {
-        if(obacht.server.options.debugClient) {
+        if(obacht.server.options.debug.debugClient) {
             log[type]('CLIENT DEBUG: [' + socket.pid + '] ' + msg);
         }
     });
