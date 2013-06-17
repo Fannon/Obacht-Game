@@ -188,21 +188,15 @@ obacht.Player = function(currentGame, location) {
             /** Sets up event subscription for enemy player. @event */
             obacht.mp.events.subscribe('enemy_player_action', function(data) {
                 if (data.action === 'jump') {
-                    obacht.timeout(function(){
-                        self.jump();
-                    },currentGame.getDistanceTimer(data.data.distance));
+                    self.jump();
                 }
                 if (data.action === 'crouch') {
-                    obacht.timeout(function(){
-                        self.crouch();
-                        self.crouching  = true;
-                    },currentGame.getDistanceTimer(data.data.distance));
+                    self.crouch();
+                    self.crouching  = true;
                 }
                 if (data.action === 'standUp') {
-                    obacht.timeout(function(){
-                        self.standUp();
-                        self.crouching = false;
-                    },currentGame.getDistanceTimer(data.data.distance));
+                    self.standUp();
+                    self.crouching = false;
                 }
             });
         }
