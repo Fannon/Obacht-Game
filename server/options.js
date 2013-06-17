@@ -11,6 +11,7 @@ var options = {
     roomPurgeInterval: 60, // In Minutes
     debug: {
         loglevel: 0,
+        timestamp: true,
         debugClient: true
     },
     gameplay: {

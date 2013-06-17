@@ -55,6 +55,7 @@ obacht.Menu.prototype = {
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+        log.debug('mainMenuScene()');
 
         this.resetMenu();
 
@@ -109,8 +110,8 @@ obacht.Menu.prototype = {
         var helpLabel = new lime.Label()
             .setText('How-to')
             .setFontColor('#fff')
-            .setFontSize(45
-            ).setPosition(322, 650)
+            .setFontSize(45)
+            .setPosition(322, 650)
             .setSize(180, 45)
             .setAlign('center');
 
@@ -156,9 +157,11 @@ obacht.Menu.prototype = {
             if (obacht.sound){
                 soundButton.setFill(obacht.spritesheet.getFrame('button_sound_off.png'));
                 obacht.sound = false;
+                log.debug('Sound OFF');
             } else {
                 soundButton.setFill(obacht.spritesheet.getFrame('button_sound.png'));
                 obacht.sound = true;
+                log.debug('Sound ON');
             }
         });
 
@@ -178,11 +181,13 @@ obacht.Menu.prototype = {
             .setAlign('center');
 
         goog.events.listen(quitButton, ['touchstart', 'mousedown'], function() {
+            log.debug('Exit App Button clicked.');
             if (navigator.app) {
                 navigator.app.exitApp();
             } else if(navigator.device) {
                 navigator.device.exitApp();
             }
+
         });
 
 
@@ -218,6 +223,7 @@ obacht.Menu.prototype = {
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+        log.debug('helpScene()');
 
 
         ///////////////////////////////
@@ -922,6 +928,7 @@ obacht.Menu.prototype = {
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+        log.debug('creditsScene()');
 
 
         ///////////////////////////////
@@ -1065,6 +1072,7 @@ obacht.Menu.prototype = {
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+        log.debug('newGameScene()');
 
 
         ///////////////////////////////
@@ -1217,6 +1225,7 @@ obacht.Menu.prototype = {
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+        log.debug('selectThemeScene()');
 
 
         ///////////////////////////////
@@ -1316,6 +1325,7 @@ obacht.Menu.prototype = {
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+        log.debug('getCodeScene()');
 
         var popupActive = false;
 
@@ -1478,6 +1488,7 @@ obacht.Menu.prototype = {
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+        log.debug('joinGameScene()');
 
         var popupActive = false;
 
@@ -1807,6 +1818,7 @@ obacht.Menu.prototype = {
         var gameoverScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         gameoverScene.appendChild(menuLayer);
+        log.debug('gameOverScene()');
 
         obacht.mp.events.subscribeOnce('join_room', function() {
             alreadyJoined = true;
@@ -1940,6 +1952,7 @@ obacht.Menu.prototype = {
         var waitForPlayerScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         waitForPlayerScene.appendChild(menuLayer);
+        log.debug('waitForPlayerScene()');
 
 
         ///////////////////////////////

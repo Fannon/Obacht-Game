@@ -11,8 +11,8 @@ goog.provide('obacht.options');
  */
 obacht.options = {
     debug: {
-        logLevel: 5,
-        remoteDebugging: false,
+        logLevel: 0,
+        remoteDebugging: true,
         fastStart: false,
         displayFps: false,
         showBoundingBoxes: false,
@@ -151,9 +151,9 @@ obacht.options = {
         }
     },
     "server": {
-        "url": "http://obacht.informatik.hs-augsburg.de:8080/",
+//        "url": "http://obacht.informatik.hs-augsburg.de:8080/",
+      "url": "http://192.168.2.113:8080/",
 //        "url": "http://141.82.173.220:8080",
-//      "url": "http://192.168.2.100:8080/",
         connectionTimeout: 7000
     }
 };

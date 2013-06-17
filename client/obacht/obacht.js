@@ -301,14 +301,10 @@ obacht.deviceDetection = function() {
 
     obacht.device = goog.userAgent;
 
-    // TODO: Adjust Options
-
-    log.debug('Running on OS: ' + obacht.device.PLATFORM);
-
     if (obacht.device.MOBILE) {
-        log.debug('Mobile Browser detected');
+        log.debug('OS: ' + obacht.device.PLATFORM + ', MOBILE: True');
     } else {
-        log.debug('Desktop Browser detected');
+        log.debug('OS: ' + obacht.device.PLATFORM + ', MOBILE: False');
     }
 
 };

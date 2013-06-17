@@ -6,7 +6,7 @@ var Backbone = require('backbone');
 var Logger = require('./Logger');
 var options = require('./options');
 
-var log = new Logger(options.debug.loglevel); // Set Logging Level
+var log = new Logger(options.debug.loglevel, options.debug.timestamp); // Set Logging Level
 
 /**
  * Room DataStructure for the Server

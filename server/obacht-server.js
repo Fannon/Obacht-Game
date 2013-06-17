@@ -30,7 +30,7 @@ obacht.server.port = (process.argv[2] ? process.argv[2] : obacht.server.options.
 obacht.server.io = require('socket.io').listen(obacht.server.port); // Start Socket.io
 
 obacht.Logger = require('./Logger');
-var log = new obacht.Logger(obacht.server.options.debug.loglevel);
+var log = new obacht.Logger(obacht.server.options.debug.loglevel, obacht.server.options.debug.timestamp);
 
 // Data Structures
 var RoomManager = require('./RoomManager');
@@ -289,7 +289,7 @@ obacht.server.io.sockets.on('connection', function(socket) {
      */
     socket.on('debug_message', function(type, msg) {
         if(obacht.server.options.debug.debugClient) {
-            log[type]('CLIENT DEBUG: [' + socket.pid + '] ' + msg);
+            log[type]('REMOTE: {' + socket.pid + '} ' + msg);
         }
     });
 
