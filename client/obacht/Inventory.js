@@ -80,8 +80,8 @@ obacht.Inventory = function(currentGame) {
 
     obacht.mp.events.subscribe('receive_bonus', function(type, success) {
 
-        log.debug('receive bonus: Type: ' + type + ' with Success: ' + success);
         if (success) {
+            log.debug('Won Bonus: Type: ' + type);
             self.fillTray(type);
         }
     });

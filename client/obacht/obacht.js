@@ -241,6 +241,8 @@ obacht.showPopup = function(sceneName, msg) {
 
     var self = this;
 
+    log.debug('showPopup(): ' + msg);
+
     if (sceneName) {
         this.sceneName = sceneName;
     } else {
@@ -274,8 +276,6 @@ obacht.showPopup = function(sceneName, msg) {
         .setFill(obacht.spritesheet.getFrame('button_okay.png'))
         .setPosition(534, 540)
         .setSize(174, 160);
-
-    log.debug('Incoming error from server:' + msg);
 
     popupLayer.appendChild(popupBackground);
     popupLayer.appendChild(popupSprite);

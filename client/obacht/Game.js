@@ -171,10 +171,8 @@ obacht.Game = function() {
     });
 
     obacht.mp.events.subscribe('room_detail', function() {
-        log.debug('Refreshing Health Status');
         self.updateHealthStatus();
     });
-
 
 };
 

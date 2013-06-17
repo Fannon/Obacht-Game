@@ -71,7 +71,7 @@ obacht.MultiplayerService = function(serverUrl) {
     this.socket.on('connected', function (data) {
         self.connected = true;
         if (!data.error) {
-            log.debug('Successful Connected');
+            log.debug('Successful Connected with Transport: ' + self.socket.socket.transport.name);
             self.pid = data.pid;
         } else {
             log.error('Connection Error: ' + data.error);
@@ -156,7 +156,7 @@ obacht.MultiplayerService = function(serverUrl) {
      * Game is ready
      */
     this.socket.on('game_ready', function () {
-        log.debug('Game is ready!');
+        log.debug('Game is ready! ' + self.roomDetail.creatingPlayerId + ' vs. ' + self.roomDetail.creatingPlayerId);
 
         // Set Enemy PID
         if (self.roomDetail.creatingPlayerId === self.pid) {
