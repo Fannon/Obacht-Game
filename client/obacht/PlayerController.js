@@ -16,12 +16,6 @@ obacht.PlayerController = function() {
     "use strict";
     var self = this;
 
-    /** Indicates if the player is currently jumping */
-    this.isJumping = false;
-
-    /** Indicates if the player is currently crouching */
-    this.isCrouching = false;
-
     /** Tap area for jump events */
     this.tapAreaTop = new lime.Node()
         .setSize(obacht.options.graphics.VIEWPORT_WIDTH / 4, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
@@ -56,9 +50,9 @@ obacht.PlayerController = function() {
 
     /** Sets up event subscription for jumping. @event */
     goog.events.listen(this.tapAreaTop, ['touchstart', 'mousedown'], function() {
-        if (self.isJumping === false && self.isCrouching === false) {
+        if (obacht.currentGame.ownPlayer.isJumping === false && obacht.currentGame.ownPlayer.isCrouching === false) {
             self.jump();
-            self.isJumping = true;
+            obacht.currentGame.ownPlayer.isJumping = true;
         }
     });
 
@@ -70,17 +64,17 @@ obacht.PlayerController = function() {
 
     /** Sets up event subscription for crouching. @event */
     goog.events.listen(this.tapAreaBottom, ['touchstart', 'mousedown'], function() {
-        if (self.isCrouching === false && self.isJumping === false) {
+        if (obacht.currentGame.ownPlayer.isCrouching === false && obacht.currentGame.ownPlayer.isJumping === false) {
             self.crouch();
-            self.isCrouching = true;
+            obacht.currentGame.ownPlayer.isCrouching = true;
         }
     });
 
     /** Sets up event subscription for standing up. @event */
     goog.events.listen(this.tapAreaPuffer, ['touchend', 'touchcancel', 'mouseup'], function() {
-        if (self.isCrouching === true) {
+        if (obacht.currentGame.ownPlayer.isCrouching === true) {
             self.standUp();
-            self.isCrouching = false;
+            obacht.currentGame.ownPlayer.isCrouching = false;
         }
     });
 
@@ -89,17 +83,17 @@ obacht.PlayerController = function() {
 
     /** Sets up event subscription on safety area for standing up. @event */
     goog.events.listen(this.tapAreaBottom, ['touchmove', 'mousemove'], function(e) {
-        self.tapPositionX = Math.round(e.position.x);
-        self.tapPositionY = Math.round(e.position.y);
+        var tapPositionX = Math.round(e.position.x);
+        var tapPositionY = Math.round(e.position.y);
 
-        if (self.isCrouching === true) {
-            if (self.tapPositionY < self.tapToleranceArea ||
-                self.tapPositionY > obacht.options.graphics.VIEWPORT_HEIGHT / 2 - self.tapToleranceArea ||
-                self.tapPositionX < self.tapToleranceArea ||
-                self.tapPositionX > obacht.options.graphics.VIEWPORT_WIDTH / 4 -self.tapToleranceArea) {
+        if (obacht.currentGame.ownPlayer.isCrouching === true) {
+            if (tapPositionY < self.tapToleranceArea ||
+                tapPositionY > obacht.options.graphics.VIEWPORT_HEIGHT / 2 - self.tapToleranceArea ||
+                tapPositionX < self.tapToleranceArea ||
+                tapPositionX > obacht.options.graphics.VIEWPORT_WIDTH / 4 -self.tapToleranceArea) {
 
                 self.standUp();
-                self.isCrouching = false;
+                obacht.currentGame.ownPlayer.isCrouching = false;
             }
         }
     });

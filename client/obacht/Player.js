@@ -43,8 +43,10 @@ obacht.Player = function(currentGame, location) {
     /** Player Health */
     this.health = 3;
 
-    /** Player crouching */
-    this.crouching = false;
+    /** Player state variables */
+    this.isJumping = false;
+    this.isCrouching = false;
+
 
     if (this.location === 'bottom') {
         this.x = obacht.options.player.location.bottom.x;
@@ -90,7 +92,7 @@ obacht.Player = function(currentGame, location) {
 
     // Set fill if showBoundingBoxes is set true in debug mode.
     if (obacht.options.debug.showBoundingBoxes && location === 'bottom') {
-        this.boundingBox.setFill(0,0,255,0.5);
+        this.boundingBox.setFill(0, 0, 255, 0.5);
         currentGame.layer.appendChild(this.boundingBox);
     }
 
@@ -163,9 +165,16 @@ obacht.Player = function(currentGame, location) {
         /** STOP-EVENT FOR OPTIMIZED JUMPING @event */
         goog.events.listen(this.jumpAnimation, 'stop', function() {
             if(obacht.playerController) {
-                obacht.playerController.isJumping = false;
+                self.isJumping = false;
                 self.run();
                 self.jumpSprites.currentFrame_=-1; // work-around for lime.js-bug with keyframe animations.
+            }
+        });
+
+        /** Stop event on crouch animation for checking if state variable matches animations. @event */
+        goog.events.listen(this.crouchAnimation, 'stop', function() {
+            if(self.isCrouching === false) {
+                self.standUp();
             }
         });
 
@@ -176,12 +185,12 @@ obacht.Player = function(currentGame, location) {
                     self.jump();
                 }
                 if (data.action === 'crouch') {
-                    self.crouching  = true;
                     self.crouch();
+                    self.isCrouching = true;
                 }
                 if (data.action === 'standUp') {
-                    self.crouching = false;
                     self.standUp();
+                    self.isCrouching = false;
                 }
             });
         } else {
@@ -192,11 +201,11 @@ obacht.Player = function(currentGame, location) {
                 }
                 if (data.action === 'crouch') {
                     self.crouch();
-                    self.crouching  = true;
+                    self.isCrouching = true;
                 }
                 if (data.action === 'standUp') {
                     self.standUp();
-                    self.crouching = false;
+                    self.isCrouching = false;
                 }
             });
         }
