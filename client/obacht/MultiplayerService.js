@@ -132,9 +132,13 @@ obacht.MultiplayerService = function(serverUrl) {
             self.events.publish('new_room', data);
 
         } else {
-            log.debug('Joining Room ' + data.pin);
-            self.joinRoom(data.pin, data.closed);
-            self.events.publish('join_room', data);
+            if (!obacht.currentGame) {
+                log.debug('Joining Room ' + data.pin);
+                self.joinRoom(data.pin, data.closed);
+                self.events.publish('join_room', data);
+            } else {
+                log.warn('MultiplayerService: Received Room Invite when already in a Game!');
+            }
         }
     });
 
