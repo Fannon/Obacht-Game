@@ -236,8 +236,18 @@ obacht.Menu.prototype = {
            .setPosition(660, 130)
            .setSize(690, 94);
 
+        /** Text Hogi **/
+        var textHogi = new lime.Label()
+            .setText('Hi, I‘m Hogi.')
+            .setFontFamily('Cartwheel')
+            .setFontColor('#fff')
+            .setFontSize(50)
+            .setPosition(280, 280)
+            .setSize(600, 80)
+            .setAlign('center');
+
         var textManualGeneral1a = new lime.Label()
-            .setText('Two players on-screen and each running on his own planet.')
+            .setText('Two on-screen players each run on their own planet.')
             .setFontFamily('OpenSansBold')
             .setFontColor('#fff')
             .setFontSize(33)
@@ -309,6 +319,7 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(backButton);
         menuLayer.appendChild(arrowNext);
         menuLayer.appendChild(hogi);
+        menuLayer.appendChild(textHogi);
         menuLayer.appendChild(textManualGeneral1a);
         menuLayer.appendChild(textManualGeneral1b);
         menuLayer.appendChild(textManualGeneral2);
@@ -1054,15 +1065,30 @@ obacht.Menu.prototype = {
             
         /** right hand **/
         var rightHand = new lime.Sprite()
-            .setFill(obacht.spritesheet.getFrame('handRight.png'))
-            .setPosition(1015, 517)
-            .setSize(216, 406);
+            .setFill(obacht.spritesheet.getFrame('handRightThrow.png'))
+            .setPosition(1002, 513)
+            .setSize(240, 414);
 
         /** throw obstacles **/
         var throwObstacles = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('throwObstacles.png'))
             .setPosition(705, 277)
             .setSize(410, 147);
+
+        /** tab **/
+        var tab = new lime.Sprite()
+            .setSize(206.4,192)
+            .setFill(obacht.spritesheet.getFrame('tap.png'))
+            .setPosition(880, 280);
+
+        /** tab Animation **/
+        var fade = new lime.animation.Loop(new lime.animation.Sequence(
+            new lime.animation.ScaleTo(1.1).setDuration(1).setEasing(lime.animation.Easing.EASEOUT),
+            new lime.animation.ScaleTo(1).setDuration(1)
+        )
+        );
+
+        tab.runAction(fade);
             
         /** Back Button - Door */
         var backButton = new lime.Sprite()
@@ -1092,6 +1118,7 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(smartphone);
         menuLayer.appendChild(textAvoidCollision);
         menuLayer.appendChild(leftHand);
+        menuLayer.appendChild(tab);
         menuLayer.appendChild(rightHand);
         menuLayer.appendChild(throwObstacles);
 
@@ -1131,83 +1158,46 @@ obacht.Menu.prototype = {
             .setText('The mobile multiplayer game OBACHT was developed by a project team at Augsburg University of Applied Sciences.')
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
-            .setFontSize(24)
+            .setFontSize(30)
             .setPosition(640, 250)
-            .setSize(830, 24)
+            .setSize(1000, 30)
             .setAlign('center')
-            .setLineHeight(1.2);
+            .setLineHeight(1.3);
 
-
-        var textFabian = new lime.Label()
-            .setText('Fabian B\u00fchler')
+        var textMartinLukas = new lime.Label()
+            .setText('Martin Hofmann | Lukas Jaborsky')
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
-            .setFontSize(24)
-            .setPosition(640, 330)
-            .setSize(710, 24)
+            .setFontSize(28)
+            .setPosition(640, 370)
+            .setSize(710, 28)
             .setAlign('center');
 
-        var textAlina = new lime.Label()
-            .setText('Alina Fink')
+        var textFabianAlina = new lime.Label()
+            .setText('Fabian B\u00fchler | Alina Fink')
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
-            .setFontSize(24)
-            .setPosition(640, 360)
-            .setSize(710, 24)
+            .setFontSize(28)
+            .setPosition(640, 520)
+            .setSize(710, 28)
             .setAlign('center');
 
-        var textSimon = new lime.Label()
-            .setText('Simon Heimler')
+        var textEduardSimon = new lime.Label()
+            .setText('Eduard Heitz | Simon Heimler')
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
-            .setFontSize(24)
-            .setPosition(640, 390)
-            .setSize(710, 24)
-            .setAlign('center');
-
-        var textEduard = new lime.Label()
-            .setText('Eduard Heitz')
-            .setFontFamily('OpenSansRegular')
-            .setFontColor('#fff')
-            .setFontSize(24)
+            .setFontSize(28)
             .setPosition(640, 420)
-            .setSize(710, 24)
+            .setSize(710, 28)
             .setAlign('center');
 
-        var textMartin = new lime.Label()
-            .setText('Martin Hofmann')
+        var textSebastianClaudia = new lime.Label()
+            .setText('Sebastian Huber | Claudia K\u00f6lbl')
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
-            .setFontSize(24)
-            .setPosition(640, 450)
-            .setSize(710, 24)
-            .setAlign('center');
-
-        var textSebastian = new lime.Label()
-            .setText('Sebastian Huber')
-            .setFontFamily('OpenSansRegular')
-            .setFontColor('#fff')
-            .setFontSize(24)
-            .setPosition(640, 480)
-            .setSize(710, 24)
-            .setAlign('center');
-
-        var textLukas = new lime.Label()
-            .setText('Lukas Jaborsky')
-            .setFontFamily('OpenSansRegular')
-            .setFontColor('#fff')
-            .setFontSize(24)
-            .setPosition(640, 510)
-            .setSize(710, 24)
-            .setAlign('center');
-
-        var textClaudia = new lime.Label()
-            .setText('Claudia K\u00f6lbl')
-            .setFontFamily('OpenSansRegular')
-            .setFontColor('#fff')
-            .setFontSize(24)
-            .setPosition(640, 540)
-            .setSize(710, 24)
+            .setFontSize(28)
+            .setPosition(640, 470)
+            .setSize(710, 28)
             .setAlign('center');
 
 
@@ -1232,14 +1222,10 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(headlineCredits);
         menuLayer.appendChild(backButton);
         menuLayer.appendChild(textCredits);
-        menuLayer.appendChild(textFabian);
-        menuLayer.appendChild(textAlina);
-        menuLayer.appendChild(textSimon);
-        menuLayer.appendChild(textSebastian);
-        menuLayer.appendChild(textLukas);
-        menuLayer.appendChild(textMartin);
-        menuLayer.appendChild(textClaudia);
-        menuLayer.appendChild(textEduard);
+        menuLayer.appendChild(textFabianAlina);
+        menuLayer.appendChild(textEduardSimon);
+        menuLayer.appendChild(textSebastianClaudia);
+        menuLayer.appendChild(textMartinLukas);
         menuLayer.appendChild(credits);
 
         // set current scene active
@@ -1424,14 +1410,14 @@ obacht.Menu.prototype = {
             .setPosition(640, 130)
             .setSize(544, 114);
 
-        /** Back Button - Door */
+        /** Back Button */
         var backButton = new lime.Sprite()
-            .setFill(obacht.spritesheet.getFrame('exit.png'))
-            .setPosition(65, 75)
-            .setSize(92, 112);
+            .setFill(obacht.spritesheet.getFrame('back.png'))
+            .setPosition(75, 75)
+            .setSize(80, 96);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
-            self.mainMenuScene();
+            self.newGameScene();
         });
 
         /** Select a World Label */
@@ -2151,15 +2137,15 @@ obacht.Menu.prototype = {
             .setPosition(640, 360)
             .setSize(556, 186);
 
-        /** Back Button - Door */
+        /** Back Button */
         var backButton = new lime.Sprite()
-            .setFill(obacht.spritesheet.getFrame('exit.png'))
-            .setPosition(65, 75)
-            .setSize(92, 112);
+            .setFill(obacht.spritesheet.getFrame('back.png'))
+            .setPosition(75, 75)
+            .setSize(80, 96);
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
             obacht.mp.events.clear('room_detail');
-            self.mainMenuScene();
+            self.newGameScene();
         });
 
 
