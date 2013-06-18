@@ -268,7 +268,7 @@ obacht.Menu.prototype = {
             .setAlign('left');
 
         var textManualGeneral2 = new lime.Label()
-            .setText('Take care of your "Hogi" and try to avoid running into obstacles.')
+            .setText('Take care of your "Hogi" and try to avoid running into traps.')
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(33)
@@ -278,7 +278,7 @@ obacht.Menu.prototype = {
             .setAlign('left');
 
         var textManualGeneral3 = new lime.Label()
-            .setText('Even better, you can place obstacles in the way of your enemy`s "Hogi" to make life difficult for him.')
+            .setText('Even better, you can place traps in the way of your enemy`s "Hogi" to make life difficult for him.')
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(33)
@@ -812,9 +812,9 @@ obacht.Menu.prototype = {
             .setText('Avoid Collisions')
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
-            .setFontSize(55)
-            .setPosition(640, 660)
-            .setSize(600, 80)
+            .setFontSize(62)
+            .setPosition(640, 650)
+            .setSize(600, 62)
             .setAlign('center');
 
         /** Smartphone **/
@@ -921,12 +921,12 @@ obacht.Menu.prototype = {
             .setSize(690, 94);
 
         var textAvoidCollision = new lime.Label()
-            .setText('COLLECT OBSTACLES')
+            .setText('COLLECT TRAPS')
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
-            .setFontSize(55)
-            .setPosition(640, 660)
-            .setSize(600, 80)
+            .setFontSize(62)
+            .setPosition(640, 650)
+            .setSize(600, 62)
             .setAlign('center');
 
         /** Smartphone **/
@@ -1043,12 +1043,12 @@ obacht.Menu.prototype = {
             .setSize(690, 94);
 
         var textAvoidCollision = new lime.Label()
-            .setText('Throw Obstacles')
+            .setText('Throw TRAPS')
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
-            .setFontSize(55)
-            .setPosition(640, 660)
-            .setSize(600, 80)
+            .setFontSize(62)
+            .setPosition(640, 650)
+            .setSize(600, 62)
             .setAlign('center');
 
         /** Smartphone **/
