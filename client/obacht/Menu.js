@@ -1043,7 +1043,7 @@ obacht.Menu.prototype = {
             .setSize(690, 94);
 
         var textAvoidCollision = new lime.Label()
-            .setText('Throw TRAPS')
+            .setText('Place TRAPS')
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
             .setFontSize(62)
