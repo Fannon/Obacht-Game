@@ -242,7 +242,7 @@ obacht.Menu.prototype = {
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
             .setFontSize(50)
-            .setPosition(280, 280)
+            .setPosition(190, 280)
             .setSize(600, 80)
             .setAlign('center');
 
@@ -290,7 +290,7 @@ obacht.Menu.prototype = {
         /** Hogi */
         var hogi = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('hogi.png'))
-            .setPosition(0, 100).setSize(510, 602)
+            .setPosition(80, 273).setSize(432, 446.4)
             .setAnchorPoint(0,0);
 
         /** Back Button - Door */
