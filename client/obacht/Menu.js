@@ -117,7 +117,7 @@ obacht.Menu.prototype = {
 
         /** Help Button Event -> Help Scene @event */
         goog.events.listen(helpButton, ['touchstart', 'mousedown'], function() {
-            self.helpScene();
+            self.obachtScene();
         });
 
         /** Info Button */
@@ -213,6 +213,106 @@ obacht.Menu.prototype = {
     },
 
     /**
+     * Obacht Explanation Scene
+     *
+     */
+    obachtScene: function() {
+        "use strict";
+        var self = this;
+
+        var menuScene = new lime.Scene();
+        var menuLayer = new lime.Layer();
+        menuScene.appendChild(menuLayer);
+
+
+        ///////////////////////////////
+        // Layer Content             //
+        ///////////////////////////////
+
+        /** Headline Manual */
+        var headlineManual = new lime.Sprite()
+           .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+           .setPosition(660, 130)
+           .setSize(690, 94);
+
+        /** Text Obacht **/
+        var textObacht = new lime.Label()
+            .setText('Ob•acht  [ˈoːbaχt], ')
+            .setFontFamily('OpenSansBold')
+            .setFontColor('#fff')
+            .setFontSize(45)
+            .setLineHeight(1.2)
+            .setPosition(860, 270)
+            .setSize(600, 45)
+            .setAlign('left')
+
+        var textObacht2 = new lime.Label()
+            .setText('Bavarian exclamation for ‘Watch out!‘')
+            .setFontFamily('OpenSansRegular')
+            .setFontColor('#fff')
+            .setFontSize(33)
+            .setLineHeight(1.2)
+            .setPosition(610, 330)
+            .setSize(500, 80)
+            .setAlign('left')
+            .setAnchorPoint(0,0);
+
+        var textObacht3 = new lime.Label()
+            .setText('Fast reaction is required in this game to save your Hogi‘s life.')
+            .setFontFamily('OpenSansRegular')
+            .setFontColor('#fff')
+            .setFontSize(33)
+            .setLineHeight(1.2)
+            .setPosition(610, 440)
+            .setSize(500, 80)
+            .setAlign('left')
+            .setAnchorPoint(0,0);
+
+
+
+        /** Hogi */
+        var hogi = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('hogi.png'))
+            .setPosition(80, 273).setSize(432, 446.4)
+            .setAnchorPoint(0,0);
+
+        /** Back Button - Door */
+        var backButton = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('exit.png'))
+            .setPosition(65, 75)
+            .setSize(92, 112);
+
+        goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
+            self.mainMenuScene();
+        });
+
+        /** Arrow Next Scene */
+        var arrowNext = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowNext.png')).setPosition(1200, 360).setSize(196,182);
+        goog.events.listen(arrowNext, ['touchstart', 'mousedown'], function() {
+            self.helpScene();
+        });
+
+
+
+        ///////////////////////////////
+        // Draw Scene                //
+        ///////////////////////////////
+
+        menuLayer.appendChild(headlineManual);
+        menuLayer.appendChild(backButton);
+        menuLayer.appendChild(arrowNext);
+        menuLayer.appendChild(hogi);
+        menuLayer.appendChild(textObacht);
+        menuLayer.appendChild(textObacht2);
+        menuLayer.appendChild(textObacht3);
+
+
+        // set current scene active
+        obacht.director.replaceScene(menuScene);
+
+    },
+
+    /**
      * Help / Manual Scene
      *
      */
@@ -232,19 +332,9 @@ obacht.Menu.prototype = {
 
         /** Headline Manual */
         var headlineManual = new lime.Sprite()
-           .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
-           .setPosition(660, 130)
-           .setSize(690, 94);
-
-        /** Text Hogi **/
-        var textHogi = new lime.Label()
-            .setText('Hi, I‘m Hogi.')
-            .setFontFamily('Cartwheel')
-            .setFontColor('#fff')
-            .setFontSize(50)
-            .setPosition(190, 280)
-            .setSize(600, 80)
-            .setAlign('center');
+            .setFill(obacht.spritesheet.getFrame('headlineManual.png'))
+            .setPosition(660, 130)
+            .setSize(690, 94);
 
         var textManualGeneral1a = new lime.Label()
             .setText('Two on-screen players each run on their own planet.')
@@ -268,7 +358,7 @@ obacht.Menu.prototype = {
             .setAlign('left');
 
         var textManualGeneral2 = new lime.Label()
-            .setText('Take care of your "Hogi" and try to avoid running into traps.')
+            .setText('Take care of your ‘Hogi‘ and try to avoid running into traps.')
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(33)
@@ -278,7 +368,7 @@ obacht.Menu.prototype = {
             .setAlign('left');
 
         var textManualGeneral3 = new lime.Label()
-            .setText('Even better, you can place traps in the way of your enemy`s "Hogi" to make life difficult for him.')
+            .setText('Even better, you can place traps in the way of your enemy‘s ‘Hogi‘ to make life difficult for him.')
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(33)
@@ -290,7 +380,7 @@ obacht.Menu.prototype = {
         /** Hogi */
         var hogi = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('hogi.png'))
-            .setPosition(80, 273).setSize(432, 446.4)
+            .setPosition(120, 274).setSize(432, 446.4)
             .setAnchorPoint(0,0);
 
         /** Back Button - Door */
@@ -301,6 +391,12 @@ obacht.Menu.prototype = {
 
         goog.events.listen(backButton, ['touchstart', 'mousedown'], function() {
             self.mainMenuScene();
+        });
+
+        /** Arrow Previous Scene */
+        var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
+        goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
+            self.obachtScene();
         });
 
         /** Arrow Next Scene */
@@ -318,8 +414,8 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(headlineManual);
         menuLayer.appendChild(backButton);
         menuLayer.appendChild(arrowNext);
+        menuLayer.appendChild(arrowPrevious);
         menuLayer.appendChild(hogi);
-        menuLayer.appendChild(textHogi);
         menuLayer.appendChild(textManualGeneral1a);
         menuLayer.appendChild(textManualGeneral1b);
         menuLayer.appendChild(textManualGeneral2);
@@ -332,7 +428,7 @@ obacht.Menu.prototype = {
 
 
     /**
-     * Help / Manual Scene
+     * Worlds Scene
      *
      */
     manualWorldsScene: function() {
@@ -503,7 +599,7 @@ obacht.Menu.prototype = {
         
         /** Text Enemy Life **/
         var textEnemyLife = new lime.Label()
-            .setText('Enemy Lives')
+            .setText('Enemy‘s Lives')
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
             .setFontSize(50)
@@ -577,12 +673,12 @@ obacht.Menu.prototype = {
             .setSize(690, 94);
 
         var textJump = new lime.Label()
-            .setText('Jump')
+            .setText('Tap to Jump')
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
-            .setFontSize(80)
+            .setFontSize(62)
             .setPosition(640, 650)
-            .setSize(600, 80)
+            .setSize(600, 62)
             .setAlign('center');
 
         /** Smartphone **/
@@ -693,12 +789,12 @@ obacht.Menu.prototype = {
             .setSize(690, 94);
 
         var textCrouch = new lime.Label()
-            .setText('Crouch')
+            .setText('Hold to Crouch')
             .setFontFamily('Cartwheel')
             .setFontColor('#fff')
-            .setFontSize(80)
+            .setFontSize(62)
             .setPosition(640, 650)
-            .setSize(600, 80)
+            .setSize(600, 62)
             .setAlign('center');
 
         /** Smartphone **/
