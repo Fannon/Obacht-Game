@@ -361,7 +361,7 @@ obacht.Menu.prototype = {
             // new lime.animation.ScaleTo(1).setDuration(1)
             // )
         // );
-// 
+//
         // yourHogi.runAction(fade);
         // enemyHogi.runAction(fade);
 
@@ -457,7 +457,7 @@ obacht.Menu.prototype = {
             // new lime.animation.ScaleTo(1).setDuration(1)
             // )
         // );
-// 
+//
         // yourLife.runAction(fade);
         // enemyLife.runAction(fade);
 
@@ -478,7 +478,7 @@ obacht.Menu.prototype = {
             self.mainMenuScene();
         });
 
-        
+
         /** Text Your Life **/
         var textYourLife = new lime.Label()
             .setText('Your Lives')
@@ -488,8 +488,8 @@ obacht.Menu.prototype = {
             .setPosition(280, 680)
             .setSize(600, 80)
             .setAlign('center');
-            
-        
+
+
         /** Text Enemy Life **/
         var textEnemyLife = new lime.Label()
             .setText('Enemy Lives')
@@ -505,8 +505,8 @@ obacht.Menu.prototype = {
             .setFill(obacht.spritesheet.getFrame('beCareful.png'))
             .setPosition(1080, 530)
             .setSize(302, 276);
-            
-                        
+
+
         /** Arrow Previous Scene */
         var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
         goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
@@ -579,13 +579,13 @@ obacht.Menu.prototype = {
             .setFill(obacht.spritesheet.getFrame('phone.png'))
             .setPosition(640, 400)
             .setSize(710, 348.5);
-            
+
         /** left hand **/
         var leftHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handLeftJump.png'))
             .setPosition(300, 517)
             .setSize(282, 406);
-            
+
         /** right hand **/
         var rightHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handRight.png'))
@@ -695,13 +695,13 @@ obacht.Menu.prototype = {
             .setFill(obacht.spritesheet.getFrame('phone.png'))
             .setPosition(640, 400)
             .setSize(710, 348.5);
-            
+
         /** left hand **/
         var leftHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handLeftCrouch.png'))
             .setPosition(300, 517)
             .setSize(276, 406);
-            
+
         /** right hand **/
         var rightHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handRight.png'))
@@ -811,13 +811,13 @@ obacht.Menu.prototype = {
             .setFill(obacht.spritesheet.getFrame('phone.png'))
             .setPosition(640, 400)
             .setSize(710, 348.5);
-            
+
         /** left hand **/
         var leftHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handLeft.png'))
             .setPosition(268, 517)
             .setSize(216, 406);
-            
+
         /** right hand **/
         var rightHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handRight.png'))
@@ -840,7 +840,7 @@ obacht.Menu.prototype = {
             .setFill(obacht.spritesheet.getFrame('yourLife.png'))
             .setPosition(680, 455)
             .setSize(130, 120);
-            
+
         /** Back Button - Door */
         var backButton = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('exit.png'))
@@ -923,13 +923,13 @@ obacht.Menu.prototype = {
             .setFill(obacht.spritesheet.getFrame('phone.png'))
             .setPosition(640, 400)
             .setSize(710, 348.5);
-            
+
         /** left hand **/
         var leftHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handLeft.png'))
             .setPosition(268, 517)
             .setSize(216, 406);
-            
+
         /** right hand **/
         var rightHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handRightCollect.png'))
@@ -941,13 +941,13 @@ obacht.Menu.prototype = {
             .setFill(obacht.spritesheet.getFrame('collectObstacle.png'))
             .setPosition(640, 400)
             .setSize(130, 130);
-            
+
         /** Be faster **/
         var beFaster = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('collectObstaclesHighlight.png'))
             .setPosition(1080, 530)
             .setSize(302, 276);
-            
+
         /** Back Button - Door */
         var backButton = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('exit.png'))
@@ -1001,7 +1001,7 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(tab);
         menuLayer.appendChild(rightHand);
         menuLayer.appendChild(beFaster);
-        
+
         // set current scene active
         obacht.director.replaceScene(menuScene);
 
@@ -1045,13 +1045,13 @@ obacht.Menu.prototype = {
             .setFill(obacht.spritesheet.getFrame('phone.png'))
             .setPosition(640, 400)
             .setSize(710, 348.5);
-            
+
         /** left hand **/
         var leftHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handLeft.png'))
             .setPosition(268, 517)
             .setSize(216, 406);
-            
+
         /** right hand **/
         var rightHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handRight.png'))
@@ -1063,7 +1063,7 @@ obacht.Menu.prototype = {
             .setFill(obacht.spritesheet.getFrame('throwObstacles.png'))
             .setPosition(705, 277)
             .setSize(410, 147);
-            
+
         /** Back Button - Door */
         var backButton = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('exit.png'))
@@ -1372,6 +1372,8 @@ obacht.Menu.prototype = {
 
         goog.events.listen(randomPlayButton, ['touchstart', 'mousedown'], function() {
             obacht.mp.findMatch();
+
+            // TODO: Vercheckt manchmal die room_details, dann wird nicht Player Ready gesetzt.
             obacht.mp.events.subscribeOnce('room_detail', function() {
                 obacht.mp.playerReady();
                 self.waitForPlayerScene();

@@ -411,6 +411,7 @@ RoomManager.prototype.getNewPin = function(isClosed) {
 RoomManager.prototype.findMatch = function() {
     "use strict";
 
+    // TODO: Joining Player reicht
     var availableRooms = this.rooms.where({
         creatingPlayerReady: true,
         joiningPlayerId: false,

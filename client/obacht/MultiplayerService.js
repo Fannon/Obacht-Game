@@ -466,6 +466,27 @@ obacht.MultiplayerService.prototype = {
         this.socket.emit('debug_message', type, msg);
     },
 
+    pingPong: function(count) {
+        "use strict";
+        var self = this;
+        var counter = 0;
+        var now = new Date().getTime();
+        var interval = setInterval(function() {
+            var now = new Date().getTime();
+            self.socket.emit('ping', now);
+            if (counter >= count) {
+                clearInterval(interval);
+            }
+            counter += 1;
+        }, 200);
+
+        this.socket.on('pong', function (time) {
+            var now = new Date().getTime();
+            var diff = now - time;
+            log.info('PingPong Time: ' + diff + 'ms');
+        });
+    },
+
     //////////////////////////////
     // Helper Functions         //
     //////////////////////////////

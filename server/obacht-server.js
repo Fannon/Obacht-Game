@@ -306,6 +306,10 @@ obacht.server.io.sockets.on('connection', function(socket) {
         log.debug('--- Player disconnect');
     });
 
+    socket.on('ping', function(time) {
+        socket.emit('pong', time);
+    });
+
 });
 
 
