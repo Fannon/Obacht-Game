@@ -271,8 +271,8 @@ obacht.Menu.prototype = {
 
 
         /** Hogi */
-        var hogi = new lime.Sprite()
-            .setFill(obacht.spritesheet.getFrame('hogi.png'))
+        var hogiSign = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('hogiSign.png'))
             .setPosition(80, 273).setSize(432, 446.4)
             .setAnchorPoint(0,0);
 
@@ -301,7 +301,7 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(headlineManual);
         menuLayer.appendChild(backButton);
         menuLayer.appendChild(arrowNext);
-        menuLayer.appendChild(hogi);
+        menuLayer.appendChild(hogiSign);
         menuLayer.appendChild(textObacht);
         menuLayer.appendChild(textObacht2);
         menuLayer.appendChild(textObacht3);
@@ -1252,12 +1252,12 @@ obacht.Menu.prototype = {
             .setSize(510, 116);
 
         var textCredits = new lime.Label()
-            .setText('The mobile multiplayer game OBACHT was developed by a project team at Augsburg University of Applied Sciences.')
+            .setText('The mobile multiplayer game OBACHT was developed by a project team at the Augsburg University of Applied Sciences.')
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(30)
-            .setPosition(640, 250)
-            .setSize(1000, 30)
+            .setPosition(640, 230)
+            .setSize(1100, 30)
             .setAlign('center')
             .setLineHeight(1.3);
 
@@ -1266,7 +1266,7 @@ obacht.Menu.prototype = {
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(28)
-            .setPosition(640, 370)
+            .setPosition(640, 390)
             .setSize(710, 28)
             .setAlign('center');
 
@@ -1275,7 +1275,7 @@ obacht.Menu.prototype = {
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(28)
-            .setPosition(640, 520)
+            .setPosition(640, 540)
             .setSize(710, 28)
             .setAlign('center');
 
@@ -1284,7 +1284,7 @@ obacht.Menu.prototype = {
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(28)
-            .setPosition(640, 420)
+            .setPosition(640, 440)
             .setSize(710, 28)
             .setAlign('center');
 
@@ -1293,8 +1293,17 @@ obacht.Menu.prototype = {
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(28)
-            .setPosition(640, 470)
+            .setPosition(640, 490)
             .setSize(710, 28)
+            .setAlign('center');
+
+        var textProfs = new lime.Label()
+            .setText('Prof. Dr. Wolfgang Kowarschick | Prof. Michael Stoll')
+            .setFontFamily('OpenSansRegular')
+            .setFontColor('#fff')
+            .setFontSize(28)
+            .setPosition(640, 340)
+            .setSize(900, 28)
             .setAlign('center');
 
 
@@ -1323,6 +1332,7 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(textEduardSimon);
         menuLayer.appendChild(textSebastianClaudia);
         menuLayer.appendChild(textMartinLukas);
+        menuLayer.appendChild(textProfs);
         menuLayer.appendChild(credits);
 
         // set current scene active
