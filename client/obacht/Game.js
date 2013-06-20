@@ -22,6 +22,7 @@ goog.require('lime.ASSETS.desertSpritesheet.json');
 goog.require('lime.ASSETS.meadowSpritesheet.json');
 goog.require('lime.ASSETS.globalSpritesheet.json');
 
+
 /**
  * Its a Game scene
  *
@@ -232,6 +233,18 @@ obacht.Game.prototype = {
             .setSize(obacht.spritesheet.getFrame(status + '.png').csize_.width * 2, obacht.spritesheet.getFrame(status + '.png').csize_.height * 2);
 
         this.countdownLayer.appendChild(this.countdownStatus);
+
+        /**Check Sound Status*/
+        obacht.menusound.stop();
+        obacht.gamesound.stop();
+
+        obacht.gamesound.play();
+
+        lime.scheduleManager.scheduleWithDelay(function(){
+        if(obacht.gamesound.isPlaying!=true && obacht.sound===true){
+        obacht.gamesound.play();
+        }
+        },obacht.gamesound,400);
     },
 
     /**
@@ -279,6 +292,11 @@ obacht.Game.prototype = {
             obacht.cleanUp();
             obacht.menu.mainMenuScene();
         });
+
+        /*unschedule Sound check*/
+        /*obacht.gamesound.stop();
+        lime.scheduleManager.unschedule(function(dt){
+        },obacht.gamesound,400);*/
     },
 
     /**

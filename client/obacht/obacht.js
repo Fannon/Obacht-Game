@@ -24,6 +24,8 @@ goog.require('obacht.PlayerController');
 goog.require('obacht.Menu');
 goog.require('obacht.Game');
 
+goog.require('lime.audio.Audio');
+
 /** global log variable for Logging with the custom Logger */
 var log;
 
@@ -64,6 +66,10 @@ obacht.start = function() {
 
     /** Global Spritesheet */
     obacht.spritesheet = new lime.SpriteSheet('assets/gfx/globalSpritesheet.png', lime.ASSETS.globalSpritesheet.json, lime.parser.JSON);
+
+    /** Global Sound */
+    obacht.menusound = new lime.audio.Audio('./assets/sounds/ms.ogg');
+    obacht.gamesound = new lime.audio.Audio('./assets/sounds/gs.ogg');
 
     /** Menu Instance */
     obacht.menu = new obacht.Menu();

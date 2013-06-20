@@ -8,6 +8,8 @@ goog.require('lime.animation.ScaleTo');
 goog.require('lime.animation.Loop');
 goog.require('lime.animation.Easing');
 
+
+
 /**
  * Game Menu
  *
@@ -40,6 +42,7 @@ obacht.Menu = function() {
         });
     }
 
+
 };
 
 obacht.Menu.prototype = {
@@ -59,6 +62,17 @@ obacht.Menu.prototype = {
 
         this.resetMenu();
 
+        ///////////////////////////////
+        // Play Menu Sound           //
+        ///////////////////////////////
+
+        obacht.menusound.play();
+
+        lime.scheduleManager.scheduleWithDelay(function(){
+            if(obacht.menusound.isPlaying==false && obacht.sound===true){
+                obacht.menusound.play();
+            }
+        },obacht.menusound,400);
 
         ///////////////////////////////
         // Layer Content             //
@@ -156,10 +170,14 @@ obacht.Menu.prototype = {
         goog.events.listen(soundButton, ['touchstart', 'mousedown'], function() {
             if (obacht.sound){
                 soundButton.setFill(obacht.spritesheet.getFrame('button_sound_off.png'));
+                obacht.gamesound.stop();
+                obacht.menusound.stop();
                 obacht.sound = false;
                 log.debug('Sound OFF');
             } else {
                 soundButton.setFill(obacht.spritesheet.getFrame('button_sound.png'));
+                obacht.gamesound.stop();
+                obacht.menusound.play();
                 obacht.sound = true;
                 log.debug('Sound ON');
             }
