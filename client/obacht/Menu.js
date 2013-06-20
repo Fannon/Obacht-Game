@@ -41,8 +41,6 @@ obacht.Menu = function() {
             self.waitForPlayerScene();
         });
     }
-
-
 };
 
 obacht.Menu.prototype = {
@@ -66,13 +64,15 @@ obacht.Menu.prototype = {
         // Play Menu Sound           //
         ///////////////////////////////
 
-        obacht.menusound.play();
-
         lime.scheduleManager.scheduleWithDelay(function(){
-            if(obacht.menusound.isPlaying==false && obacht.sound===true){
+            if(obacht.menusound.isPlaying()===false && obacht.sound===true){
                 obacht.menusound.play();
             }
-        },obacht.menusound,400);
+            if(obacht.gamesound.isPlaying()===true){
+                obacht.gamesound.stop();
+            }
+
+        },obacht.menusound,obacht.gamesound,obacht.sound,150);
 
         ///////////////////////////////
         // Layer Content             //
@@ -170,14 +170,10 @@ obacht.Menu.prototype = {
         goog.events.listen(soundButton, ['touchstart', 'mousedown'], function() {
             if (obacht.sound){
                 soundButton.setFill(obacht.spritesheet.getFrame('button_sound_off.png'));
-                obacht.gamesound.stop();
-                obacht.menusound.stop();
                 obacht.sound = false;
                 log.debug('Sound OFF');
             } else {
                 soundButton.setFill(obacht.spritesheet.getFrame('button_sound.png'));
-                obacht.gamesound.stop();
-                obacht.menusound.play();
                 obacht.sound = true;
                 log.debug('Sound ON');
             }
@@ -241,7 +237,6 @@ obacht.Menu.prototype = {
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
-
 
         ///////////////////////////////
         // Layer Content             //
@@ -537,6 +532,7 @@ obacht.Menu.prototype = {
 
         // set current scene active
         obacht.director.replaceScene(menuScene);
+
 
     },
 
@@ -2019,6 +2015,13 @@ obacht.Menu.prototype = {
         /////////////////////////////
         // Helper Functions        //
         /////////////////////////////
+
+        function checkSound() {
+            function getPin() {
+                return codeArray[0] + '' + codeArray[1] + '' + codeArray[2] + '' + codeArray[3];
+            }
+        }
+
 
         /**
          * Returns PIN

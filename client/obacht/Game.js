@@ -234,17 +234,18 @@ obacht.Game.prototype = {
 
         this.countdownLayer.appendChild(this.countdownStatus);
 
-        /**Check Sound Status*/
-        obacht.menusound.stop();
-        obacht.gamesound.stop();
-
-        obacht.gamesound.play();
+        ///////////////////////////////
+        // Play Game Sound           //
+        ///////////////////////////////
 
         lime.scheduleManager.scheduleWithDelay(function(){
-        if(obacht.gamesound.isPlaying!=true && obacht.sound===true){
-        obacht.gamesound.play();
-        }
-        },obacht.gamesound,400);
+            if(obacht.gamesound.isPlaying()===false && obacht.sound===true){
+                obacht.gamesound.play();
+            }
+            if(obacht.menusound.isPlaying()===true){
+                obacht.menusound.stop();
+            }
+        },obacht.menusound,obacht.gamesound,obacht.sound,150);
     },
 
     /**
