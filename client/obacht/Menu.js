@@ -59,20 +59,7 @@ obacht.Menu.prototype = {
         log.debug('mainMenuScene()');
 
         this.resetMenu();
-
-        ///////////////////////////////
-        // Play Menu Sound           //
-        ///////////////////////////////
-
-        lime.scheduleManager.scheduleWithDelay(function(){
-            if(obacht.menusound.isPlaying()===false && obacht.sound===true){
-                obacht.menusound.play();
-            }
-            if(obacht.gamesound.isPlaying()===true){
-                obacht.gamesound.stop();
-            }
-
-        },obacht.menusound,obacht.gamesound,obacht.sound,150);
+        this.checkSound();
 
         ///////////////////////////////
         // Layer Content             //
@@ -2292,6 +2279,24 @@ obacht.Menu.prototype = {
         obacht.mp.events.clear('join_room');
         obacht.mp.events.clear('room_detail');
     },
+
+    checkSound: function() {
+
+        ///////////////////////////////
+        // Play Menu Sound           //
+        ///////////////////////////////
+
+        lime.scheduleManager.scheduleWithDelay(function(){
+            if(obacht.menusound.isPlaying()===false && obacht.sound===true){
+                obacht.menusound.play();
+            }
+            if(obacht.gamesound.isPlaying()===true){
+                obacht.gamesound.stop();
+            }
+        },obacht.menusound,obacht.gamesound,obacht.sound,150);
+    },
+
+
 
     /**
      * Adds (left) Padding to the PIN Number

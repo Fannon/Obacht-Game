@@ -142,6 +142,9 @@ obacht.Game = function() {
         self.ownWorld.spin();
         self.enemyWorld.spin();
 
+        // Start check Sound
+        self.checkSound();
+
         self.setCountdownStatus('obacht_start');
 
         // Just start the generator if player is the creating Player
@@ -233,19 +236,6 @@ obacht.Game.prototype = {
             .setSize(obacht.spritesheet.getFrame(status + '.png').csize_.width * 2, obacht.spritesheet.getFrame(status + '.png').csize_.height * 2);
 
         this.countdownLayer.appendChild(this.countdownStatus);
-
-        ///////////////////////////////
-        // Play Game Sound           //
-        ///////////////////////////////
-
-        lime.scheduleManager.scheduleWithDelay(function(){
-            if(obacht.gamesound.isPlaying()===false && obacht.sound===true){
-                obacht.gamesound.play();
-            }
-            if(obacht.menusound.isPlaying()===true){
-                obacht.menusound.stop();
-            }
-        },obacht.menusound,obacht.gamesound,obacht.sound,150);
     },
 
     /**
@@ -322,6 +312,26 @@ obacht.Game.prototype = {
 
         return true;
     },
+
+    checkSound: function() {
+        "use strict";
+
+        ///////////////////////////////
+        // Play Game Sound           //
+        ///////////////////////////////
+
+        lime.scheduleManager.scheduleWithDelay(function(){
+            if(obacht.gamesound.isPlaying()===false && obacht.sound===true){
+                obacht.gamesound.play();
+            }
+            if(obacht.menusound.isPlaying()===true){
+                obacht.menusound.stop();
+            }
+        },obacht.menusound,obacht.gamesound,obacht.sound,150);
+
+    },
+
+
 
     /**
      * Destructor - Cleans up all Lime Elements and DataStructures
