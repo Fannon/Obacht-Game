@@ -237,14 +237,15 @@ obacht.Menu.prototype = {
 
         /** Text Obacht **/
         var textObacht = new lime.Label()
-            .setText('Ob•acht  [ˈoːbaχt], ')
+            .setText('Ob•acht  [ˈoːbaχt] ')
             .setFontFamily('OpenSansBold')
             .setFontColor('#fff')
             .setFontSize(45)
             .setLineHeight(1.2)
-            .setPosition(860, 270)
+            .setPosition(610, 260)
             .setSize(600, 45)
             .setAlign('left')
+            .setAnchorPoint(0,0);
 
         var textObacht2 = new lime.Label()
             .setText('Bavarian exclamation for ‘Watch out!‘')
@@ -252,7 +253,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(33)
             .setLineHeight(1.2)
-            .setPosition(610, 330)
+            .setPosition(610, 340)
             .setSize(500, 80)
             .setAlign('left')
             .setAnchorPoint(0,0);
@@ -263,7 +264,7 @@ obacht.Menu.prototype = {
             .setFontColor('#fff')
             .setFontSize(33)
             .setLineHeight(1.2)
-            .setPosition(610, 440)
+            .setPosition(610, 450)
             .setSize(500, 80)
             .setAlign('left')
             .setAnchorPoint(0,0);
@@ -273,7 +274,7 @@ obacht.Menu.prototype = {
         /** Hogi */
         var hogiSign = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('hogiSign.png'))
-            .setPosition(80, 273).setSize(432, 446.4)
+            .setPosition(-50, 220).setSize(614, 500)
             .setAnchorPoint(0,0);
 
         /** Back Button - Door */
@@ -380,7 +381,7 @@ obacht.Menu.prototype = {
         /** Hogi */
         var hogi = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('hogi.png'))
-            .setPosition(120, 274).setSize(432, 446.4)
+            .setPosition(145, 243).setSize(396, 475.2)
             .setAnchorPoint(0,0);
 
         /** Back Button - Door */
@@ -697,8 +698,8 @@ obacht.Menu.prototype = {
         /** right hand **/
         var rightHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handRight.png'))
-            .setPosition(1015, 517)
-            .setSize(216, 406);
+            .setPosition(1020, 517)
+            .setSize(202, 406);
 
         /** tab **/
         var tab = new lime.Sprite()
@@ -813,8 +814,8 @@ obacht.Menu.prototype = {
         /** right hand **/
         var rightHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handRight.png'))
-            .setPosition(1015, 517)
-            .setSize(216, 406);
+            .setPosition(1020, 517)
+            .setSize(202, 406);
 
         /** tab **/
         var tab = new lime.Sprite()
@@ -923,14 +924,14 @@ obacht.Menu.prototype = {
         /** left hand **/
         var leftHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handLeft.png'))
-            .setPosition(268, 517)
-            .setSize(216, 406);
+            .setPosition(261, 517)
+            .setSize(202, 406);
             
         /** right hand **/
         var rightHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handRight.png'))
-            .setPosition(1015, 517)
-            .setSize(216, 406);
+            .setPosition(1020, 517)
+            .setSize(202, 406);
 
         /** obstacles **/
         var obstacles = new lime.Sprite()
@@ -1035,8 +1036,8 @@ obacht.Menu.prototype = {
         /** left hand **/
         var leftHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handLeft.png'))
-            .setPosition(268, 517)
-            .setSize(216, 406);
+            .setPosition(261, 517)
+            .setSize(202, 406);
             
         /** right hand **/
         var rightHand = new lime.Sprite()
@@ -1157,8 +1158,8 @@ obacht.Menu.prototype = {
         /** left hand **/
         var leftHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handLeft.png'))
-            .setPosition(268, 517)
-            .setSize(216, 406);
+            .setPosition(261, 517)
+            .setSize(202, 406);
             
         /** right hand **/
         var rightHand = new lime.Sprite()
@@ -1169,8 +1170,8 @@ obacht.Menu.prototype = {
         /** throw obstacles **/
         var throwObstacles = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('throwObstacles.png'))
-            .setPosition(705, 277)
-            .setSize(410, 147);
+            .setPosition(718, 267)
+            .setSize(380, 150);
 
         /** tab **/
         var tab = new lime.Sprite()
