@@ -328,7 +328,7 @@
 	"spriteSourceSize": {"x":8,"y":70,"w":184,"h":86},
 	"sourceSize": {"w":192,"h":156}
 },
-"character_creep_end_0001.png":
+"character_creep_end_0021.png":
 {
 	"frame": {"x":554,"y":241,"w":172,"h":90},
 	"rotated": false,
@@ -336,7 +336,7 @@
 	"spriteSourceSize": {"x":17,"y":61,"w":172,"h":90},
 	"sourceSize": {"w":192,"h":156}
 },
-"character_creep_end_0002.png":
+"character_creep_end_0022.png":
 {
 	"frame": {"x":1355,"y":330,"w":166,"h":98},
 	"rotated": false,
@@ -344,7 +344,7 @@
 	"spriteSourceSize": {"x":20,"y":51,"w":166,"h":98},
 	"sourceSize": {"w":192,"h":156}
 },
-"character_creep_end_0003.png":
+"character_creep_end_0023.png":
 {
 	"frame": {"x":2,"y":469,"w":130,"h":132},
 	"rotated": false,
@@ -352,7 +352,7 @@
 	"spriteSourceSize": {"x":21,"y":20,"w":130,"h":132},
 	"sourceSize": {"w":192,"h":156}
 },
-"character_creep_end_0004.png":
+"character_creep_end_0024.png":
 {
 	"frame": {"x":1496,"y":2,"w":130,"h":154},
 	"rotated": false,
@@ -559,6 +559,6 @@
 	"format": "RGBA8888",
 	"size": {"w":2003,"h":603},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:a3848997d99c04fdcbfa4dea8f8f71aa$"
+	"smartupdate": "$TexturePacker:SmartUpdate:f82e0571c3fabbc99d138e686e7c4385$"
 }
 }
