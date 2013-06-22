@@ -68,6 +68,7 @@ obacht.Game = function() {
         log.warn('Error loading Theme Spritesheet');
     }
 
+    // Debug average Framerate if set in options.js
     if (obacht.options.debug.avgFramerate) {
 
         obacht.frameRateArray = [];
@@ -92,6 +93,7 @@ obacht.Game = function() {
     // Draw & construct Game    //
     //////////////////////////////
 
+    // Draw Background Gradient according to theme
     obacht.setBackground(obacht.mp.roomDetail.theme);
 
     // Draw Countdown Layer
@@ -99,8 +101,14 @@ obacht.Game = function() {
         .setFill('assets/gfx/bg_clean.jpg')
         .setPosition(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
         .setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
+
+    this.countdownStatus = new lime.Sprite()
+        .setFill(obacht.spritesheet.getFrame('three.png'))
+        .setPosition(640, 360)
+        .setSize(obacht.spritesheet.getFrame('three.png').csize_.width * 2, obacht.spritesheet.getFrame('three.png').csize_.height * 2);
+
     this.countdownLayer.appendChild(countDownLayerBackground);
-    self.setCountdownStatus('three');
+    this.countdownLayer.appendChild(this.countdownStatus);
 
     // Construct Worlds
     this.ownWorld = new obacht.World(this, 'bottom');
@@ -143,7 +151,7 @@ obacht.Game = function() {
         self.enemyWorld.spin();
 
         // Start check Sound
-        self.checkSound();
+//        self.checkSound();
 
         self.setCountdownStatus('obacht_start');
 
@@ -154,10 +162,11 @@ obacht.Game = function() {
             self.generator.startThrowBonus();
         }
 
-        // Remove Background
+        // Remove Background, Obacht stays
         self.countdownLayer.removeChild(countDownLayerBackground);
 
         obacht.timeout(function() {
+
             // Remove CountDown Layer from Game Sene
             obacht.gameScene.removeChild(self.countdownLayer);
 
@@ -225,17 +234,12 @@ obacht.Game.prototype = {
     setCountdownStatus: function(status) {
         "use strict";
 
-        if (this.countdownStatus) {
-            this.countdownLayer.removeChild(this.countdownStatus);
-        }
-
         /** Current Countdown Status */
-        this.countdownStatus = new lime.Sprite()
+        this.countdownStatus
             .setFill(obacht.spritesheet.getFrame(status + '.png'))
             .setPosition(640, 360)
             .setSize(obacht.spritesheet.getFrame(status + '.png').csize_.width * 2, obacht.spritesheet.getFrame(status + '.png').csize_.height * 2);
 
-        this.countdownLayer.appendChild(this.countdownStatus);
     },
 
     /**
@@ -330,8 +334,6 @@ obacht.Game.prototype = {
         },obacht.menusound,obacht.gamesound,obacht.sound,150);
 
     },
-
-
 
     /**
      * Destructor - Cleans up all Lime Elements and DataStructures

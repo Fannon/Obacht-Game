@@ -304,7 +304,7 @@ RoomManager.prototype.leaveRoom = function(socket) {
         }
 
         // If no Players left, remove the room
-        if (!room.attributes.creatingPlayerId && room.attributes.joiningPlayerId) {
+        if (!room.attributes.creatingPlayerId) {
             this.removeRoom(pin);
         }
 
@@ -413,7 +413,7 @@ RoomManager.prototype.findMatch = function() {
 
     // TODO: Joining Player reicht
     var availableRooms = this.rooms.where({
-        creatingPlayerReady: true,
+//        creatingPlayerReady: true,
         joiningPlayerId: false,
         closed: false
     });
