@@ -59,7 +59,7 @@ obacht.options = {
 
         distanceOffset: 0,
 
-        displayMessageTime: 500
+        displayMessageTime: 1100
     },
     world: {
         size: {
