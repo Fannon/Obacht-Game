@@ -107,18 +107,6 @@ obacht.Game = function() {
         .setPosition(640, 360)
         .setSize(obacht.spritesheet.getFrame('three.png').csize_.width * 2, obacht.spritesheet.getFrame('three.png').csize_.height * 2);
 
-    // this.smoke = new lime.Sprite()
-    //     .setFill('#000000')
-    //     .setPosition(640, 360)
-    //     .setSize();
-
-    // this.smokeAnimation = new lime.animation.KeyframeAnimation();
-    // this.smokeAnimation.looping = false;
-    // for (var i = 1; i <= 10; i++) {
-    //     this.smokeAnimation
-    //         .addFrame(self.spritesheet.getFrame('character_creep_end_' + goog.string.padNumber(i, 4) + '.png'));
-    // }
-
     this.countdownLayer.appendChild(countDownLayerBackground);
     this.countdownLayer.appendChild(this.countdownStatus);
 

@@ -115,6 +115,11 @@ obacht.options = {
                 x: 1145,
                 y: 160
             }
+        },
+        smoke: {
+            moveX: 20,
+            moveY: 70,
+            frameFrequency: 0.05
         }
     },
     playerController: {
