@@ -58,6 +58,8 @@ obacht.Menu.prototype = {
         menuScene.appendChild(menuLayer);
         log.debug('mainMenuScene()');
 
+        obacht.sound = localStorage.getItem("sound");
+
         this.resetMenu();
         this.checkSound();
 
@@ -154,14 +156,23 @@ obacht.Menu.prototype = {
             .setSize(170, 45)
             .setAlign('center');
 
+        // If Sound was remembered to be off, change the Display to OFF
+        if (obacht.sound){
+            soundButton.setFill(obacht.spritesheet.getFrame('button_sound_off.png'));
+        }
+
         goog.events.listen(soundButton, ['touchstart', 'mousedown'], function() {
             if (obacht.sound){
                 soundButton.setFill(obacht.spritesheet.getFrame('button_sound_off.png'));
                 obacht.sound = false;
+                localStorage.setItem("sound", false);
+                obacht.menusound.stop();
                 log.debug('Sound OFF');
             } else {
                 soundButton.setFill(obacht.spritesheet.getFrame('button_sound.png'));
                 obacht.sound = true;
+                localStorage.setItem("sound", true);
+                obacht.menusound.play();
                 log.debug('Sound ON');
             }
         });
@@ -206,8 +217,12 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(infoLabel);
         menuLayer.appendChild(soundButton);
         menuLayer.appendChild(soundLabel);
-        menuLayer.appendChild(quitButton);
-        menuLayer.appendChild(quitLabel);
+
+
+        if (!obacht.device.IPHONE && !obacht.device.IPAD) {
+            menuLayer.appendChild(quitButton);
+            menuLayer.appendChild(quitLabel);
+        }
 
         // set current scene active
         obacht.director.replaceScene(menuScene);
@@ -2293,12 +2308,17 @@ obacht.Menu.prototype = {
     },
 
     checkSound: function() {
+        "use strict";
+
 
         ///////////////////////////////
         // Play Menu Sound           //
         ///////////////////////////////
 
         lime.scheduleManager.scheduleWithDelay(function(){
+            if(obacht.menusound.isPlaying()===true && obacht.sound===false){
+                obacht.menusound.stop();
+            }
             if(obacht.menusound.isPlaying()===false && obacht.sound===true){
                 obacht.menusound.play();
             }

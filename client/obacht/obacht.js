@@ -69,7 +69,9 @@ obacht.start = function() {
 
     /** Global Sound */
     obacht.menusound = new lime.audio.Audio('./assets/sounds/ms.ogg');
+    obacht.menusound.loop_ = true;
     obacht.gamesound = new lime.audio.Audio('./assets/sounds/gs.ogg');
+    obacht.gamesound.loop_ = true;
 
     /** Menu Instance */
     obacht.menu = new obacht.Menu();
