@@ -140,6 +140,7 @@ obacht.MultiplayerService = function(serverUrl) {
                 log.warn('MultiplayerService: Received Room Invite when already in a Game!');
             }
         }
+
     });
 
     /**
