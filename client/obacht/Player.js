@@ -146,7 +146,6 @@ obacht.Player = function(currentGame, location) {
     /** Sprite animation for crouching (when character goes down) */
     this.crouchSprites = new lime.animation.KeyframeAnimation();
     this.crouchSprites.looping = false;
-//    this.crouchSprites.delay = (obacht.options.player.general.crouchDuration) / 4;
     for (var k = 1; k <= 4; k++) {
         this.crouchSprites
             .addFrame(self.spritesheet.getFrame('character_creep_start_' + k + '.png'));
@@ -167,7 +166,6 @@ obacht.Player = function(currentGame, location) {
 
     this.standUpSprites = new lime.animation.KeyframeAnimation();
     this.standUpSprites.looping = false;
-//    this.standUpSprites.delay = (obacht.options.player.general.crouchDuration) / 4;
     for (var h = 21; h <= 24; h++) {
         this.standUpSprites
             .addFrame(self.spritesheet.getFrame('character_creep_end_' + h + '.png'));
