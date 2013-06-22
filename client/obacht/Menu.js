@@ -260,40 +260,36 @@ obacht.Menu.prototype = {
             .setFontFamily('OpenSansBold')
             .setFontColor('#fff')
             .setFontSize(45)
-            .setLineHeight(1.2)
-            .setPosition(610, 260)
+            .setPosition(920, 300)
             .setSize(600, 45)
             .setAlign('left')
-            .setAnchorPoint(0,0);
 
         var textObacht2 = new lime.Label()
             .setText('Bavarian exclamation for ‘Watch out!‘')
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(33)
-            .setLineHeight(1.2)
-            .setPosition(610, 340)
+            .setLineHeight(1.3)
+            .setPosition(870, 390)
             .setSize(500, 80)
             .setAlign('left')
-            .setAnchorPoint(0,0);
 
         var textObacht3 = new lime.Label()
             .setText('Fast reaction is required in this game to save your Hogi‘s life.')
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(33)
-            .setLineHeight(1.2)
-            .setPosition(610, 450)
-            .setSize(500, 80)
+            .setLineHeight(1.3)
+            .setPosition(845, 500)
+            .setSize(450, 80)
             .setAlign('left')
-            .setAnchorPoint(0,0);
 
 
 
         /** Hogi */
         var hogiSign = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('hogiSign.png'))
-            .setPosition(-50, 220).setSize(614, 500)
+            .setPosition(-30, 220).setSize(614, 500)
             .setAnchorPoint(0,0);
 
         /** Back Button - Door */
@@ -361,9 +357,9 @@ obacht.Menu.prototype = {
             .setFontFamily('OpenSansBold')
             .setFontColor('#fff')
             .setFontSize(33)
-            .setLineHeight(1.2)
-            .setPosition(870, 250)
-            .setSize(700, 33)
+            .setLineHeight(1.3)
+            .setPosition(865, 250)
+            .setSize(600, 33)
             .setAlign('left');
 
 
@@ -372,9 +368,9 @@ obacht.Menu.prototype = {
             .setFontFamily('OpenSansBold')
             .setFontColor('#fff')
             .setFontSize(33)
-            .setLineHeight(1.2)
-            .setPosition(870, 333)
-            .setSize(700, 33)
+            .setLineHeight(1.3)
+            .setPosition(865, 338)
+            .setSize(600, 33)
             .setAlign('left');
 
         var textManualGeneral2 = new lime.Label()
@@ -382,9 +378,9 @@ obacht.Menu.prototype = {
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(33)
-            .setLineHeight(1.2)
-            .setPosition(837, 410)
-            .setSize(630, 33)
+            .setLineHeight(1.3)
+            .setPosition(865, 410)
+            .setSize(600, 33)
             .setAlign('left');
 
         var textManualGeneral3 = new lime.Label()
@@ -392,15 +388,16 @@ obacht.Menu.prototype = {
             .setFontFamily('OpenSansRegular')
             .setFontColor('#fff')
             .setFontSize(33)
-            .setLineHeight(1.2)
-            .setPosition(855, 520)
-            .setSize(670, 33)
+            .setLineHeight(1.3)
+            .setPosition(865, 520)
+            .setSize(600, 33)
             .setAlign('left');
 
         /** Hogi */
         var hogi = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('hogi.png'))
-            .setPosition(145, 243).setSize(396, 475.2)
+            .setPosition(160, 256)
+            .setSize(396, 475.2)
             .setAnchorPoint(0,0);
 
         /** Back Button - Door */
@@ -1184,8 +1181,8 @@ obacht.Menu.prototype = {
         /** right hand **/
         var rightHand = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('handRightThrow.png'))
-            .setPosition(1002, 513)
-            .setSize(240, 414);
+            .setPosition(1001, 505)
+            .setSize(240, 430);
 
         /** throw obstacles **/
         var throwObstacles = new lime.Sprite()
@@ -1237,8 +1234,8 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(textAvoidCollision);
         menuLayer.appendChild(leftHand);
         menuLayer.appendChild(tab);
-        menuLayer.appendChild(rightHand);
         menuLayer.appendChild(throwObstacles);
+        menuLayer.appendChild(rightHand);
 
 
         // set current scene active
