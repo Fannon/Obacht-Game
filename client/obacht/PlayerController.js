@@ -52,7 +52,7 @@ obacht.PlayerController = function() {
     goog.events.listen(this.tapAreaTop, ['touchstart', 'mousedown'], function() {
         if (obacht.currentGame.ownPlayer.isJumping === false && obacht.currentGame.ownPlayer.isCrouching === false) {
             self.jump();
-            obacht.currentGame.ownPlayer.isJumping = true;
+//            obacht.currentGame.ownPlayer.isJumping = true;
         }
     });
 
@@ -66,7 +66,7 @@ obacht.PlayerController = function() {
     goog.events.listen(this.tapAreaBottom, ['touchstart', 'mousedown'], function() {
         if (obacht.currentGame.ownPlayer.isCrouching === false && obacht.currentGame.ownPlayer.isJumping === false) {
             self.crouch();
-            obacht.currentGame.ownPlayer.isCrouching = true;
+//            obacht.currentGame.ownPlayer.isCrouching = true;
         }
     });
 
@@ -74,7 +74,7 @@ obacht.PlayerController = function() {
     goog.events.listen(this.tapAreaPuffer, ['touchend', 'touchcancel', 'mouseup'], function() {
         if (obacht.currentGame.ownPlayer.isCrouching === true) {
             self.standUp();
-            obacht.currentGame.ownPlayer.isCrouching = false;
+//            obacht.currentGame.ownPlayer.isCrouching = false;
         }
     });
 

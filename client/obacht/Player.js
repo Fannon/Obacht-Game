@@ -194,7 +194,11 @@ obacht.Player = function(currentGame, location) {
         });
 
         goog.events.listen(this.crouchSprites, 'stop', function() {
-            self.stayDown();
+            if (self.isCrouching === false) {
+                self.standUp();
+            } else {
+                self.stayDown();
+            }
             self.crouchSprites.currentFrame_=-1; // work-around for lime.js-bug with keyframe animations.
         });
 
@@ -215,6 +219,7 @@ obacht.Player = function(currentGame, location) {
             obacht.playerController.events.subscribe('own_player_action', function(data) {
                 if (data.action === 'jump') {
                     self.jump();
+                    self.isJumping = true;
                 }
                 if (data.action === 'crouch') {
                     self.crouch();
@@ -302,9 +307,8 @@ obacht.Player.prototype = {
         'use strict';
 
         this.stayDownSprites.stop();
+        this.runSprites.stop();
         this.character.runAction(this.standUpSprites);
-
-//        this.character.runAction(this.standUpAnimation);
 
         if (this.location === 'bottom') {
             this.boundingBox.runAction(this.standUpAnimation);
