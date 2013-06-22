@@ -57,7 +57,9 @@ obacht.options = {
         generateTrapsMinInterval: 1000,
         generateTrapsMaxInterval: 4000,
 
-        distanceOffset: 0
+        distanceOffset: 0,
+
+        displayMessageTime: 500
     },
     world: {
         size: {

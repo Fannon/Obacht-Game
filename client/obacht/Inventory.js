@@ -83,6 +83,17 @@ obacht.Inventory = function(currentGame) {
         if (success) {
             log.debug('Won Bonus: Type: ' + type);
             self.fillTray(type);
+        } else {
+
+            var tooSlow = new lime.Sprite()
+                .setFill(obacht.spritesheet.getFrame('tooSlow.png'))
+                .setPosition(640, 360)
+                .setSize(obacht.spritesheet.getFrame('tooSlow.png').csize_.width * 2, obacht.spritesheet.getFrame('tooSlow.png').csize_.height * 2);
+
+            currentGame.layer.appendChild(tooSlow);
+            obacht.timeout(function() {
+                currentGame.layer.removeChild(tooSlow);
+            }, obacht.options.gameplay.displayMessageTime);
         }
     });
 
@@ -123,6 +134,16 @@ obacht.Inventory.prototype = {
                 return true;
             }
         }
+        var noSpaceLeft = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('noSpaceLeft.png'))
+            .setPosition(640, 360)
+            .setSize(obacht.spritesheet.getFrame('noSpaceLeft.png').csize_.width * 2, obacht.spritesheet.getFrame('noSpaceLeft.png').csize_.height * 2);
+
+        obacht.currentGame.layer.appendChild(noSpaceLeft);
+        obacht.timeout(function() {
+            obacht.currentGame.layer.removeChild(noSpaceLeft);
+        }, obacht.options.gameplay.displayMessageTime);
+
         log.debug('Could not fill Tray: No Space left.');
         return false;
     },
