@@ -47,7 +47,6 @@ obacht.Player = function(currentGame, location) {
     this.isJumping = false;
     this.isCrouching = false;
 
-
     if (this.location === 'bottom') {
         this.x = obacht.options.player.location.bottom.x;
         this.y = obacht.options.player.location.bottom.y;
@@ -134,8 +133,7 @@ obacht.Player = function(currentGame, location) {
         .setEasing(lime.animation.Easing.EASEIN);
 
     /** Sequences jump up and jump down animation */
-    this.jumpAnimation = new lime.animation
-        .Sequence(this.jumpUp, this.jumpDown);
+    this.jumpAnimation = new lime.animation.Sequence(this.jumpUp, this.jumpDown);
 
     // Adds targets to jump sequence. Has to be done like this when using multiple targets.
     this.jumpAnimation.addTarget(this.character);
@@ -144,10 +142,36 @@ obacht.Player = function(currentGame, location) {
         this.jumpAnimation.addTarget(this.boundingBox);
     }
 
+
+    /** Sprite animation for crouching (when character goes down) */
+    this.crouchSprites = new lime.animation.KeyframeAnimation();
+    this.crouchSprites.looping = false;
+//    this.crouchSprites.delay = (obacht.options.player.general.crouchDuration) / 4;
+    for (var k = 1; k <= 4; k++) {
+        this.crouchSprites
+            .addFrame(self.spritesheet.getFrame('character_creep_start_' + k + '.png'));
+    }
+
+    /** Sprite animation for crouching (while character is down) */
+    this.stayDownSprites = new lime.animation.KeyframeAnimation();
+    for (var l = 5; l <= 20; l++) {
+        this.stayDownSprites
+            .addFrame(self.spritesheet.getFrame('character_creep_' + l + '.png'));
+    }
+
     /** Crouch animation for bounding box */
     this.crouchAnimation = new lime.animation
         .ScaleTo(obacht.options.player.general.crouchWidth, obacht.options.player.general.crouchHeight)
         .setDuration(obacht.options.player.general.crouchDuration);
+
+
+    this.standUpSprites = new lime.animation.KeyframeAnimation();
+    this.standUpSprites.looping = false;
+//    this.standUpSprites.delay = (obacht.options.player.general.crouchDuration) / 4;
+    for (var h = 21; h <= 24; h++) {
+        this.standUpSprites
+            .addFrame(self.spritesheet.getFrame('character_creep_end_' + h + '.png'));
+    }
 
     /** Stand up animation for bounding box */
     this.standUpAnimation = new lime.animation
@@ -169,6 +193,16 @@ obacht.Player = function(currentGame, location) {
                 self.run();
                 self.jumpSprites.currentFrame_=-1; // work-around for lime.js-bug with keyframe animations.
             }
+        });
+
+        goog.events.listen(this.crouchSprites, 'stop', function() {
+            self.stayDown();
+            self.crouchSprites.currentFrame_=-1; // work-around for lime.js-bug with keyframe animations.
+        });
+
+        goog.events.listen(this.standUpSprites, 'stop', function() {
+            self.run();
+            self.standUpSprites.currentFrame_=-1; // work-around for lime.js-bug with keyframe animations.
         });
 
         /** Stop event on crouch animation for checking if state variable matches animations. @event */
@@ -249,11 +283,18 @@ obacht.Player.prototype = {
     crouch: function() {
         'use strict';
 
-        this.character.runAction(this.crouchAnimation);
+        this.runSprites.stop();
+        this.character.runAction(this.crouchSprites);
 
         if (this.location === 'bottom') {
             this.boundingBox.runAction(this.crouchAnimation);
         }
+    },
+
+    stayDown: function() {
+        'use strict';
+
+        this.character.runAction(this.stayDownSprites);
     },
 
     /**
@@ -262,7 +303,10 @@ obacht.Player.prototype = {
     standUp: function() {
         'use strict';
 
-        this.character.runAction(this.standUpAnimation);
+        this.stayDownSprites.stop();
+        this.character.runAction(this.standUpSprites);
+
+//        this.character.runAction(this.standUpAnimation);
 
         if (this.location === 'bottom') {
             this.boundingBox.runAction(this.standUpAnimation);
