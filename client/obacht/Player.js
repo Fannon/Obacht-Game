@@ -148,14 +148,14 @@ obacht.Player = function(currentGame, location) {
     this.crouchSprites.looping = false;
     for (var k = 1; k <= 4; k++) {
         this.crouchSprites
-            .addFrame(self.spritesheet.getFrame('character_creep_start_' + k + '.png'));
+            .addFrame(self.spritesheet.getFrame('character_creep_start_' + goog.string.padNumber(k, 4) + '.png'));
     }
 
     /** Sprite animation for crouching (while character is down) */
     this.stayDownSprites = new lime.animation.KeyframeAnimation();
     for (var l = 5; l <= 20; l++) {
         this.stayDownSprites
-            .addFrame(self.spritesheet.getFrame('character_creep_' + l + '.png'));
+            .addFrame(self.spritesheet.getFrame('character_creep_' + goog.string.padNumber(l, 4) + '.png'));
     }
 
     /** Crouch animation for bounding box */
@@ -166,9 +166,9 @@ obacht.Player = function(currentGame, location) {
 
     this.standUpSprites = new lime.animation.KeyframeAnimation();
     this.standUpSprites.looping = false;
-    for (var h = 21; h <= 24; h++) {
+    for (var h = 1; h <= 4; h++) {
         this.standUpSprites
-            .addFrame(self.spritesheet.getFrame('character_creep_end_' + h + '.png'));
+            .addFrame(self.spritesheet.getFrame('character_creep_end_' + goog.string.padNumber(h, 4) + '.png'));
     }
 
     /** Stand up animation for bounding box */
