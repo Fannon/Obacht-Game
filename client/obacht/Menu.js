@@ -65,7 +65,7 @@ obacht.Menu.prototype = {
         }
 
         this.resetMenu();
-        this.checkSound();
+//        this.checkSound();
 
         ///////////////////////////////
         // Layer Content             //
