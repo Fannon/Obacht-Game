@@ -166,7 +166,7 @@ obacht.Player = function(currentGame, location) {
 
     this.standUpSprites = new lime.animation.KeyframeAnimation();
     this.standUpSprites.looping = false;
-    for (var h = 1; h <= 4; h++) {
+    for (var h = 21; h <= 24; h++) {
         this.standUpSprites
             .addFrame(self.spritesheet.getFrame('character_creep_end_' + goog.string.padNumber(h, 4) + '.png'));
     }
