@@ -278,38 +278,12 @@ RoomManager.prototype.leaveRoom = function(socket) {
     "use strict";
 
     var pin = socket.pin;
-    var pid = socket.pid;
     var room = this.getRoom(pin);
 
     if (room) {
         log.debug('--> Player leaves Room #' + pin);
-
-        if (room.attributes.creatingPlayerId === pid) {
-            room.set({
-                creatingPlayerId: false,
-                creatingPlayerReactiontime: false,
-                creatingPlayerReady: false
-            });
-            log.debug('--> Creating Player left Room #' + pin);
-
-        } else if (room.attributes.joiningPlayerId === pid) {
-            room.set({
-                joiningPlayerId: false,
-                joiningPlayerReactiontime: false,
-                joiningPlayerReady: false
-            });
-            log.debug('--> Joining Player left Room #' + pin);
-        } else {
-            log.warn('!!! Player Left: Player has not been in Room! #' + pin, socket);
-        }
-
-        // If no Players left, remove the room
-        if (!room.attributes.creatingPlayerId) {
-            this.removeRoom(pin);
-        }
-
+        this.removeRoom(pin);
         return room.attributes;
-
     } else {
         return false;
     }
