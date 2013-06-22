@@ -68,9 +68,9 @@ obacht.start = function() {
     obacht.spritesheet = new lime.SpriteSheet('assets/gfx/globalSpritesheet.png', lime.ASSETS.globalSpritesheet.json, lime.parser.JSON);
 
     /** Global Sound */
-    obacht.menusound = new lime.audio.Audio('./assets/sounds/ms.ogg');
+    obacht.menusound = new lime.audio.Audio('assets/sounds/ms.ogg');
     obacht.menusound.loop_ = true;
-    obacht.gamesound = new lime.audio.Audio('./assets/sounds/gs.ogg');
+    obacht.gamesound = new lime.audio.Audio('assets/sounds/gs.ogg');
     obacht.gamesound.loop_ = true;
 
     /** Menu Instance */

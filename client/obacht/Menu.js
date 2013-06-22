@@ -58,7 +58,11 @@ obacht.Menu.prototype = {
         menuScene.appendChild(menuLayer);
         log.debug('mainMenuScene()');
 
-        obacht.sound = localStorage.getItem("sound");
+        if(localStorage.getItem("sound") === 'on') {
+            obacht.sound = true;
+        } else {
+            obacht.sound = false;
+        }
 
         this.resetMenu();
         this.checkSound();
@@ -157,7 +161,7 @@ obacht.Menu.prototype = {
             .setAlign('center');
 
         // If Sound was remembered to be off, change the Display to OFF
-        if (obacht.sound){
+        if (!obacht.sound){
             soundButton.setFill(obacht.spritesheet.getFrame('button_sound_off.png'));
         }
 
@@ -165,13 +169,13 @@ obacht.Menu.prototype = {
             if (obacht.sound){
                 soundButton.setFill(obacht.spritesheet.getFrame('button_sound_off.png'));
                 obacht.sound = false;
-                localStorage.setItem("sound", false);
+                localStorage.setItem("sound", "off");
                 obacht.menusound.stop();
                 log.debug('Sound OFF');
             } else {
                 soundButton.setFill(obacht.spritesheet.getFrame('button_sound.png'));
                 obacht.sound = true;
-                localStorage.setItem("sound", true);
+                localStorage.setItem("sound", "on");
                 obacht.menusound.play();
                 log.debug('Sound ON');
             }
