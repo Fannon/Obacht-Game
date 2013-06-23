@@ -70,7 +70,7 @@ obacht.Player = function(currentGame, location) {
     this.character = new lime.Sprite()
         .setFill(this.spritesheet.getFrame('character_0001.png'))
         .setPosition(this.x, this.y)
-        .setSize(obacht.options.player.general.width, obacht.options.player.general.height)
+        .setSize(this.spritesheet.getFrame('character_0001.png').csize_.width * 1.4, this.spritesheet.getFrame('character_0001.png').csize_.height * 1.4)
         .setAnchorPoint(0.5, 1)
         .setRotation(this.rotation)
         .setRenderer(obacht.renderer.player)
@@ -305,7 +305,6 @@ obacht.Player.prototype = {
         'use strict';
 
         this.character.runAction(this.runSprites);
-        this.character.setSize(205, 240);
     },
 
     /**
@@ -329,7 +328,6 @@ obacht.Player.prototype = {
         'use strict';
 
         this.runSprites.stop();
-        this.character.setSize(205*1.28, 240*1.02);
         this.character.runAction(this.crouchSprites);
         this.smoke.runAction(this.moveSmokeDown);
 

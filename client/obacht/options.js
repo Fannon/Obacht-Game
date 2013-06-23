@@ -98,21 +98,21 @@ obacht.options = {
             jumpHeight: 325,
             crouchDuration: 0.3,
             crouchWidth: 1.7,
-            crouchHeight: 0.4,
+            crouchHeight: 0.5,
             maxHealth: 3,
             anchorx: 0,
             anchory: 1
         },
         boundingBoxes: [
-            {x: 0, y: 20, width: 110, height: 190}
+            {x: -30, y: 20, width: 110, height: 190}
         ],
         location: {
             bottom: {
-                x: 135,
+                x: 155,
                 y: 560
             },
             top: {
-                x: 1145,
+                x: 1125,
                 y: 160
             }
         },
