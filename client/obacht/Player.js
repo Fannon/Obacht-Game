@@ -86,7 +86,7 @@ obacht.Player = function(currentGame, location) {
         .setRenderer(obacht.renderer.player)
         .setQuality(obacht.options.graphics.characterQuality);
 
-    this.character.appendChild(this.smoke);
+
 
     /** Character Bounding Box (Square) */
     if (this.location === 'bottom') {
@@ -245,6 +245,11 @@ obacht.Player = function(currentGame, location) {
             self.standUpSprites.currentFrame_=-1; // work-around for lime.js-bug with keyframe animations.
         });
 
+        goog.events.listen(this.smokeSprites, 'stop', function() {
+            self.character.removeChild(self.smoke);
+        });
+
+
 
         if (this.location === 'bottom') {
 
@@ -370,6 +375,8 @@ obacht.Player.prototype = {
     collide: function() {
         'use strict';
         var self = this;
+
+        this.character.appendChild(this.smoke);
 
         this.smokeSprites.currentFrame_ = -1;
         lime.animation.actionManager.actions[goog.getUid(self.smokeSprites.targets[0])] = {};
