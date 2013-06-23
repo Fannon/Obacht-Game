@@ -134,12 +134,12 @@ obacht.Player = function(currentGame, location) {
     }
 
     /** Crouch animation for bounding box */
-    this.crouchAnimation = new lime.animation
+    this.crouchAnimationBB = new lime.animation
         .ScaleTo(obacht.options.player.general.crouchWidth, obacht.options.player.general.crouchHeight)
         .setDuration(obacht.options.player.general.crouchDuration);
 
     /** Stand up animation for bounding box */
-    this.standUpAnimation = new lime.animation
+    this.standUpAnimationBB = new lime.animation
         .ScaleTo(1, 1)
         .setDuration(obacht.options.player.general.crouchDuration);
 
@@ -245,12 +245,6 @@ obacht.Player = function(currentGame, location) {
             self.standUpSprites.currentFrame_=-1; // work-around for lime.js-bug with keyframe animations.
         });
 
-        /** Stop event on crouch animation for checking if state variable matches animations. @event */
-        goog.events.listen(this.crouchAnimation, 'stop', function() {
-            if(self.isCrouching === false) {
-                self.standUp();
-            }
-        });
 
         if (this.location === 'bottom') {
 
@@ -304,7 +298,9 @@ obacht.Player.prototype = {
      */
     run: function() {
         'use strict';
+
         this.character.runAction(this.runSprites);
+        this.character.setSize(205, 240);
     },
 
     /**
@@ -328,11 +324,12 @@ obacht.Player.prototype = {
         'use strict';
 
         this.runSprites.stop();
+        this.character.setSize(205*1.28, 240*1.02);
         this.character.runAction(this.crouchSprites);
         this.smoke.runAction(this.moveSmokeDown);
 
         if (this.location === 'bottom') {
-            this.boundingBox.runAction(this.crouchAnimation);
+            this.boundingBox.runAction(this.crouchAnimationBB);
         }
     },
 
@@ -361,7 +358,7 @@ obacht.Player.prototype = {
         this.smoke.runAction(this.moveSmokeUp);
 
         if (this.location === 'bottom') {
-            this.boundingBox.runAction(this.standUpAnimation);
+            this.boundingBox.runAction(this.standUpAnimationBB);
         }
     },
 
