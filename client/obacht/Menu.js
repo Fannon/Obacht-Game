@@ -80,22 +80,23 @@ obacht.Menu.prototype = {
         /** Character */
         var character = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('character_right.png'))
-            .setPosition(1055, 340)
-            .setSize(450, 536);
+            .setPosition(1010, 360)
+            .setSize(540, 643);
 
         /** Play Button */
         var playButton = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('play.png'))
-            .setPosition(640, 338)
-            .setSize(368, 176);
+            .setPosition(640, 390)
+            .setSize(408, 216);
+
 
         /** Play Button Label */
         var playLabel = new lime.Label()
             .setText('PLAY')
             .setFontColor('#fff')
-            .setFontSize(90)
-            .setPosition(640, 338)
-            .setSize(400, 90)
+            .setFontSize(100)
+            .setPosition(640, 390)
+            .setSize(400, 100)
             .setAlign('center');
 
         /** On Play Button -> New Game Scene @event */
@@ -110,7 +111,8 @@ obacht.Menu.prototype = {
         /** Help Button */
         var helpButton = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('button_help.png'))
-            .setPosition(322, 540)
+            .setPosition(170, 440) //without Sound
+            //.setPosition(120, 320) //with Sound
             .setSize(174, 160);
 
         /** Help Button Label */
@@ -118,93 +120,72 @@ obacht.Menu.prototype = {
             .setText('Help')
             .setFontColor('#fff')
             .setFontSize(45)
-            .setPosition(322, 650)
-            .setSize(180, 45)
-            .setAlign('center');
+            .setPosition(340, 440) //without Sound
+            //.setPosition(290, 320) //with Sound
+            .setSize(140, 45)
+            .setAlign('left');
 
         /** Help Button Event -> Help Scene @event */
         goog.events.listen(helpButton, ['touchstart', 'mousedown'], function() {
             self.obachtScene();
         });
 
-        /** Info Button */
+        /** Credits Button */
         var infoButton = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('button_info.png'))
-            .setPosition(534, 540)
+            .setPosition(300, 580) //without Sound
+            //.setPosition(120, 460) //with Sound
             .setSize(174, 160);
 
-        /** Info Button Label */
+        /** Credits Button Label */
         var infoLabel = new lime.Label()
             .setText('CREDITS')
             .setFontColor('#fff')
             .setFontSize(45)
-            .setPosition(534, 650)
-            .setSize(170, 45)
-            .setAlign('center');
+            .setPosition(475, 580) //without Sound
+            //.setPosition(290, 460) //with Sound
+            .setSize(140, 45)
+            .setAlign('left');
 
         goog.events.listen(infoButton, ['touchstart', 'mousedown'], function() {
             self.creditsScene();
         });
 
-        /** Sound Button */
-        var soundButton = new lime.Sprite()
-            .setFill(obacht.spritesheet.getFrame('button_sound.png'))
-            .setPosition(746, 540)
-            .setSize(174, 160);
+        // /** Sound Button */
+        // var soundButton = new lime.Sprite()
+            // .setFill(obacht.spritesheet.getFrame('button_sound.png'))
+            // .setPosition(120, 600)
+            // .setSize(174, 160);
+// 
+        // var soundLabel = new lime.Label()
+            // .setText('SOUND')
+            // .setFontColor('#fff')
+            // .setFontSize(45)
+            // .setPosition(290, 600)
+            // .setSize(140, 45)
+            // .setAlign('left');
+// 
+        // // If Sound was remembered to be off, change the Display to OFF
+        // if (!obacht.sound){
+            // soundButton.setFill(obacht.spritesheet.getFrame('button_sound_off.png'));
+        // }
+// 
+        // goog.events.listen(soundButton, ['touchstart', 'mousedown'], function() {
+            // if (obacht.sound){
+                // soundButton.setFill(obacht.spritesheet.getFrame('button_sound_off.png'));
+                // obacht.sound = false;
+                // localStorage.setItem("sound", "off");
+                // obacht.menusound.stop();
+                // log.debug('Sound OFF');
+            // } else {
+                // soundButton.setFill(obacht.spritesheet.getFrame('button_sound.png'));
+                // obacht.sound = true;
+                // localStorage.setItem("sound", "on");
+                // obacht.menusound.play();
+                // log.debug('Sound ON');
+            // }
+        // });
 
-        var soundLabel = new lime.Label()
-            .setText('SOUND')
-            .setFontColor('#fff')
-            .setFontSize(45)
-            .setPosition(746, 650)
-            .setSize(170, 45)
-            .setAlign('center');
-
-        // If Sound was remembered to be off, change the Display to OFF
-        if (!obacht.sound){
-            soundButton.setFill(obacht.spritesheet.getFrame('button_sound_off.png'));
-        }
-
-        goog.events.listen(soundButton, ['touchstart', 'mousedown'], function() {
-            if (obacht.sound){
-                soundButton.setFill(obacht.spritesheet.getFrame('button_sound_off.png'));
-                obacht.sound = false;
-                localStorage.setItem("sound", "off");
-                obacht.menusound.stop();
-                log.debug('Sound OFF');
-            } else {
-                soundButton.setFill(obacht.spritesheet.getFrame('button_sound.png'));
-                obacht.sound = true;
-                localStorage.setItem("sound", "on");
-                obacht.menusound.play();
-                log.debug('Sound ON');
-            }
-        });
-
-        /** Quit Button */
-        var quitButton = new lime.Sprite()
-            .setFill(obacht.spritesheet.getFrame('button_quit.png'))
-            .setPosition(958, 540)
-            .setSize(174, 160);
-
-        /** Quit Button Text */
-        var quitLabel = new lime.Label()
-            .setText('QUIT')
-            .setFontColor('#fff')
-            .setFontSize(45)
-            .setPosition(958, 650)
-            .setSize(170, 45)
-            .setAlign('center');
-
-        goog.events.listen(quitButton, ['touchstart', 'mousedown'], function() {
-            log.debug('Exit App Button clicked.');
-            if (navigator.app) {
-                navigator.app.exitApp();
-            } else if(navigator.device) {
-                navigator.device.exitApp();
-            }
-
-        });
 
 
         ///////////////////////////////
@@ -219,14 +200,8 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(helpLabel);
         menuLayer.appendChild(infoButton);
         menuLayer.appendChild(infoLabel);
-        menuLayer.appendChild(soundButton);
-        menuLayer.appendChild(soundLabel);
-
-
-        if (!obacht.device.IPHONE && !obacht.device.IPAD) {
-            menuLayer.appendChild(quitButton);
-            menuLayer.appendChild(quitLabel);
-        }
+        //menuLayer.appendChild(soundButton);
+        //menuLayer.appendChild(soundLabel);
 
         // set current scene active
         obacht.director.replaceScene(menuScene);
