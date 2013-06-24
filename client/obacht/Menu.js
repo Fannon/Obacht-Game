@@ -111,7 +111,7 @@ obacht.Menu.prototype = {
         /** Help Button */
         var helpButton = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('button_help.png'))
-            .setPosition(170, 440) //without Sound
+            .setPosition(170, 460) //without Sound
             //.setPosition(120, 320) //with Sound
             .setSize(174, 160);
 
@@ -120,7 +120,7 @@ obacht.Menu.prototype = {
             .setText('Help')
             .setFontColor('#fff')
             .setFontSize(45)
-            .setPosition(340, 440) //without Sound
+            .setPosition(340, 460) //without Sound
             //.setPosition(290, 320) //with Sound
             .setSize(140, 45)
             .setAlign('left');
@@ -133,7 +133,7 @@ obacht.Menu.prototype = {
         /** Credits Button */
         var infoButton = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('button_info.png'))
-            .setPosition(300, 580) //without Sound
+            .setPosition(300, 600) //without Sound
             //.setPosition(120, 460) //with Sound
             .setSize(174, 160);
 
@@ -142,7 +142,7 @@ obacht.Menu.prototype = {
             .setText('CREDITS')
             .setFontColor('#fff')
             .setFontSize(45)
-            .setPosition(475, 580) //without Sound
+            .setPosition(475, 600) //without Sound
             //.setPosition(290, 460) //with Sound
             .setSize(140, 45)
             .setAlign('left');

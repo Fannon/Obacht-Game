@@ -98,10 +98,11 @@ obacht.Game = function() {
 
     // Draw Countdown Layer
     var countDownLayerBackground = new lime.Sprite()
-        .setFill('assets/gfx/bg_clean.jpg')
+        .setFill(this.spritesheet.getFrame('preview.jpg'))
         .setPosition(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
         .setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
-
+        
+    /// 3 ///
     this.countdownStatus = new lime.Sprite()
         .setFill(obacht.spritesheet.getFrame('three.png'))
         .setPosition(640, 360)
@@ -142,7 +143,7 @@ obacht.Game = function() {
 
     /// Obacht! ///
     obacht.timeout(function() {
-
+            
         /** Time the game started, used for calculation current Distance */
         self.timer = new Date();
 
