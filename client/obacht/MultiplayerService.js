@@ -67,11 +67,12 @@ obacht.MultiplayerService = function(serverUrl) {
 
     /**
      * Player is connected, else print out the error
+     * @event
      */
     this.socket.on('connected', function (data) {
         self.connected = true;
         if (!data.error) {
-            log.debug('Successful Connected with Transport: ' + self.socket.socket.transport.name);
+            log.info('Successful Connected with Transport: ' + self.socket.socket.transport.name);
             self.pid = data.pid;
         } else {
             log.error('Connection Error: ' + data.error);
@@ -93,6 +94,7 @@ obacht.MultiplayerService = function(serverUrl) {
 
     /**
      * Print out errors
+     * @event
      */
     this.socket.on('error', function(data) {
         if (data.type === 'warning') {
@@ -107,6 +109,7 @@ obacht.MultiplayerService = function(serverUrl) {
 
     /**
      * Print out Servermessages
+     * @event
      */
     this.socket.on('message', function(data) {
         log.debug('Incoming message:' + data.msg);
@@ -117,6 +120,7 @@ obacht.MultiplayerService = function(serverUrl) {
      * Receive an invite for a room
      * If the received pin = 0 a new random room will be created
      * Else join the the room with the received pin
+     * @event
      */
     this.socket.on('room_invite', function (data) {
 
@@ -144,8 +148,8 @@ obacht.MultiplayerService = function(serverUrl) {
     });
 
     /**
-     * No Match was found
-     * Create a new room
+     * No Match was found -> Create a new room
+     * @event
      */
     this.socket.on('no_match_found', function () {
         log.debug('No Match found.');
@@ -155,6 +159,7 @@ obacht.MultiplayerService = function(serverUrl) {
 
     /**
      * Game is ready
+     * @event
      */
     this.socket.on('game_ready', function () {
         log.debug('Game is ready! ' + self.roomDetail.creatingPlayerId + ' vs. ' + self.roomDetail.creatingPlayerId);
@@ -180,6 +185,7 @@ obacht.MultiplayerService = function(serverUrl) {
 
     /**
      * Player took an action
+     * @event
      */
     this.socket.on('player_action', function (data) {
         data.data.distance += obacht.options.gameplay.distanceOffset;
@@ -188,6 +194,7 @@ obacht.MultiplayerService = function(serverUrl) {
 
     /**
      * Players Health Status (from both Players)
+     * @event
      */
     this.socket.on('player_health', function (data) {
         self.events.publish('player_health', data);
@@ -195,6 +202,7 @@ obacht.MultiplayerService = function(serverUrl) {
 
     /**
      * Receives a bonus to show it within the reactionbox
+     * @event
      */
     this.socket.on('bonus', function (data) {
         //log.debug('bonus: ' + data.type);
@@ -203,6 +211,7 @@ obacht.MultiplayerService = function(serverUrl) {
 
     /**
      * Sorts out if the player gets the bonus
+     * @event
      */
     this.socket.on('receive_bonus', function (data) {
         if (data.winner_pid === self.pid) {
@@ -216,6 +225,7 @@ obacht.MultiplayerService = function(serverUrl) {
 
     /**
      * Receives a trap
+     * @event
      */
     this.socket.on('trap', function (data) {
         //log.debug('Trap received: ' + data.type);
@@ -231,6 +241,7 @@ obacht.MultiplayerService = function(serverUrl) {
 
     /**
      * Shows that the game is over and who won the game
+     * @event
      */
     this.socket.on('game_over', function (data) {
         log.debug('Game over! -> ' + data.reason);
@@ -244,6 +255,7 @@ obacht.MultiplayerService = function(serverUrl) {
 
     /**
      * Get room data for debugging
+     * @event
      */
     this.socket.on('get_rooms', function (data) {
         log.debug('Getting Rooms Data (Debugging)');
@@ -252,6 +264,7 @@ obacht.MultiplayerService = function(serverUrl) {
 
     /**
      * Socket.io Disconnect Event
+     * @event
      */
     this.socket.on('disconnect', function() {
         self.connected = false;

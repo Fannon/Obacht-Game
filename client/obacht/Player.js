@@ -84,7 +84,6 @@ obacht.Player = function(currentGame, location) {
         .setRenderer(obacht.renderer.player)
         .setQuality(obacht.options.graphics.characterQuality);
 
-
     /** Character Bounding Box (Square) */
     if (this.location === 'bottom') {
 
@@ -372,13 +371,12 @@ obacht.Player.prototype = {
         'use strict';
         var self = this;
 
-        log.debug(this.location + ' Player Kollusiom!');
-
         this.character.appendChild(this.smoke);
+
+        log.debug(this.location + ' Player Kollusiom!');
 
         this.smokeSprites.currentFrame_ = -1;
         lime.animation.actionManager.actions[goog.getUid(self.smokeSprites.targets[0])] = {};
-//        this.smoke.setPosition(this.character.getPosition().x, this.character.getPosition().y);
         this.smokeSprites.play();
     },
 

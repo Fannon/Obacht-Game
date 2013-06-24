@@ -37,9 +37,9 @@ obacht.start = function() {
 
     log = new obacht.Logger(obacht.options.debug.logLevel);
 
-    if (obacht.options.general.mainMenuOnBlur) {
+    if (obacht.options.debug.mainMenuOnBlur) {
 
-        window.addEventListener('pagehide', function() {
+        window.onblur = function() {
             log.warn('Window lost Focus! Returning to MainMensu');
             if (obacht.mp.pid) {
                 obacht.mp.leaveRoom();
@@ -48,7 +48,8 @@ obacht.start = function() {
                 obacht.cleanUp();
             }
             obacht.menu.mainMenuScene();
-        });
+        };
+
     }
 
     //////////////////////////////
