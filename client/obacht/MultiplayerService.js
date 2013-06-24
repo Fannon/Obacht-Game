@@ -187,6 +187,13 @@ obacht.MultiplayerService = function(serverUrl) {
     });
 
     /**
+     * Players Health Status (from both Players)
+     */
+    this.socket.on('player_health', function (data) {
+        self.events.publish('player_health', data);
+    });
+
+    /**
      * Receives a bonus to show it within the reactionbox
      */
     this.socket.on('bonus', function (data) {

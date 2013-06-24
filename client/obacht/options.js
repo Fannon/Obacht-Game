@@ -159,6 +159,7 @@ obacht.options = {
     },
     "server": {
         "url": "http://obacht.informatik.hs-augsburg.de:8080/",
+//      "url": "http://localhost:8080/",
 //      "url": "http://192.168.0.100:8080/",
 //        "url": "http://141.82.173.220:8080",
         connectionTimeout: 7000

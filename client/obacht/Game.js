@@ -150,8 +150,6 @@ obacht.Game = function() {
         self.ownWorld.spin();
         self.enemyWorld.spin();
 
-        // Start check Sound
-//        self.checkSound();
 
         self.setCountdownStatus('obacht_start');
 
@@ -166,10 +164,7 @@ obacht.Game = function() {
         self.countdownLayer.removeChild(countDownLayerBackground);
 
         obacht.timeout(function() {
-
-            // Remove CountDown Layer from Game Sene
             obacht.gameScene.removeChild(self.countdownLayer);
-
         }, obacht.options.gameplay.countdownInterval);
 
     }, obacht.options.gameplay.countdownInterval * 3);
@@ -183,8 +178,8 @@ obacht.Game = function() {
         self.bonusButton = new obacht.Bonus(self, type);
     });
 
-    obacht.mp.events.subscribe('room_detail', function() {
-        self.updateHealthStatus();
+    obacht.mp.events.subscribe('player_health', function(data) {
+        self.updateHealthStatus(data);
     });
 
 };
@@ -287,31 +282,30 @@ obacht.Game.prototype = {
             obacht.cleanUp();
             obacht.menu.mainMenuScene();
         });
-
-        /*unschedule Sound check*/
-        /*obacht.gamesound.stop();
-        lime.scheduleManager.unschedule(function(dt){
-        },obacht.gamesound,400);*/
     },
 
     /**
      * Updates current Healthstatus for both Players
      */
-    updateHealthStatus: function() {
+    updateHealthStatus: function(data) {
         "use strict";
 
-        if (obacht.mp.roomDetail.creatingPlayerHealth === 0 || obacht.mp.roomDetail.joiningPlayerHealth === 0) {
+        if (data.creatingPlayerHealth === 0 || data.joiningPlayerHealth === 0) {
             return false;
         }
 
-        if (obacht.mp.pid === obacht.mp.roomDetail.creatingPlayerId) {
-            this.ownPlayer.health = obacht.mp.roomDetail.creatingPlayerHealth;
-            this.ownLifestatus.setFill(obacht.spritesheet.getFrame('ownLifestatus_' + obacht.mp.roomDetail.creatingPlayerHealth + '.png'));
-            this.enemyLifestatus.setFill(obacht.spritesheet.getFrame('enemyLifestatus_' + obacht.mp.roomDetail.joiningPlayerHealth + '.png'));
+        if (data.creatingPlayerId === obacht.mp.pid) {
+            this.ownPlayer.health = data.creatingPlayerHealth;
+            this.ownLifestatus.setFill(obacht.spritesheet.getFrame('ownLifestatus_' + data.creatingPlayerHealth + '.png'));
+            this.enemyLifestatus.setFill(obacht.spritesheet.getFrame('enemyLifestatus_' + data.joiningPlayerHealth + '.png'));
         } else {
             this.ownPlayer.health = obacht.mp.roomDetail.joiningPlayerHealth;
-            this.ownLifestatus.setFill(obacht.spritesheet.getFrame('ownLifestatus_' + obacht.mp.roomDetail.joiningPlayerHealth + '.png'));
-            this.enemyLifestatus.setFill(obacht.spritesheet.getFrame('enemyLifestatus_' + obacht.mp.roomDetail.creatingPlayerHealth + '.png'));
+            this.ownLifestatus.setFill(obacht.spritesheet.getFrame('ownLifestatus_' + data.joiningPlayerHealth + '.png'));
+            this.enemyLifestatus.setFill(obacht.spritesheet.getFrame('enemyLifestatus_' + data.creatingPlayerHealth + '.png'));
+        }
+
+        if (data.lostHealth !== obacht.mp.pid) {
+            this.enemyPlayer.collide();
         }
 
         return true;

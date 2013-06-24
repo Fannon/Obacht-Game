@@ -212,7 +212,13 @@ RoomManager.prototype.playerStatus = function(socket, player_status) {
         return false;
     }
 
-    return room.attributes;
+    return {
+        creatingPlayerId: room.attributes.creatingPlayerId,
+        creatingPlayerHealth: room.attributes.creatingPlayerHealth,
+        joiningPlayerId: room.attributes.joiningPlayerId,
+        joiningPlayerHealth: room.attributes.joiningPlayerHealth,
+        lostHealth: pid
+    };
 };
 
 

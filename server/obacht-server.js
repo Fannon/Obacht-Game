@@ -211,10 +211,11 @@ obacht.server.io.sockets.on('connection', function(socket) {
      */
     socket.on('player_status', function(player_status) {
         if (socket.pin) {
-            obacht.server.rooms.playerStatus(socket, player_status);
+            var player_health = obacht.server.rooms.playerStatus(socket, player_status);
             if (player_status.health < 1) {
                 obacht.server.gameoverHelper(socket, 'player_dead');
             }
+            socket.broadcast.to(socket.pin).emit('player_health', player_health);
         } else {
             log.warn('!!! Cannot send Player Status while not connected to a Game!', socket);
         }

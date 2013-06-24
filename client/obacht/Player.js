@@ -60,8 +60,6 @@ obacht.Player = function(currentGame, location) {
         this.jumpHeight = obacht.options.player.general.jumpHeight;
     }
 
-
-
     /////////////
     /* SPRITES */
     /////////////
@@ -81,11 +79,10 @@ obacht.Player = function(currentGame, location) {
     /** Smoke Sprite */
     this.smoke = new lime.Sprite()
         .setAnchorPoint(0.5, 1)
-        .setPosition(10, -10)
+        .setPosition(0, 0)
         .setSize(obacht.spritesheet.getFrame('smoke_0001.png').csize_.width * 2, obacht.spritesheet.getFrame('smoke_0001.png').csize_.height * 2)
         .setRenderer(obacht.renderer.player)
         .setQuality(obacht.options.graphics.characterQuality);
-
 
 
     /** Character Bounding Box (Square) */
@@ -268,6 +265,7 @@ obacht.Player = function(currentGame, location) {
                     self.isCrouching = false;
                 }
             });
+
         } else {
 
             /** Sets up event subscription for enemy player. @event */
@@ -374,10 +372,13 @@ obacht.Player.prototype = {
         'use strict';
         var self = this;
 
+        log.debug(this.location + ' Player Kollusiom!');
+
         this.character.appendChild(this.smoke);
 
         this.smokeSprites.currentFrame_ = -1;
         lime.animation.actionManager.actions[goog.getUid(self.smokeSprites.targets[0])] = {};
+//        this.smoke.setPosition(this.character.getPosition().x, this.character.getPosition().y);
         this.smokeSprites.play();
     },
 
