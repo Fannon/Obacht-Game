@@ -68,7 +68,7 @@ obacht.Player = function(currentGame, location) {
     this.character = new lime.Sprite()
         .setFill(this.spritesheet.getFrame('character_0001.png'))
         .setPosition(this.x, this.y)
-        .setSize(this.spritesheet.getFrame('character_0001.png').csize_.width * 1.4, this.spritesheet.getFrame('character_0001.png').csize_.height * 1.4)
+        .setSize(this.spritesheet.getFrame('character_0001.png').csize_.width * 1.988, this.spritesheet.getFrame('character_0001.png').csize_.height * 1.988)
         .setAnchorPoint(0.5, 1)
         .setRotation(this.rotation)
         .setRenderer(obacht.renderer.player)
@@ -110,13 +110,15 @@ obacht.Player = function(currentGame, location) {
     this.jumpUp = new lime.animation
         .MoveBy(0, this.jumpHeight)
         .setDuration(obacht.options.player.general.jumpUpDuration)
-        .setEasing(lime.animation.Easing.EASEOUT);
+        .setEasing(lime.animation.Easing.EASEOUT)
+        .enableOptimizations();
 
     /** Jump down animation */
     this.jumpDown = this.jumpUp
         .reverse()
         .setDuration(obacht.options.player.general.jumpDownDuration)
-        .setEasing(lime.animation.Easing.EASEIN);
+        .setEasing(lime.animation.Easing.EASEIN)
+        .enableOptimizations();
 
     /** Sequences jump up and jump down animation */
     this.jumpAnimation = new lime.animation.Sequence(this.jumpUp, this.jumpDown);
@@ -132,22 +134,26 @@ obacht.Player = function(currentGame, location) {
     /** Crouch animation for bounding box */
     this.crouchAnimationBB = new lime.animation
         .ScaleTo(obacht.options.player.general.crouchWidth, obacht.options.player.general.crouchHeight)
-        .setDuration(obacht.options.player.general.crouchDuration);
+        .setDuration(obacht.options.player.general.crouchDuration)
+        .enableOptimizations();
 
     /** Stand up animation for bounding box */
     this.standUpAnimationBB = new lime.animation
         .ScaleTo(1, 1)
-        .setDuration(obacht.options.player.general.crouchDuration);
+        .setDuration(obacht.options.player.general.crouchDuration)
+        .enableOptimizations();
 
     /** Moves smoke down while crouching */
     this.moveSmokeDown = new lime.animation
         .MoveTo(obacht.options.player.smoke.moveX, obacht.options.player.smoke.moveY)
-        .setDuration(obacht.options.player.crouchDuration);
+        .setDuration(obacht.options.player.crouchDuration)
+        .enableOptimizations();
 
     /** Moves smoke up again */
     this.moveSmokeUp = new lime.animation
         .MoveTo(0, 0)
-        .setDuration(obacht.options.player.crouchDuration);
+        .setDuration(obacht.options.player.crouchDuration)
+        .enableOptimizations();
 
 
 
@@ -201,7 +207,7 @@ obacht.Player = function(currentGame, location) {
     this.smokeSprites = new lime.animation.KeyframeAnimation();
     this.smokeSprites.delay = obacht.options.player.smoke.frameFrequency;
     this.smokeSprites.looping = false;
-    for (var g = 1; g <= 10; g++) {
+    for (var g = 1; g <= 5; g++) {
         this.smokeSprites
             .addFrame(obacht.spritesheet.getFrame('smoke_' + goog.string.padNumber(g, 4) + '.png'));
     }

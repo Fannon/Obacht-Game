@@ -11,14 +11,14 @@ goog.provide('obacht.options');
  */
 obacht.options = {
     debug: {
-        logLevel: 0,
+        logLevel: 5,
         remoteDebugging: false,
         fastStart: false,
-        displayFps: true,
-        showBoundingBoxes: true,
+        displayFps: false,
+        showBoundingBoxes: false,
         invincible: false,
-        avgFramerate: true,
-        mainMenuOnBlur: false
+        avgFramerate: false,
+        mainMenuOnBlur: true
     },
     debug_production: {
         logLevel: 5,
@@ -127,7 +127,7 @@ obacht.options = {
         smoke: {
             moveX: 20,
             moveY: 70,
-            frameFrequency: 0.05
+            frameFrequency: 0.1
         }
     },
     playerController: {

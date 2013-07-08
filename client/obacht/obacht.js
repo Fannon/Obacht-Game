@@ -82,7 +82,8 @@ obacht.start = function() {
 
     /** LimeJs Director Instance */
     obacht.director = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
-    obacht.director.makeMobileWebAppCapable();
+    //öffnet POP UP um Game als App auf Screen zu speichern... 
+    //obacht.director.makeMobileWebAppCapable();
     obacht.director.setDisplayFPS(obacht.options.debug.displayFps);
 
     /** Obacht Renderer */

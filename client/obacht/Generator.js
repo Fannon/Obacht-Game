@@ -2,8 +2,6 @@
 
 goog.provide('obacht.Generator');
 
-goog.require('obacht.Trap');
-
 /**
  * Trap and Bonus Generator
  *

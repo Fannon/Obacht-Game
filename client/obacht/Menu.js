@@ -82,6 +82,12 @@ obacht.Menu.prototype = {
             .setFill(obacht.spritesheet.getFrame('character_right.png'))
             .setPosition(1010, 360)
             .setSize(540, 643);
+            
+        /** Wifi Hint */
+        var wifiHint = new lime.Sprite()
+            .setFill(obacht.spritesheet.getFrame('internet_hint.png'))
+            .setPosition(950, 600) //without Sound
+            .setSize(291, 197);
 
         /** Play Button */
         var playButton = new lime.Sprite()
@@ -111,7 +117,7 @@ obacht.Menu.prototype = {
         /** Help Button */
         var helpButton = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('button_help.png'))
-            .setPosition(170, 460) //without Sound
+            .setPosition(170, 470) //without Sound
             //.setPosition(120, 320) //with Sound
             .setSize(174, 160);
 
@@ -120,7 +126,7 @@ obacht.Menu.prototype = {
             .setText('Help')
             .setFontColor('#fff')
             .setFontSize(45)
-            .setPosition(340, 460) //without Sound
+            .setPosition(340, 470) //without Sound
             //.setPosition(290, 320) //with Sound
             .setSize(140, 45)
             .setAlign('left');
@@ -133,7 +139,7 @@ obacht.Menu.prototype = {
         /** Credits Button */
         var infoButton = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('button_info.png'))
-            .setPosition(300, 600) //without Sound
+            .setPosition(300, 610) //without Sound
             //.setPosition(120, 460) //with Sound
             .setSize(174, 160);
 
@@ -142,7 +148,7 @@ obacht.Menu.prototype = {
             .setText('CREDITS')
             .setFontColor('#fff')
             .setFontSize(45)
-            .setPosition(475, 600) //without Sound
+            .setPosition(475, 610) //without Sound
             //.setPosition(290, 460) //with Sound
             .setSize(140, 45)
             .setAlign('left');
@@ -202,6 +208,7 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(infoLabel);
         //menuLayer.appendChild(soundButton);
         //menuLayer.appendChild(soundLabel);
+        menuLayer.appendChild(wifiHint);
 
         // set current scene active
         obacht.director.replaceScene(menuScene);

@@ -11,7 +11,6 @@ goog.require('obacht.TrapManager');
 goog.require('obacht.Player');
 goog.require('obacht.Generator');
 goog.require('obacht.Bonus');
-goog.require('obacht.Trap');
 goog.require('obacht.Inventory');
 
 //Spritesheet Requirements
@@ -101,7 +100,7 @@ obacht.Game = function() {
         .setFill(this.spritesheet.getFrame('preview.jpg'))
         .setPosition(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
         .setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
-        
+
     /// 3 ///
     this.countdownStatus = new lime.Sprite()
         .setFill(obacht.spritesheet.getFrame('three.png'))
@@ -143,7 +142,7 @@ obacht.Game = function() {
 
     /// Obacht! ///
     obacht.timeout(function() {
-            
+
         /** Time the game started, used for calculation current Distance */
         self.timer = new Date();
 
