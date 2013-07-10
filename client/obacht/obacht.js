@@ -12,8 +12,11 @@ goog.require('lime.Renderer.CANVAS');
 
 //Spritesheets Requirements
 goog.require('lime.parser.JSON');
-goog.require('lime.ASSETS.globalSpritesheet.json');
 goog.require('lime.SpriteSheet');
+goog.require('lime.ASSETS.globalSpritesheet.json');
+goog.require('lime.ASSETS.waterSpritesheet.json');
+goog.require('lime.ASSETS.desertSpritesheet.json');
+goog.require('lime.ASSETS.meadowSpritesheet.json');
 
 // Obacht Requirements
 goog.require('obacht.options');
@@ -68,6 +71,12 @@ obacht.start = function() {
     /** Global Spritesheet */
     obacht.spritesheet = new lime.SpriteSheet('assets/gfx/globalSpritesheet.png', lime.ASSETS.globalSpritesheet.json, lime.parser.JSON);
 
+    /** Preloades Themes Spritesheets */
+    obacht.themeSpritesheets = [];
+    obacht.themeSpritesheets.desert = new lime.SpriteSheet('assets/themes/desert/desertSpritesheet.png', lime.ASSETS.desertSpritesheet.json, lime.parser.JSON);
+    obacht.themeSpritesheets.meadow = new lime.SpriteSheet('assets/themes/meadow/meadowSpritesheet.png', lime.ASSETS.meadowSpritesheet.json, lime.parser.JSON);
+    obacht.themeSpritesheets.water = new lime.SpriteSheet('assets/themes/water/waterSpritesheet.png', lime.ASSETS.waterSpritesheet.json, lime.parser.JSON);
+
     /** Global Sound */
 //    obacht.menusound = new lime.audio.Audio('assets/sounds/ms.ogg');
 //    obacht.menusound.loop_ = true;
@@ -82,7 +91,7 @@ obacht.start = function() {
 
     /** LimeJs Director Instance */
     obacht.director = new lime.Director(document.body, obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
-    //öffnet POP UP um Game als App auf Screen zu speichern... 
+    //öffnet POP UP um Game als App auf Screen zu speichern...
     //obacht.director.makeMobileWebAppCapable();
     obacht.director.setDisplayFPS(obacht.options.debug.displayFps);
 
