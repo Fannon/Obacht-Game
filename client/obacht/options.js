@@ -20,7 +20,7 @@ obacht.options = {
         avgFramerate: false,
         mainMenuOnBlur: true
     },
-    debug_production: {
+    debug_production_values: {
         logLevel: 5,
         remoteDebugging: false,
         fastStart: false,

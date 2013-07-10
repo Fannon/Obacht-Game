@@ -13,7 +13,13 @@ goog.require('obacht.Generator');
 goog.require('obacht.Bonus');
 goog.require('obacht.Inventory');
 
-
+//Spritesheet Requirements
+goog.require('lime.SpriteSheet');
+goog.require('lime.parser.JSON');
+goog.require('lime.ASSETS.waterSpritesheet.json');
+goog.require('lime.ASSETS.desertSpritesheet.json');
+goog.require('lime.ASSETS.meadowSpritesheet.json');
+goog.require('lime.ASSETS.globalSpritesheet.json');
 
 
 /**
@@ -36,7 +42,7 @@ obacht.Game = function() {
     this.distance = 0;
 
     /** Game Spritesheet (changes with current theme) */
-    this.spritesheet = obacht.themeSpritesheets[obacht.mp.roomDetail.theme];
+    this.spritesheet = false;
 
     /** Game Layer */
     this.layer = new lime.Layer();
@@ -49,6 +55,17 @@ obacht.Game = function() {
 
     /** Timer which will be set when Game is starting (Worlds rotating) */
     this.timer = false;
+
+    // Load Spritesheet according to current Theme
+    if (obacht.mp.roomDetail.theme === 'desert') {
+        this.spritesheet = new lime.SpriteSheet(this.theme.spritesheet, lime.ASSETS.desertSpritesheet.json, lime.parser.JSON);
+    } else if (obacht.mp.roomDetail.theme === 'meadow') {
+        this.spritesheet = new lime.SpriteSheet(this.theme.spritesheet, lime.ASSETS.meadowSpritesheet.json, lime.parser.JSON);
+    } else if (obacht.mp.roomDetail.theme === 'water') {
+        this.spritesheet = new lime.SpriteSheet(this.theme.spritesheet, lime.ASSETS.waterSpritesheet.json, lime.parser.JSON);
+    } else {
+        log.warn('Error loading Theme Spritesheet');
+    }
 
     // Debug average Framerate if set in options.js
     if (obacht.options.debug.avgFramerate) {
