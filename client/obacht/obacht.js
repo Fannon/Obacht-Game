@@ -89,6 +89,11 @@ obacht.start = function() {
     /** Obacht Renderer */
     obacht.renderer = {};
 
+
+    ///////////////////////////////////////
+    // Set Renderer according to Options //
+    ///////////////////////////////////////
+
     // world
     if (obacht.options.graphics.worldRenderer === 'DOM') {
         obacht.renderer.world = lime.Renderer.DOM;
@@ -123,6 +128,7 @@ obacht.start = function() {
     } else {
         obacht.renderer.inventory = lime.Renderer.CANVAS;
     }
+
 
     //////////////////////////////
     // Events                   //

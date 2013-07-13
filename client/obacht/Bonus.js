@@ -20,9 +20,14 @@ obacht.Bonus = function(currentGame, type) {
 
     this.gameLayer = currentGame.layer;
     this.spritesheet = currentGame.spritesheet;
+
+    /** Bonus Type */
     this.type = type;
+    /** Bonus clicked */
     this.clicked = false;
+    /** Timestamp the Button was drawn */
 	this.drawtime = 0;
+    /** Timestamp the Button was clicked */
 	this.clicktime = 0;
 
 
@@ -30,6 +35,7 @@ obacht.Bonus = function(currentGame, type) {
     // LIMEJS OBJECTS //
     ////////////////////
 
+    /** Bonus Button (drawn Element) */
 	this.bonusButton = new lime.RoundedRect()
         .setSize(obacht.options.bonus.general.size, obacht.options.bonus.general.size)
         .setPosition(obacht.options.bonus.general.x, obacht.options.bonus.general.y)
@@ -77,6 +83,10 @@ obacht.Bonus.prototype = {
         }, obacht.options.bonus.general.displayTime);
     },
 
+    /**
+     * No reaction from player within Reactiontime
+     * Sets the reactiontime to high fixed Number
+     */
     noReaction: function() {
         "use strict";
         this.deleteBonus();

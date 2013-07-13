@@ -34,14 +34,17 @@ obacht.PlayerController = function() {
         .setPosition(0, 0)
         .setAnchorPoint(0, 0);
 
+    /** Player Layer */
     this.layer = new lime.Layer().setSize(obacht.options.graphics.VIEWPORT_WIDTH, obacht.options.graphics.VIEWPORT_HEIGHT);
     this.layer.appendChild(this.tapAreaTop);
     this.layer.appendChild(this.tapAreaBottom);
     this.layer.appendChild(this.tapAreaPuffer);
 
-    // Event Publisher/Subscriber
+    /**
+     * Player Event Publisher/Subscriber
+     * All own Player Events/Interactions can be subscribed here
+     */
     this.events = new goog.pubsub.PubSub();
-
 
 
     ////////////////////////////////
@@ -145,7 +148,5 @@ obacht.PlayerController.prototype = {
      */
     destruct: function() {
         "use strict";
-
-
     }
 };

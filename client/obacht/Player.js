@@ -35,6 +35,8 @@ obacht.Player = function(currentGame, location) {
     //////////////////
 
     this.spritesheet = currentGame.spritesheet;
+
+    /** Player Location */
     this.location = location;
 
     /** Player BoundingBoxes Array */
@@ -44,8 +46,10 @@ obacht.Player = function(currentGame, location) {
     /** Player Health */
     this.health = 3;
 
-    /** Player state variables */
+    /** Player jumping Boolean */
     this.isJumping = false;
+
+    /** Player crouching Boolean */
     this.isCrouching = false;
 
     if (this.location === 'bottom') {
@@ -101,7 +105,6 @@ obacht.Player = function(currentGame, location) {
     }
 
 
-
     ////////////////
     /* ANIMATIONS */
     ////////////////
@@ -154,7 +157,6 @@ obacht.Player = function(currentGame, location) {
         .MoveTo(0, 0)
         .setDuration(obacht.options.player.crouchDuration)
         .enableOptimizations();
-
 
 
     ///////////////////////
@@ -251,8 +253,6 @@ obacht.Player = function(currentGame, location) {
             self.character.removeChild(self.smoke);
         });
 
-
-
         if (this.location === 'bottom') {
 
             /** Sets up event subscription for own player. @event */
@@ -288,6 +288,7 @@ obacht.Player = function(currentGame, location) {
                 }
             });
         }
+
     } catch(e) {
         obacht.eventError(e);
     }

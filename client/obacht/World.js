@@ -46,7 +46,6 @@ obacht.World = function(currentGame, type) {
     }
 
 
-
     /////////////
     /* SPRITES */
     /////////////

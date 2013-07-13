@@ -20,13 +20,17 @@ obacht.Trap = function(currentGame, type, location) {
     ////////////////
 
     var self = this;
+
+    /** Trap Type */
     this.type = type;
+
+    /** Trap Location */
     this.location = location;
+
     this.layer = currentGame.layer;
 
     /** Trap Data from themes.js */
     this.trapDetail = obacht.themes[obacht.mp.roomDetail.theme].traps[type];
-
 
     if (this.location === 'bottom') {
 

@@ -95,7 +95,7 @@ obacht.Game = function() {
     // Draw Background Gradient according to theme
     obacht.setBackground(obacht.mp.roomDetail.theme);
 
-    // Draw Countdown Layer
+    /** Draw Countdown Background */
     var countDownLayerBackground = new lime.Sprite()
         .setFill(this.spritesheet.getFrame('preview.jpg'))
         .setPosition(obacht.options.graphics.VIEWPORT_WIDTH / 2, obacht.options.graphics.VIEWPORT_HEIGHT / 2)
@@ -309,24 +309,6 @@ obacht.Game.prototype = {
         }
 
         return true;
-    },
-
-    checkSound: function() {
-        "use strict";
-
-        ///////////////////////////////
-        // Play Game Sound           //
-        ///////////////////////////////
-
-        lime.scheduleManager.scheduleWithDelay(function(){
-            if(obacht.gamesound.isPlaying()===false && obacht.sound===true){
-                obacht.gamesound.play();
-            }
-            if(obacht.menusound.isPlaying()===true){
-                obacht.menusound.stop();
-            }
-        },obacht.menusound,obacht.gamesound,obacht.sound,150);
-
     },
 
     /**
