@@ -9,7 +9,6 @@ goog.require('lime.animation.Loop');
 goog.require('lime.animation.Easing');
 
 
-
 /**
  * Game Menu
  *
@@ -58,11 +57,11 @@ obacht.Menu.prototype = {
         menuScene.appendChild(menuLayer);
         log.debug('mainMenuScene()');
 
-        if(localStorage.getItem("sound") === 'on') {
-            obacht.sound = true;
-        } else {
-            obacht.sound = false;
-        }
+//        if(localStorage.getItem("sound") === 'on') {
+//            obacht.sound = true;
+//        } else {
+//            obacht.sound = false;
+//        }
 
         this.resetMenu();
 //        this.checkSound();
@@ -82,7 +81,7 @@ obacht.Menu.prototype = {
             .setFill(obacht.spritesheet.getFrame('character_right.png'))
             .setPosition(1010, 360)
             .setSize(540, 643);
-            
+
         /** Wifi Hint */
         var wifiHint = new lime.Sprite()
             .setFill(obacht.spritesheet.getFrame('internet_hint.png'))
@@ -133,7 +132,7 @@ obacht.Menu.prototype = {
 
         /** Help Button Event -> Help Scene @event */
         goog.events.listen(helpButton, ['touchstart', 'mousedown'], function() {
-            self.obachtScene();
+            self.helpScene();
         });
 
         /** Credits Button */
@@ -162,7 +161,7 @@ obacht.Menu.prototype = {
             // .setFill(obacht.spritesheet.getFrame('button_sound.png'))
             // .setPosition(120, 600)
             // .setSize(174, 160);
-// 
+//
         // var soundLabel = new lime.Label()
             // .setText('SOUND')
             // .setFontColor('#fff')
@@ -170,12 +169,12 @@ obacht.Menu.prototype = {
             // .setPosition(290, 600)
             // .setSize(140, 45)
             // .setAlign('left');
-// 
+//
         // // If Sound was remembered to be off, change the Display to OFF
         // if (!obacht.sound){
             // soundButton.setFill(obacht.spritesheet.getFrame('button_sound_off.png'));
         // }
-// 
+//
         // goog.events.listen(soundButton, ['touchstart', 'mousedown'], function() {
             // if (obacht.sound){
                 // soundButton.setFill(obacht.spritesheet.getFrame('button_sound_off.png'));
@@ -216,15 +215,15 @@ obacht.Menu.prototype = {
 
     /**
      * Obacht Explanation Scene
-     *
      */
-    obachtScene: function() {
+    helpScene: function() {
         "use strict";
         var self = this;
 
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+        log.debug('helpScene()');
 
         ///////////////////////////////
         // Layer Content             //
@@ -244,7 +243,7 @@ obacht.Menu.prototype = {
             .setFontSize(45)
             .setPosition(920, 300)
             .setSize(600, 45)
-            .setAlign('left')
+            .setAlign('left');
 
         var textObacht2 = new lime.Label()
             .setText('Bavarian exclamation for ‘Watch out!‘')
@@ -254,7 +253,7 @@ obacht.Menu.prototype = {
             .setLineHeight(1.3)
             .setPosition(870, 390)
             .setSize(500, 80)
-            .setAlign('left')
+            .setAlign('left');
 
         var textObacht3 = new lime.Label()
             .setText('Fast reaction is required in this game to save your Hogi‘s life.')
@@ -264,9 +263,7 @@ obacht.Menu.prototype = {
             .setLineHeight(1.3)
             .setPosition(845, 500)
             .setSize(450, 80)
-            .setAlign('left')
-
-
+            .setAlign('left');
 
         /** Hogi */
         var hogiSign = new lime.Sprite()
@@ -287,9 +284,8 @@ obacht.Menu.prototype = {
         /** Arrow Next Scene */
         var arrowNext = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowNext.png')).setPosition(1200, 360).setSize(196,182);
         goog.events.listen(arrowNext, ['touchstart', 'mousedown'], function() {
-            self.helpScene();
+            self.helpIntroScene();
         });
-
 
 
         ///////////////////////////////
@@ -304,7 +300,6 @@ obacht.Menu.prototype = {
         menuLayer.appendChild(textObacht2);
         menuLayer.appendChild(textObacht3);
 
-
         // set current scene active
         obacht.director.replaceScene(menuScene);
 
@@ -312,16 +307,15 @@ obacht.Menu.prototype = {
 
     /**
      * Help / Manual Scene
-     *
      */
-    helpScene: function() {
+    helpIntroScene: function() {
         "use strict";
         var self = this;
 
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
-        log.debug('helpScene()');
+        log.debug('helpIntroScene()');
 
 
         ///////////////////////////////
@@ -343,7 +337,6 @@ obacht.Menu.prototype = {
             .setPosition(865, 250)
             .setSize(600, 33)
             .setAlign('left');
-
 
         var textManualGeneral1b = new lime.Label()
             .setText('This is where the fun starts!')
@@ -395,15 +388,14 @@ obacht.Menu.prototype = {
         /** Arrow Previous Scene */
         var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
         goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
-            self.obachtScene();
+            self.helpScene();
         });
 
         /** Arrow Next Scene */
         var arrowNext = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowNext.png')).setPosition(1200, 360).setSize(196,182);
         goog.events.listen(arrowNext, ['touchstart', 'mousedown'], function() {
-            self.manualWorldsScene();
+            self.helpWorldsScene();
         });
-
 
 
         ///////////////////////////////
@@ -428,15 +420,15 @@ obacht.Menu.prototype = {
 
     /**
      * Worlds Scene
-     *
      */
-    manualWorldsScene: function() {
+    helpWorldsScene: function() {
         "use strict";
         var self = this;
 
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+        log.debug('helpWorldsScene()');
 
 
         ///////////////////////////////
@@ -491,15 +483,14 @@ obacht.Menu.prototype = {
         /** Arrow Previous Scene */
         var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
         goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
-            self.helpScene();
+            self.helpIntroScene();
         });
 
         /** Arrow Next Scene */
         var arrowNext = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowNext.png')).setPosition(1200, 360).setSize(196,182);
         goog.events.listen(arrowNext, ['touchstart', 'mousedown'], function() {
-            self.manualHealthScene();
+            self.helpHealthScene();
         });
-
 
 
         ///////////////////////////////
@@ -525,15 +516,15 @@ obacht.Menu.prototype = {
 
     /**
      * Manual Health Scene
-     *
      */
-     manualHealthScene: function() {
+     helpHealthScene: function() {
         "use strict";
         var self = this;
 
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+        log.debug('helpHealthScene()');
 
 
         ///////////////////////////////
@@ -617,15 +608,14 @@ obacht.Menu.prototype = {
         /** Arrow Previous Scene */
         var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
         goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
-            self.manualWorldsScene();
+            self.helpWorldsScene();
         });
 
         /** Arrow Next Scene */
         var arrowNext = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowNext.png')).setPosition(1200, 360).setSize(196,182);
         goog.events.listen(arrowNext, ['touchstart', 'mousedown'], function() {
-            self.manualObstaclesScene();
+            self.helpObstaclesScene();
         });
-
 
 
         ///////////////////////////////
@@ -652,15 +642,15 @@ obacht.Menu.prototype = {
 
     /**
      * Manual Obstacles Scene
-     *
      */
-    manualObstaclesScene: function() {
+    helpObstaclesScene: function() {
         "use strict";
         var self = this;
 
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+        log.debug('helpObstaclesScene();');
 
 
         ///////////////////////////////
@@ -730,13 +720,13 @@ obacht.Menu.prototype = {
         /** Arrow Previous Scene */
         var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
         goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
-            self.manualCrouchScene();
+            self.helpHealthScene();
         });
 
         /** Arrow Next Scene */
         var arrowNext = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowNext.png')).setPosition(1200, 360).setSize(196,182);
         goog.events.listen(arrowNext, ['touchstart', 'mousedown'], function() {
-            self.manualJumpScene();
+            self.helpJumpScene();
         });
 
 
@@ -765,15 +755,15 @@ obacht.Menu.prototype = {
 
     /**
      * Manual Jump Scene
-     *
      */
-    manualJumpScene: function() {
+    helpJumpScene: function() {
         "use strict";
         var self = this;
 
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+        log.debug('helpJumpScene()');
 
 
         ///////////////////////////////
@@ -847,15 +837,14 @@ obacht.Menu.prototype = {
         /** Arrow Previous Scene */
         var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
         goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
-            self.manualHealthScene();
+            self.helpObstaclesScene();
         });
 
         /** Arrow Next Scene */
         var arrowNext = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowNext.png')).setPosition(1200, 360).setSize(196,182);
         goog.events.listen(arrowNext, ['touchstart', 'mousedown'], function() {
-            self.manualCrouchScene();
+            self.helpCrouchScene();
         });
-
 
 
         ///////////////////////////////
@@ -878,18 +867,17 @@ obacht.Menu.prototype = {
 
     },
 
-
     /**
      * Manual Crouch Scene
-     *
      */
-    manualCrouchScene: function() {
+    helpCrouchScene: function() {
         "use strict";
         var self = this;
 
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+        log.debug('helpCrouchScene();');
 
 
         ///////////////////////////////
@@ -963,13 +951,13 @@ obacht.Menu.prototype = {
         /** Arrow Previous Scene */
         var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
         goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
-            self.manualJumpScene();
+            self.helpJumpScene();
         });
 
         /** Arrow Next Scene */
         var arrowNext = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowNext.png')).setPosition(1200, 360).setSize(196,182);
         goog.events.listen(arrowNext, ['touchstart', 'mousedown'], function() {
-            self.manualCollectBoniScene();
+            self.helpCollectBoniScene();
         });
 
 
@@ -998,13 +986,14 @@ obacht.Menu.prototype = {
      * Manual Collect Boni Scene
      *
      */
-    manualCollectBoniScene: function() {
+    helpCollectBoniScene: function() {
         "use strict";
         var self = this;
 
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+        log.debug('helpCollectBoniScene()');
 
 
         ///////////////////////////////
@@ -1069,13 +1058,13 @@ obacht.Menu.prototype = {
         /** Arrow Previous Scene */
         var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
         goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
-            self.manualObstaclesScene();
+            self.helpCrouchScene();
         });
 
         /** Arrow Next Scene */
         var arrowNext = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowNext.png')).setPosition(1200, 360).setSize(196,182);
         goog.events.listen(arrowNext, ['touchstart', 'mousedown'], function() {
-            self.manualThrowBoniScene();
+            self.helpThrowBoniScene();
         });
 
         /** tab **/
@@ -1120,13 +1109,14 @@ obacht.Menu.prototype = {
      * Manual Throw Boni Scene
      *
      */
-    manualThrowBoniScene: function() {
+    helpThrowBoniScene: function() {
         "use strict";
         var self = this;
 
         var menuScene = new lime.Scene();
         var menuLayer = new lime.Layer();
         menuScene.appendChild(menuLayer);
+        log.debug('helpThrowBoniScene');
 
 
         ///////////////////////////////
@@ -1200,7 +1190,7 @@ obacht.Menu.prototype = {
         /** Arrow Previous Scene */
         var arrowPrevious = new lime.Sprite().setFill(obacht.spritesheet.getFrame('arrowPrevious.png')).setPosition(80, 360).setSize(196,182);
         goog.events.listen(arrowPrevious, ['touchstart', 'mousedown'], function() {
-            self.manualCollectBoniScene();
+            self.helpCollectBoniScene();
         });
 
 
@@ -2290,29 +2280,6 @@ obacht.Menu.prototype = {
         obacht.mp.events.clear('room_detail');
         obacht.mp.events.clear('room_invite');
     },
-
-    checkSound: function() {
-        "use strict";
-
-
-        ///////////////////////////////
-        // Play Menu Sound           //
-        ///////////////////////////////
-
-        lime.scheduleManager.scheduleWithDelay(function(){
-            if(obacht.menusound.isPlaying()===true && obacht.sound===false){
-                obacht.menusound.stop();
-            }
-            if(obacht.menusound.isPlaying()===false && obacht.sound===true){
-                obacht.menusound.play();
-            }
-            if(obacht.gamesound.isPlaying()===true){
-                obacht.gamesound.stop();
-            }
-        },obacht.menusound,obacht.gamesound,obacht.sound,150);
-    },
-
-
 
     /**
      * Adds (left) Padding to the PIN Number
