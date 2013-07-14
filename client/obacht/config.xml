@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns="http://www.w3.org/ns/widgets"
         xmlns:gap="http://phonegap.com/ns/1.0"
-        id="com.obacht.game"
+        id="com.obacht.game.wlan"
         version="1.0.1">
     <preference name="phonegap-version" value="2.9.0"/>
 
-    <name>Obacht Game</name>
+    <name>Obacht Game WLAN</name>
 
     <description>
         Obacht is a Cross Platform Multiplayer Game
